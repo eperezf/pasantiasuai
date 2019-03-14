@@ -11,6 +11,7 @@ class Empresa extends Model{
 		'nombre',
 		'rubro',
 		'urlWeb',
-		'correoContacto'
+		'correoContacto',
+		'status'
 	];
 }

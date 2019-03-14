@@ -5,17 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Empresa;
 
-class EmpresaController extends Controller
-{
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(){
-			$empresas = Empresa::all();
-    	return view('empresa.index', compact('empresas'));
-    }
+class EmpresaController extends Controller{
+  /**
+   * Muestra un listado de empresas en convenio
+   *
+   * @return \Illuminate\Http\Response
+   */
+  public function index(){
+		$empresas = Empresa::all();
+  	return view('empresa.index', compact('empresas'));
+  }
 
     /**
      * Show the form for creating a new resource.
