@@ -12,9 +12,9 @@ class EmpresaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function index(){
+			$empresas = Empresa::all();
+    	return view('empresa.index', compact('empresas'));
     }
 
     /**
