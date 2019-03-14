@@ -22,6 +22,7 @@
 		      <th scope="col">ID</th>
 		      <th scope="col">Nombre</th>
 		      <th scope="col">Rubro</th>
+					<th scope="col">Estado</th>
 		      <th scope="col">Sitio Web</th>
 					<th scope="col">Correo de contacto</th>
 					<th scope="col">Acciones</th>
@@ -29,10 +30,11 @@
 		  </thead>
 		  <tbody>
 				@foreach($empresas as $empresa)
-		    <tr>
+		    <tr @if($empresa->status == 0)class="table-dark" @else @endif>
 		      <th scope="row">{{$empresa->idEmpresa}}</th>
 		      <td>{{$empresa->nombre}}</td>
 		      <td>{{$empresa->rubro}}</td>
+					<td>@if($empresa->status == 1)Activo @else Inactivo @endif</td>
 		      <td><a href="http://{{$empresa->urlWeb}}">{{$empresa->urlWeb}}</a></td>
 					<td>{{$empresa->correoContacto}}</td>
 					<td>
