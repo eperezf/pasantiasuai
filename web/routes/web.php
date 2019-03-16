@@ -16,3 +16,7 @@ Route::get('/', function () {
 });
 
 Route::resource('/empresas', 'EmpresaController');
+
+Route::get('/login', function(){
+	return view('login');
+});
