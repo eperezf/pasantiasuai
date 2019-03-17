@@ -60,15 +60,8 @@ class LoginController extends Controller
 						$status = $org_arr[2];
 						$anoIngreso = $org_arr[3];
 						$grupo = $org_arr[4];
-						echo $nombres . " " . $apellidos . "</br>";
-						echo "RUT: " . $rut . "</br>";
-						echo "Año de ingreso: " . $anoIngreso . "</br>";
-						echo "Sede: " . $sede . "</br>";
-						echo "Status: " . $status . "</br>";
-						echo "Grupo: " . $grupo . "</br>";
 						$located = User::where('email', $email) -> first();
 						if ($located == ""){
-							echo "Alumno no existe en sistema pasantías. Creando.";
 							$user = User::create([
 								'nombres' => $nombres,
 								'apellidoPaterno' => $apellidoPaterno,
