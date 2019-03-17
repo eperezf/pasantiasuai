@@ -2,15 +2,21 @@
 
 @section('contenido')
 <div class="container">
-	<form>
+	@if(session()->get('danger'))
+    <div class="alert alert-danger">
+      {{ session()->get('danger') }}
+    </div>
+  @endif
+	<form method="post" action="{{ route('login') }}">
+		@csrf
 	  <div class="form-group">
-	    <label for="exampleInputEmail1">Email address</label>
-	    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+	    <label for="Email">Email address</label>
+	    <input type="email" class="form-control" id="Email" name="Email" aria-describedby="emailHelp" placeholder="Enter email">
 	    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
 	  </div>
 	  <div class="form-group">
-	    <label for="exampleInputPassword1">Password</label>
-	    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+	    <label for="Password">Password</label>
+	    <input type="password" class="form-control" id="Password" name="Password" placeholder="Password">
 	  </div>
 	  <div class="form-group form-check">
 	    <input type="checkbox" class="form-check-input" id="exampleCheck1">

@@ -20,3 +20,5 @@ Route::resource('/empresas', 'EmpresaController');
 Route::get('/login', function(){
 	return view('login');
 });
+
+Route::post('/login', 'LoginController@authenticate')->name('login');
