@@ -20,8 +20,9 @@
 	</div>
 	<div class="row justify-content-center">
 		<div class="col-8">
-			<form method="post" action="{{ route('empresas.update') }}">
+			<form method="post" action="{{ route('empresas.update', $empresa->idEmpresa) }}">
 				@csrf
+				@method('PATCH')
 				<div class="form-group">
 			    <label for="name">Nombre</label>
 			    <input class="form-control" id="nombre" name="nombre" aria-describedby="nombreHelp" placeholder="Nombre de la empresa" value="{{$empresa->nombre}}">

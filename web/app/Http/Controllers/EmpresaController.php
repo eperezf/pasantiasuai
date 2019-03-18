@@ -34,12 +34,12 @@ class EmpresaController extends Controller{
 			};
 
 			$request->validate(
-			['nombre'=>'required|unique:empresa'],
-			['rubro'=>'required'],
-			['urlWeb'=>'required'],
-			['correoContacto'=>'required'],
-			['status'=>'required']
-		);
+				['nombre'=>'required|unique:empresa'],
+				['rubro'=>'required'],
+				['urlWeb'=>'required'],
+				['correoContacto'=>'required'],
+				['status'=>'required']
+			);
 
 		$empresa = new Empresa([
 			'nombre'=>$request->get('nombre'),
@@ -64,8 +64,7 @@ class EmpresaController extends Controller{
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
+     * Muestra el formulario de edición de empresa.
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -75,15 +74,29 @@ class EmpresaController extends Controller{
     }
 
     /**
-     * Update the specified resource in storage.
+     * Actualiza la empresa especificada en la base de datos.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(Request $request, $id){
+			$request->validate(
+				['nombre'=>'required|unique:empresa'],
+				['rubro'=>'required'],
+				['urlWeb'=>'required'],
+				['correoContacto'=>'required'],
+				['status'=>'required']
+			);
+			$empresa = Empresa::find($id);
+			$empresa->nombre = $request->get('nombre');
+			$empresa->rubro = $request->get('rubro');
+			$empresa->urlWeb = $request->get('urlWeb');
+			$empresa->correoContacto = $request->get('correoContacto');
+			$empresa->status = $request->get('status');
+			$empresa->save();
+			return redirect('/empresas')->with('success', 'Empresa editada correctamente');
+
     }
 
     /**
