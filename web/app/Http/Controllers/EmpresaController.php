@@ -7,8 +7,7 @@ use App\Empresa;
 
 class EmpresaController extends Controller{
   /**
-   * Muestra un listado de empresas en convenio
-   *
+   * Muestra un listado de empresas
    * @return \Illuminate\Http\Response
    */
   public function index(){
@@ -17,13 +16,11 @@ class EmpresaController extends Controller{
   }
 
     /**
-     * Show the form for creating a new resource.
-     *
+     * Muestra el formulario de creación de empresa
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
+    public function create(){
+      return view('empresa.create');
     }
 
     /**
