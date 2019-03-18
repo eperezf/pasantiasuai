@@ -4,6 +4,11 @@
 
 @section('contenido')
 <div class="container">
+	@if(session()->get('success'))
+    <div class="alert alert-success">
+      {{ session()->get('success') }}
+    </div><br />
+  @endif
 	<div class="row">
 		<h1>Listado de empresas</h1>
 	</div>
@@ -13,7 +18,7 @@
 		</p>
 	</div>
 	<div class="row">
-		<a class="btn btn-primary" href="#" role="button">Agregar (solo admin)</a>
+		<a class="btn btn-primary" href="/empresas/create" role="button">Agregar (solo admin)</a>
 	</div>
 	<div class="row">
 		<table class="table">
@@ -36,7 +41,7 @@
 		      <td>{{$empresa->rubro}}</td>
 					<td>@if($empresa->status == 1)Activo @else Inactivo @endif</td>
 		      <td><a href="http://{{$empresa->urlWeb}}">{{$empresa->urlWeb}}</a></td>
-					<td>{{$empresa->correoContacto}}</td>
+					<td><a href="mailto:{{$empresa->correoContacto}}">{{$empresa->correoContacto}}</a></td>
 					<td>
 						<a class="btn btn-warning" href="#" role="button">Editar</a>
 						<a class="btn btn-danger" href="#" role="button">Elimiar</a>
