@@ -9,7 +9,7 @@ class CreateEmpresaTable extends Migration{
     Schema::create('Empresa', function (Blueprint $table) {
       $table->increments('idEmpresa');
       $table->string('nombre', 45);
-      $table->string('Rubro', 45);
+      $table->string('rubro', 45);
       $table->string('urlWeb', 45);
       $table->string('correoContacto', 45);
 			$table->integer('status');
