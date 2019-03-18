@@ -69,9 +69,9 @@ class EmpresaController extends Controller{
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
+    public function edit($id){
+    	$empresa = Empresa::find($id);
+			return view('empresa.edit', compact('empresa'));
     }
 
     /**
