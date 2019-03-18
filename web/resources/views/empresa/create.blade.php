@@ -28,7 +28,7 @@
 			  </div>
 				<div class="form-group">
 			    <label for="rubro">Rubro</label>
-			    <input class="form-control" id="rubro" name="rubro" aria-describedby="urlLogoHelp" placeholder="Rubro de la empresa">
+			    <input class="form-control" id="rubro" name="rubro" aria-describedby="rubroHelp" placeholder="Rubro de la empresa">
 			    <small id="rubroHelp" class="form-text text-muted">Ej.: Consultoría en TI.</small>
 			  </div>
 				<div class="form-group">
@@ -41,7 +41,7 @@
           <small id="rubroHelp" class="form-text text-muted">Si es más de uno, separarlos por coma.</small>
 			  </div>
         <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="" id="status" name="status">
+          <input class="form-check-input" type="checkbox" value="1" id="status" name="status">
           <label class="form-check-label" for="status">
             ¿Convenio activo?
           </label>

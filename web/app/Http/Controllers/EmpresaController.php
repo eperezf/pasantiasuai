@@ -24,14 +24,32 @@ class EmpresaController extends Controller{
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
+     * Guarda la empresa en la base de datos.
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request){
+			if ($request->status == ""){
+				$request->status = 0;
+			};
+
+			$request->validate(
+			['nombre'=>'required|unique:empresa'],
+			['rubro'=>'required'],
+			['urlWeb'=>'required'],
+			['correoContacto'=>'required'],
+			['status'=>'required']
+		);
+
+		$empresa = new Empresa([
+			'nombre'=>$request->get('nombre'),
+			'rubro'=>$request->get('rubro'),
+			'urlWeb'=>$request->get('urlWeb'),
+			'correoContacto'=>$request->get('correoContacto'),
+			'status'=>$request->get('status')
+		]);
+		$empresa->save();
+		return redirect('/empresas')->with('success', 'Nueva empresa agregada');
     }
 
     /**

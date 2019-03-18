@@ -10,10 +10,11 @@ class CreateEmpresaTable extends Migration{
       $table->engine = 'InnoDB';
       $table->increments('idEmpresa');
       $table->string('nombre', 45);
-      $table->string('Rubro', 45);
+      $table->string('rubro', 45);
       $table->string('urlWeb', 45);
       $table->string('correoContacto', 45);
 			$table->integer('status');
+			$table->timestamps();
 
       $table->unique(["idEmpresa"], 'idEmpresa_UNIQUE');
 
