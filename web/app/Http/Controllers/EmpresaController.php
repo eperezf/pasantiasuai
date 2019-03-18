@@ -29,7 +29,7 @@ class EmpresaController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
-			if ($request->status == ""){
+			if ($request->status == NULL){
 				$request->status = 0;
 			};
 
@@ -46,7 +46,7 @@ class EmpresaController extends Controller{
 			'rubro'=>$request->get('rubro'),
 			'urlWeb'=>$request->get('urlWeb'),
 			'correoContacto'=>$request->get('correoContacto'),
-			'status'=>$request->get('status')
+			'status'=>$request->status
 		]);
 		$empresa->save();
 		return redirect('/empresas')->with('success', 'Nueva empresa agregada');
@@ -87,12 +87,15 @@ class EmpresaController extends Controller{
 				['correoContacto'=>'required'],
 				['status'=>'required']
 			);
+			if ($request->status == NULL){
+				$request->status = 0;
+			};
 			$empresa = Empresa::find($id);
 			$empresa->nombre = $request->get('nombre');
 			$empresa->rubro = $request->get('rubro');
 			$empresa->urlWeb = $request->get('urlWeb');
 			$empresa->correoContacto = $request->get('correoContacto');
-			$empresa->status = $request->get('status');
+			$empresa->status = $request->status;
 			$empresa->save();
 			return redirect('/empresas')->with('success', 'Empresa editada correctamente');
 
