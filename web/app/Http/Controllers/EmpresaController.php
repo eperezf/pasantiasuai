@@ -75,14 +75,13 @@ class EmpresaController extends Controller{
 
     /**
      * Actualiza la empresa especificada en la base de datos.
-     *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id){
 			$request->validate(
-				['nombre'=>'required|unique:empresa'],
+				['nombre'=>'required'],
 				['rubro'=>'required'],
 				['urlWeb'=>'required'],
 				['correoContacto'=>'required'],
@@ -100,13 +99,13 @@ class EmpresaController extends Controller{
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
+     * Elimina la empresa de la base de datos.
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy($id){
+			$empresa = Empresa::find($id);
+			$empresa->delete();
+			return redirect('/empresas')->with('success', 'Empresa eliminada correctamente');
     }
 }

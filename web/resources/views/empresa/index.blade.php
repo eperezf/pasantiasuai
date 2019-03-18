@@ -43,8 +43,12 @@
 		      <td><a href="http://{{$empresa->urlWeb}}">{{$empresa->urlWeb}}</a></td>
 					<td><a href="mailto:{{$empresa->correoContacto}}">{{$empresa->correoContacto}}</a></td>
 					<td>
-						<a class="btn btn-warning" href="#" role="button">Editar</a>
-						<a class="btn btn-danger" href="#" role="button">Elimiar</a>
+						<a class="btn btn-warning" href="{{route('empresas.edit', $empresa->idEmpresa)}}" role="button">Editar</a>
+						<form style="display: inline-block;" action="{{ route('empresas.destroy', $empresa->idEmpresa)}}" method="post">
+              @csrf
+              @method('DELETE')
+              <button class="btn btn-danger" type="submit">Eliminar</button>
+                </form>
 					</td>
 		    </tr>
 				@endforeach
