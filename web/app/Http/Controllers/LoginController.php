@@ -89,6 +89,13 @@ class LoginController extends Controller
 						$tipoProfe = $org_arr[1];
 						$sede = $org_arr[2];
 						$profesor = true;
+						echo "Tipo de profe: " . $tipoProfe . "</br>";
+						echo "Sede: " . $sede . "</br>";
+						echo "Nombres: " . $nombres . "</br>";
+						echo "Apellidos: " . $apellidoMaterno . " " . $apellidoPaterno . "</br>";
+						echo "Email: " . $email . "</br>";
+						echo "RUT: " . $rut . "</br>";
+
 					}
 				}
 				else {
