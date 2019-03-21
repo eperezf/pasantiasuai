@@ -14,18 +14,18 @@
 		  </ol>
 		</nav>
 	</div>
-	<div class="row">
+	<div class="row justify-content-md-center mb-5">
 		<h2>Paso 0: Reglamento</h2>
 	</div>
-	<div class="row">
+	<div class="row justify-content-md-center mb-5">
 		aquí va el reglamento
 	</div>
-	<div class="row">
-		<form method="post" action="{{ route('inscripcion.0.post') }}">
+	<div class="row justify-content-md-center mb-5">
+		<form method="post" action="{{ route('inscripcion.0.post') }}" class="text-center">
 			@csrf
 			<div class="form-check">
 				<input class="form-check-input" type="checkbox" value="1" id="reglamento" name="reglamento">
-			  <label class="form-check-label" for="reglamento">
+			  <label class="form-check-label mb-2" for="reglamento">
 			    He leído y acepto el reglamento de inscripción
 			  </label>
 			</div>

@@ -18,7 +18,7 @@ class PasantiaController extends Controller{
 	}
 
 	public function paso1View(){
-
+		return view('pasantia.paso1');
 	}
 
 	public function paso1Contro(){
