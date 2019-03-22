@@ -13,20 +13,24 @@ class PasantiaController extends Controller{
 		if ($request->reglamento == NULL){
 			$request->reglamento = 0;
 		}
-		echo $request->reglamento;
-		return redirect('/inscripcion/1');
+		if ($request->reglamento == 1){
+			return redirect('/inscripcion/1');
+		}
+		else {
+			return redirect('inscripcion/0')->with('error', 'Debes aceptar el reglamento para continuar con tu inscripción');
+		}
 	}
 
 	public function paso1View(){
 		return view('pasantia.paso1');
 	}
 
-	public function paso1Contro(){
-
+	public function paso1Control(){
+		return redirect('/inscripcion/2');
 	}
 
 	public function paso2View(){
-
+		return view('pasantia.paso2');
 	}
 
 	public function paso2Control(){

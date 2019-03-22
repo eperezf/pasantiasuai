@@ -29,3 +29,5 @@ Route::get('/inscripcion/0', 'PasantiaController@paso0View')->name('inscripcion.
 Route::post('/inscripcion/0/post','PasantiaController@paso0Control')->name('inscripcion.0.post');
 Route::get('/inscripcion/1', 'PasantiaController@paso1View')->name('inscripcion.1.view');
 Route::post('/inscripcion/1/post','PasantiaController@paso1Control')->name('inscripcion.1.post');
+Route::get('/inscripcion/2', 'PasantiaController@paso2View')->name('inscripcion.2.view');
+Route::post('/inscripcion/2/post','PasantiaController@paso2Control')->name('inscripcion.2.post');

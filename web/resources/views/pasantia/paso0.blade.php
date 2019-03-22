@@ -3,6 +3,11 @@
 
 @section('contenido')
 <div class="container-fluid">
+	@if(session()->get('error'))
+    <div class="alert alert-danger">
+      {{ session()->get('error') }}
+    </div><br />
+  @endif
 	<div class="row">
 		<nav aria-label="breadcrumb">
 		  <ol class="breadcrumb">
