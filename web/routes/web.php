@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 Route::resource('/empresas', 'EmpresaController');
 
-Route::resource('/users', 'UserController');
+Route::resource('/perfil', 'PerfilController');
 
 Route::get('/login', function(){
 	return view('login');
