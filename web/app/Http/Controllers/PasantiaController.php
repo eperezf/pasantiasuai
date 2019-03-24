@@ -34,19 +34,19 @@ class PasantiaController extends Controller{
 	}
 
 	public function paso2Control(){
-
+		return redirect('/inscripcion/3');
 	}
 
 	public function paso3View(){
-
+		return view('pasantia.paso3');
 	}
 
 	public function paso3Control(){
-
+		return redirect('/inscripcion/4');
 	}
 
 	public function paso4View(){
-
+		return view('pasantia.paso4');
 	}
 	public function paso4Control(){
 
