@@ -23,18 +23,20 @@
 		<h2>Paso 3: Datos de tu supervisor</h2>
 	</div>
 	<div class="row justify-content-md-center mb-5">
-		<form method="post" action="{{ route('inscripcion.3.post') }}" class="text-center">
-			@csrf
-			<div class="form-group">
-		    <label for="email">Correo</label>
-		    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="correo@empresa.com">
-		  </div>
-		  <div class="form-group">
-		    <label for="nombre">Nombre</label>
-		    <input class="form-control" id="nombre" placeholder="Nombre">
-		  </div>
-			<button type="submit" class="btn btn-primary">Enviar correo de validación</button>
-		</form>
+		<div class="col-md-6">
+			<form method="post" action="{{ route('inscripcion.3.post') }}" class="text-center">
+				@csrf
+				<div class="form-group">
+			    <label for="email">Correo</label>
+			    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="correo@empresa.com">
+			  </div>
+			  <div class="form-group">
+			    <label for="nombre">Nombre</label>
+			    <input class="form-control" id="nombre" placeholder="Nombre">
+			  </div>
+				<button type="submit" class="btn btn-primary">Enviar correo de validación</button>
+			</form>
+		</div>
 	</div>
 </div>
 @endsection

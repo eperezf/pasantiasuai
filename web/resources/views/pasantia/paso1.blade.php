@@ -18,7 +18,7 @@
 		<h2>Paso 1: Requisitos académicos</h2>
 	</div>
 	<div class="row justify-content-md-center mb-5">
-		<div class="col-md-auto">
+		<div class="col-md-6">
 			<div class="card text-white bg-success">
 			  <div class="card-header">
 			    <h2 class="text-center">Práctica Operaria</h2>
@@ -30,7 +30,7 @@
 		</div>
 	</div>
 	<div class="row justify-content-md-center mb-5">
-		<div class="col-md-auto">
+		<div class="col-md-6">
 			<div class="card text-white bg-info">
 			  <div class="card-header">
 			    <h2 class="text-center">Malla</h2>
