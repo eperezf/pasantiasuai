@@ -32,52 +32,52 @@
 
 
 <script>
-document.getElementById("pieBtn").addEventListener("click", function() {
-  var pieChart = Highcharts.chart('grafico', {
-    chart: {
-        plotBackgroundColor: null,
-        plotBorderWidth: null,
-        plotShadow: false,
-        type: 'pie'
-    },
-    title: {
-        text: 'Cantidad de alumnos en cada paso en el proceso de inscripcion de pasantia en el mes X'
-    },
+	document.getElementById("pieBtn").addEventListener("click", function() {
+		var pieChart = Highcharts.chart('grafico', {
+			chart: {
+				plotBackgroundColor: null,
+				plotBorderWidth: null,
+				plotShadow: false,
+				type: 'pie'
+			},
+			title: {
+				text: 'Cantidad de alumnos en cada paso en el proceso de inscripcion de pasantia en el mes X'
+			},
 
-    plotOptions: {
-        pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            dataLabels: {
-                enabled: true,
-                format: '<b>{point.name}</b>: {point.percentage:.2f} %',
-                style: {
-                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-                }
-            }
-        }
-    },
-    series: [{
-        name: 'Proceso de pasantia',
-        colorByPoint: true,
-        data: [{
-            name: 'Paso 1',
-            y: 43.15,
-            sliced: true,
-            selected: true
-        }, {
-            name: 'Paso 2',
-            y: 22.31
-        }, {
-            name: 'Paso 3',
-            y: 18.76
-        }, {
-            name: 'Paso 4',
-            y: 15.78
-        }]
-    }]
-});
-});
+			plotOptions: {
+				pie: {
+					allowPointSelect: true,
+					cursor: 'pointer',
+					dataLabels: {
+						enabled: true,
+						format: '<b>{point.name}</b>: {point.percentage:.2f} %',
+						style: {
+							color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+						}
+					}
+				}
+			},
+			series: [{
+				name: 'Proceso de pasantia',
+				colorByPoint: true,
+				data: [{
+					name: 'Paso 1',
+					y: 43.15,
+					sliced: true,
+					selected: true
+				}, {
+					name: 'Paso 2',
+					y: 22.31
+				}, {
+					name: 'Paso 3',
+					y: 18.76
+				}, {
+					name: 'Paso 4',
+					y: 15.78
+				}]
+			}]
+		});
+	});
 
 	document.getElementById("barBtn").addEventListener("click", function() {
 		var barChart = Highcharts.chart('grafico', {
@@ -151,7 +151,6 @@ document.getElementById("pieBtn").addEventListener("click", function() {
 					data: [5, 15, 25, 40, 90]
 				}
 			]
-
 		});
 	});
 </script>
