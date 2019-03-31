@@ -16,6 +16,7 @@ Route::get('/', function () {
 });
 
 Route::resource('/empresas', 'EmpresaController');
+Route::resource('/admin', 'GraficasController');
 
 Route::resource('/perfil', 'PerfilController');
 
