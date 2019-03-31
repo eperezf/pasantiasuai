@@ -1,3 +1,4 @@
+html { visibility:hidden; }
 /* ---------------------------------------------------
     DROPDOWN FONTAWESOME ICON ANIMATION
 ----------------------------------------------------- */
@@ -9,7 +10,6 @@
   float: right;
  transition: all .5s;
 }
-
 .drop-icon-animation[aria-expanded=true] span:before {
   font-family: "Font Awesome 5 Free";
   font-weight: 900;
@@ -99,10 +99,6 @@ a, a:hover, a:focus {
 }
 
 
-#sidebar ul li.active > a, a[aria-expanded="true"] {
-    color: #fff;
-    background: rgb(8,8,8);
-}
 
 
 a[data-toggle="collapse"] {
@@ -202,7 +198,9 @@ a.article, a.article:hover {
   transition:.5s ease all;
 }
 
-
+.profile-arrow{
+  padding: 3px;
+}
 
 /* ---------------------------------------------------
     MEDIAQUERIES NAV && SIDEBAR
