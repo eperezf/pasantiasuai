@@ -38,17 +38,15 @@
 	<div class="wrapper">
 		<!-- Sidebar -->
 		<nav id="sidebar">
-			<div class="sidebar-header">
-				<h3>
-					<img src="https://upload.wikimedia.org/wikipedia/commons/4/4c/FIC_UAI.jpg" class="img-fluid">
-				</h3>
+			<div class="container">
+					<img src="../media/images/iUAI.jpg" class="mx-auto d-block">
 			</div>
 
 			<!-- Elementos Menu Sidebar -->
 			<ul class="list-unstyled components">
 				<p> Dashboard Pasantias </p>
 				<li class="active">
-					<a href="#"><i class="fa fa-home"></i> Home</a>
+					<a href="#"><i class="fa fa-home"></i> Inicio</a>
 				</li>
 
 				<li>
@@ -56,27 +54,7 @@
 				</li>
 
 				<li>
-					<a href="#subMenu-Empresas" class="drop-icon-animation" data-toggle="collapse" aria-expanded="false">
-						<i class="fas fa-industry"></i> Empresas
-						<span class="ml-auto"></span>
-					</a>
-					<ul class="collapse list-unstyled" id="subMenu-Empresas">
-						<li>
-							<a href="#">
-								Lorem
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								Ipsum
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								Perspiciatis
-							</a>
-						</li>
-					</ul>
+					<a href="#"><i class="fas fa-industry"></i> Empresas</a>
 				</li>
 
 				<li>
