@@ -7,7 +7,7 @@ assignees: ''
 
 ---
 
-**Describe the bug**
+**Describe el bug**
 Una descripción clara y concisa de qué es el bug.
 
 **Para reproducir**
