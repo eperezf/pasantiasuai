@@ -22,56 +22,114 @@
 		<div class="row">
 			<div class="col-md-12">
 
-				<div id="grafico"></div>
-
+				<div id="grafico" ></div>
 
 			</div>
 		</div>
 </div>
 
-
 <script>
-	document.getElementById("barBtn").addEventListener("click", function() {
-		var barChart = Highcharts.chart('grafico', {
-			chart: {
-				type: 'bar'
-			},
-			credits: {
-      enabled: false
-  		},
-			title: {
-				text: 'Cantidad de alumnos en cada paso en el proceso de inscripcion de pasantia'
-			},
-			xAxis: {
-				title: {
-					text: 'Mes'
-				},
-				categories: ['Marzo', 'Abril', 'Mayo', 'Junio', 'Julio']
-			},
-			yAxis: {
-				title: {
-					text: 'Cantidad de postulantes'
-				}
-			},
+//SCRIPT CREA GRAFICO Y DATA RANDOM, FECHAS INCAMBIABLES
+// CREA GRAFICO
+$(function () {
+	//FECHA RANDOM
+	function randomDate(start, end) {
+		//FECHA INCAMBIABLE
+		return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()))
+	}
+	//DATA RANDOM
+	function randomData(){
+		var arr = [];
+		//DATOS DESDE FECHA INICIAL A FECHA FINAL
+		for (var i = 0; i < 100; i++) {
+			var date=randomDate(new Date(2004, 0, 9), new Date());
+			console.log(date);
+			var randNum=Math.round(Math.random() * 100);
 
-			series: [{
-					name: 'Paso 1',
-					data: [70, 40, 30, 20, 2]
-				}, {
-					name: 'Paso 2',
-					data: [15, 30, 25, 20, 3]
-				},
-				{
-					name: 'Paso 3',
-					data: [10, 15, 20, 20, 5]
-				},
-				{
-					name: 'Paso 4',
-					data: [5, 15, 25, 40, 90]
-				}
-			]
-		});
+			arr.push([date.getTime(), randNum]);
+		}
+		arr.sort(function (a,b) {
+			if (a[0] < b[0]) return -1;
+			if (a[0]> b[0]) return 1;
+			return 0;
+		})
+
+		return arr;
+	}
+
+	window.chart = new Highcharts.StockChart({
+		//EN DONDE UBICARLO
+		chart: {
+			renderTo: 'grafico'
+		},
+		//SACAR CREDITOS
+		credits: {
+			enabled: false
+		},
+		tooltip:{
+			shared: true,
+			xDateFormat: '%A, %b %e, %Y'
+		},
+		//LABEL EJE X
+		xAxis: {
+			title: {
+				text: 'Fecha'
+			}
+		},
+		//LABEL EJE Y
+		yAxis: {
+			title: {
+				text: 'Cantidad de postulantes'
+			}
+		},
+		//LINEAS Y DATOS RESPECTIVOS
+		series: [{
+			name: 'Postulantes Paso 1',
+			data: randomData()
+		},
+		{
+			name: 'Postulantes Paso 2',
+			data: randomData()
+		},
+		{
+			name: 'Postulantes Paso 3',
+			data: randomData()
+		},
+		{
+			name: 'Postulantes Paso 4',
+			data: randomData()
+		}],
+
+		//BOTONES
+		rangeSelector: {
+			buttons: [{
+				type: 'month',
+				count: 1,
+				text: '1M',
+			}, {
+				type: 'month',
+				count: 3,
+				text: '3M'
+			}, {
+				type: 'month',
+				count: 6,
+				text: '6M'
+			},  {
+				type: 'year',
+				count: 1,
+				text: '1A'
+			},
+			{
+				type: 'ytd',
+				text: 'YTD'
+			}, {
+				type: 'all',
+				text: 'Todo'
+			}]
+		},
+
 	});
+});
 </script>
 
 
