@@ -5,9 +5,19 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Empresa;
 
+
+/**
+ * EmpresaController es el controlador del listado de empresas.
+ * En este controlador están las funciones para mostrar, agregar, editar, actualizar y eliminar las empresas.
+ * @author Eduardo Pérez
+ * @version v1.1
+ * @return void
+ */
 class EmpresaController extends Controller{
   /**
    * Muestra un listado de empresas
+   * @author Eduardo Pérez
+   * @version v1.0
    * @return \Illuminate\Http\Response
    */
   public function index(){
@@ -17,6 +27,8 @@ class EmpresaController extends Controller{
 
     /**
      * Muestra el formulario de creación de empresa
+     * @author Eduardo Pérez
+     * @version v1.0
      * @return \Illuminate\Http\Response
      */
     public function create(){
@@ -25,6 +37,8 @@ class EmpresaController extends Controller{
 
     /**
      * Guarda la empresa en la base de datos.
+     * @author Eduardo Pérez
+     * @version v1.0
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
@@ -53,8 +67,9 @@ class EmpresaController extends Controller{
     }
 
     /**
-     * Display the specified resource.
-     *
+     * Muestra el recurso especificado (no usado).
+     * @author Eduardo Pérez
+     * @version v1.0
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -65,6 +80,8 @@ class EmpresaController extends Controller{
 
     /**
      * Muestra el formulario de edición de empresa.
+     * @author Eduardo Pérez
+     * @version v1.0
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -75,16 +92,18 @@ class EmpresaController extends Controller{
 
     /**
      * Actualiza la empresa especificada en la base de datos.
+     * @author Eduardo Pérez
+     * @version v1.1
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id){
-			$request->validate(
-				['nombre'=>'required'],
-				['rubro'=>'required'],
-				['urlWeb'=>'required'],
-				['correoContacto'=>'required'],
+			$validated = $request->validate(
+				['nombre'=>'string|required'],
+				['rubro'=>'string|required'],
+				['urlWeb'=>'string|required'],
+				['correoContacto'=>'email|required'],
 				['status'=>'required']
 			);
 			if ($request->status == NULL){
@@ -98,11 +117,12 @@ class EmpresaController extends Controller{
 			$empresa->status = $request->status;
 			$empresa->save();
 			return redirect('/empresas')->with('success', 'Empresa editada correctamente');
-
     }
 
     /**
      * Elimina la empresa de la base de datos.
+     * @version v1.0
+     * @author Eduardo Pérez
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
