@@ -10,7 +10,7 @@
 		</div><br />
 		@endif
 		<div class="row">
-			<h1>Elija su gráfica preferida para mostrar los datos</h1>
+			<h1>Elija la fecha para ver sus datos</h1>
 		</div>
 
 		<div class="row">
