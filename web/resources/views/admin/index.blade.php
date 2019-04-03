@@ -3,7 +3,7 @@
 @section('title', 'Graficos')
 
 @section('contenido')
-<div class="container">
+<div class="container-fluid">
 	@if(session()->get('success'))
 		<div class="alert alert-success">
 			{{ session()->get('success') }}
@@ -61,6 +61,15 @@ $(function () {
 		//EN DONDE UBICARLO
 		chart: {
 			renderTo: 'grafico'
+		},
+		title: {
+			text: 'titulo grafico'
+		},
+		exporting: {
+			enabled: true,
+			csv: {
+				dateFormat:'%A, %b %e, %Y'
+			}
 		},
 		//SACAR CREDITOS
 		credits: {
