@@ -3,156 +3,137 @@
 @section('title', 'Graficos')
 
 @section('contenido')
-<div class="container">
+
 	@if(session()->get('success'))
 		<div class="alert alert-success">
 			{{ session()->get('success') }}
 		</div><br />
 		@endif
 		<div class="row">
-			<h1>Elija su gráfica preferida para mostrar los datos</h1>
+			<h1>Gráfico de número de estudiantes en cada paso</h1>
 		</div>
 
-		<div class="row">
-			<div class="col-xs-12">
-				<button type="button" id="barBtn" class="btn btn-primary">Barras</button>
-				<button type="button" id="pieBtn" class="btn btn-primary">Pie</button>
-				<button type="button" id="linBtn" class="btn btn-primary">Lineal</button>
-			</div>
-		</div>
 		<div class="row">
 			<div class="col-md-12">
 
 				<div id="grafico"></div>
 
-
 			</div>
 		</div>
-</div>
 
 
 <script>
-	document.getElementById("pieBtn").addEventListener("click", function() {
-		var pieChart = Highcharts.chart('grafico', {
-			chart: {
-				plotBackgroundColor: null,
-				plotBorderWidth: null,
-				plotShadow: false,
-				type: 'pie'
-			},
-			title: {
-				text: 'Cantidad de alumnos en cada paso en el proceso de inscripcion de pasantia en el mes X'
-			},
+//SCRIPT CREA GRAFICO Y DATA RANDOM, FECHAS INCAMBIABLES
+// CREA GRAFICO
+$(function () {
+	//FECHA RANDOM
+	function randomDate(start, end) {
+		//FECHA INCAMBIABLE
+		return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()))
+	}
+	//DATA RANDOM
+	function randomData(){
+		var arr = [];
+		//DATOS DESDE FECHA INICIAL A FECHA FINAL
+		for (var i = 0; i < 100; i++) {
+			var date=randomDate(new Date(2004, 0, 9), new Date());
+			console.log(date);
+			var randNum=Math.round(Math.random() * 100);
 
-			plotOptions: {
-				pie: {
-					allowPointSelect: true,
-					cursor: 'pointer',
-					dataLabels: {
-						enabled: true,
-						format: '<b>{point.name}</b>: {point.percentage:.2f} %',
-						style: {
-							color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-						}
-					}
-				}
+			arr.push([date.getTime(), randNum]);
+		}
+		arr.sort(function (a,b) {
+			if (a[0] < b[0]) return -1;
+			if (a[0]> b[0]) return 1;
+			return 0;
+		})
+
+		return arr;
+	}
+
+	window.chart = new Highcharts.StockChart({
+		//EN DONDE UBICARLO
+		chart: {
+			renderTo: 'grafico',
+			height: (9 / 16 * 100) + '%'
+		},
+		title: {
+			text: 'Fecha y Número de estudiantes en cada paso'
+		},
+		exporting: {
+			enabled: true,
+			csv: {
+				dateFormat:'%A, %b %e, %Y'
+			}
+		},
+		//SACAR CREDITOS
+		credits: {
+			enabled: false
+		},
+		tooltip:{
+			shared: true,
+			xDateFormat: '%A, %b %e, %Y'
+		},
+		//LABEL EJE X
+		xAxis: {
+			title: {
+				text: 'Fecha'
+			}
+		},
+		//LABEL EJE Y
+		yAxis: {
+			title: {
+				text: 'Cantidad de postulantes'
+			}
+		},
+		//LINEAS Y DATOS RESPECTIVOS
+		series: [{
+			name: 'Postulantes Paso 1',
+			data: randomData()
+		},
+		{
+			name: 'Postulantes Paso 2',
+			data: randomData()
+		},
+		{
+			name: 'Postulantes Paso 3',
+			data: randomData()
+		},
+		{
+			name: 'Postulantes Paso 4',
+			data: randomData()
+		}],
+
+		//BOTONES
+		rangeSelector: {
+			buttons: [{
+				type: 'month',
+				count: 1,
+				text: '1M',
+			}, {
+				type: 'month',
+				count: 3,
+				text: '3M'
+			}, {
+				type: 'month',
+				count: 6,
+				text: '6M'
+			},  {
+				type: 'year',
+				count: 1,
+				text: '1A'
 			},
-			series: [{
-				name: 'Proceso de pasantia',
-				colorByPoint: true,
-				data: [{
-					name: 'Paso 1',
-					y: 43.15,
-					sliced: true,
-					selected: true
-				}, {
-					name: 'Paso 2',
-					y: 22.31
-				}, {
-					name: 'Paso 3',
-					y: 18.76
-				}, {
-					name: 'Paso 4',
-					y: 15.78
-				}]
+			{
+				type: 'ytd',
+				text: 'YTD'
+			}, {
+				type: 'all',
+				text: 'Todo'
 			}]
-		});
+		},
+
 	});
-
-	document.getElementById("barBtn").addEventListener("click", function() {
-		var barChart = Highcharts.chart('grafico', {
-			chart: {
-				type: 'bar'
-			},
-			title: {
-				text: 'Cantidad de alumnos en cada paso en el proceso de inscripcion de pasantia'
-			},
-			xAxis: {
-				title: {
-					text: 'Mes'
-				},
-				categories: ['Marzo', 'Abril', 'Mayo', 'Junio', 'Julio']
-			},
-			yAxis: {
-				title: {
-					text: 'Cantidad de postulantes'
-				}
-			},
-
-			series: [{
-					name: 'Paso 1',
-					data: [70, 40, 30, 20, 2]
-				}, {
-					name: 'Paso 2',
-					data: [15, 30, 25, 20, 3]
-				},
-				{
-					name: 'Paso 3',
-					data: [10, 15, 20, 20, 5]
-				},
-				{
-					name: 'Paso 4',
-					data: [5, 15, 25, 40, 90]
-				}
-			]
-		});
-	});
-
-	document.getElementById("linBtn").addEventListener("click", function() {
-		var linChart = Highcharts.chart('grafico', {
-
-			title: {
-				text: 'Cantidad de alumnos en cada paso en el proceso de inscripcion de pasantia'
-			},
-			xAxis: {
-				title: {
-					text: 'Mes'
-				},
-				categories: ['Mar', 'Abr', 'May', 'Jun', 'Jul']
-			},
-			yAxis: {
-				title: {
-					text: 'Cantidad de postulantes'
-				}
-			},
-			series: [{
-					name: 'Paso 1',
-					data: [70, 40, 30, 20, 2]
-				}, {
-					name: 'Paso 2',
-					data: [15, 30, 25, 20, 3]
-				},
-				{
-					name: 'Paso 3',
-					data: [10, 15, 20, 20, 5]
-				},
-				{
-					name: 'Paso 4',
-					data: [5, 15, 25, 40, 90]
-				}
-			]
-		});
-	});
+});
 </script>
 
 

@@ -6,8 +6,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<title>@yield('title')</title>
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/6.0.6/highcharts.js" charset="utf-8"></script>
 	<!-- Highcharts -->
+	<script src="http://code.highcharts.com/stock/highstock.js"></script>
+	<script src="https://code.highcharts.com/modules/exporting.js"></script>
+	<script src="https://code.highcharts.com/modules/export-data.js"></script>
 	<!-- CSS STYLES -->
 	<link href='https://fonts.googleapis.com/css?family=Titillium+Web' rel='stylesheet' type='text/css'>
 	<!-- Bootstrap CSS -->
@@ -48,7 +50,7 @@
 
 			<!-- Elementos Menu Sidebar -->
 			<ul class="list-unstyled components">
-				<p> Dashboard Pasantias </p>
+
 				<li class="active">
 					<a href="#"><i class="fa fa-home"></i> Home</a>
 				</li>
