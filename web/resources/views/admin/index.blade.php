@@ -3,30 +3,24 @@
 @section('title', 'Graficos')
 
 @section('contenido')
-<div class="container-fluid">
+
 	@if(session()->get('success'))
 		<div class="alert alert-success">
 			{{ session()->get('success') }}
 		</div><br />
 		@endif
 		<div class="row">
-			<h1>Elija la fecha para ver sus datos</h1>
+			<h1>Gráfico de número de estudiantes en cada paso</h1>
 		</div>
 
-		<div class="row">
-			<div class="col-xs-12">
-				<button type="button" id="barBtn" class="btn btn-primary">Graficar</button>
-
-			</div>
-		</div>
 		<div class="row">
 			<div class="col-md-12">
 
-				<div id="grafico" ></div>
+				<div id="grafico"></div>
 
 			</div>
 		</div>
-</div>
+
 
 <script>
 //SCRIPT CREA GRAFICO Y DATA RANDOM, FECHAS INCAMBIABLES
@@ -60,10 +54,11 @@ $(function () {
 	window.chart = new Highcharts.StockChart({
 		//EN DONDE UBICARLO
 		chart: {
-			renderTo: 'grafico'
+			renderTo: 'grafico',
+			height: (9 / 16 * 100) + '%'
 		},
 		title: {
-			text: 'titulo grafico'
+			text: 'Fecha y Número de estudiantes en cada paso'
 		},
 		exporting: {
 			enabled: true,

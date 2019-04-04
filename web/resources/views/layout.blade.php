@@ -48,7 +48,7 @@
 
 			<!-- Elementos Menu Sidebar -->
 			<ul class="list-unstyled components">
-				<p> Dashboard Pasantias </p>
+
 				<li class="active">
 					<a href="#"><i class="fa fa-home"></i> Home</a>
 				</li>
