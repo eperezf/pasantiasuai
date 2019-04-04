@@ -18,7 +18,7 @@
 		</p>
 	</div>
 	<div class="row">
-		<a class="btn btn-primary" href="/empresas/create" role="button">Agregar (solo admin)</a>
+		<a class="btn btn-primary mb-3" href="/empresas/create" role="button">Agregar (solo admin)</a>
 	</div>
 	<div class="row">
 		<div class="table-responsive">
