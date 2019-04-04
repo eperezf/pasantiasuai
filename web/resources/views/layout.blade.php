@@ -88,7 +88,7 @@
           <div class="col-2"> -->
 				<ul class="navbar-nav">
 					<li class="nav-item">
-						<span class="navbar-brand"> Bienvenido < Usuario> </span>
+						<span class="navbar-brand"> Bienvenido {{Auth::user()->nombres}} </span>
 					</li>
 				</ul>
 

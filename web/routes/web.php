@@ -12,8 +12,8 @@
 */
 
 Route::get('/', function () {
-    return view('index');
-});
+	return view('index');
+})->middleware('auth');
 
 Route::resource('/empresas', 'EmpresaController')->middleware('auth');;
 Route::resource('/admin', 'GraficasController')->middleware('auth');;
