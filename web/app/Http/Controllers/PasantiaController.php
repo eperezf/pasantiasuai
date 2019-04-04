@@ -49,7 +49,10 @@ class PasantiaController extends Controller{
 		return view('pasantia.paso4');
 	}
 	public function paso4Control(){
-
+		return redirect('/inscripcion/resumen');
+	}
+	public function resumenView(){
+		return view('pasantia.resumen');
 	}
 
 }
