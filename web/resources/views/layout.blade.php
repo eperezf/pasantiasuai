@@ -30,7 +30,7 @@
 	<!-- Bootstrap -->
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 	<!-- Custom JS-->
-	<script src="../js/layout-menu.js"></script>
+	<script src="/js/layout-menu.js"></script>
 
 
 
@@ -43,7 +43,7 @@
 		<!-- Sidebar -->
 		<nav id="sidebar">
 			<div class="container">
-					<img src="../media/images/iUAI.jpg" class="mx-auto d-block">
+					<img src="/media/images/iUAI.jpg" class="mx-auto d-block">
 			</div>
 
 			<!-- Elementos Menu Sidebar -->
