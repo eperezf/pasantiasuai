@@ -50,7 +50,7 @@
 			<ul class="list-unstyled components">
 
 				<li class="active">
-					<a href="#"><i class="fa fa-home"></i> Inicio</a>
+					<a href="/"><i class="fa fa-home"></i> Inicio</a>
 				</li>
 
 				<li>
@@ -58,7 +58,7 @@
 				</li>
 
 				<li>
-					<a href="#"><i class="fas fa-industry"></i> Empresas</a>
+					<a href="/empresas"><i class="fas fa-industry"></i> Empresas</a>
 				</li>
 
 				<li>
@@ -107,7 +107,7 @@
 					<ul class="dropdown-menu dropdown-menu-right">
 
 						<li>
-							<a href="#"><i class="fas fa-user-tie"></i> Mis Pasantias</a>
+							<a href="{{route('inscripcion.0.view')}}"><i class="fas fa-user-tie"></i> Mis Pasantias</a>
 						</li>
 
 						<li>
@@ -121,7 +121,7 @@
 						<div class="dropdown-divider"></div>
 
 						<li>
-							<a href="{{ route('logout')}}"><i class="fa fa-fw fa-power-off"></i> Cerrar Sesion</a>
+							<a href="{{route('logout')}}"><i class="fa fa-fw fa-power-off"></i> Cerrar Sesion</a>
 						</li>
 					</ul>
 				</li>
