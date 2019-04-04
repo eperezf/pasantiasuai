@@ -73,10 +73,7 @@ a, a:hover, a:focus {
     transform: rotateY(100deg);
 }
 
-#sidebar .sidebar-header {
-    padding: 20px;
-    background: rgb(34,34,34);
-}
+
 
 #sidebar ul.components {
     padding: 20px 0;
@@ -111,29 +108,6 @@ ul ul a {
     padding-left: 30px !important;
     background: rgb(34,34,34);
 }
-
-ul.CTAs {
-    padding: 20px;
-}
-
-ul.CTAs a {
-    text-align: center;
-    font-size: 0.9em !important;
-    display: block;
-    border-radius: 5px;
-    margin-bottom: 5px;
-}
-
-a.download {
-    background: #fff;
-    color: #7386D5;
-}
-
-a.article, a.article:hover {
-    background: rgb(34,34,34) !important;
-    color: #fff !important;
-}
-
 
 
 /* ---------------------------------------------------
