@@ -25,6 +25,7 @@ Route::get('/login', function(){
 });
 
 Route::post('/login', 'LoginController@authenticate')->name('login');
+Route::get('logout', 'LoginController@logout')->name('logout');
 
 Route::get('/inscripcion/0', 'PasantiaController@paso0View')->name('inscripcion.0.view')->middleware('auth');;
 Route::post('/inscripcion/0/post','PasantiaController@paso0Control')->name('inscripcion.0.post')->middleware('auth');;

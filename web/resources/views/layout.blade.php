@@ -121,7 +121,7 @@
 						<div class="dropdown-divider"></div>
 
 						<li>
-							<a href="#"><i class="fa fa-fw fa-power-off"></i> Cerrar Sesion</a>
+							<a href="{{ route('logout')}}"><i class="fa fa-fw fa-power-off"></i> Cerrar Sesion</a>
 						</li>
 					</ul>
 				</li>

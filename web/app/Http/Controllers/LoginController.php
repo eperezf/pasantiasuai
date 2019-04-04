@@ -107,4 +107,9 @@ class LoginController extends Controller
 			//Externo (Empresa)
 		};
 	}
+
+	public function logout(){
+		Auth::logout();
+		return redirect('/login');
+	}
 }
