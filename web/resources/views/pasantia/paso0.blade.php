@@ -23,7 +23,7 @@
 		<h2>Paso 0: Reglamento</h2>
 	</div>
 	<div class="row justify-content-md-center mb-5">
-		aquí va el reglamento
+		<embed src="https://drive.google.com/viewerng/viewer?embedded=true&url=http://alumnosfic.uai.cl/wp-content/uploads/2018/07/Reglamento-de-Pasant%C3%ADas-a-partir-de-2018.pdf" width="100%" height="700">
 	</div>
 	<div class="row justify-content-md-center mb-5">
 		<form method="post" action="{{ route('inscripcion.0.post') }}" class="text-center">
