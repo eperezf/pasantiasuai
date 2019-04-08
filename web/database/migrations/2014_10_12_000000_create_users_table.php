@@ -12,7 +12,7 @@ class CreateUsersTable extends Migration{
    */
   public function up(){
     Schema::create('users', function (Blueprint $table) {
-    	$table->bigIncrements('idUsuario');
+    	$table->increments('idUsuario');
     	$table->string('nombres');
 			$table->string('apellidoPaterno');
 			$table->string('apellidoMaterno');
