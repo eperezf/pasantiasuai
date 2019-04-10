@@ -9,6 +9,7 @@ class Empresa extends Model{
 	protected $primaryKey = 'idEmpresa';
 
   protected $fillable = [
+		'idEmpresa',
 		'nombre',
 		'rubro',
 		'urlWeb',

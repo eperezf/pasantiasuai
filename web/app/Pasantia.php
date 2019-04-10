@@ -20,6 +20,6 @@ class Pasantia extends Model{
 		'ciudad',
 		'pais',
 		'horasSemanales',
-		'parienteEmpresa',
-	]
+		'parienteEmpresa'
+	];
 }
