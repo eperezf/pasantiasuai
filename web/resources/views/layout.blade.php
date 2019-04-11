@@ -54,7 +54,7 @@
 				</li>
 
 				<li>
-					<a href="#"><i class="fas fa-paste"></i> Pasantias</a>
+					<a href="{{route('inscripcion.resumen')}}"><i class="fas fa-paste"></i>Pasantia</a>
 				</li>
 
 				<li>
@@ -107,7 +107,7 @@
 					<ul class="dropdown-menu dropdown-menu-right">
 
 						<li>
-							<a href="{{route('inscripcion.0.view')}}"><i class="fas fa-user-tie"></i> Mis Pasantias</a>
+							<a href="{{route('inscripcion.resumen')}}"><i class="fas fa-user-tie"></i> Mis Pasantias</a>
 						</li>
 
 						<li>
