@@ -84,22 +84,77 @@ class PasantiaController extends Controller{
 		$userId = Auth::id();
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
 		$pasantia->statusPaso1 = 2;
-
+		$pasantia->save();
 		return redirect('/inscripcion/2');
 	}
 
 	public function paso2View(){
 		$userId = Auth::id();
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
-		return view('pasantia.paso2', [
-			'statusPaso0'=>$pasantia->statusPaso0,
-			'statusPaso1'=>$pasantia->statusPaso1,
-			'statusPaso2'=>$pasantia->statusPaso2,
-			'statusPaso3'=>$pasantia->statusPaso3,
-			'statusPaso4'=>$pasantia->statusPaso4]);
+		if ($pasantia){
+			return view('pasantia.paso2', [
+				'statusPaso0'=>$pasantia->statusPaso0,
+				'statusPaso1'=>$pasantia->statusPaso1,
+				'statusPaso2'=>$pasantia->statusPaso2,
+				'statusPaso3'=>$pasantia->statusPaso3,
+				'statusPaso4'=>$pasantia->statusPaso4,
+				'ciudad'=>$pasantia->ciudad,
+				'pais'=>$pasantia->pais,
+				'fecha'=>$pasantia->fechaInicio,
+				'horas'=>$pasantia->horasSemanales,
+				'pariente'=>$pasantia->parienteEmpresa
+			]);
+		}
+		else {
+			return redirect('/inscripcion/0');
+		}
 	}
 
-	public function paso2Control(){
+	public function paso2Control(Request $request){
+		$incompleto = false;
+		$userId = Auth::id();
+		$pasantia = Pasantia::where('idAlumno', $userId)->first();
+		$pasantia->parienteEmpresa = $request->pariente;
+		$pasantia->save();
+
+		if ($request->ciudad){
+			$pasantia->ciudad = $request->ciudad;
+			$pasantia->save();
+		}
+		else {
+			$pasantia->ciudad = null;
+			$pasantia->save();
+			$incompleto = true;
+		}
+		if ($request->pais){
+			$pasantia->pais = $request->pais;
+			$pasantia->save();
+		}
+		else {
+			$incompleto = true;
+		}
+		if ($request->fecha){
+			$pasantia->fechaInicio = $request->fecha;
+			$pasantia->save();
+		}
+		else {
+			$incompleto = true;
+		}
+		if ($request->horas){
+			$pasantia->horasSemanales = $request->horas;
+			$pasantia->save();
+		}
+		else {
+			$incompleto = true;
+		}
+		if ($incompleto == true){
+			$pasantia->statusPaso2 = 1;
+			$pasantia->save();
+		}
+		else {
+			$pasantia->statusPaso2 = 2;
+			$pasantia->save();
+		}
 		return redirect('/inscripcion/3');
 	}
 
