@@ -7,17 +7,7 @@
       {{ session()->get('error') }}
     </div><br />
   @endif
-	<div class="row">
-		<nav aria-label="breadcrumb">
-		  <ol class="breadcrumb">
-		    <li class="breadcrumb-item"><a href="#">Paso 0</a></li>
-				<li class="breadcrumb-item"><a href="#">Paso 1</a></li>
-				<li class="breadcrumb-item"><a href="#">Paso 2</a></li>
-				<li class="breadcrumb-item"><a href="#">Paso 3</a></li>
-				<li class="breadcrumb-item active" aria-current="page">Paso 4</li>
-		  </ol>
-		</nav>
-	</div>
+	@include('pasantia.pasos', ['statusPaso0'=>$statusPaso0, 'statusPaso1'=>$statusPaso1, 'statusPaso2'=>$statusPaso2, 'statusPaso3'=>$statusPaso3, 'statusPaso4'=>$statusPaso4])
 	<div class="row justify-content-md-center mb-5">
 		<h2>Paso 4: Proyecto</h2>
 	</div>

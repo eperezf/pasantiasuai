@@ -3,19 +3,12 @@
 
 @section('contenido')
 <div class="container-fluid">
-	<div class="row">
-		<nav aria-label="breadcrumb">
-		  <ol class="breadcrumb">
-				<li class="breadcrumb-item"><a href="/inscripcion/0">Paso 0</a></li>
-				<li class="breadcrumb-item"><a href="/inscripcion/1">Paso 1</a></li>
-				<li class="breadcrumb-item active" aria-current="page">Paso 2</li>
-				<li class="breadcrumb-item"><a href="#">Paso 3</a></li>
-				<li class="breadcrumb-item"><a href="#">Paso 4</a></li>
-		  </ol>
-		</nav>
-	</div>
-	<div class="row justify-content-md-center mb-5">
+	@include('pasantia.pasos', ['statusPaso0'=>$statusPaso0, 'statusPaso1'=>$statusPaso1, 'statusPaso2'=>$statusPaso2, 'statusPaso3'=>$statusPaso3, 'statusPaso4'=>$statusPaso4])
+	<div class="row justify-content-md-center mb-1">
 		<h2>Paso 2: Registro de datos</h2>
+	</div>
+	<div class="row justify-content-md-center mb-3">
+		<p>Una vez que tu práctica esté aprobada, no podrás volver a editar estos datos.</p>
 	</div>
 	<div class="row justify-content-md-center mb-5">
 		<div class="col-md-6">
@@ -33,28 +26,28 @@
 			  </div>
 				<div class="form-group">
 			    <label for="ciudad">Ciudad en la que harás la pasantía</label>
-			    <input class="form-control" id="ciudad" name="ciudad" placeholder="Ciudad">
+			    <input class="form-control" id="ciudad" name="ciudad" placeholder="Ciudad" @if($ciudad) value="{{$ciudad}}" @else @endif>
 			  </div>
 				<div class="form-group">
 			    <label for="pais">País en la que harás la pasantía</label>
-			    <input class="form-control" id="pais" name="pais" placeholder="País" required>
+			    <input class="form-control" id="pais" name="pais" placeholder="País" @if($pais) value="{{$pais}}" @else @endif>
 			  </div>
 				<div class="form-group">
 					<label for="fecha">Fecha en la que iniciarás tu pasantía</label>
-					<input class="form-control" type="date" name="fecha" id="fecha" required>
+					<input class="form-control" type="date" name="fecha" id="fecha" @if($fecha) value="{{$fecha}}" @else @endif>
 				</div>
 				<div class="form-group">
 			    <label for="horas">Horas semanales de trabajo</label>
-			    <input type="number" class="form-control" id="horas" name="horas" required>
+			    <input type="number" class="form-control" id="horas" name="horas" @if($horas) value="{{$horas}}" @else @endif>
 			  </div>
-				<p>Tengo un pariente que trabaja en la empresa</p>
+				<p>Tengo un familiar que trabaja en la empresa o es socio/dueño de esta</p>
 				<div class="form-check form-check-inline">
-				  <input class="form-check-input" type="radio" name="pariente" id="parienteno" value="0" checked>
+				  <input class="form-check-input" type="radio" name="pariente" id="parienteno" value="0" @if($pariente==0) checked @else @endif>
 				  <label class="form-check-label" for="parienteno">No</label>
 				</div>
 				<div class="form-check form-check-inline">
 
-				  <input class="form-check-input" type="radio" name="pariente" id="parientesi" value="1">
+				  <input class="form-check-input" type="radio" name="pariente" id="parientesi" value="1" @if($pariente==1) checked @else @endif>
 				  <label class="form-check-label" for="parientesi">Sí</label>
 				</div>
 				</br>

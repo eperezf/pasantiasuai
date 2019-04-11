@@ -3,17 +3,7 @@
 
 @section('contenido')
 <div class="container-fluid">
-	<div class="row">
-		<nav aria-label="breadcrumb">
-		  <ol class="breadcrumb">
-				<li class="breadcrumb-item"><a href="/inscripcion/0">Paso 0</a></li>
-				<li class="breadcrumb-item active" aria-current="page">Paso 1</li>
-				<li class="breadcrumb-item"><a href="#">Paso 2</a></li>
-				<li class="breadcrumb-item"><a href="#">Paso 3</a></li>
-				<li class="breadcrumb-item"><a href="#">Paso 4</a></li>
-		  </ol>
-		</nav>
-	</div>
+	@include('pasantia.pasos', ['statusPaso0'=>$statusPaso0, 'statusPaso1'=>$statusPaso1, 'statusPaso2'=>$statusPaso2, 'statusPaso3'=>$statusPaso3, 'statusPaso4'=>$statusPaso4])
 	<div class="row justify-content-md-center mb-5">
 		<h2>Paso 1: Requisitos académicos</h2>
 	</div>

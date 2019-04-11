@@ -6,7 +6,7 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateEmpresaTable extends Migration{
 	public function up(){
-    Schema::create('Empresa', function (Blueprint $table) {
+    Schema::create('empresa', function (Blueprint $table) {
       $table->increments('idEmpresa');
       $table->string('nombre', 45);
       $table->string('rubro', 45);
