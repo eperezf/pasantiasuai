@@ -8,3 +8,10 @@ $(document).ready(function () {
     $(this).toggleClass('active');
   });
 });
+
+//FUNCION FECHA
+function fecha(elementID){
+	const hoy = new Date();
+	let date = hoy.getFullYear()+'-'+(hoy.getMonth()+1)+'-'+hoy.getDate();
+	document.getElementById(elementID).innerHTML += date;
+}
