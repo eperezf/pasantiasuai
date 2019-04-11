@@ -19,10 +19,12 @@
 			<div class="col-md-12">
 				<div id="pasos"></div>
 			</div>
-			<div class="col-md-12">
+		</div>
+		<div class="row">
+			<div class="col-md-6">
 				<div id="defensas"></div>
 			</div>
-			<div class="col-md-12">
+			<div class="col-md-6">
 				<div id="empresas"></div>
 			</div>
 		</div>
@@ -49,7 +51,7 @@ window.chart = new Highcharts.chart({
 	chart: {
 		type: 'bar',
 		renderTo: 'pasos',
-		height: (9 / 16 * 100) + '%'
+		height: (9 / 16 * 75) + '%'
 	},
 
 	//TITULO
@@ -147,21 +149,185 @@ window.chart = new Highcharts.chart({
 /
 */
 // GRAFICO 2 //
-//GRAFICO PASANTIAS TERMINADAS/NO TERMINADAS QUE PUEDEN/NO PUEDEN DAR DEFENSAS
+// //GRAFICO PASANTIAS TERMINADAS/NO TERMINADAS QUE PUEDEN/NO PUEDEN DAR DEFENSAS
+// window.chart = new Highcharts.chart({
+// 	//EN DONDE UBICARLO
+// 	chart: {
+// 		type: 'column',
+// 		renderTo: 'defensas',
+// 		height: (9 / 16 * 100) + '%'
+// 	},
+//
+// 	//TITULO
+// 	title: {
+// 		text: 'Estado de pasantías y disponibilidad de defensa',
+// 		style: {
+// 			fontSize: '22px'
+// 		}
+// 	},
+//
+// 	//BOTONES DE DESCARGA
+// 	exporting: {
+// 		enabled: true,
+// 		csv: {
+// 			dateFormat:'%A, %b %e, %Y'
+// 		}
+// 	},
+//
+// 	//SACAR CREDITOS
+// 	credits: {
+// 		enabled: false
+// 	},
+//
+// 	//LABEL EJE X
+// 	xAxis: {
+// 		categories: ['Pasantías terminadas', 'Pasantías no terminadas'],
+// 		labels: {
+// 			style: {
+// 				fontSize: '14px',
+// 				fontWeight: 'bold'
+// 			}
+// 		}
+// 	},
+//
+// 	//LABEL EJE Y
+// 	yAxis: {
+// 		allowDecimals: false,
+// 		min: 0,
+// 		max: 100,
+// 		title: {
+// 			text: 'Porcentaje de pasantías',
+// 			style: {
+// 				fontSize: '14px',
+// 				fontWeight: 'bold'
+// 			}
+// 		},
+// 		labels: {
+// 			style: {
+// 				fontSize: '14px'
+// 			}
+// 		}
+// 	},
+//
+// 	//COLORES Y LABEL DE CADA COLUMNA
+// 	plotOptions: {
+// 		series: {
+// 			dataLabels: {
+// 				enabled: true,
+// 				inside: true
+// 			}
+// 		},
+// 		column: {
+// 			stacking: 'normal'
+// 		}
+// 	},
+//
+// 	//DATA
+// 	// series: [{
+// 	//       name: 'Terminada sin defensa',
+// 	//       data: [35,0],
+// 	//       stack: 'Terminadas'
+// 	//   }, {
+// 	//       name: 'Terminada con defensa',
+// 	//       data: [65,0],
+// 	//       stack: 'Terminadas'
+// 	//   }, {
+// 	//       name: 'No terminada sin defensa',
+// 	//       data: [0,49],
+// 	//       stack: 'No Terminadas'
+// 	//   }, {
+// 	//       name: 'No terminada con defensa',
+// 	//       data: [0,51],
+// 	//       stack: 'No Terminadas'
+// 	//   }]
+//
+// 	series: [{
+// 		name: 'Terminado sin defensa disponible',
+// 		legendIndex: 1,
+// 		dataLabels: [{
+// 			format: '{y} %'
+// 		}],
+// 		// TERMINADO Y DEFENSA NO DISPONIBLE
+// 		data: [{
+// 			y: 23,
+// 			name: 'Pasantías terminadas',
+// 		}]
+// 	},
+// 	{
+// 		name: 'No terminado sin defensa disponible',
+// 		legendIndex: 3,
+// 		dataLabels: [{
+// 			format: '{y} %'
+// 		}],
+// 		// NO TERMINADO Y DEFENSA NO DISPONIBLE
+// 		data: [{
+// 			y: null,
+// 			name: 'Pasantías no terminadas',
+// 		}, {
+// 			y: 81,
+// 			name: 'Pasantías no terminadas',
+// 		}]
+// 	},
+// 	{
+// 		name: 'Terminado con defensa disponible',
+// 		legendIndex: 2,
+// 		dataLabels: [{
+// 			format: '{y} %'
+// 		}],
+// 		// TERMINADO Y DEFENSA DISPONIBLE
+// 		data: [{
+// 			y: 77,
+// 			name: 'Pasantías terminadas',
+// 		}]
+//
+// 	},
+// 	{
+// 		name: 'No terminado con defensa disponible',
+// 		legendIndex: 4,
+// 		dataLabels: [{
+// 			format: '{y} %'
+// 		}],
+// 		// NO TERMINADO Y DEFENSA DISPONIBLE
+// 		data: [{
+// 			y: null,
+// 			name: 'Pasantías no terminadas',
+// 		}, {
+// 			y: 19,
+// 			name: 'Pasantías no terminadas',
+// 		}]
+// 	}],
+//
+// 	// LEYENDAS A LA DERECHA SUPERIOR
+// 	legend: {
+//         align: 'right',
+//         verticalAlign: 'top',
+//         layout: 'vertical',
+//         x: 0,
+//         y: 100
+//     },
+// });
 window.chart = new Highcharts.chart({
 	//EN DONDE UBICARLO
 	chart: {
-		type: 'column',
+		type: 'pie',
 		renderTo: 'defensas',
-		height: (9 / 16 * 100) + '%'
+		height: (9 / 16 * 100) + '%',
+		plotBackgroundColor: null,
+		plotBorderWidth: null,
+		plotShadow: false,
 	},
 
 	//TITULO
 	title: {
-		text: 'Estado de pasantías y disponibilidad de defensa',
+		text: 'Estado de pasantías y defensas ',
 		style: {
 			fontSize: '22px'
 		}
+	},
+
+	//TOOLTIP
+	tooltip: {
+			pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
 	},
 
 	//BOTONES DE DESCARGA
@@ -177,134 +343,38 @@ window.chart = new Highcharts.chart({
 		enabled: false
 	},
 
-	//LABEL EJE X
-	xAxis: {
-		categories: ['Pasantías terminadas', 'Pasantías no terminadas'],
-		labels: {
-			style: {
-				fontSize: '14px',
-				fontWeight: 'bold'
-			}
-		}
-	},
-
-	//LABEL EJE Y
-	yAxis: {
-		allowDecimals: false,
-		min: 0,
-		max: 100,
-		title: {
-			text: 'Porcentaje de pasantías',
-			style: {
-				fontSize: '14px',
-				fontWeight: 'bold'
-			}
-		},
-		labels: {
-			style: {
-				fontSize: '14px'
-			}
-		}
-	},
-
-	//COLORES Y LABEL DE CADA COLUMNA
-	plotOptions: {
-		series: {
-			dataLabels: {
-				enabled: true,
-				inside: true
-			}
-		},
-		column: {
-			stacking: 'normal'
-		}
-	},
-
-	//DATA
-	// series: [{
-	//       name: 'Terminada sin defensa',
-	//       data: [35,0],
-	//       stack: 'Terminadas'
-	//   }, {
-	//       name: 'Terminada con defensa',
-	//       data: [65,0],
-	//       stack: 'Terminadas'
-	//   }, {
-	//       name: 'No terminada sin defensa',
-	//       data: [0,49],
-	//       stack: 'No Terminadas'
-	//   }, {
-	//       name: 'No terminada con defensa',
-	//       data: [0,51],
-	//       stack: 'No Terminadas'
-	//   }]
-
-	series: [{
-		name: 'Terminado sin defensa disponible',
-		legendIndex: 1,
-		dataLabels: [{
-			format: '{y} %'
-		}],
-		// TERMINADO Y DEFENSA NO DISPONIBLE
-		data: [{
-			y: 23,
-			name: 'Pasantías terminadas',
-		}]
-	},
-	{
-		name: 'No terminado sin defensa disponible',
-		legendIndex: 3,
-		dataLabels: [{
-			format: '{y} %'
-		}],
-		// NO TERMINADO Y DEFENSA NO DISPONIBLE
-		data: [{
-			y: null,
-			name: 'Pasantías no terminadas',
-		}, {
-			y: 81,
-			name: 'Pasantías no terminadas',
-		}]
-	},
-	{
-		name: 'Terminado con defensa disponible',
-		legendIndex: 2,
-		dataLabels: [{
-			format: '{y} %'
-		}],
-		// TERMINADO Y DEFENSA DISPONIBLE
-		data: [{
-			y: 77,
-			name: 'Pasantías terminadas',
-		}]
-
-	},
-	{
-		name: 'No terminado con defensa disponible',
-		legendIndex: 4,
-		dataLabels: [{
-			format: '{y} %'
-		}],
-		// NO TERMINADO Y DEFENSA DISPONIBLE
-		data: [{
-			y: null,
-			name: 'Pasantías no terminadas',
-		}, {
-			y: 19,
-			name: 'Pasantías no terminadas',
-		}]
-	}],
-
-	// LEYENDAS A LA DERECHA SUPERIOR
-	legend: {
-        align: 'right',
-        verticalAlign: 'top',
-        layout: 'vertical',
-        x: 0,
-        y: 100
+		//COLORES Y LABEL DE CADA PARTE
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                style: {
+                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                }
+            }
+        }
     },
+		//DATA
+    series: [{
+        name: 'Pasantías',
+        colorByPoint: true,
+        data: [{
+            name: 'Pasantías terminadas con defensa disponible',
+            y: 35.98,
+            sliced: true,
+            selected: true
+        }, {
+            name: 'Pasantías terminadas sin defensa disponible',
+            y: 19.14
+        }, {
+            name: 'Pasantías no terminadas',
+            y: 44.88
+        }]
+    }]
 });
-
 
 /*
 /
