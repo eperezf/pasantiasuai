@@ -13,17 +13,35 @@ class PasantiaController extends Controller{
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
 		if ($pasantia){
 			if ($pasantia->lecReglamento == 0){
-				return view('pasantia.paso0', ['statusPaso0'=>$pasantia->statusPaso0, 'reglamento' => '0']);
+				return view('pasantia.paso0', [
+					'statusPaso0'=>$pasantia->statusPaso0,
+					'statusPaso1'=>$pasantia->statusPaso1,
+					'statusPaso2'=>$pasantia->statusPaso2,
+					'statusPaso3'=>$pasantia->statusPaso3,
+					'statusPaso4'=>$pasantia->statusPaso4,
+					'reglamento' => '0']);
 			}
 			else {
-				return view('pasantia.paso0',['reglamento' => '1','statusPaso0'=>$pasantia->statusPaso0]);
+				return view('pasantia.paso0', [
+					'statusPaso0'=>$pasantia->statusPaso0,
+					'statusPaso1'=>$pasantia->statusPaso1,
+					'statusPaso2'=>$pasantia->statusPaso2,
+					'statusPaso3'=>$pasantia->statusPaso3,
+					'statusPaso4'=>$pasantia->statusPaso4,
+					'reglamento' => '1']);
 			}
 		}
 		else {
 			$pasantia = new Pasantia;
 			$pasantia->idAlumno = $userId;
 			$pasantia->save();
-			return view('pasantia.paso0',['statusPaso0'=>$pasantia->statusPaso0, 'reglamento' => '0']);
+			return view('pasantia.paso0', [
+				'statusPaso0'=>$pasantia->statusPaso0,
+				'statusPaso1'=>$pasantia->statusPaso1,
+				'statusPaso2'=>$pasantia->statusPaso2,
+				'statusPaso3'=>$pasantia->statusPaso3,
+				'statusPaso4'=>$pasantia->statusPaso4,
+				'reglamento' => '0']);
 		}
 	}
 
@@ -50,17 +68,35 @@ class PasantiaController extends Controller{
 		$userId = Auth::id();
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
 		if ($pasantia){
-			return view('pasantia.paso1',['statusPaso0'=>$pasantia->statusPaso0]);
+			return view('pasantia.paso1',[
+				'statusPaso0'=>$pasantia->statusPaso0,
+				'statusPaso1'=>$pasantia->statusPaso1,
+				'statusPaso2'=>$pasantia->statusPaso2,
+				'statusPaso3'=>$pasantia->statusPaso3,
+				'statusPaso4'=>$pasantia->statusPaso4]);
+		}
+		else {
+			return redirect('/inscripcion/0');
 		}
 
 	}
-
 	public function paso1Control(){
+		$userId = Auth::id();
+		$pasantia = Pasantia::where('idAlumno', $userId)->first();
+		$pasantia->statusPaso1 = 2;
+
 		return redirect('/inscripcion/2');
 	}
 
 	public function paso2View(){
-		return view('pasantia.paso2');
+		$userId = Auth::id();
+		$pasantia = Pasantia::where('idAlumno', $userId)->first();
+		return view('pasantia.paso2', [
+			'statusPaso0'=>$pasantia->statusPaso0,
+			'statusPaso1'=>$pasantia->statusPaso1,
+			'statusPaso2'=>$pasantia->statusPaso2,
+			'statusPaso3'=>$pasantia->statusPaso3,
+			'statusPaso4'=>$pasantia->statusPaso4]);
 	}
 
 	public function paso2Control(){
