@@ -47,7 +47,7 @@
 			    <label for="horas">Horas semanales de trabajo</label>
 			    <input type="number" class="form-control" id="horas" name="horas" required>
 			  </div>
-				<p>Tengo un pariente que trabaja en la empresa</p>
+				<p>Tengo un familiar que trabaja en a empresa o es socio/dueño de esta</p>
 				<div class="form-check form-check-inline">
 				  <input class="form-check-input" type="radio" name="pariente" id="parienteno" value="0" checked>
 				  <label class="form-check-label" for="parienteno">No</label>
