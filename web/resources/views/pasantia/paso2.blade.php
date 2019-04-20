@@ -17,11 +17,9 @@
 				<div class="form-group">
 			    <label for="empresa">Empresa en la que trabajarás</label>
 			    <select class="form-control" id="empresa" name="empresa">
-			      <option>Empresa A</option>
-			      <option>Empresa B</option>
-			      <option>Empresa C</option>
-			      <option>Empresa D</option>
-			      <option>Empresa E</option>
+						@foreach($empresas as $empresa)
+						<option value="{{$empresa->idEmpresa}}"@if($empresaSel == $empresa->idEmpresa)selected @endif>{{$empresa->nombre}}</option>
+						@endforeach
 			    </select>
 			  </div>
 				<div class="form-group">
