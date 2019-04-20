@@ -2,12 +2,6 @@
 
 @section('contenido')
 <div class="container-fluid">
-<<<<<<< HEAD
-	<div class="text-center">
-		<h1>Inscripción realizada con éxito</h1>
-	</div>
-</div>
-=======
 	@if(session()->get('error'))
     <div class="alert alert-danger">
       {{ session()->get('error') }}
@@ -34,6 +28,4 @@
 		</ul>
 	</div>
 </div>
-
->>>>>>> inscripcionPasantia
 @endsection
