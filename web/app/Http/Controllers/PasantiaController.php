@@ -211,7 +211,17 @@ class PasantiaController extends Controller{
 		}
 	}
 	public function paso4Control(){
-
+		return redirect('/inscripcion/resumen');
+	}
+	public function resumenView(){
+		$userId = Auth::id();
+		$pasantia = Pasantia::where('idAlumno', $userId)->first();
+		return view('pasantia.resumen', [
+			'statusPaso0'=>$pasantia->statusPaso0,
+			'statusPaso1'=>$pasantia->statusPaso1,
+			'statusPaso2'=>$pasantia->statusPaso2,
+			'statusPaso3'=>$pasantia->statusPaso3,
+			'statusPaso4'=>$pasantia->statusPaso4]);
 	}
 
 }
