@@ -226,14 +226,11 @@ class PasantiaController extends Controller{
 	public function paso4Control(){
 		return redirect('/inscripcion/resumen');
 	}
+
 	public function resumenView(){
-<<<<<<< HEAD
-		return view('pasantia.resumen');
-=======
 		$userId = Auth::id();
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
 		$empresa = Empresa::where('idEmpresa', $pasantia->idEmpresa)->first();
-
 		return view('pasantia.resumen', [
 			'statusPaso0'=>$pasantia->statusPaso0,
 			'statusPaso1'=>$pasantia->statusPaso1,
@@ -242,7 +239,5 @@ class PasantiaController extends Controller{
 			'statusPaso4'=>$pasantia->statusPaso4,
 			'pasantia'=>$pasantia,
 			'empresa'=>$empresa]);
->>>>>>> inscripcionPasantia
 	}
-
 }
