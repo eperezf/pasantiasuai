@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Pasantia;
+use App\Empresa;
 use Auth;
 
 class PasantiaController extends Controller{
@@ -91,6 +92,7 @@ class PasantiaController extends Controller{
 	public function paso2View(){
 		$userId = Auth::id();
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
+		$empresas = Empresa::all();
 		if ($pasantia && $pasantia->statusPaso0==2){
 			return view('pasantia.paso2', [
 				'statusPaso0'=>$pasantia->statusPaso0,
@@ -98,6 +100,8 @@ class PasantiaController extends Controller{
 				'statusPaso2'=>$pasantia->statusPaso2,
 				'statusPaso3'=>$pasantia->statusPaso3,
 				'statusPaso4'=>$pasantia->statusPaso4,
+				'empresas'=>$empresas,
+				'empresaSel'=>$pasantia->idEmpresa,
 				'ciudad'=>$pasantia->ciudad,
 				'pais'=>$pasantia->pais,
 				'fecha'=>$pasantia->fechaInicio,
@@ -116,6 +120,15 @@ class PasantiaController extends Controller{
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
 		$pasantia->parienteEmpresa = $request->pariente;
 		$pasantia->save();
+		if ($request->empresa){
+			$pasantia->idEmpresa = $request->empresa;
+			$pasantia->save();
+		}
+		else {
+			$pasantia->idEmpresa = null;
+			$pasantia->save();
+			$incompleto = true;
+		}
 
 		if ($request->ciudad){
 			$pasantia->ciudad = $request->ciudad;
