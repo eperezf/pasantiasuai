@@ -33,6 +33,10 @@ class CreateEvalTutorTable extends Migration
 
             $table->unique(["idEncuesta"], 'idEncuesta_UNIQUE');
 
+						$table->index("idPasantia");
+
+						$table->foreign("idPasantia")->references("idPasantia")->on("pasantia");
+
         });
     }
 
