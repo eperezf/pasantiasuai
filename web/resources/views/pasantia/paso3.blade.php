@@ -31,7 +31,7 @@
 			    <label for="nombre">Nombre</label>
 			    <input class="form-control" id="nombre" name="nombre" placeholder="Nombre" value="{{$nombre}}" @if($statusPaso3==2 || $statusPaso3==3)disabled @endif>
 			  </div>
-				@if($statusPaso3==1)
+				@if($statusPaso3!=2)
 					<button type="submit" name="enviar" value="1" class="btn btn-primary">Enviar correo</button>
 					<button type="submit" name="guardar" value="1" class="btn btn-primary">Continuar sin enviar</button>
 				@else
