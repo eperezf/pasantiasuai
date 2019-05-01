@@ -91,8 +91,6 @@ window.chart = new Highcharts.chart({
 
 	//LABEL EJE Y
 	yAxis: {
-		min: 0,
-		max: 100,
 		title: {
       text: 'Porcentaje de postulantes',
 			style: {
@@ -114,7 +112,7 @@ window.chart = new Highcharts.chart({
 			cursor: 'pointer',
 			dataLabels: {
 				enabled: true,
-				inside: true
+				inside: true,
 			},
 			point: {
 				events: {
@@ -176,20 +174,27 @@ window.chart = new Highcharts.chart({
 		name: 'Postulantes',
 		dataLabels: [{
 			align: 'right',
-			format: '{y} %'
+			format: '{y} '
+		},{
+			align: 'center',
+			format: '{point.porcentajePostulantes} %'
 		}],
 		data: [{
-			y: 30,
-			name: 'Postulantes paso 1'
+			y: 600,
+			porcentajePostulantes: 30,
+			name: 'Requisitos académicos'
 		}, {
-			y: 20,
-			name: 'Postulantes paso 2'
+			y: 400,
+			porcentajePostulantes: 20,
+			name: 'Inscripción pasantía'
 		}, {
-			y: 40,
-			name: 'Postulantes paso 3',
+			y: 800,
+			porcentajePostulantes: 40,
+			name: 'Inscripción supervisor',
 		}, {
-			y: 10,
-			name: 'Postulantes paso 4',
+			y: 200,
+			porcentajePostulantes: 10,
+			name: 'Inscripción proyecto',
 		}],
 		showInLegend: false
 	}]
@@ -239,7 +244,7 @@ window.chart = new Highcharts.chart({
             allowPointSelect: true,
             dataLabels: {
                 enabled: true,
-                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                format: '<b>{point.name}</b>: {point.cantidadPasantias}',
                 style: {
                     color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black',
 										fontSize: '1em'
@@ -310,14 +315,17 @@ window.chart = new Highcharts.chart({
         data: [{
             name: 'Pasantías terminadas con defensa disponible',
             y: 35.98,
+						cantidadPasantias: 350,
             sliced: true,
             selected: true
         }, {
             name: 'Pasantías terminadas sin defensa disponible',
-            y: 19.14
+            y: 19.14,
+						cantidadPasantias: 190
         }, {
             name: 'Pasantías no terminadas',
-            y: 44.88
+            y: 44.88,
+						cantidadPasantias: 440
         }]
     }]
 });
@@ -408,7 +416,7 @@ window.chart = new Highcharts.chart({
             allowPointSelect: true,
             dataLabels: {
                 enabled: true,
-                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                format: '<b>{point.name}</b>: {point.cantidadEmpresas} ',
                 style: {
                     color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black',
 										fontSize: '1em'
@@ -479,14 +487,17 @@ window.chart = new Highcharts.chart({
         colorByPoint: true,
         data: [{
             name: 'Empresas con convenio',
+						cantidadEmpresas: 265,
             y: 53.41,
             sliced: true,
             selected: true
         }, {
             name: 'Empresas en proceso',
+						cantidadEmpresas: 140,
             y: 28.84
         }, {
             name: 'Empresas sin convenio',
+						cantidadEmpresas: 85,
             y: 17.75
         }]
     }]
