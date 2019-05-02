@@ -230,7 +230,7 @@ class PasantiaController extends Controller{
 	public function resumenView(){
 		$userId = Auth::id();
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
-		if ($pasantia && $pasantia->statusPaso0==2){
+		if ($pasantia && $pasantia->statusPaso0 == 2){
 			$empresa = Empresa::where('idEmpresa', $pasantia->idEmpresa)->first();
 			return view('pasantia.resumen', [
 				'statusPaso0'=>$pasantia->statusPaso0,
