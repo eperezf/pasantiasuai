@@ -48,32 +48,30 @@
 
 	<div class="wrapper">
 		<!-- Sidebar -->
-		<nav id="sidebar">
-			<div class="container">
-					<img src="/media/images/iUAI.jpg" class="mx-auto d-block">
-			</div>
+		<nav class="navbar-dark bg-dark" id="sidenav">
+		<img src="../media/images/iUAI.jpg" class="img-fluid" alt="Responsive image">
 
 			<!-- Elementos Menu Sidebar -->
-			<ul class="list-unstyled components">
-
-				<li class="active">
+			<ul class="list-unstyled navbar-nav">
+				<p class="navbar-brand"> Dashboard Pasantias </p>
+				<li class="active nav-item">
 					<a href="/"><i class="fa fa-home"></i> Inicio</a>
 				</li>
 
-				<li>
+				<li class="nav-item">
 					<a href="{{route('inscripcion.resumen')}}"><i class="fas fa-paste"></i>Pasantia</a>
 				</li>
 
-				<li>
+				<li class="nav-item">
 					<a href="/empresas"><i class="fas fa-industry"></i> Empresas</a>
 				</li>
 
-				<li>
-					<a href="#"><i class="fas fa-chart-line"></i> Estadisticas </a>
+				<li class="nav-item">
+					<a href="#" class="nav-link"><i class="fas fa-chart-line"></i> Estadisticas </a>
 				</li>
 
-				<li>
-					<a href="#"><i class="fas fa-balance-scale"></i> Reglamento </a>
+				<li class="nav-item">
+					<a href="#" class="nav-link"><i class="fas fa-balance-scale"></i> Reglamento </a>
 				</li>
 
 			</ul>
@@ -86,11 +84,7 @@
 			<nav class="navbar navbar-expand-lg navbar-light bg-light">
 				<!-- <div class="col-2"> -->
 				<!-- BTN COLLAPSE SIDEBAR -->
-				<button type="button" id="sidebarCollapse" class="navbar-btn">
-					<span></span>
-					<span></span>
-					<span></span>
-				</button>
+
 				<!-- </div>
           <div class="col-2"> -->
 				<ul class="navbar-nav">
@@ -104,25 +98,25 @@
 
 				<!-- <div class="col-8"> -->
 
-				<li class=" nav-item ml-auto dropdown list-unstyled">
-					<a href="#" class="drop-icon-animation" data-toggle="dropdown" aria-expanded="false">
+				<li class=" ml-auto dropdown list-unstyled">
+					<button href="#" class="drop-icon-animation btn btn-light" data-toggle="dropdown" aria-expanded="false">
 						<i class="fa fa-user"></i>
 						Mi Perfil
-						<span class="profile-arrow ml-auto"></span>
-					</a>
+						<i class="fas fa-sort-down"></i>
+					</button>
 
 					<ul class="dropdown-menu dropdown-menu-right">
 
-						<li>
+						<li class="nav-item">
 							<a href="{{route('inscripcion.resumen')}}"><i class="fas fa-user-tie"></i> Mis Pasantias</a>
 						</li>
 
-						<li>
-							<a href="#"><i class="fas fa-graduation-cap"></i> Mi Profesor</a>
+						<li class="nav-item">
+							<a href="#" class="nav-link"><i class="fas fa-graduation-cap"></i> Mi Profesor</a>
 						</li>
 
-						<li>
-							<a href="#"><i class="fas fa-wrench"></i> Configuracion</a>
+						<li class="nav-item">
+							<a href="#" class="nav-link"><i class="fas fa-wrench"></i> Configuracion</a>
 						</li>
 
 						<div class="dropdown-divider"></div>
