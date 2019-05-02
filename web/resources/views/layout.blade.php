@@ -53,17 +53,16 @@
 
 			<!-- Elementos Menu Sidebar -->
 			<ul class="list-unstyled navbar-nav">
-				<p class="navbar-brand"> Dashboard Pasantias </p>
-				<li class="active nav-item">
-					<a href="/"><i class="fa fa-home"></i> Inicio</a>
+				<li class="nav-item">
+					<a href="/" class="nav-link"><i class="fa fa-home"></i> Inicio</a>
 				</li>
 
 				<li class="nav-item">
-					<a href="{{route('inscripcion.resumen')}}"><i class="fas fa-paste"></i>Pasantia</a>
+					<a href="{{route('inscripcion.resumen')}}" class="nav-link"><i class="fas fa-paste"></i>Pasantia</a>
 				</li>
 
 				<li class="nav-item">
-					<a href="/empresas"><i class="fas fa-industry"></i> Empresas</a>
+					<a href="/empresas" class="nav-link"><i class="fas fa-industry"></i> Empresas</a>
 				</li>
 
 				<li class="nav-item">
@@ -108,7 +107,7 @@
 					<ul class="dropdown-menu dropdown-menu-right">
 
 						<li class="nav-item">
-							<a href="{{route('inscripcion.resumen')}}"><i class="fas fa-user-tie"></i> Mis Pasantias</a>
+							<a href="{{route('inscripcion.resumen')}}" class="nav-link"><i class="fas fa-user-tie"></i> Mis Pasantias</a>
 						</li>
 
 						<li class="nav-item">
@@ -122,7 +121,7 @@
 						<div class="dropdown-divider"></div>
 
 						<li>
-							<a href="{{route('logout')}}"><i class="fa fa-fw fa-power-off"></i> Cerrar Sesion</a>
+							<a href="{{route('logout')}}" class="nav-link"><i class="fa fa-fw fa-power-off"></i> Cerrar Sesion</a>
 						</li>
 					</ul>
 				</li>
