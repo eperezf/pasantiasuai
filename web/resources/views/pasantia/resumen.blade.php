@@ -40,11 +40,18 @@
 			@elseif($statusPaso3==2)
 				<li class="list-group-item list-group-item-success"><i class="fas fa-envelope"></i> Tu supervisor, {{$pasantia->nombreJefe}}, ha recibido el correo pero no lo ha confirmado.</li>
 			@elseif($statusPaso3==1)
-				<li class="list-group-item list-group-item-warning"><i class="fas fa-exclamation"></i> Tienes guardados los datos de tu supervisor, {{$pasantia->nombreJefe}}, pero aun no has enviado el correo.</li>
+				<li class="list-group-item list-group-item-success"><i class="fas fa-check"></i> Tienes guardados los datos de tu supervisor, {{$pasantia->nombreJefe}}.</li>
 			@else
 				<li class="list-group-item list-group-item-warning"><i class="fas fa-exclamation"></i> No has iniciado el paso 3.</li>
 			@endif
 		</ul>
+	</div>
+	<div class="row justify-content-md-center mb-5">
+		<form style="display: inline-block;" action="{{ url('inscripcion/destroy', $pasantia->idPasantia)}}" method="post">
+			@csrf
+			@method('DELETE')
+			<button class="btn btn-danger" type="submit">Eliminar</button>
+				</form>
 	</div>
 </div>
 @endsection
