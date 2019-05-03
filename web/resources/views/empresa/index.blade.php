@@ -18,7 +18,9 @@
 		</p>
 	</div>
 	<div class="row">
-		<a class="btn btn-primary mb-3" href="/empresas/create" role="button">Agregar (solo admin)</a>
+		@if(Auth::user()->rol >= 4)
+			<a class="btn btn-primary mb-3" href="/empresas/create" role="button">Agregar (solo admin)</a>
+		@endif
 	</div>
 	<div class="row">
 		<div class="table-responsive">
@@ -31,7 +33,7 @@
 						<th scope="col">Estado</th>
 			      <th scope="col">Sitio Web</th>
 						<th scope="col">Correo de contacto</th>
-						<th scope="col">Acciones</th>
+						@if(Auth::user()->rol >= 4)<th scope="col">Acciones</th>@endif
 			    </tr>
 			  </thead>
 			  <tbody>
@@ -43,6 +45,7 @@
 						<td>@if($empresa->status == 1)Activo @else Inactivo @endif</td>
 			      <td><a href="http://{{$empresa->urlWeb}}">{{$empresa->urlWeb}}</a></td>
 						<td><a href="mailto:{{$empresa->correoContacto}}">{{$empresa->correoContacto}}</a></td>
+						@if(Auth::user()->rol >= 4)
 						<td>
 							<a class="btn btn-warning" href="{{route('empresas.edit', $empresa->idEmpresa)}}" role="button">Editar</a>
 							<form style="display: inline-block;" action="{{ route('empresas.destroy', $empresa->idEmpresa)}}" method="post">
@@ -51,6 +54,7 @@
 	              <button class="btn btn-danger" type="submit">Eliminar</button>
 	                </form>
 						</td>
+						@endif
 			    </tr>
 					@endforeach
 			  </tbody>

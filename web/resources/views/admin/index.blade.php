@@ -19,10 +19,12 @@
 			<div class="col-md-12">
 				<div id="pasos"></div>
 			</div>
-			<div class="col-md-12">
+		</div>
+		<div class="row">
+			<div class="col-md-6">
 				<div id="defensas"></div>
 			</div>
-			<div class="col-md-12">
+			<div class="col-md-6">
 				<div id="empresas"></div>
 			</div>
 		</div>
@@ -31,7 +33,10 @@
 <script>
 
 //FECHA ACTUAL
-fecha('estadisticas');
+appendFecha('estadisticas');
+/////////////
+// // TODO: REFACTORIZAR EL CODIGO EN ARCHIVO JS APARTE DE HIGHCHARTS Y LLAMAR SOLO FUNCIONES EN ESTE LUGAR
+////////////
 
 /*
 /
@@ -49,7 +54,7 @@ window.chart = new Highcharts.chart({
 	chart: {
 		type: 'bar',
 		renderTo: 'pasos',
-		height: (9 / 16 * 100) + '%'
+		height: (9 / 16 * 75) + '%'
 	},
 
 	//TITULO
@@ -78,7 +83,7 @@ window.chart = new Highcharts.chart({
 		type: 'category',
 		labels: {
 			style: {
-				fontSize: '14px',
+				fontSize: '1.25em',
 				fontWeight: 'bold'
 			}
 		}
@@ -86,18 +91,16 @@ window.chart = new Highcharts.chart({
 
 	//LABEL EJE Y
 	yAxis: {
-		min: 0,
-		max: 100,
 		title: {
       text: 'Porcentaje de postulantes',
 			style: {
-				fontSize: '14px',
+				fontSize: '1.25em',
 				fontWeight: 'bold'
 			}
 		},
 		labels: {
 			style: {
-				fontSize: '14px'
+				fontSize: '1em'
 			}
 		}
 	},
@@ -106,9 +109,62 @@ window.chart = new Highcharts.chart({
 	plotOptions: {
 		series: {
 			colorByPoint: true,
+			cursor: 'pointer',
 			dataLabels: {
 				enabled: true,
-				inside: true
+				inside: true,
+			},
+			point: {
+				events: {
+					click: function (e) {
+						hs.htmlExpand(null, {
+							pageOrigin: {
+								x: e.pageX || e.clientX,
+								y: e.pageY || e.clientY
+							},
+							headingText: this.series.data[this.x].name,
+							maincontentText: 'Fecha: ' + fecha() + ':<br /> ' +
+							// TABLA FIJA -- DUMMY
+							'<table class="table table-striped">' +
+							'<thead>' +
+							'<tr>' +
+							'<th scope="col">#</th>' +
+							'<th scope="col">Nombre</th>' +
+							'<th scope="col">Apellido</th>' +
+							'<th scope="col">Carrera</th>' +
+							'</tr>' +
+							'</thead>' +
+							'<tbody>' +
+							'<tr>' +
+							'<th scope="row">1</th>' +
+							'<td>Alberto</td>' +
+							'<td>Johnson</td>' +
+							'<td>Ingeniería Civil</td>' +
+							'</tr>' +
+							'<tr>' +
+							'<th scope="row">2</th>' +
+							'<td>Juana</td>' +
+							'<td>Thornton</td>' +
+							'<td>Ingeniería Comercial</td>' +
+							'</tr>' +
+							'<tr>' +
+							'<th scope="row">3</th>' +
+							'<td>Lucia</td>' +
+							'<td>Fuentes</td>' +
+							'<td>Ingeniería Civil</td>' +
+							'</tr>' +
+							'<tr>' +
+							'<th scope="row">4</th>' +
+							'<td>Pedro</td>' +
+							'<td>Smith</td>' +
+							'<td>Psicología</td>' +
+							'</tr>' +
+							'</tbody>' +
+							'</table>'
+
+						});
+					}
+				}
 			}
 		}
 	},
@@ -118,50 +174,55 @@ window.chart = new Highcharts.chart({
 		name: 'Postulantes',
 		dataLabels: [{
 			align: 'right',
-			format: '{y} %'
+			format: '{y} '
+		},{
+			align: 'center',
+			format: '{point.porcentajePostulantes} %'
 		}],
 		data: [{
-			y: 30,
-			name: 'Postulantes paso 1'
+			y: 600,
+			porcentajePostulantes: 30,
+			name: 'Requisitos académicos'
 		}, {
-			y: 20,
-			name: 'Postulantes paso 2'
+			y: 400,
+			porcentajePostulantes: 20,
+			name: 'Inscripción pasantía'
 		}, {
-			y: 40,
-			name: 'Postulantes paso 3',
+			y: 800,
+			porcentajePostulantes: 40,
+			name: 'Inscripción supervisor',
 		}, {
-			y: 10,
-			name: 'Postulantes paso 4',
+			y: 200,
+			porcentajePostulantes: 10,
+			name: 'Inscripción proyecto',
 		}],
 		showInLegend: false
 	}]
 });
 
-/*
-/
-/
-/
-/
-/
-/
-/
-*/
-// GRAFICO 2 //
-//GRAFICO PASANTIAS TERMINADAS/NO TERMINADAS QUE PUEDEN/NO PUEDEN DAR DEFENSAS
+
 window.chart = new Highcharts.chart({
 	//EN DONDE UBICARLO
 	chart: {
-		type: 'column',
+		type: 'pie',
 		renderTo: 'defensas',
-		height: (9 / 16 * 100) + '%'
+		height: (9 / 16 * 100) + '%',
+		plotBackgroundColor: null,
+		plotBorderWidth: null,
+		plotShadow: false
 	},
 
 	//TITULO
 	title: {
-		text: 'Estado de pasantías y disponibilidad de defensa',
+		text: 'Estado de pasantías y defensas ',
 		style: {
 			fontSize: '22px'
 		}
+	},
+
+	//TOOLTIP
+	tooltip: {
+			pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
 	},
 
 	//BOTONES DE DESCARGA
@@ -177,134 +238,97 @@ window.chart = new Highcharts.chart({
 		enabled: false
 	},
 
-	//LABEL EJE X
-	xAxis: {
-		categories: ['Pasantías terminadas', 'Pasantías no terminadas'],
-		labels: {
-			style: {
-				fontSize: '14px',
-				fontWeight: 'bold'
-			}
-		}
-	},
+		//COLORES Y LABEL DE CADA PARTE
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.cantidadPasantias}',
+                style: {
+                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black',
+										fontSize: '1em'
+                }
+            }
+        },
 
-	//LABEL EJE Y
-	yAxis: {
-		allowDecimals: false,
-		min: 0,
-		max: 100,
-		title: {
-			text: 'Porcentaje de pasantías',
-			style: {
-				fontSize: '14px',
-				fontWeight: 'bold'
-			}
-		},
-		labels: {
-			style: {
-				fontSize: '14px'
-			}
-		}
-	},
+				series: {
+            cursor: 'pointer',
+						point: {
+							events: {
+								click: function (e) {
+									hs.htmlExpand(null, {
+										pageOrigin: {
+											x: e.pageX || e.clientX,
+											y: e.pageY || e.clientY
+										},
+										headingText: this.series.data[this.x].name,
+										maincontentText: 'Fecha: ' + fecha() + ':<br /> ' +
+										// TABLA FIJA -- DUMMY
+										'<table class="table table-striped">' +
+										'<thead>' +
+										'<tr>' +
+										'<th scope="col">#</th>' +
+										'<th scope="col">Nombre</th>' +
+										'<th scope="col">Apellido</th>' +
+										'<th scope="col">Carrera</th>' +
+										'</tr>' +
+										'</thead>' +
+										'<tbody>' +
+										'<tr>' +
+										'<th scope="row">1</th>' +
+										'<td>Jaime</td>' +
+										'<td>Maxwell</td>' +
+										'<td>Derecho</td>' +
+										'</tr>' +
+										'<tr>' +
+										'<th scope="row">2</th>' +
+										'<td>Juana</td>' +
+										'<td>Thomson</td>' +
+										'<td>Ingeniería Comercial</td>' +
+										'</tr>' +
+										'<tr>' +
+										'<th scope="row">3</th>' +
+										'<td>Alberta</td>' +
+										'<td>Einstein</td>' +
+										'<td>Diseño</td>' +
+										'</tr>' +
+										'<tr>' +
+										'<th scope="row">4</th>' +
+										'<td>Elizabeth</td>' +
+										'<td>Mary</td>' +
+										'<td>Psicología</td>' +
+										'</tr>' +
+										'</tbody>' +
+										'</table>'
 
-	//COLORES Y LABEL DE CADA COLUMNA
-	plotOptions: {
-		series: {
-			dataLabels: {
-				enabled: true,
-				inside: true
-			}
-		},
-		column: {
-			stacking: 'normal'
-		}
-	},
-
-	//DATA
-	// series: [{
-	//       name: 'Terminada sin defensa',
-	//       data: [35,0],
-	//       stack: 'Terminadas'
-	//   }, {
-	//       name: 'Terminada con defensa',
-	//       data: [65,0],
-	//       stack: 'Terminadas'
-	//   }, {
-	//       name: 'No terminada sin defensa',
-	//       data: [0,49],
-	//       stack: 'No Terminadas'
-	//   }, {
-	//       name: 'No terminada con defensa',
-	//       data: [0,51],
-	//       stack: 'No Terminadas'
-	//   }]
-
-	series: [{
-		name: 'Terminado sin defensa disponible',
-		legendIndex: 1,
-		dataLabels: [{
-			format: '{y} %'
-		}],
-		// TERMINADO Y DEFENSA NO DISPONIBLE
-		data: [{
-			y: 23,
-			name: 'Pasantías terminadas',
-		}]
-	},
-	{
-		name: 'No terminado sin defensa disponible',
-		legendIndex: 3,
-		dataLabels: [{
-			format: '{y} %'
-		}],
-		// NO TERMINADO Y DEFENSA NO DISPONIBLE
-		data: [{
-			y: null,
-			name: 'Pasantías no terminadas',
-		}, {
-			y: 81,
-			name: 'Pasantías no terminadas',
-		}]
-	},
-	{
-		name: 'Terminado con defensa disponible',
-		legendIndex: 2,
-		dataLabels: [{
-			format: '{y} %'
-		}],
-		// TERMINADO Y DEFENSA DISPONIBLE
-		data: [{
-			y: 77,
-			name: 'Pasantías terminadas',
-		}]
-
-	},
-	{
-		name: 'No terminado con defensa disponible',
-		legendIndex: 4,
-		dataLabels: [{
-			format: '{y} %'
-		}],
-		// NO TERMINADO Y DEFENSA DISPONIBLE
-		data: [{
-			y: null,
-			name: 'Pasantías no terminadas',
-		}, {
-			y: 19,
-			name: 'Pasantías no terminadas',
-		}]
-	}],
-
-	// LEYENDAS A LA DERECHA SUPERIOR
-	legend: {
-        align: 'right',
-        verticalAlign: 'top',
-        layout: 'vertical',
-        x: 0,
-        y: 100
+									});
+								}
+							}
+						}
+        }
     },
+		//DATA
+    series: [{
+        name: 'Pasantías',
+        colorByPoint: true,
+        data: [{
+            name: 'Pasantías terminadas con defensa disponible',
+            y: 35.98,
+						cantidadPasantias: 350,
+            sliced: true,
+            selected: true
+        }, {
+            name: 'Pasantías terminadas sin defensa disponible',
+            y: 19.14,
+						cantidadPasantias: 190
+        }, {
+            name: 'Pasantías no terminadas',
+            y: 44.88,
+						cantidadPasantias: 440
+        }]
+    }]
 });
-
 
 /*
 /
@@ -390,14 +414,71 @@ window.chart = new Highcharts.chart({
     plotOptions: {
         pie: {
             allowPointSelect: true,
-            cursor: 'pointer',
             dataLabels: {
                 enabled: true,
-                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                format: '<b>{point.name}</b>: {point.cantidadEmpresas} ',
                 style: {
-                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-                }
+                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black',
+										fontSize: '1em'
+                },
+
             }
+        },
+
+				series: {
+            cursor: 'pointer',
+						point: {
+							events: {
+								click: function (e) {
+									hs.htmlExpand(null, {
+										pageOrigin: {
+											x: e.pageX || e.clientX,
+											y: e.pageY || e.clientY
+										},
+										headingText: this.series.data[this.x].name,
+										maincontentText: 'Fecha: ' + fecha() + ':<br /> ' +
+										// TABLA FIJA -- DUMMY
+										'<table class="table table-striped">' +
+										'<thead>' +
+										'<tr>' +
+										'<th scope="col">#</th>' +
+										'<th scope="col">Nombre</th>' +
+										'<th scope="col">Sitio Web</th>' +
+										'<th scope="col">Rubro</th>' +
+										'</tr>' +
+										'</thead>' +
+										'<tbody>' +
+										'<tr>' +
+										'<th scope="row">1</th>' +
+										'<td>Neztle</td>' +
+										'<td>www.neztle.cl</td>' +
+										'<td>Ingeniería Civil</td>' +
+										'</tr>' +
+										'<tr>' +
+										'<th scope="row">2</th>' +
+										'<td>Falabela</td>' +
+										'<td>www.falabela.cl</td>' +
+										'<td>Ingeniería Comercial</td>' +
+										'</tr>' +
+										'<tr>' +
+										'<th scope="row">3</th>' +
+										'<td>Ryplei</td>' +
+										'<td>www.ryplei.cl</td>' +
+										'<td>Ingeniería Civil</td>' +
+										'</tr>' +
+										'<tr>' +
+										'<th scope="row">4</th>' +
+										'<td>Junbo</td>' +
+										'<td>www.junbo.cl</td>' +
+										'<td>Derecho</td>' +
+										'</tr>' +
+										'</tbody>' +
+										'</table>'
+
+									});
+								}
+							}
+						}
         }
     },
 		//DATA
@@ -406,14 +487,17 @@ window.chart = new Highcharts.chart({
         colorByPoint: true,
         data: [{
             name: 'Empresas con convenio',
+						cantidadEmpresas: 265,
             y: 53.41,
             sliced: true,
             selected: true
         }, {
             name: 'Empresas en proceso',
+						cantidadEmpresas: 140,
             y: 28.84
         }, {
             name: 'Empresas sin convenio',
+						cantidadEmpresas: 85,
             y: 17.75
         }]
     }]
