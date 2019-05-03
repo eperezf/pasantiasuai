@@ -46,5 +46,12 @@
 			@endif
 		</ul>
 	</div>
+	<div class="row justify-content-md-center mb-5">
+		<form style="display: inline-block;" action="{{ url('inscripcion/destroy', $pasantia->idPasantia)}}" method="post">
+			@csrf
+			@method('DELETE')
+			<button class="btn btn-danger" type="submit">Eliminar</button>
+				</form>
+	</div>
 </div>
 @endsection

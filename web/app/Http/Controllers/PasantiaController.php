@@ -325,7 +325,7 @@ class PasantiaController extends Controller{
 	 * @return \Illuminate\Http\Response
 	 */
 	public function destroy($id){
-		if (Auth::user()->role >=4){
+		if (Auth::user()->rol >=4){
 			$userId = Auth::id();
 			$pasantia = Pasantia::where('idAlumno', $userId)->first();
 			$pasantia->delete();
