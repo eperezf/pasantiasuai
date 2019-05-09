@@ -27,6 +27,7 @@ class LoginController extends Controller
 		$tipoProfe = "";
 		$profesor = false;
 		$ldapconn = ldap_connect("10.2.1.213") or die("Could not connect to LDAP server.");
+		ldap_set_option($ldapconn, LDAP_OPT_PROTOCOL_VERSION, 3);
 		if (Str::endsWith($email, 'uai.cl')){
 			//Interno (Profesor, alumno o funcionario). Asumiremos profesor o funcionario.
 			$ldaptree = "OU=UAI,DC=uai,DC=cl";
