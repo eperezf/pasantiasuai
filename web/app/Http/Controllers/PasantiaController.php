@@ -237,21 +237,26 @@ class PasantiaController extends Controller{
 	/**
    * Guarda los datos del supervisor
    * @author Eduardo Pérez
-   * @version v1.0
+   * @version v1.1
 	 * @param  \Illuminate\Http\Request  $request
    * @return \Illuminate\Http\Response
    */
 	public function paso3Control(Request $request){
 		$userId = Auth::id();
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
+		if ($request->nombre == "" || $request->email == ""){
+			$pasantia->statusPaso3 = 1;
+		}
+		else {
+			$pasantia->statusPaso3 = 2;
+		}
 		$pasantia->nombreJefe = $request->nombre;
 		$pasantia->correoJefe = $request->email;
 		if ($request->guardar){
-			$pasantia->statusPaso3 = 1;
 			$pasantia->save();
 		}
 		if ($request->enviar){
-			$pasantia->statusPaso3 = 2;
+			$pasantia->statusPaso3 = 3;
 			//Enviar correo
 			$pasantia->save();
 		}
