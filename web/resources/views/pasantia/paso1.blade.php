@@ -32,6 +32,20 @@
 		</div>
 	</div>
 	<div class="row justify-content-md-center mb-5">
+		<div class="col-md-6">
+			<div class="card text-white bg-danger">
+			  <div class="card-header">
+			    <h2 class="text-center">¡Atención!</h2>
+			  </div>
+			  <div class="card-body">
+			    <h5 class="card-title text-center">En caso de no querer hacer el tipo de pasantía ya asignada, debe comunicarse con Sandra Reyes</h5>
+					<p class="card-text text-center">mail: 
+					<a href="mailto:sandra.reyes@uai.cl">sandra.reyes@uai.cl</a></p>
+			  </div>
+			</div>
+		</div>
+	</div>
+	<div class="row justify-content-md-center mb-5">
 		<form method="post" action="{{ route('inscripcion.1.post') }}">
 			@csrf
 			<button type="submit" class="btn btn-primary">Continuar</button>
