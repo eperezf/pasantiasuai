@@ -1,0 +1,20 @@
+html { visibility:hidden; }
+/* ---------------------------------------------------
+    DROPDOWN FONTAWESOME ICON ANIMATION
+----------------------------------------------------- */
+.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+    perspective: 1500px;
+}
+/* ---------------------------------------------------
+    CONTENT STYLE
+----------------------------------------------------- */
+#content {
+    width: 100%;
+    padding: 20px;
+    min-height: 100vh;
+    transition: all 0.3s;
+}
+
