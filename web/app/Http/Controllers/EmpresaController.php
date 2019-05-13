@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Empresa;
 use App\User;
+use Auth;
 
 
 /**
@@ -33,11 +34,11 @@ class EmpresaController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function create(){
-			if (Auth::user()->role >=4){
+			if (Auth::user()->rol >=4){
 				return view('empresa.create');
 			}
       else {
-				return view('empresa.index');
+				return redirect('/empresas');
 			}
     }
 
@@ -49,7 +50,7 @@ class EmpresaController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
-			if (Auth::user()->role >=4){
+			if (Auth::user()->rol >=4){
 				if ($request->status == NULL){
 					$request->status = 0;
 				};
@@ -97,12 +98,12 @@ class EmpresaController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function edit($id){
-			if (Auth::user()->role >=4){
+			if (Auth::user()->rol >=4){
 				$empresa = Empresa::find($id);
 				return view('empresa.edit', compact('empresa'));
 			}
 			else {
-				return view('empresa.index');
+				return redirect('/empresas');
 			}
     }
 
@@ -115,7 +116,7 @@ class EmpresaController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id){
-			if (Auth::user()->role >=4){
+			if (Auth::user()->rol >=4){
 				$validated = $request->validate(
 					['nombre'=>'string|required'],
 					['rubro'=>'string|required'],
@@ -149,7 +150,7 @@ class EmpresaController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function destroy($id){
-			if (Auth::user()->role >=4){
+			if (Auth::user()->rol >=4){
 				$empresa = Empresa::find($id);
 				$empresa->delete();
 				return redirect('/empresas')->with('success', 'Empresa eliminada correctamente');
