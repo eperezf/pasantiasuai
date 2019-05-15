@@ -27,15 +27,15 @@
       <div class="col-md-6">
         <div class="profile-head">
           <h5>
-            {{ $user->nombres }}
-            {{ $user->apellidoPaterno }}
-            {{ $user->apellidoMaterno }}
+            {{ $perfil->nombres }}
+            {{ $perfil->apellidoPaterno }}
+            {{ $perfil->apellidoMaterno }}
           </h5>
           <h6>
-            {{ $user->idCarrera }}
+            {{ $perfil->idCarrera }}
           </h6>
           <p class="profile-rut">RUT : <span>
-              {{ $user->rut }}
+              {{ $perfil->rut }}
             </span></p>
           <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
@@ -74,7 +74,7 @@
               </div>
               <div class="col-md-6">
                 <p>
-                  {{ $user->nombres }}
+                  {{ $perfil->nombres }}
                 </p>
               </div>
             </div>
@@ -84,8 +84,8 @@
               </div>
               <div class="col-md-6">
                 <p>
-                  {{ $user->apellidoPaterno }}
-                  {{ $user->apellidoMaterno }}
+                  {{ $perfil->apellidoPaterno }}
+                  {{ $perfil->apellidoMaterno }}
                 </p>
               </div>
             </div>
@@ -95,7 +95,7 @@
               </div>
               <div class="col-md-6">
                 <p>
-                  {{ $user->email }}
+                  {{ $perfil->email }}
                 </p>
               </div>
             </div>
@@ -105,7 +105,7 @@
               </div>
               <div class="col-md-6">
                 <p>
-                  {{ $user->idCarrera }}
+                  {{ $perfil->idCarrera }}
                 </p>
               </div>
             </div>
@@ -117,7 +117,7 @@
               </div>
               <div class="col-md-6">
                 <p>
-                  {{ $user->rol }}
+                  {{ $perfil->rol }}
                 </p>
               </div>
             </div>
@@ -127,7 +127,7 @@
               </div>
               <div class="col-md-6">
                 <p>
-                  {{ $user->statusPregrado }}
+                  {{ $perfil->statusPregrado }}
                 </p>
               </div>
             </div>
@@ -137,7 +137,7 @@
               </div>
               <div class="col-md-6">
                 <p>
-                  {{ $user->statusOmega }}
+                  {{ $perfil->statusOmega }}
                 </p>
               </div>
             </div>
@@ -147,7 +147,7 @@
               </div>
               <div class="col-md-6">
                 <p>
-                  {{ $user->statusWebcursos }}
+                  {{ $perfil->statusWebcursos }}
                 </p>
               </div>
             </div>

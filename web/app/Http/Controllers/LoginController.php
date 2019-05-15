@@ -27,6 +27,7 @@ class LoginController extends Controller
 		$tipoProfe = "";
 		$profesor = false;
 		$ldapconn = ldap_connect("10.2.1.213") or die("Could not connect to LDAP server.");
+		ldap_set_option($ldapconn, LDAP_OPT_PROTOCOL_VERSION, 3);
 		if (Str::endsWith($email, 'uai.cl')){
 			//Interno (Profesor, alumno o funcionario). Asumiremos profesor o funcionario.
 			$ldaptree = "OU=UAI,DC=uai,DC=cl";
@@ -89,6 +90,13 @@ class LoginController extends Controller
 						$tipoProfe = $org_arr[1];
 						$sede = $org_arr[2];
 						$profesor = true;
+						echo "Tipo de profe: " . $tipoProfe . "</br>";
+						echo "Sede: " . $sede . "</br>";
+						echo "Nombres: " . $nombres . "</br>";
+						echo "Apellidos: " . $apellidoMaterno . " " . $apellidoPaterno . "</br>";
+						echo "Email: " . $email . "</br>";
+						echo "RUT: " . $rut . "</br>";
+
 					}
 				}
 				else {
@@ -99,5 +107,10 @@ class LoginController extends Controller
 		else {
 			//Externo (Empresa)
 		};
+	}
+
+	public function logout(){
+		Auth::logout();
+		return redirect('/login');
 	}
 }
