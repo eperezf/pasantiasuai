@@ -38,7 +38,7 @@
 			    <h2 class="text-center">¡Atención!</h2>
 			  </div>
 			  <div class="card-body">
-			    <h5 class="card-title text-center">En caso de no querer hacer el tipo de pasantía ya asignada, debe comunicarse con Sandra Reyes</h5>
+			    <h5 class="card-title text-center">En caso de no querer hacer el tipo de pasantía ya asignada, debe enviar un correo a la gestión de pasantías de la Universidad.</h5>
 					<p class="card-text text-center">mail: 
 					<a href="mailto:pasantias.fic@uai.cl">pasantias.fic@uai.cl</a></p>
 			  </div>
