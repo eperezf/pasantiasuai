@@ -54,6 +54,10 @@ class EmpresaController extends Controller{
 				if ($request->status == NULL){
 					$request->status = 0;
 				};
+				if (!str_contains($request->get('urlWeb'), 'https://') ||
+					!str_contains($request->get('urlWeb'), 'http://')){
+					$request->merge(['urlWeb' => 'http://' . $request->get('urlWeb')]);
+				}
 
 				$request->validate(
 					['nombre'=>'required|unique:empresa'],
@@ -127,6 +131,11 @@ class EmpresaController extends Controller{
 				if ($request->status == NULL){
 					$request->status = 0;
 				};
+				if (!str_contains($request->get('urlWeb'), 'https://') ||
+					!str_contains($request->get('urlWeb'), 'http://')){
+					$request->merge(['urlWeb' => 'http://' . $request->get('urlWeb')]);
+				}
+
 				$empresa = Empresa::find($id);
 				$empresa->nombre = $request->get('nombre');
 				$empresa->rubro = $request->get('rubro');
