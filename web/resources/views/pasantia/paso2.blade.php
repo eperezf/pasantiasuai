@@ -18,7 +18,14 @@
 			    <label for="empresa">Empresa en la que trabajarás</label>
 			    <select class="form-control" id="empresa" name="empresa">
 						@foreach($empresas as $empresa)
-						<option value="{{$empresa->idEmpresa}}"@if($empresaSel == $empresa->idEmpresa)selected @endif>{{$empresa->nombre}}</option>
+							@if ($empresa->status === 1)
+								<option value="{{$empresa->idEmpresa}}"
+								@if($empresaSel == $empresa->idEmpresa)
+									selected 
+								@endif>
+								{{$empresa->nombre}}
+								</option>
+							@endif
 						@endforeach
 			    </select>
 			  </div>
