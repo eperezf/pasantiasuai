@@ -23,7 +23,7 @@ class EmpresaController extends Controller{
    * @return \Illuminate\Http\Response
    */
   public function index(){
-		$empresas = Empresa::all()->sortBy('nombre');
+		$empresas = Empresa::all();
   	return view('empresa.index', compact('empresas'));
   }
 
