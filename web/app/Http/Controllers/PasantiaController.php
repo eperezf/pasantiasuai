@@ -120,6 +120,11 @@ class PasantiaController extends Controller{
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
 		$pasantia->parienteEmpresa = $request->pariente;
 		$pasantia->save();
+		if ($request->pariente == 1){
+			$incompleto = true;
+			return redirect('/inscripcion/2')->with('danger', 'No puede inscribir su pasantía en una empresa en la que tiene un familiar que trabaja en la empresa o es socio/dueño de esta, por favor inscriba su pasantía en otra empresa.');
+		}
+
 		if ($request->empresa){
 			$pasantia->idEmpresa = $request->empresa;
 			$pasantia->save();
