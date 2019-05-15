@@ -9,6 +9,12 @@ use App\Empresa;
 use Auth;
 
 class PasantiaController extends Controller{
+	/**
+   * Muestra el Paso 0
+   * @author Eduardo Pérez
+   * @version v1.0
+   * @return \Illuminate\Http\Response
+   */
 	public function paso0View(){
 		$userId = Auth::id();
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
@@ -46,6 +52,13 @@ class PasantiaController extends Controller{
 		}
 	}
 
+	/**
+   * Comprueba si el alumno aceptó el reglamento
+   * @author Eduardo Pérez
+   * @version v1.0
+	 * @param  \Illuminate\Http\Request  $request
+   * @return \Illuminate\Http\Response
+   */
 	public function paso0Control(Request $request){
 		$userId = Auth::id();
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
@@ -65,6 +78,12 @@ class PasantiaController extends Controller{
 		}
 	}
 
+	/**
+   * Muestra el Paso 1
+   * @author Eduardo Pérez
+   * @version v1.0
+   * @return \Illuminate\Http\Response
+   */
 	public function paso1View(){
 		$userId = Auth::id();
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
@@ -81,6 +100,13 @@ class PasantiaController extends Controller{
 		}
 
 	}
+
+	/**
+   * Guarda los datos de tipo de malla y práctica operario
+   * @author Eduardo Pérez
+   * @version v1.0
+   * @return \Illuminate\Http\Response
+   */
 	public function paso1Control(){
 		$userId = Auth::id();
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
@@ -89,6 +115,12 @@ class PasantiaController extends Controller{
 		return redirect('/inscripcion/2');
 	}
 
+	/**
+   * Muestra el Paso 2
+   * @author Eduardo Pérez
+   * @version v1.0
+   * @return \Illuminate\Http\Response
+   */
 	public function paso2View(){
 		$userId = Auth::id();
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
@@ -114,6 +146,13 @@ class PasantiaController extends Controller{
 		}
 	}
 
+	/**
+   * Guarda los datos de la pasantía
+   * @author Eduardo Pérez
+   * @version v1.0
+	 * @param  \Illuminate\Http\Request  $request
+   * @return \Illuminate\Http\Response
+   */
 	public function paso2Control(Request $request){
 		$incompleto = false;
 		$userId = Auth::id();
@@ -183,6 +222,12 @@ class PasantiaController extends Controller{
 		return redirect('/inscripcion/3');
 	}
 
+	/**
+   * Muestra el Paso 3
+   * @author Eduardo Pérez
+   * @version v1.0
+   * @return \Illuminate\Http\Response
+   */
 	public function paso3View(){
 		$userId = Auth::id();
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
@@ -201,17 +246,29 @@ class PasantiaController extends Controller{
 		}
 	}
 
+	/**
+   * Guarda los datos del supervisor
+   * @author Eduardo Pérez
+   * @version v1.1
+	 * @param  \Illuminate\Http\Request  $request
+   * @return \Illuminate\Http\Response
+   */
 	public function paso3Control(Request $request){
 		$userId = Auth::id();
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
+		if ($request->nombre == "" || $request->email == ""){
+			$pasantia->statusPaso3 = 1;
+		}
+		else {
+			$pasantia->statusPaso3 = 2;
+		}
 		$pasantia->nombreJefe = $request->nombre;
 		$pasantia->correoJefe = $request->email;
 		if ($request->guardar){
-			$pasantia->statusPaso3 = 1;
 			$pasantia->save();
 		}
 		if ($request->enviar){
-			$pasantia->statusPaso3 = 2;
+			$pasantia->statusPaso3 = 3;
 			//Enviar correo
 			$pasantia->save();
 		}
@@ -220,6 +277,12 @@ class PasantiaController extends Controller{
 
 	}
 
+	/**
+   * Muestra el Paso 4
+   * @author Eduardo Pérez
+   * @version v1.0
+   * @return \Illuminate\Http\Response
+   */
 	public function paso4View(){
 		$userId = Auth::id();
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
@@ -235,9 +298,23 @@ class PasantiaController extends Controller{
 			return redirect('/inscripcion/0');
 		}
 	}
+
+	/**
+   * Guarda los datos del proyecto de pasantía
+   * @author Eduardo Pérez
+   * @version v1.0
+   * @return \Illuminate\Http\Response
+   */
 	public function paso4Control(){
 		return redirect('/inscripcion/resumen');
 	}
+
+	/**
+   * Muestra el Resumen de inscripción
+   * @author Eduardo Pérez
+   * @version v1.0
+   * @return \Illuminate\Http\Response
+   */
 	public function resumenView(){
 		$userId = Auth::id();
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
@@ -257,4 +334,23 @@ class PasantiaController extends Controller{
 		}
 	}
 
+	/**
+	 * Elimina la pasantía de la base de datos. (SOLO PARA QA)
+	 * @version v1.0
+	 * @author Eduardo Pérez
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function destroy($id){
+		if (Auth::user()->rol >=4){
+			$userId = Auth::id();
+			$pasantia = Pasantia::where('idAlumno', $userId)->first();
+			$pasantia->delete();
+			return redirect('/inscripcion/0');
+		}
+		else {
+			return redirect('/inscripcion/resumen');
+		}
+
+	}
 }
