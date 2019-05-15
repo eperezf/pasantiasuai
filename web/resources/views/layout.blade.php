@@ -56,7 +56,7 @@
 						<a href="/empresas" class="nav-link"><i class="fas fa-industry"></i> Empresas</a>
 					</li>
 					<li class="nav-item pt-3">
-						<a href="#" class="nav-link"><i class="fas fa-chart-line"></i> Estadisticas </a>
+						@if(Auth::user()->rol >= 4)<a href="#" class="nav-link"><i class="fas fa-chart-line"></i> Estadisticas </a>@endif
 					</li>
 					<li class="nav-item pt-3">
 						<a href="#" class="nav-link"><i class="fas fa-balance-scale"></i> Reglamento </a>
