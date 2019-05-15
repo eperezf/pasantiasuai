@@ -64,9 +64,9 @@ class LoginController extends Controller
 						$located = User::where('email', $email) -> first();
 						if ($located == ""){
 							$user = User::create([
-								'nombres' => ucfirst(strtolower($nombres)),
-								'apellidoPaterno' => ucfirst(strtolower($apellidoPaterno)),
-								'apellidoMaterno' => ucfirst(strtolower($apellidoMaterno)),
+								'nombres' => $nombres,
+								'apellidoPaterno' => $apellidoPaterno,
+								'apellidoMaterno' => $apellidoMaterno,
 								'rut' => $rut,
 								'idCarrera'=> 0,
 								'statusPregrado' => 0,
