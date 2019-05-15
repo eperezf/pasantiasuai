@@ -69,7 +69,12 @@
 					<ul class="navbar-nav">
 						<li class="nav-item">
 							<!-- Nombre de usuario -->
-							<span class="navbar-brand"> Bienvenido {{Auth::user()->nombres}} </span>
+							<span class="navbar-brand"> Bienvenido 
+								<!-- Transforma todo a minuscula y el primero lo hace mayuscula -->
+								{{ucfirst(strtolower(Auth::user()->nombres))}}
+								{{ucfirst(strtolower(Auth::user()->apellidoPaterno))}}
+								{{ucfirst(strtolower(Auth::user()->apellidoMaterno))}} 
+							</span>
 						</li>
 					</ul>
 					<!-- Boton Perfil -->
