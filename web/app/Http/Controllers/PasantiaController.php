@@ -92,7 +92,7 @@ class PasantiaController extends Controller{
 	public function paso2View(){
 		$userId = Auth::id();
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
-		$empresas = Empresa::all();
+		$empresas = Empresa::all()->sortBy('nombre');
 		if ($pasantia && $pasantia->statusPaso0==2){
 			return view('pasantia.paso2', [
 				'statusPaso0'=>$pasantia->statusPaso0,
