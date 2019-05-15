@@ -154,8 +154,13 @@ class PasantiaController extends Controller{
 			$incompleto = true;
 		}
 		if ($request->horas){
-			$pasantia->horasSemanales = $request->horas;
-			$pasantia->save();
+			if ($request->horas < 0 || $request->horas > 45){
+				return redirect('/inscripcion/2');
+			}
+			else{
+				$pasantia->horasSemanales = $request->horas;
+				$pasantia->save();
+			}
 		}
 		else {
 			$incompleto = true;
