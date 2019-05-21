@@ -42,7 +42,7 @@
 			      <th scope="row">{{$empresa->idEmpresa}}</th>
 			      <td>{{$empresa->nombre}}</td>
 			      <td>{{$empresa->rubro}}</td>
-						<td>@if($empresa->status == 1)Activo @else Inactivo @endif</td>
+						<td>@if($empresa->status == 1)Activo @elseif($empresa->status == 2)Solicitado por alumno @else Inactivo @endif</td>
 			      <td><a href="http://{{$empresa->urlWeb}}">{{$empresa->urlWeb}}</a></td>
 						<td><a href="mailto:{{$empresa->correoContacto}}">{{$empresa->correoContacto}}</a></td>
 						@if(Auth::user()->rol >= 4)

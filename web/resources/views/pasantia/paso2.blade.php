@@ -12,15 +12,20 @@
 	</div>
 	<div class="row justify-content-md-center mb-5">
 		<div class="col-md-6">
+			@if(session()->get('danger'))
+			<div class="alert alert-danger">
+				{{session()->get('danger')}}
+			</div>
+			@endif
 			<form method="post" action="{{ route('inscripcion.2.post') }}">
 				@csrf
 				<div class="form-group">
 			    <label for="empresa">Empresa en la que trabajarás</label>
-			    <select class="form-control" id="empresa" name="empresa">
+			    <select class="form-control" id="empresa" name="empresa" @if($empresaSel->status == 2) disabled @endif>
 						@foreach($empresas as $empresa)
 							@if ($empresa->status === 1)
 								<option value="{{$empresa->idEmpresa}}"
-								@if($empresaSel == $empresa->idEmpresa)
+								@if($empresaSel->idEmpresa == $empresa->idEmpresa)
 									selected
 								@endif>
 								{{$empresa->nombre}}
@@ -31,10 +36,10 @@
 					<div class="input-group mb-3 mt-3">
 					  <div class="input-group-prepend">
 					    <div class="input-group-text">
-					      Mi empresa no está en la lista <input type="checkbox" class="ml-2" onclick="document.getElementById('otraEmpresa').disabled = !document.getElementById('otraEmpresa').disabled; document.getElementById('empresa').disabled = !document.getElementById('empresa').disabled;">
+					      Mi empresa no está en la lista <input type="checkbox" id="otraEmpresa" @if($empresaSel->status == 2) checked @endif name="otraEmpresa" value="1" class="ml-2" onclick="document.getElementById('nombreOtraEmpresa').disabled = !document.getElementById('nombreOtraEmpresa').disabled; document.getElementById('empresa').disabled = !document.getElementById('empresa').disabled;">
 					    </div>
 					  </div>
-					  <input type="text" class="form-control" id="otraEmpresa" name="otraEmpresa" placeholder="Nombre de la empresa" disabled>
+					  <input type="text" class="form-control" id="nombreOtraEmpresa" name="nombreOtraEmpresa" placeholder="Nombre de la empresa" @if($empresaSel->status == 2) value="{{$empresaSel->nombre}}" @else disabled @endif >
 					</div>
 			  </div>
 				<div class="form-group">
@@ -64,11 +69,6 @@
 						<label class="form-check-label" for="parientesi">Sí</label>
 					</div>
 				</div>
-				@if(session()->get('danger'))
-				<div class="alert alert-danger">
-					{{session()->get('danger')}}
-				</div>
-				@endif
 				<button type="submit" class="btn btn-primary mt-3">Continuar</button>
 			</form>
 		</div>

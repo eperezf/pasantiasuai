@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use App\User;
 use App\Pasantia;
 use App\Empresa;
@@ -118,13 +119,23 @@ class PasantiaController extends Controller{
 	/**
    * Muestra el Paso 2
    * @author Eduardo Pérez
-   * @version v1.0
+   * @version v1.1
    * @return \Illuminate\Http\Response
    */
 	public function paso2View(){
 		$userId = Auth::id();
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
 		$empresas = Empresa::all()->sortBy('nombre');
+		$empresaSel = Empresa::where('idEmpresa', $pasantia->idEmpresa)->first();
+		if (!$empresaSel){
+			$empresaSel = new Empresa([
+				'nombre'=>"",
+				'rubro'=>"",
+				'urlWeb'=>"",
+				'correoContacto'=>"",
+				'status'=>"0"
+			]);
+		}
 		if ($pasantia && $pasantia->statusPaso0==2){
 			return view('pasantia.paso2', [
 				'statusPaso0'=>$pasantia->statusPaso0,
@@ -133,7 +144,7 @@ class PasantiaController extends Controller{
 				'statusPaso3'=>$pasantia->statusPaso3,
 				'statusPaso4'=>$pasantia->statusPaso4,
 				'empresas'=>$empresas,
-				'empresaSel'=>$pasantia->idEmpresa,
+				'empresaSel'=>$empresaSel,
 				'ciudad'=>$pasantia->ciudad,
 				'pais'=>$pasantia->pais,
 				'fecha'=>$pasantia->fechaInicio,
@@ -149,7 +160,7 @@ class PasantiaController extends Controller{
 	/**
    * Guarda los datos de la pasantía
    * @author Eduardo Pérez
-   * @version v1.0
+   * @version v1.3
 	 * @param  \Illuminate\Http\Request  $request
    * @return \Illuminate\Http\Response
    */
@@ -158,6 +169,16 @@ class PasantiaController extends Controller{
 		$userId = Auth::id();
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
 		$pasantia->parienteEmpresa = $request->pariente;
+		$empresaSel = Empresa::where('idEmpresa', $pasantia->idEmpresa)->first();
+		if(!$empresaSel){
+			$empresaSel = new Empresa([
+				'nombre'=>null,
+				'rubro'=>null,
+				'urlWeb'=>null,
+				'correoContacto'=>null,
+				'status'=>"2"
+			]);
+		}
 		$pasantia->save();
 		if ($request->pariente == 1){
 			$pasantia->idEmpresa = null;
@@ -171,9 +192,33 @@ class PasantiaController extends Controller{
 			$pasantia->save();
 		}
 		else {
-			$pasantia->idEmpresa = null;
-			$pasantia->save();
-			$incompleto = true;
+			if (!$request->otraEmpresa){
+				$pasantia->idEmpresa = null;
+				$pasantia->save();
+				$incompleto = true;
+			}
+		}
+		if ($request->otraEmpresa && $request->nombreOtraEmpresa){
+			if ($request->nombreOtraEmpresa != $empresaSel->nombre){
+				if(Empresa::where('nombre', $request->nombreOtraEmpresa)->first()){
+					$pasantia->idEmpresa = Empresa::where('nombre', $request->nombreOtraEmpresa)->first()->idEmpresa;
+				}
+				else {
+					$empresa = new Empresa([
+						'nombre'=>$request->get('nombreOtraEmpresa'),
+						'rubro'=>"Rubro " . $request->get('nombreOtraEmpresa'),
+						'urlWeb'=>Str::slug($request->get('nombreOtraEmpresa')).".com",
+						'correoContacto'=>"contacto@".Str::slug($request->get('nombreOtraEmpresa')).".com",
+						'status'=>"2"
+					]);
+					$empresa->save();
+					$pasantia->idEmpresa = $empresa->idEmpresa;
+					$pasantia->save();
+				}
+			}
+		}
+		else {
+			return redirect('/inscripcion/2')->with('danger', 'El nombre de la empresa no puede estar en blanco.');
 		}
 
 		if ($request->ciudad){
