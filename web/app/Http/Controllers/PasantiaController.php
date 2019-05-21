@@ -162,10 +162,10 @@ class PasantiaController extends Controller{
 		if ($request->pariente == 1){
 			$pasantia->idEmpresa = null;
 			$pasantia->statusPaso2 = 1;
+			$pasantia->parienteEmpresa = 0;
 			$pasantia->save();
 			return redirect('/inscripcion/2')->with('danger', 'No puede inscribir su pasantía en una empresa en la que tiene un familiar que trabaja en la empresa o es socio/dueño de esta, por favor inscriba su pasantía en otra empresa (Su empresa ha sido deseleccionada).');
 		}
-
 		if ($request->empresa){
 			$pasantia->idEmpresa = $request->empresa;
 			$pasantia->save();
