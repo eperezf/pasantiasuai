@@ -21,13 +21,21 @@
 							@if ($empresa->status === 1)
 								<option value="{{$empresa->idEmpresa}}"
 								@if($empresaSel == $empresa->idEmpresa)
-									selected 
+									selected
 								@endif>
 								{{$empresa->nombre}}
 								</option>
 							@endif
 						@endforeach
 			    </select>
+					<div class="input-group mb-3 mt-3">
+					  <div class="input-group-prepend">
+					    <div class="input-group-text">
+					      Mi empresa no está en la lista <input type="checkbox" class="ml-2" onclick="document.getElementById('otraEmpresa').disabled = !document.getElementById('otraEmpresa').disabled; document.getElementById('empresa').disabled = !document.getElementById('empresa').disabled;">
+					    </div>
+					  </div>
+					  <input type="text" class="form-control" id="otraEmpresa" name="otraEmpresa" placeholder="Nombre de la empresa" disabled>
+					</div>
 			  </div>
 				<div class="form-group">
 			    <label for="ciudad">Ciudad en la que harás la pasantía</label>
