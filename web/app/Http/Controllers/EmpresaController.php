@@ -34,11 +34,11 @@ class EmpresaController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function create(){
-			if (Auth::user()->role >=4){
+			if (Auth::user()->rol >=4){
 				return view('empresa.create');
 			}
       else {
-				return view('empresa.index');
+				return redirect('/empresas');
 			}
     }
 
@@ -50,10 +50,14 @@ class EmpresaController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
-			if (Auth::user()->role >=4){
+			if (Auth::user()->rol >=4){
 				if ($request->status == NULL){
 					$request->status = 0;
 				};
+				if (!str_contains($request->get('urlWeb'), 'https://') ||
+					!str_contains($request->get('urlWeb'), 'http://')){
+					$request->merge(['urlWeb' => 'http://' . $request->get('urlWeb')]);
+				}
 
 				$request->validate(
 					['nombre'=>'required|unique:empresa'],
@@ -127,6 +131,11 @@ class EmpresaController extends Controller{
 				if ($request->status == NULL){
 					$request->status = 0;
 				};
+				if (!str_contains($request->get('urlWeb'), 'https://') ||
+					!str_contains($request->get('urlWeb'), 'http://')){
+					$request->merge(['urlWeb' => 'http://' . $request->get('urlWeb')]);
+				}
+
 				$empresa = Empresa::find($id);
 				$empresa->nombre = $request->get('nombre');
 				$empresa->rubro = $request->get('rubro');
@@ -150,7 +159,7 @@ class EmpresaController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function destroy($id){
-			if (Auth::user()->role >=4){
+			if (Auth::user()->rol >=4){
 				$empresa = Empresa::find($id);
 				$empresa->delete();
 				return redirect('/empresas')->with('success', 'Empresa eliminada correctamente');
