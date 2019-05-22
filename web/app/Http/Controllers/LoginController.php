@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use App\User;
+use App\AuthUsers;
 
 class LoginController extends Controller
 {
@@ -34,6 +35,9 @@ class LoginController extends Controller
   		$usefulinfo = array("ou", "sn", "givenname", "mail", "employeeid", "distinguishedname");
 			if (Str::endsWith($email, 'alumnos.uai.cl')){
 				//Es un alumno. Cambiamos arbol LDAP.
+				if (!$autorizado = AuthUsers::where('email', $email)->first()){
+					return redirect('/login')->with('danger', 'Usted no está autorizado para utilizar este sistema');
+				}
 				$ldaptree = "OU=Live@Edu,DC=uai,DC=cl";
 	  		$usefulinfo = array("ou", "sn", "givenname", "mail", "employeeid", "distinguishedname");
 			}
