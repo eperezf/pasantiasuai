@@ -28,7 +28,6 @@ class User extends Authenticatable{
 			'statusOmega',
 			'statusWebcursos',
 			'rol',
-			'tipoMalla',
 			'email',
 			'password'
     ];

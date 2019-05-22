@@ -67,9 +67,6 @@ class LoginController extends Controller
 						$grupo = $org_arr[4];
 						$located = User::where('email', $email) -> first();
 						if ($located == ""){
-							$authUser = AuthUsers::where('email', $email)->first();
-
-							$tipoMalla = $authUser->tipoMalla;
 							$user = User::create([
 								'nombres' => ucfirst(strtolower($nombres)),
 								'apellidoPaterno' => ucfirst(strtolower($apellidoPaterno)),
@@ -80,7 +77,6 @@ class LoginController extends Controller
 								'statusOmega' => 0,
 								'statusWebcursos'=> 0,
 								'rol' => 1,
-								'tipoMalla'=>$tipoMalla,
 								'email' => $email,
 								'password' => 'INTUAI'
 							]);
