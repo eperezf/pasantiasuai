@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use App\User;
+use App\AuthUsers;
 
 class LoginController extends Controller
 {
@@ -34,6 +35,9 @@ class LoginController extends Controller
   		$usefulinfo = array("ou", "sn", "givenname", "mail", "employeeid", "distinguishedname");
 			if (Str::endsWith($email, 'alumnos.uai.cl')){
 				//Es un alumno. Cambiamos arbol LDAP.
+				if (!AuthUsers::where('email', $email)->first()){
+					return redirect('/login')->with('danger', 'Usted no está autorizado para utilizar este sistema');
+				}
 				$ldaptree = "OU=Live@Edu,DC=uai,DC=cl";
 	  		$usefulinfo = array("ou", "sn", "givenname", "mail", "employeeid", "distinguishedname");
 			}
@@ -63,16 +67,20 @@ class LoginController extends Controller
 						$grupo = $org_arr[4];
 						$located = User::where('email', $email) -> first();
 						if ($located == ""){
+							$authUser = AuthUsers::where('email', $email)->first();
+
+							$tipoMalla = $authUser->tipoMalla;
 							$user = User::create([
-								'nombres' => $nombres,
-								'apellidoPaterno' => $apellidoPaterno,
-								'apellidoMaterno' => $apellidoMaterno,
+								'nombres' => ucfirst(strtolower($nombres)),
+								'apellidoPaterno' => ucfirst(strtolower($apellidoPaterno)),
+								'apellidoMaterno' => ucfirst(strtolower($apellidoMaterno)),
 								'rut' => $rut,
 								'idCarrera'=> 0,
 								'statusPregrado' => 0,
 								'statusOmega' => 0,
 								'statusWebcursos'=> 0,
 								'rol' => 1,
+								'tipoMalla'=>$tipoMalla,
 								'email' => $email,
 								'password' => 'INTUAI'
 							]);
