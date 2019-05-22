@@ -10,6 +10,7 @@ class AuthUsers extends Model
 	protected $primaryKey = 'idAuthUsers';
 	public $timestamps = false;
 	protected $fillable = [
-		'email'
+		'email',
+		'tipo'
 	];
 }
