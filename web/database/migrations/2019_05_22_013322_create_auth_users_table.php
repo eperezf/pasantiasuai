@@ -25,6 +25,7 @@ class CreateAuthusersTable extends Migration
             $table->string('email', 45);
             $table->unique(["idAuthUsers"], 'idAuthUsers_UNIQUE');
             $table->unique(["email"], 'email_UNIQUE');
+						$table->integer('tipoMalla');
         });
     }
 

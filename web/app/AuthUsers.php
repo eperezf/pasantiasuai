@@ -11,6 +11,6 @@ class AuthUsers extends Model
 	public $timestamps = false;
 	protected $fillable = [
 		'email',
-		'tipo'
+		'tipoMalla'
 	];
 }

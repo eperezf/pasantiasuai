@@ -17,7 +17,7 @@ class AuthUsersImport implements ToModel, WithHeadingRow
     {
         return new AuthUsers([
             'email'=> $row['email'],
-						'tipo'=>$row['tipo']
+						'tipoMalla'=>$row['tipoMalla']
         ]);
     }
 }

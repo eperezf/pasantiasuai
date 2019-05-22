@@ -35,7 +35,7 @@ class LoginController extends Controller
   		$usefulinfo = array("ou", "sn", "givenname", "mail", "employeeid", "distinguishedname");
 			if (Str::endsWith($email, 'alumnos.uai.cl')){
 				//Es un alumno. Cambiamos arbol LDAP.
-				if (!$autorizado = AuthUsers::where('email', $email)->first()){
+				if (!AuthUsers::where('email', $email)->first()){
 					return redirect('/login')->with('danger', 'Usted no está autorizado para utilizar este sistema');
 				}
 				$ldaptree = "OU=Live@Edu,DC=uai,DC=cl";
@@ -67,6 +67,9 @@ class LoginController extends Controller
 						$grupo = $org_arr[4];
 						$located = User::where('email', $email) -> first();
 						if ($located == ""){
+							$authUser = AuthUsers::where('email', $email)->first();
+
+							$tipoMalla = $authUser->tipoMalla;
 							$user = User::create([
 								'nombres' => ucfirst(strtolower($nombres)),
 								'apellidoPaterno' => ucfirst(strtolower($apellidoPaterno)),
@@ -77,6 +80,7 @@ class LoginController extends Controller
 								'statusOmega' => 0,
 								'statusWebcursos'=> 0,
 								'rol' => 1,
+								'tipoMalla'=>$tipoMalla,
 								'email' => $email,
 								'password' => 'INTUAI'
 							]);
