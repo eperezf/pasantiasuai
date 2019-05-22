@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\User;
+use App\AuthUsers;
 use App\Pasantia;
 use App\Empresa;
 use Auth;
@@ -88,13 +89,18 @@ class PasantiaController extends Controller{
 	public function paso1View(){
 		$userId = Auth::id();
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
+		$tipoMalla = AuthUsers::where('email', Auth::user()->email)->first()->tipoMalla;
+
 		if ($pasantia && $pasantia->statusPaso0==2){
+			$pasantia->modalidad = $tipoMalla;
+			$pasantia->save();
 			return view('pasantia.paso1',[
 				'statusPaso0'=>$pasantia->statusPaso0,
 				'statusPaso1'=>$pasantia->statusPaso1,
 				'statusPaso2'=>$pasantia->statusPaso2,
 				'statusPaso3'=>$pasantia->statusPaso3,
-				'statusPaso4'=>$pasantia->statusPaso4]);
+				'statusPaso4'=>$pasantia->statusPaso4,
+				'tipoMalla'=>$tipoMalla]);
 		}
 		else {
 			return redirect('/inscripcion/0');
