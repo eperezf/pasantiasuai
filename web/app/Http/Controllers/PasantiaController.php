@@ -245,7 +245,7 @@ class PasantiaController extends Controller{
 			$incompleto = true;
 		}
 		if ($request->horas){
-			if ($request->horas < 0 || $request->horas > 45){
+			if ($request->horas < 25 || $request->horas > 45){
 				return redirect('/inscripcion/2');
 			}
 			else{
