@@ -46,6 +46,7 @@
 			@endif
 		</ul>
 	</div>
+	@if(Auth::user()->rol >= 4)
 	<div class="row justify-content-md-center mb-5">
 		<form style="display: inline-block;" action="{{ url('inscripcion/destroy', $pasantia->idPasantia)}}" method="post">
 			@csrf
@@ -53,5 +54,6 @@
 			<button class="btn btn-danger" type="submit">Eliminar</button>
 				</form>
 	</div>
+	@endif
 </div>
 @endsection
