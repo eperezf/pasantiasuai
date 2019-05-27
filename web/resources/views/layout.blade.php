@@ -47,10 +47,10 @@
 				<!-- Elementos del menu sidebar -->
 				<ul class="list-unstyled navbar-nav pl-2">
 					<li class="nav-item pt-3">
-						<a href="#" class="nav-link"><i class="fa fa-home"></i> Inicio</a>
+						<a href="/" class="nav-link"><i class="fa fa-home"></i> Inicio</a>
 					</li>
 					<li class="nav-item pt-3">
-						<a href="{{route('inscripcion.resumen')}}" class="nav-link"><i class="fas fa-paste"></i>Pasantia</a>
+						<a href="{{route('inscripcion.resumen')}}" class="nav-link"><i class="fas fa-paste"></i> Pasantia</a>
 					</li>
 					<li class="nav-item pt-3">
 						<a href="/empresas" class="nav-link"><i class="fas fa-industry"></i> Empresas</a>
