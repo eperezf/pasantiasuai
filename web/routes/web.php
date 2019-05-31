@@ -15,10 +15,12 @@ Route::get('/', function () {
 	return view('index');
 })->middleware('auth');
 
-Route::resource('/empresas', 'EmpresaController')->middleware('auth');;
-Route::resource('/admin', 'GraficasController')->middleware('auth');;
+Route::resource('/empresas', 'EmpresaController')->middleware('auth');
+Route::resource('/admin/estadisticas', 'GraficasController')->middleware('auth');
+Route::resource('/admin/importarlista', 'ListadoController')->middleware('auth');
 
-Route::resource('/perfil', 'PerfilController')->middleware('auth');;
+Route::resource('/perfil', 'PerfilController')->middleware('auth');
+
 
 Route::get('/login', function(){
 	return view('login');
