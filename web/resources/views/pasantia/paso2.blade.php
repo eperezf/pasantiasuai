@@ -67,27 +67,6 @@
 						<label for="pais">Describa el parentesco, rol y relación de su pariente en la empresa</label>
 						<input class="form-control" id="rolPariente" name="rolPariente" placeholder="Ej.: Mi padre, subgerente de finanzas, no estará en mi misma área." @if($rolPariente) value="{{$rolPariente}}" @else @endif>
 					</div>
-					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" name="relacionCargo" id="relacionCargoSi" onclick="document.getElementById('tipoPariente').style.display = 'block';">
-						<label class="form-check-label" for="relacionCargoSi">Sí</label>
-					</div>
-				</div>
-
-				<div class="form-group" id="tipoPariente" style="display: none;">
-					<div class="card text-white bg-warning">
-						<div class="card-header">
-							<h4 class="text-center">¡Atención!</h4>
-						</div>
-						<div class="card-body">
-							<h6 class="card-title text-center">Su pasantía quedará en espera hasta que sea autorizada por el administrador. Para contactarse con la administración debe enviar un correo a la gestión de pasantías de la Universidad.</h6>
-							<p class="card-text text-center">mail:
-								<a href="mailto:pasantias.fic@uai.cl" class="text-white">pasantias.fic@uai.cl</a></p>
-						</div>
-					</div>
-					<div class="form-group mt-3">
-						<label for="cargoPariente">Describa el cargo de su pariente respecto a usted</label>
-						<input type="text" class="form-control" id="cargoPariente" name="cargoPariente" placeholder="Cargo de su pariente">
-					</div>
 				</div>
 				<div class="form-group">
 					<button type="submit" class="btn btn-primary mt-3">Continuar</button>
