@@ -155,7 +155,8 @@ class PasantiaController extends Controller{
 				'pais'=>$pasantia->pais,
 				'fecha'=>$pasantia->fechaInicio,
 				'horas'=>$pasantia->horasSemanales,
-				'pariente'=>$pasantia->parienteEmpresa
+				'pariente'=>$pasantia->parienteEmpresa,
+				'rolPariente' =>$pasantia->rolPariente
 			]);
 		}
 		else {
@@ -166,46 +167,29 @@ class PasantiaController extends Controller{
 	/**
    * Guarda los datos de la pasantía
    * @author Eduardo Pérez
-   * @version v1.3
+   * @version v2.0
 	 * @param  \Illuminate\Http\Request  $request
    * @return \Illuminate\Http\Response
    */
 	public function paso2Control(Request $request){
-		$incompleto = false;
+		$request->validate([
+			'empresa' => 'numeric|nullable',
+			'ciudad' => 'alpha|nullable',
+			'pais' => 'alpha|nullable',
+			//TODO: Validación de fecha
+			'horas' => 'integer|between:25,45|nullable',
+			'pariente' => 'boolean|nullable',
+			'otraEmpresa' => 'boolean|nullable'
+			//TODO: Validación de rol de pariente
+		]);
 		$userId = Auth::id();
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
-		$pasantia->parienteEmpresa = $request->pariente;
-		$empresaSel = Empresa::where('idEmpresa', $pasantia->idEmpresa)->first();
-		if(!$empresaSel){
-			$empresaSel = new Empresa([
-				'nombre'=>null,
-				'rubro'=>null,
-				'urlWeb'=>null,
-				'correoContacto'=>null,
-				'status'=>"2"
-			]);
-		}
-		$pasantia->save();
-		if ($request->pariente == 1){
-			$pasantia->idEmpresa = null;
-			$pasantia->statusPaso2 = 1;
-			$pasantia->parienteEmpresa = 0;
-			$pasantia->save();
-			return redirect('/inscripcion/2')->with('danger', 'No puede inscribir su pasantía en una empresa en la que tiene un familiar que trabaja en la empresa o es socio/dueño de esta, por favor inscriba su pasantía en otra empresa (Su empresa ha sido deseleccionada).');
-		}
-		if ($request->empresa){
-			$pasantia->idEmpresa = $request->empresa;
-			$pasantia->save();
-		}
-		else {
-			if (!$request->otraEmpresa){
-				$pasantia->idEmpresa = null;
-				$pasantia->save();
-				$incompleto = true;
+		$incompleto = false;
+		if ($request->otraEmpresa){
+			if (!$request->nombreOtraEmpresa){
+				return redirect('/inscripcion/2')->with('danger', 'El nombre de la empresa no puede estar en blanco.');
 			}
-		}
-		if ($request->otraEmpresa && $request->nombreOtraEmpresa){
-			if ($request->nombreOtraEmpresa != $empresaSel->nombre){
+			else {
 				if(Empresa::where('nombre', $request->nombreOtraEmpresa)->first()){
 					$pasantia->idEmpresa = Empresa::where('nombre', $request->nombreOtraEmpresa)->first()->idEmpresa;
 				}
@@ -219,57 +203,39 @@ class PasantiaController extends Controller{
 					]);
 					$empresa->save();
 					$pasantia->idEmpresa = $empresa->idEmpresa;
-					$pasantia->save();
 				}
 			}
 		}
-		else {
-			return redirect('/inscripcion/2')->with('danger', 'El nombre de la empresa no puede estar en blanco.');
-		}
-
-		if ($request->ciudad){
-			$pasantia->ciudad = $request->ciudad;
-			$pasantia->save();
-		}
-		else {
-			$pasantia->ciudad = null;
-			$pasantia->save();
+		if (!$request->pais || !$request->ciudad || !$request->fecha || !$request->horas){
 			$incompleto = true;
 		}
-		if ($request->pais){
-			$pasantia->pais = $request->pais;
-			$pasantia->save();
-		}
-		else {
-			$incompleto = true;
-		}
-		if ($request->fecha){
-			$pasantia->fechaInicio = $request->fecha;
-			$pasantia->save();
-		}
-		else {
-			$incompleto = true;
-		}
-		if ($request->horas){
-			if ($request->horas < 25 || $request->horas > 45){
-				return redirect('/inscripcion/2');
+		if ($request->pariente == 1){
+			$pasantia->parienteEmpresa = 1;
+			if (!$request->rolPariente){
+				return redirect('/inscripcion/2')->with('danger', 'El rol del pariente no puede estar en blanco.');
 			}
-			else{
-				$pasantia->horasSemanales = $request->horas;
-				$pasantia->save();
+			else {
+				$pasantia->rolPariente = $request->rolPariente;
 			}
 		}
 		else {
-			$incompleto = true;
+			$pasantia->parienteEmpresa = 0;
+			$pasantia->rolPariente = null;
 		}
 		if ($incompleto == true){
 			$pasantia->statusPaso2 = 1;
-			$pasantia->save();
 		}
 		else {
 			$pasantia->statusPaso2 = 2;
-			$pasantia->save();
 		}
+		if ($request->pariente == 1){
+			$pasantia->statusPaso2 = 3;
+		}
+		$pasantia->pais = $request->pais;
+		$pasantia->ciudad = $request->ciudad;
+		$pasantia->fechaInicio = $request->fecha;
+		$pasantia->horasSemanales = $request->horas;
+		$pasantia->save();
 		return redirect('/inscripcion/3');
 	}
 
