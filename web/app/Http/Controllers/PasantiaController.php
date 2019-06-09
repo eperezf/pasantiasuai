@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 use App\User;
 use App\AuthUsers;
 use App\Pasantia;
 use App\Empresa;
 use Auth;
+
 
 class PasantiaController extends Controller{
 	/**
@@ -176,7 +178,7 @@ class PasantiaController extends Controller{
 			'empresa' => 'numeric|nullable',
 			'ciudad' => 'alpha|nullable',
 			'pais' => 'alpha|nullable',
-			//TODO: Validación de fecha
+			'fecha' => 'required|date',
 			'horas' => 'integer|between:25,45|nullable',
 			'pariente' => 'boolean|nullable',
 			'otraEmpresa' => 'boolean|nullable'
@@ -212,6 +214,18 @@ class PasantiaController extends Controller{
 		if (!$request->pais || !$request->ciudad || !$request->fecha || !$request->horas){
 			$incompleto = true;
 		}
+
+
+		if ($request->fecha){
+			$fechaInicio = Carbon::parse($request->fecha);
+			if ($request->fecha <= today()) {
+				return redirect('/inscripcion/2')->with('danger', 'La fecha de inicio de su pasantía no puede ser antes que la de hoy.');
+			} 
+			if ($fechaInicio->diffInMonths(today()) > 6) {
+				return redirect('/inscripcion/2')->with('danger', 'La fecha de inicio de su pasantía debe ser en menos de 6 meses.');
+			}
+		}
+
 		if ($request->pariente == 1){
 			$pasantia->parienteEmpresa = 1;
 			if (!$request->rolPariente){
