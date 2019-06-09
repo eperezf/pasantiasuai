@@ -31,7 +31,7 @@
 					<div class="input-group mb-3 mt-3">
 						<div class="input-group-prepend">
 							<div class="input-group-text">
-								Mi empresa no está en la lista <input type="checkbox" id="otraEmpresa" @if($empresaSel->status == 2) checked @endif name="otraEmpresa" value="1" class="ml-2" onclick="document.getElementById('nombreOtraEmpresa').disabled = !document.getElementById('nombreOtraEmpresa').disabled; document.getElementById('empresa').disabled = !document.getElementById('empresa').disabled;">
+								Convenio en proceso de firma <input type="checkbox" id="otraEmpresa" @if($empresaSel->status == 2) checked @endif name="otraEmpresa" value="1" class="ml-2" onclick="document.getElementById('nombreOtraEmpresa').disabled = !document.getElementById('nombreOtraEmpresa').disabled; document.getElementById('empresa').disabled = !document.getElementById('empresa').disabled;">
 							</div>
 						</div>
 						<input type="text" class="form-control" id="nombreOtraEmpresa" name="nombreOtraEmpresa" placeholder="Nombre de la empresa" @if($empresaSel->status == 2) value="{{$empresaSel->nombre}}" @else disabled @endif >
@@ -56,25 +56,16 @@
 				<div class="form-group">
 					<p>Tengo un familiar que trabaja en la empresa o es socio/dueño de esta</p>
 					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" name="pariente" id="parienteno" value="0" @if($pariente==0) checked @else @endif onclick="document.getElementById('tipoPariente').style.display = 'none';">
+						<input class="form-check-input" type="radio" name="pariente" id="pariente" value="0" @if($pariente==0) checked @else @endif onclick="document.getElementById('tipoPariente').style.display = 'none';">
 						<label class="form-check-label" for="parienteno">No</label>
 					</div>
 					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" name="pariente" id="parientesi" value="1" @if($pariente==1) checked @else @endif onclick="document.getElementById('tipoPariente').style.display = 'block';">
+						<input class="form-check-input" type="radio" name="pariente" id="pariente" value="1" @if($pariente==1) checked @else @endif onclick="document.getElementById('tipoPariente').style.display = 'block';">
 						<label class="form-check-label" for="parientesi">Sí</label>
 					</div>
-					<div class="form-group mt-2" id="tipoPariente" style="display: none;">
-						<label for="tipoPariente">Especifique el rol que tendrá su pariente respecto a usted en la empresa</label>
-						<select class="form-control" id="selectTipoPariente" name="pariente">
-						<option value="" disabled selected>Seleccione su rol</option>
-							<option value="0">Dueño</option>
-							<option value="0">Corporativo</option>
-							<option value="1">Gerente</option>
-							<option value="1">Subgerente</option>
-							<option value="1">Jefe de área</option>
-							<option value="0">Compañero</option>
-							<option value="0">Subordinado</option>
-						</select>
+					<div class="form-group" id="tipoPariente" @if($pariente==1) @else style="display: none;" @endif>
+						<label for="pais">Describa el parentesco, rol y relación de su pariente en la empresa</label>
+						<input class="form-control" id="rolPariente" name="rolPariente" placeholder="Ej.: Mi padre, subgerente de finanzas, no estará en mi misma área." @if($rolPariente) value="{{$rolPariente}}" @else @endif>
 					</div>
 				<div class="form-group">
 					<button type="submit" class="btn btn-primary mt-3">Continuar</button>

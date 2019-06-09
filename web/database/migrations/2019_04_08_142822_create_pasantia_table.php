@@ -44,6 +44,7 @@ class CreatePasantiaTable extends Migration
             $table->string('pais', 45)->nullable();
             $table->integer('horasSemanales')->nullable();
             $table->tinyInteger('parienteEmpresa')->nullable();
+						$table->string('rolPariente')->nullable();
 						$table->timestamps();
 
             $table->index("idEmpresa");
