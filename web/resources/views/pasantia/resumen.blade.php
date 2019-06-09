@@ -31,6 +31,8 @@
 				<li class="list-group-item list-group-item-success"><i class="fas fa-check"></i> Comenzarás el {{$pasantia->fechaInicio}} trabajando {{$pasantia->horasSemanales}} horas semanales. </li>
 			@elseif($statusPaso2 == 1)
 				<li class="list-group-item list-group-item-warning"><i class="fas fa-exclamation"></i> Faltan uno o más datos del paso 2.</li>
+			@elseif($statusPaso2 == 3)
+				<li class="list-group-item list-group-item-warning"><i class="fas fa-exclamation"></i> Su pasantía está en espera de aprobación por familiar en la empresa.</li>
 			@else
 				<li class="list-group-item list-group-item-warning"><i class="fas fa-exclamation"></i> No has iniciado el paso 2.</li>
 			@endif
