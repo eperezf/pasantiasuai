@@ -206,6 +206,9 @@ class PasantiaController extends Controller{
 				}
 			}
 		}
+		else {
+			$pasantia->idEmpresa = Empresa::where('idEmpresa', $request->empresa)->first()->idEmpresa;
+		}
 		if (!$request->pais || !$request->ciudad || !$request->fecha || !$request->horas){
 			$incompleto = true;
 		}
