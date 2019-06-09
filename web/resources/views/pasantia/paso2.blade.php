@@ -56,26 +56,46 @@
 				<div class="form-group">
 					<p>Tengo un familiar que trabaja en la empresa o es socio/dueño de esta</p>
 					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" name="pariente" id="parienteno" value="0" @if($pariente==0) checked @else @endif onclick="document.getElementById('tipoPariente').style.display = 'none';">
+						<input class="form-check-input" type="radio" name="pariente" id="parienteno" value="0" @if($pariente==0) checked @else @endif onclick="
+						document.getElementById('relacionCargo').style.display = 'none';
+						document.getElementById('relacionCargoSi').checked = false; 
+						document.getElementById('tipoPariente').style.display = 'none';">
 						<label class="form-check-label" for="parienteno">No</label>
 					</div>
 					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" name="pariente" id="parientesi" value="1" @if($pariente==1) checked @else @endif onclick="document.getElementById('tipoPariente').style.display = 'block';">
+						<input class="form-check-input" type="radio" name="pariente" id="parientesi" value="1" @if($pariente==1) checked @else @endif onclick="document.getElementById('relacionCargo').style.display = 'block';">
 						<label class="form-check-label" for="parientesi">Sí</label>
 					</div>
-					<div class="form-group mt-2" id="tipoPariente" style="display: none;">
-						<label for="tipoPariente">Especifique el rol que tendrá su pariente respecto a usted en la empresa</label>
-						<select class="form-control" id="selectTipoPariente" name="pariente">
-						<option value="" disabled selected>Seleccione su rol</option>
-							<option value="0">Dueño</option>
-							<option value="0">Corporativo</option>
-							<option value="1">Gerente</option>
-							<option value="1">Subgerente</option>
-							<option value="1">Jefe de área</option>
-							<option value="0">Compañero</option>
-							<option value="0">Subordinado</option>
-						</select>
+				</div>
+
+				<div class="form-group" id="relacionCargo" style="display: none;">
+					<p>¿Su pariente tendrá una relación con el cargo que usted desempeñará?</p>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" name="relacionCargo" id="relacionCargoNo" onclick="document.getElementById('tipoPariente').style.display = 'none';">
+						<label class="form-check-label" for="relacionCargoNo">No</label>
 					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input" type="radio" name="relacionCargo" id="relacionCargoSi" onclick="document.getElementById('tipoPariente').style.display = 'block';">
+						<label class="form-check-label" for="relacionCargoSi">Sí</label>
+					</div>
+				</div>
+
+				<div class="form-group" id="tipoPariente" style="display: none;">
+					<div class="card text-white bg-warning">
+						<div class="card-header">
+							<h4 class="text-center">¡Atención!</h4>
+						</div>
+						<div class="card-body">
+							<h6 class="card-title text-center">Su pasantía quedará en espera hasta que sea autorizada por el administrador. Para contactarse con la administración debe enviar un correo a la gestión de pasantías de la Universidad.</h6>
+							<p class="card-text text-center">mail:
+								<a href="mailto:pasantias.fic@uai.cl" class="text-white">pasantias.fic@uai.cl</a></p>
+						</div>
+					</div>
+					<div class="form-group mt-3">
+						<label for="cargoPariente">Describa el cargo de su pariente respecto a usted</label>
+						<input type="text" class="form-control" id="cargoPariente" name="cargoPariente" placeholder="Cargo de su pariente">
+					</div>
+				</div>
 				<div class="form-group">
 					<button type="submit" class="btn btn-primary mt-3">Continuar</button>
 				</div>
