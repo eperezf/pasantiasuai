@@ -23,7 +23,7 @@
 					<label for="empresa">Empresa en la que trabajarás</label>
 					<select class="form-control" id="empresa" name="empresa" @if($empresaSel->status == 2) disabled @endif>
 						@foreach($empresas as $empresa)
-							@if ($empresa->status === 1)
+							@if ($empresa->status == 1)
 								<option value="{{$empresa->idEmpresa}}" @if($empresaSel->idEmpresa == $empresa->idEmpresa) selected @endif>{{$empresa->nombre}}</option>
 							@endif
 						@endforeach
