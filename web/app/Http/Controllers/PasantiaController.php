@@ -178,7 +178,7 @@ class PasantiaController extends Controller{
 			'empresa' => 'numeric|nullable',
 			'ciudad' => 'alpha|nullable',
 			'pais' => 'alpha|nullable',
-			'fecha' => 'required|date',
+			'fecha' => 'date|nullable',
 			'horas' => 'integer|between:25,45|nullable',
 			'pariente' => 'boolean|nullable',
 			'otraEmpresa' => 'boolean|nullable'
@@ -216,13 +216,16 @@ class PasantiaController extends Controller{
 		}
 
 
-		if ($request->fecha){
-			$fechaInicio = Carbon::parse($request->fecha);
-			if ($request->fecha <= today()) {
+		if ($request->fecha) {
+			//Limite de la fecha de inscripcion respecto al año actual
+			$fechaLimite = Carbon::parse(Carbon::create(Carbon::now()->year, 7, 16));
+			//Si hoy es mayor a la fecha de inscripcion
+			if (Carbon::now() > $fechaLimite) {
+				return redirect('/inscripcion/2')->with('danger', 'Su pasantía no la puede inscribir en este período, si aún asi desea realizarla, deberá contactarse con pasantias.fic@uai.cl');
+			}
+			//Si desea inscribir en una fecha menor a la de hoy
+			if (Carbon::parse($request->fecha) < Carbon::now()) {
 				return redirect('/inscripcion/2')->with('danger', 'La fecha de inicio de su pasantía no puede ser antes que la de hoy.');
-			} 
-			if ($fechaInicio->diffInMonths(today()) > 6) {
-				return redirect('/inscripcion/2')->with('danger', 'La fecha de inicio de su pasantía debe ser en menos de 6 meses.');
 			}
 		}
 
