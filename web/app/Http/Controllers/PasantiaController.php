@@ -219,8 +219,8 @@ class PasantiaController extends Controller{
 		if ($request->fecha) {
 			//Limite de la fecha de inscripcion respecto al año actual
 			$fechaLimite = Carbon::parse(Carbon::create(Carbon::now()->year, 7, 16));
-			//Si hoy es mayor a la fecha de inscripcion
-			if (Carbon::now() > $fechaLimite) {
+			//Si hoy o la fecha de inscripcion es mayor a la fecha limite 
+			if (Carbon::now() > $fechaLimite || Carbon::parse($request->fecha) > $fechaLimite) {
 				return redirect('/inscripcion/2')->with('danger', 'Su pasantía no la puede inscribir en este período, si aún asi desea realizarla, deberá contactarse con pasantias.fic@uai.cl');
 			}
 			//Si desea inscribir en una fecha menor a la de hoy
