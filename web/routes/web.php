@@ -40,3 +40,6 @@ Route::post('/inscripcion/4/post','PasantiaController@paso4Control')->name('insc
 Route::get('/inscripcion/resumen', 'PasantiaController@resumenView')->name('inscripcion.resumen')->middleware('auth');
 
 Route::get('/inscripcion/resumen','PasantiaController@resumenView')->name('inscripcion.resumen');
+
+Route::post('evaluacion/{id}','EvalTutorController@save')->name('evalTutor.save');
+Route::get('evaluacion/{id}', 'EvalTutorController@show')->name('evalTutor.show');
