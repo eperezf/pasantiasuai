@@ -182,7 +182,7 @@ class PasantiaController extends Controller{
 			'horas' => 'integer|between:25,45|nullable',
 			'pariente' => 'boolean|nullable',
 			'otraEmpresa' => 'boolean|nullable',
-			'rolPariente' => 'alpha'
+			'rolPariente' => 'required_if:pariente,1|alpha'
 		]);
 		$userId = Auth::id();
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
