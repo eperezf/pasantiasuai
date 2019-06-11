@@ -21,9 +21,9 @@
 			@endif
 
 			@if($statusPaso1 == 2)
-				<li class="list-group-item list-group-item-success"><i class="fas fa-check"></i> Ya has completado tu práctica operario.</li>
+				<li class="list-group-item list-group-item-success"><i class="fas fa-check"></i> Cumples con todos los requerimientos académicos.</li>
 			@else
-				<li class="list-group-item list-group-item-warning"><i class="fas fa-exclamation"></i> Debes realizar tu práctica operario antes de realizar la pasantía</li>
+				<li class="list-group-item list-group-item-warning"><i class="fas fa-exclamation"></i> Uno o más requerimientos académicos están incompletos</li>
 			@endif
 
 			@if($statusPaso2 == 2)
