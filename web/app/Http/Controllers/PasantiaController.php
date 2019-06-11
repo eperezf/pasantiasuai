@@ -219,7 +219,7 @@ class PasantiaController extends Controller{
 		if ($request->fecha) {
 			//Limite de la fecha de inscripcion respecto al año actual
 			$fechaLimite = Carbon::parse(Carbon::create(Carbon::now()->year, 7, 16));
-			//Si hoy o la fecha de inscripcion es mayor a la fecha limite 
+			//Si hoy o la fecha de inscripcion es mayor a la fecha limite
 			if (Carbon::now() > $fechaLimite || Carbon::parse($request->fecha) > $fechaLimite) {
 				return redirect('/inscripcion/2')->with('danger', 'Su pasantía no la puede inscribir en este período, si aún asi desea realizarla, deberá contactarse con pasantias.fic@uai.cl');
 			}
@@ -262,21 +262,26 @@ class PasantiaController extends Controller{
 	/**
    * Muestra el Paso 3
    * @author Eduardo Pérez
-   * @version v1.0
+   * @version v1.1
    * @return \Illuminate\Http\Response
    */
 	public function paso3View(){
 		$userId = Auth::id();
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
 		if ($pasantia && $pasantia->statusPaso0==2){
-			return view('pasantia.paso3',[
-				'statusPaso0'=>$pasantia->statusPaso0,
-				'statusPaso1'=>$pasantia->statusPaso1,
-				'statusPaso2'=>$pasantia->statusPaso2,
-				'statusPaso3'=>$pasantia->statusPaso3,
-				'statusPaso4'=>$pasantia->statusPaso4,
-				'nombre'=>$pasantia->nombreJefe,
-				'correo'=>$pasantia->correoJefe]);
+			if ($pasantia->statusPaso2 == 3){
+				return redirect('/inscripcion/2')->with('danger', 'No puedes continuar tu proceso de inscripción si tienes un pariente en la empresa. Tu pasantía está a la espera de aprobación.');
+			}
+			else {
+				return view('pasantia.paso3',[
+					'statusPaso0'=>$pasantia->statusPaso0,
+					'statusPaso1'=>$pasantia->statusPaso1,
+					'statusPaso2'=>$pasantia->statusPaso2,
+					'statusPaso3'=>$pasantia->statusPaso3,
+					'statusPaso4'=>$pasantia->statusPaso4,
+					'nombre'=>$pasantia->nombreJefe,
+					'correo'=>$pasantia->correoJefe]);
+			}
 		}
 		else {
 			return redirect('/inscripcion/0');
@@ -317,19 +322,24 @@ class PasantiaController extends Controller{
 	/**
    * Muestra el Paso 4
    * @author Eduardo Pérez
-   * @version v1.0
+   * @version v1.1
    * @return \Illuminate\Http\Response
    */
 	public function paso4View(){
 		$userId = Auth::id();
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
 		if ($pasantia && $pasantia->statusPaso0==2){
-			return view('pasantia.paso4', [
-				'statusPaso0'=>$pasantia->statusPaso0,
-				'statusPaso1'=>$pasantia->statusPaso1,
-				'statusPaso2'=>$pasantia->statusPaso2,
-				'statusPaso3'=>$pasantia->statusPaso3,
-				'statusPaso4'=>$pasantia->statusPaso4]);
+			if ($pasantia->statusPaso2 == 3){
+				return redirect('/inscripcion/2')->with('danger', 'No puedes continuar tu proceso de inscripción si tienes un pariente en la empresa. Tu pasantía está a la espera de aprobación.');
+			}
+			else {
+				return view('pasantia.paso4', [
+					'statusPaso0'=>$pasantia->statusPaso0,
+					'statusPaso1'=>$pasantia->statusPaso1,
+					'statusPaso2'=>$pasantia->statusPaso2,
+					'statusPaso3'=>$pasantia->statusPaso3,
+					'statusPaso4'=>$pasantia->statusPaso4]);
+			}
 		}
 		else {
 			return redirect('/inscripcion/0');
