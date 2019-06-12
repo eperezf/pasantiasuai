@@ -23,7 +23,7 @@
 					<label for="empresa">Empresa en la que trabajarás</label>
 					<select class="form-control" id="empresa" name="empresa" @if($empresaSel->status == 2) disabled @endif>
 						@foreach($empresas as $empresa)
-							@if ($empresa->status === 1)
+							@if ($empresa->status == 1)
 								<option value="{{$empresa->idEmpresa}}" @if($empresaSel->idEmpresa == $empresa->idEmpresa) selected @endif>{{$empresa->nombre}}</option>
 							@endif
 						@endforeach
@@ -63,7 +63,15 @@
 						<input class="form-check-input" type="radio" name="pariente" id="pariente" value="1" @if($pariente==1) checked @else @endif onclick="document.getElementById('tipoPariente').style.display = 'block';">
 						<label class="form-check-label" for="parientesi">Sí</label>
 					</div>
-					<div class="form-group" id="tipoPariente" @if($pariente==1) @else style="display: none;" @endif>
+					<div class="form-group mt-3" id="tipoPariente" @if($pariente==1) @else style="display: none;" @endif>
+						<div class="card text-white bg-warning mb-2">
+							<div class="card-header">
+								<h5 class="text-center">¡Atención!</h3>
+							</div>
+							<div class="card-body">
+								<h6 class="card-title text-center">Su pasantía quedará en estado de aprobación, lo que podría tardar el proceso de su inscripción.</h6>
+							</div>
+						</div>
 						<label for="pais">Describa el parentesco, rol y relación de su pariente en la empresa</label>
 						<input class="form-control" id="rolPariente" name="rolPariente" placeholder="Ej.: Mi padre, subgerente de finanzas, no estará en mi misma área." @if($rolPariente) value="{{$rolPariente}}" @else @endif>
 					</div>
