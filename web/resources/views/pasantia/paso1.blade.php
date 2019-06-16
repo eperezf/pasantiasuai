@@ -26,7 +26,7 @@
 			    <h2 class="text-center">Malla</h2>
 			  </div>
 			  <div class="card-body">
-			    <h5 class="card-title text-center">Tu malla permite solamente pasantías part-time</h5>
+			    <h5 class="card-title text-center">Tu malla permite solamente pasantías @if($tipoMalla == 0)Part Time @else Full Time @endif</h5>
 			  </div>
 			</div>
 		</div>
@@ -39,8 +39,10 @@
 			  </div>
 			  <div class="card-body">
 			    <h5 class="card-title text-center">En caso de no querer hacer el tipo de pasantía ya asignada, debe enviar un correo a la gestión de pasantías de la Universidad.</h5>
-					<p class="card-text text-center">mail: 
-					<a href="mailto:pasantias.fic@uai.cl" class="text-white">pasantias.fic@uai.cl</a></p>
+					<p class="card-text text-center">
+						mail:
+						<a class="text-white" href="mailto:pasantias.fic@uai.cl">pasantias.fic@uai.cl</a>
+					</p>
 			  </div>
 			</div>
 		</div>

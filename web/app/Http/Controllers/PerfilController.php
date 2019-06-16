@@ -9,7 +9,7 @@ class PerfilController extends Controller
 {
     //
     public function index(){
-      $perfil = Auth::id();
+      $perfil = \Auth::user();
       return view('perfil.index', compact('perfil'));
     }
 }
