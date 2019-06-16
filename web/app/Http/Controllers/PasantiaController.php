@@ -318,7 +318,7 @@ class PasantiaController extends Controller{
 			//Enviar correo
 			$pasantia->save();
 		}
-		return redirect('/inscripcion/4');
+		return redirect('/inscripcion/resumen');
 
 
 	}
