@@ -218,10 +218,14 @@ class PasantiaController extends Controller{
 
 		if ($request->fecha) {
 			//Limite de la fecha de inscripcion respecto al año actual
-			$fechaLimite = Carbon::parse(Carbon::create(Carbon::now()->year, 7, 16));
+			$fechaInicio = Carbon::parse(Carbon::create(Carbon::now()->year, 6, 22)); //22 Julio
+			$fechaLimite = Carbon::parse(Carbon::create(Carbon::now()->year, 7, 16)); //16 Agosto
 			//Si hoy o la fecha de inscripcion es mayor a la fecha limite
 			if (Carbon::now() > $fechaLimite || Carbon::parse($request->fecha) > $fechaLimite) {
-				return redirect('/inscripcion/2')->with('danger', 'Su pasantía no la puede inscribir en este período, si aún asi desea realizarla, deberá contactarse con pasantias.fic@uai.cl');
+				return redirect('/inscripcion/2')->with('danger', 'Su pasantía no la puede inscribir en esta fecha, si aún asi desea realizarla, deberá contactarse con pasantias.fic@uai.cl');
+			}
+			if (Carbon::parse($request->fecha) < $fechaInicio) {
+				return redirect('/inscripcion/2')->with('danger', 'El rango de fechas permitido para iniciar pasantías es desde el 22 de Julio hasta el 16 de Agosto.');
 			}
 			//Si desea inscribir en una fecha menor a la de hoy
 			if (Carbon::parse($request->fecha) < Carbon::now()) {
