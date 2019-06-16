@@ -55,9 +55,23 @@ class EmpresaController extends Controller{
 				if ($request->status == NULL){
 					$request->status = 0;
 				};
+
+				//Si no contiene www
 				if (!Str::contains($request->get('urlWeb'), 'www.')) {
-				$request->merge(['urlWeb' => 'www.' . $request->get('urlWeb')]);
+					//Si contiene https y no www
+					if (Str::contains($request->get('urlWeb'), 'https://')) {
+						$request->merge(['urlWeb' => 'https://www.' . Str::after($request->get('urlWeb'), 'https://')]);
+					}
+					//Si contiene http y no www
+					if (Str::contains($request->get('urlWeb'), 'http://')) {
+						$request->merge(['urlWeb' => 'http://www.' . Str::after($request->get('urlWeb'), 'http://')]);
+					}
+					//Si no contiene www
+					else {
+						$request->merge(['urlWeb' => 'www.' . $request->get('urlWeb')]);
+					}
 				}
+				//Si no contiene ni http ni https
 				if (!Str::contains($request->get('urlWeb'), 'https://') && 
 					!Str::contains($request->get('urlWeb'), 'http://')){
 					$request->merge(['urlWeb' => 'http://' . $request->get('urlWeb')]);
@@ -135,9 +149,22 @@ class EmpresaController extends Controller{
 				if ($request->status == NULL){
 					$request->status = 0;
 				};
+				//Si no contiene www
 				if (!Str::contains($request->get('urlWeb'), 'www.')) {
-				$request->merge(['urlWeb' => 'www.' . $request->get('urlWeb')]);
+					//Si contiene https y no www
+					if (Str::contains($request->get('urlWeb'), 'https://')) {
+						$request->merge(['urlWeb' => 'https://www.' . Str::after($request->get('urlWeb'), 'https://')]);
+					}
+					//Si contiene http y no www
+					if (Str::contains($request->get('urlWeb'), 'http://')) {
+						$request->merge(['urlWeb' => 'http://www.' . Str::after($request->get('urlWeb'), 'http://')]);
+					}
+					//Si no contiene www
+					else {
+						$request->merge(['urlWeb' => 'www.' . $request->get('urlWeb')]);
+					}
 				}
+				//Si no contiene ni http ni https
 				if (!Str::contains($request->get('urlWeb'), 'https://') && 
 					!Str::contains($request->get('urlWeb'), 'http://')){
 					$request->merge(['urlWeb' => 'http://' . $request->get('urlWeb')]);
