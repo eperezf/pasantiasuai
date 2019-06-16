@@ -15,7 +15,8 @@ class CreateEvalTutorTable extends Migration
     {
         Schema::create('evalTutor', function (Blueprint $table) {
             $table->bigIncrements('idEvalTutor');
-						$table->unsignedInteger('idPasantia');
+            $table->string('idEncuesta');
+			$table->unsignedInteger('idPasantia');
             $table->unsignedInteger('compromiso');
             $table->unsignedInteger('adaptabilidad');
             $table->unsignedInteger('comunicacion');
@@ -30,11 +31,8 @@ class CreateEvalTutorTable extends Migration
             $table->string('comentarios')->nullable();
             $table->unsignedTinyInteger('certificadoTutor');
 						$table->timestamps();
-
-            $table->unique(["idEncuesta"], 'idEncuesta_UNIQUE');
-
+            $table->unique("idEncuesta");
 						$table->index("idPasantia");
-
 						$table->foreign("idPasantia")->references("idPasantia")->on("pasantia");
 
         });
