@@ -6,14 +6,14 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateEmpresaTable extends Migration{
 	public function up(){
-    Schema::create('Empresa', function (Blueprint $table) {
-      $table->engine = 'InnoDB';
+    Schema::create('empresa', function (Blueprint $table) {
       $table->increments('idEmpresa');
       $table->string('nombre', 45);
-      $table->string('Rubro', 45);
+      $table->string('rubro', 250);
       $table->string('urlWeb', 45);
       $table->string('correoContacto', 45);
 			$table->integer('status');
+			$table->timestamps();
 
       $table->unique(["idEmpresa"], 'idEmpresa_UNIQUE');
 

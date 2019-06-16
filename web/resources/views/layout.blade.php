@@ -6,6 +6,15 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<title>@yield('title')</title>
 
+	<!-- Highcharts -->
+	<script src="http://code.highcharts.com/stock/highstock.js"></script>
+	<script src="https://code.highcharts.com/modules/exporting.js"></script>
+	<script src="https://code.highcharts.com/modules/export-data.js"></script>
+	<script src="https://www.highcharts.com/media/com_demo/js/highslide-full.min.js"></script>
+	<script src="https://www.highcharts.com/media/com_demo/js/highslide.config.js" charset="utf-8"></script>
+	<!-- Custom JS-->
+	<script src="/js/layout-menu.js"></script>
+
 	<!-- CSS STYLES -->
 	<link href='https://fonts.googleapis.com/css?family=Titillium+Web' rel='stylesheet' type='text/css'>
 	<!-- Bootstrap CSS -->
@@ -29,12 +38,9 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 	<!-- Custom JS-->
 	<script src="/js/layout-menu.js"></script>
-	<!-- Highcharts JS -->
-	<script src="http://code.highcharts.com/stock/highstock.js"></script>
-	<script src="https://code.highcharts.com/modules/exporting.js"></script>
-	<script src="https://code.highcharts.com/modules/export-data.js"></script>
-	<script src="https://www.highcharts.com/media/com_demo/js/highslide-full.min.js"></script>
-	<script src="https://www.highcharts.com/media/com_demo/js/highslide.config.js" charset="utf-8"></script>
+	<!--Bootstrap Tables-->
+	<link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.14.2/dist/bootstrap-table.min.css">
+	<script src="https://unpkg.com/bootstrap-table@1.14.2/dist/bootstrap-table.min.js"></script>
 
 </head>
 
