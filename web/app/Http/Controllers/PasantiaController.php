@@ -225,7 +225,7 @@ class PasantiaController extends Controller{
 			}
 			//Si desea inscribir en una fecha menor a la de hoy
 			if (Carbon::parse($request->fecha) < Carbon::now()) {
-				return redirect('/inscripcion/2')->with('danger', 'La fecha de inicio de su pasantía no puede ser antes que la de hoy.');
+				return redirect('/inscripcion/2')->with('danger', 'La fecha de inicio de su pasantía debe ser futura.');
 			}
 		}
 
