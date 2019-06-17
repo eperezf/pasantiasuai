@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use App\Empresa;
 use App\User;
 use Auth;
@@ -55,8 +54,8 @@ class EmpresaController extends Controller{
 				if ($request->status == NULL){
 					$request->status = 0;
 				};
-				if (!Str::contains($request->get('urlWeb'), 'https://') && 
-					!Str::contains($request->get('urlWeb'), 'http://')){
+				if (!str_contains($request->get('urlWeb'), 'https://') ||
+					!str_contains($request->get('urlWeb'), 'http://')){
 					$request->merge(['urlWeb' => 'http://' . $request->get('urlWeb')]);
 				}
 
@@ -132,8 +131,8 @@ class EmpresaController extends Controller{
 				if ($request->status == NULL){
 					$request->status = 0;
 				};
-				if (!Str::contains($request->get('urlWeb'), 'https://') && 
-					!Str::contains($request->get('urlWeb'), 'http://')){
+				if (!str_contains($request->get('urlWeb'), 'https://') ||
+					!str_contains($request->get('urlWeb'), 'http://')){
 					$request->merge(['urlWeb' => 'http://' . $request->get('urlWeb')]);
 				}
 
