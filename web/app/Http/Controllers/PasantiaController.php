@@ -291,7 +291,7 @@ class PasantiaController extends Controller{
 	/**
    * Guarda los datos del supervisor
    * @author Eduardo Pérez
-   * @version v1.1
+   * @version v1.2
 	 * @param  \Illuminate\Http\Request  $request
    * @return \Illuminate\Http\Response
    */
@@ -314,7 +314,7 @@ class PasantiaController extends Controller{
 			//Enviar correo
 			$pasantia->save();
 		}
-		return redirect('/inscripcion/4');
+		return redirect('/inscripcion/resumen');
 
 
 	}
