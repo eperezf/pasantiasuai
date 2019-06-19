@@ -26,22 +26,25 @@ class LoginController extends Controller
 		$anoIngreso = "";
 		$grupo = "";
 		$tipoProfe = "";
+		$rol = 0;
 		$profesor = false;
 		$ldapconn = ldap_connect("10.2.1.213") or die("Could not connect to LDAP server.");
 		ldap_set_option($ldapconn, LDAP_OPT_PROTOCOL_VERSION, 3);
 		if (Str::endsWith($email, 'uai.cl')){
-			//Interno (Profesor, alumno o funcionario). Asumiremos profesor o funcionario.
-			$ldaptree = "OU=UAI,DC=uai,DC=cl";
-  		$usefulinfo = array("ou", "sn", "givenname", "mail", "employeeid", "distinguishedname");
+			//Es un nusario interno de la Universidad.
 			if (Str::endsWith($email, 'alumnos.uai.cl')){
-				//Es un alumno. Cambiamos arbol LDAP.
+				//Es un alumno. Revisamos si está en la lista de autorizados.
 				if (!AuthUsers::where('email', $email)->first()){
 					return redirect('/login')->with('danger', 'Usted no está autorizado para utilizar este sistema');
 				}
+				//Cambiamos arbol LDAP
 				$ldaptree = "OU=Live@Edu,DC=uai,DC=cl";
 	  		$usefulinfo = array("ou", "sn", "givenname", "mail", "employeeid", "distinguishedname");
 			}
 			else {
+				//Es un profesor o funcionario. No necesita estar en listado de autorización
+				$ldaptree = "OU=UAI,DC=uai,DC=cl";
+	  		$usefulinfo = array("ou", "sn", "givenname", "mail", "employeeid", "distinguishedname");
 			}
 			if ($ldapconn) {
 				$ldapbind = @ldap_bind($ldapconn, $email, $password);
@@ -49,9 +52,15 @@ class LoginController extends Controller
 					$result = @ldap_search($ldapconn, $ldaptree, "(mail=".$email.")", $usefulinfo);
 					$data = @ldap_get_entries($ldapconn, $result);
 					$apellidos = $data[0]['sn'][0];
-					$splitApellidos = explode(' ', $apellidos, 2);
-					$apellidoPaterno = $splitApellidos[0];
-					$apellidoMaterno = $splitApellidos[1];
+					if (Str::contains($apellidos, ' ')){ //Existen usuarios con un solo apellido registrado.
+						$splitApellidos = explode(' ', $apellidos, 2);
+						$apellidoPaterno = $splitApellidos[0];
+						$apellidoMaterno = $splitApellidos[1];
+					}
+					else {
+						$apellidoPaterno = $apellidos;
+						$apellidoMaterno = "";
+					}
 					$nombres = $data[0]['givenname'][0];
 					$email = $data[0]['mail'][0];
 					$rut = $data[0]['employeeid'][0];
@@ -60,47 +69,45 @@ class LoginController extends Controller
 					$org = str_replace("CN=","",$org);
 					$org = str_replace("DC=","",$org);
 					$org_arr = explode (",", $org);
-					if (Str::contains($email,'alumnos.uai.cl')!= false){
+
+					if (Str::contains($email,'alumnos.uai.cl')){
 						$sede = $org_arr[1];
 						$status = $org_arr[2];
 						$anoIngreso = $org_arr[3];
 						$grupo = $org_arr[4];
-						$located = User::where('email', $email) -> first();
-						if ($located == ""){
-							$user = User::create([
-								'nombres' => Str::title($nombres),
-								'apellidoPaterno' => Str::title($apellidoPaterno),
-								'apellidoMaterno' => Str::title($apellidoMaterno),
-								'rut' => $rut,
-								'idCarrera'=> 0,
-								'statusPregrado' => 0,
-								'statusOmega' => 0,
-								'statusWebcursos'=> 0,
-								'rol' => 1,
-								'email' => $email,
-								'password' => 'INTUAI'
-							]);
-							Auth::login($user);
-							return redirect('/');
-						}
-						else {
-							echo "Alumno existe en sistema pasantías. Logeando.</br>";
-							$userID = $located['idUsuario'];
-							Auth::loginUsingId($userID);
-							return redirect('/');
-						}
+						$rol = 1;
 					}
 					else {
-						$tipoProfe = $org_arr[1];
-						$sede = $org_arr[2];
-						$profesor = true;
-						echo "Tipo de profe: " . $tipoProfe . "</br>";
-						echo "Sede: " . $sede . "</br>";
-						echo "Nombres: " . $nombres . "</br>";
-						echo "Apellidos: " . $apellidoMaterno . " " . $apellidoPaterno . "</br>";
-						echo "Email: " . $email . "</br>";
-						echo "RUT: " . $rut . "</br>";
-
+						$tipo = $org_arr[1];
+						if (Str::contains($tipo, 'Funcionarios')){
+							$rol = 4;
+						}
+						if (Str::contains($tipo, 'Profesores Hora')){
+							$rol = 3;
+						}
+					}
+					$located = User::where('email', $email) -> first();
+					if ($located == ""){
+						$user = User::create([
+							'nombres' => Str::title($nombres),
+							'apellidoPaterno' => Str::title($apellidoPaterno),
+							'apellidoMaterno' => Str::title($apellidoMaterno),
+							'rut' => $rut,
+							'idCarrera'=> 0,
+							'statusPregrado' => 0,
+							'statusOmega' => 0,
+							'statusWebcursos'=> 0,
+							'rol' => $rol,
+							'email' => $email,
+							'password' => 'INTUAI'
+						]);
+						Auth::login($user);
+						return redirect('/');
+					}
+					else {
+						$userID = $located['idUsuario'];
+						Auth::loginUsingId($userID);
+						return redirect('/');
 					}
 				}
 				else {
