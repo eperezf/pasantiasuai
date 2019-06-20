@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use App\Mail\ConfTutor;
+use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 use App\User;
 use App\AuthUsers;
@@ -301,7 +303,9 @@ class PasantiaController extends Controller{
    */
 	public function paso3Control(Request $request){
 		$userId = Auth::id();
+		$user = Auth::user();
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
+		$empresa = Empresa::where('idEmpresa', $pasantia->idEmpresa)->first();
 		if ($request->nombre == "" || $request->email == ""){
 			$pasantia->statusPaso3 = 1;
 		}
@@ -315,8 +319,8 @@ class PasantiaController extends Controller{
 		}
 		if ($request->enviar){
 			$pasantia->statusPaso3 = 3;
-			//Enviar correo
 			$pasantia->save();
+			Mail::to($pasantia->correoJefe)->send(new ConfTutor($pasantia, $user, $empresa));
 		}
 		return redirect('/inscripcion/resumen');
 
@@ -402,6 +406,15 @@ class PasantiaController extends Controller{
 		else {
 			return redirect('/inscripcion/resumen');
 		}
+
+	}
+
+	public function enviarCorreo(){
+		$userId = Auth::id();
+		$user = Auth::user();
+		$pasantia = Pasantia::where('idAlumno', $userId)->first();
+		$empresa = Empresa::where('idEmpresa', $pasantia->idEmpresa)->first();
+		Mail::to($pasantia->correoJefe)->send($pasantia, $user, $empresa);
 
 	}
 }
