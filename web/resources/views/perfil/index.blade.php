@@ -51,13 +51,10 @@
     </div>
     <div class="row">
       <div class="col-md-4">
-        <div class="profile-btns">
-          <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Editar Perfil" />
-          <br>
-          <input type="submit" class="profile-pasantia-btn" value="Mi Pasantia" />
-          <br>
-          <input type="submit" class="profile-profesor-btn" value="Mi Profesor" />
-          <br>
+        <div class="list-group">
+          <a href="#" class="list-group-item list-group-item-action">Editar perfil</a>
+          <a href="{{route('inscripcion.resumen')}}" class="list-group-item list-group-item-action">Mi pasantía</a>
+        	<a href="#" class="list-group-item list-group-item-action">Mi profesor</a>
         </div>
       </div>
 

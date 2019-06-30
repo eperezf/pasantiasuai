@@ -26,12 +26,12 @@
 				<div class="card">
 				  <div class="card-header text-center">
 
-				    Sistema de Pasantías UAI
+				    Sistema de Gestión FIC
 				  </div>
 				  <div class="card-body">
 						@if(session()->get('danger'))
 					    <div class="alert alert-danger">
-					      {{ session()->get('danger') }}
+					      {{session()->get('danger') }}
 					    </div>
 					  @endif
 						<form method="post" action="{{ route('login') }}">

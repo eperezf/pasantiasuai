@@ -31,9 +31,9 @@
 			    <label for="nombre">Nombre</label>
 			    <input class="form-control" id="nombre" name="nombre" placeholder="Nombre" value="{{$nombre}}" @if($statusPaso3==2 || $statusPaso3==3)disabled @endif>
 			  </div>
-				@if($statusPaso3==0 || $statusPaso3==1)
-					<button type="submit" name="enviar" value="1" class="btn btn-primary">Enviar correo</button>
-					<button type="submit" name="guardar" value="1" class="btn btn-primary">Continuar sin enviar</button>
+				@if($statusPaso3 < 2)
+					<button type="submit" name="enviar" value="1" class="btn btn-primary" onsubmit="return confirm('¿Estás seguro que quieres enviar el correo? No podrás volver a modificar los datos.');">Enviar correo y guardar</button>
+					<button type="submit" name="guardar" value="1" class="btn btn-primary">Guardar</button>
 				@else
 					<button type="submit" name="continuar" value="1" class="btn btn-primary">Continuar</button>
 				@endif
