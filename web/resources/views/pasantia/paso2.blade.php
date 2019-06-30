@@ -69,7 +69,7 @@
 								<h5 class="text-center">¡Atención!</h3>
 							</div>
 							<div class="card-body">
-								<h6 class="card-title text-center">Su pasantía quedará en estado de aprobación, lo que podría tardar el proceso de su inscripción.</h6>
+								<h6 class="card-title text-center">Su pasantía quedará en un estado pendiente de aprobación, lo que podría tardar el proceso de su inscripción.</h6>
 							</div>
 						</div>
 						<label for="pais">Describa el parentesco, rol y relación de su pariente en la empresa</label>

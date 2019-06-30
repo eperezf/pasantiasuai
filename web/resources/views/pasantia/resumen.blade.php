@@ -32,7 +32,7 @@
 			@elseif($statusPaso2 == 1)
 				<li class="list-group-item list-group-item-warning"><i class="fas fa-exclamation"></i> Faltan uno o más datos del paso 2.</li>
 			@elseif($statusPaso2 == 3)
-				<li class="list-group-item list-group-item-warning"><i class="fas fa-exclamation"></i> Su pasantía está en espera de aprobación por familiar en la empresa.</li>
+				<li class="list-group-item list-group-item-warning"><i class="fas fa-exclamation"></i> Su pasantía quedará en un estado pendiente de aprobación, lo que podría tardar el proceso de su inscripción.</li>
 			@else
 				<li class="list-group-item list-group-item-warning"><i class="fas fa-exclamation"></i> No has iniciado el paso 2.</li>
 			@endif
