@@ -16,6 +16,7 @@
                 </div>
                 <form action="/evaluacion/<?php echo $id; ?>" method="post" id="search">
                     @csrf
+                    <input type="hidden" name="idEncuesta" value="<?php echo $id;?>">
                     <input type="text" name="compromiso">
                     <input type="text" name="adaptabilidad">
                     <input type="text" name="comunicacion">
