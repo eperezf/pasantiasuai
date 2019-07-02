@@ -57,8 +57,8 @@
 <div class="">
 <div style="color:#555555; font-family:'Trebuchet MS','Lucida Grande','Lucida Sans Unicode','Lucida Sans',Tahoma,sans-serif; line-height:120%; padding-right:10px; padding-left:10px; padding-top:10px; padding-bottom:10px">
 <div style="font-size:12px; line-height:14px; font-family:'Trebuchet MS','Lucida Grande','Lucida Sans Unicode','Lucida Sans',Tahoma,sans-serif; color:#555555; text-align:left">
-<p style="margin:0; font-size:14px; line-height:17px; text-align:left"><em><span style="font-size:18px; line-height:21px; color:rgb(255,255,255)">Estimado {{ $user }}, </span></em><br>
-<em><span style="font-size:18px; line-height:21px; color:rgb(255,255,255)">Se le solicita llenar la siguiente encuesta, la cual sirve para evaluar al alumno que se encuentra haciendo una pasantia en la empresa {{ $empresa }}.</span></em><br>
+<p style="margin:0; font-size:14px; line-height:17px; text-align:left"><em><span style="font-size:18px; line-height:21px; color:rgb(255,255,255)">Estimado {{$pasantia->nombreJefe}}, </span></em><br>
+<em><span style="font-size:18px; line-height:21px; color:rgb(255,255,255)">Se le solicita llenar la evaluación del alumno {{$user->nombres}} {{$user->apellidoPaterno}} que se encuentra haciendo la pasantia en {{$empresa->nombre}}.</span></em><br>
 <em><span style="font-size:18px; line-height:21px; color:rgb(255,255,255)"></span></em><br>
 <em><span style="font-size:18px; line-height:21px; color:rgb(255,255,255)">Saludos cordiales</span></em><br>
 <em><span style="font-size:18px; line-height:21px; color:rgb(255,255,255)">Universidad Adolfo Ibañez.</span></em><br>
