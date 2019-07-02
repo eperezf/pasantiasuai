@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use App\User;
+use App\AuthUsers;
+use App\Pasantia;
+use App\Empresa;
 use App\EvalTutor;
 use Auth;
 
@@ -32,5 +36,11 @@ class EvalTutorController extends Controller{
         	$evaltutor->certificadoTutor = $request->certificadoTutor;
         }
         $evaltutor->save();
+	}
+
+	public function create(){
+		$evalTutor = new EvalTutor;
+		$evalTutor->idEncuesta = $string = str_random(10);
+		$evalTutor->save();
 	}
 }
