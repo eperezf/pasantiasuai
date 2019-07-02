@@ -39,8 +39,23 @@ class EvalTutorController extends Controller{
 	}
 
 	public function create(){
+		$userId = Auth::id();
+		$pasantia = Pasantia::where('idAlumno', $userId)->first();
+		$empresa = Empresa::find($pasantia->idEmpresa);
+
 		$evalTutor = new EvalTutor;
 		$evalTutor->idEncuesta = $string = str_random(10);
+		$evalTutor->idPasantia = $pasantia->idPasantia;
 		$evalTutor->save();
+
+
+		Mail::to($pasantia->correoJefe)->send(new ConfTutor($pasantia, $user, $empresa));
+	}
+
+	public function test(){
+		$userId = Auth::id();
+		$pasantia = Pasantia::where('idAlumno', $userId)->first();
+		$empresa = Empresa::find($pasantia->idEmpresa);
+		Mail::to($pasantia->correoJefe)->send(new EvalTutor($pasantia, $user, $empresa));
 	}
 }
