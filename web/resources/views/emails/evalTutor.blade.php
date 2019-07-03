@@ -1,6 +1,19 @@
 
-<table class="x_nl-container" cellpadding="0" cellspacing="0" style="border-collapse:collapse; table-layout:fixed; border-spacing:0; vertical-align:top; min-width:320px; margin:0 auto; background-color:#FFFFFF; width:100%">
 <tbody>
+
+<table class="x_nl-container" cellpadding="0" cellspacing="0" style="border-collapse:collapse; table-layout:fixed; border-spacing:0; vertical-align:top; min-width:320px; margin:0 auto; background-color:#FFFFFF; width:600px">
+<tr style="background-color:#000">
+<td width="600">
+<div id="x_titulo" style="font-family:Rockwell,'Courier Bold',Courier,Georgia,Times,'Times New Roman',serif; color:#FFF; margin:0 0 0 35px; text-decoration:underline; font-size:12px; text-transform:uppercase">
+<p><span style="font-size:larger">UAI</span><br>
+Dirección de Postgrado<br>
+</p>
+</div>
+</td>
+<td align="right"><img data-imagetype="External" src="http://marketing.uai.cl/mailing/plantillas/negocios/img/index_r1_c2.png" originalsrc="http://marketing.uai.cl/mailing/plantillas/negocios/img/index_r1_c2.png" data-connectorsauthtoken="1" data-imageproxyendpoint="/actions/ei" data-imageproxyid="" name="x_index_r1_c2" width="217" height="94" id="x_index_r1_c2" alt=""></td>
+
+
+</tr>
 <tr style="vertical-align:top">
 <td style="word-break:break-word; border-collapse:collapse!important; vertical-align:top">
 <div style="background-color:transparent">
