@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use App\Empresa;
 use App\User;
+use Auth;
 
 
 /**
@@ -33,11 +35,11 @@ class EmpresaController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function create(){
-			if (Auth::user()->role >=4){
+			if (Auth::user()->rol >=4){
 				return view('empresa.create');
 			}
       else {
-				return view('empresa.index');
+				return redirect('/empresas');
 			}
     }
 
@@ -49,10 +51,31 @@ class EmpresaController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
-			if (Auth::user()->role >=4){
+			if (Auth::user()->rol >=4){
 				if ($request->status == NULL){
 					$request->status = 0;
 				};
+
+				//Si no contiene www
+				if (!Str::contains($request->get('urlWeb'), 'www.')) {
+					//Si contiene https y no www
+					if (Str::contains($request->get('urlWeb'), 'https://')) {
+						$request->merge(['urlWeb' => 'https://www.' . Str::after($request->get('urlWeb'), 'https://')]);
+					}
+					//Si contiene http y no www
+					if (Str::contains($request->get('urlWeb'), 'http://')) {
+						$request->merge(['urlWeb' => 'http://www.' . Str::after($request->get('urlWeb'), 'http://')]);
+					}
+					//Si no contiene www
+					else {
+						$request->merge(['urlWeb' => 'www.' . $request->get('urlWeb')]);
+					}
+				}
+				//Si no contiene ni http ni https
+				if (!Str::contains($request->get('urlWeb'), 'https://') && 
+					!Str::contains($request->get('urlWeb'), 'http://')){
+					$request->merge(['urlWeb' => 'http://' . $request->get('urlWeb')]);
+				}
 
 				$request->validate(
 					['nombre'=>'required|unique:empresa'],
@@ -97,12 +120,12 @@ class EmpresaController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function edit($id){
-			if (Auth::user()->role >=4){
+			if (Auth::user()->rol >=4){
 				$empresa = Empresa::find($id);
 				return view('empresa.edit', compact('empresa'));
 			}
 			else {
-				return view('empresa.index');
+				return redirect('/empresas');
 			}
     }
 
@@ -115,7 +138,7 @@ class EmpresaController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id){
-			if (Auth::user()->role >=4){
+			if (Auth::user()->rol >=4){
 				$validated = $request->validate(
 					['nombre'=>'string|required'],
 					['rubro'=>'string|required'],
@@ -126,6 +149,27 @@ class EmpresaController extends Controller{
 				if ($request->status == NULL){
 					$request->status = 0;
 				};
+				//Si no contiene www
+				if (!Str::contains($request->get('urlWeb'), 'www.')) {
+					//Si contiene https y no www
+					if (Str::contains($request->get('urlWeb'), 'https://')) {
+						$request->merge(['urlWeb' => 'https://www.' . Str::after($request->get('urlWeb'), 'https://')]);
+					}
+					//Si contiene http y no www
+					if (Str::contains($request->get('urlWeb'), 'http://')) {
+						$request->merge(['urlWeb' => 'http://www.' . Str::after($request->get('urlWeb'), 'http://')]);
+					}
+					//Si no contiene www
+					else {
+						$request->merge(['urlWeb' => 'www.' . $request->get('urlWeb')]);
+					}
+				}
+				//Si no contiene ni http ni https
+				if (!Str::contains($request->get('urlWeb'), 'https://') && 
+					!Str::contains($request->get('urlWeb'), 'http://')){
+					$request->merge(['urlWeb' => 'http://' . $request->get('urlWeb')]);
+				}
+
 				$empresa = Empresa::find($id);
 				$empresa->nombre = $request->get('nombre');
 				$empresa->rubro = $request->get('rubro');
@@ -149,7 +193,7 @@ class EmpresaController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function destroy($id){
-			if (Auth::user()->role >=4){
+			if (Auth::user()->rol >=4){
 				$empresa = Empresa::find($id);
 				$empresa->delete();
 				return redirect('/empresas')->with('success', 'Empresa eliminada correctamente');

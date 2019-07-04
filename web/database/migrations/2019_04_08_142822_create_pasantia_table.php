@@ -38,12 +38,14 @@ class CreatePasantiaTable extends Migration
             $table->integer('idEmpresa')->unsigned()->nullable();
             $table->string('nombreJefe', 45)->nullable();
             $table->string('correoJefe', 45)->nullable();
+						$table->string('tokenCorreo', 45)->nullable();
             $table->tinyInteger('lecReglamento')->default(0);
             $table->tinyInteger('practicaOp')->default(0);
             $table->string('ciudad', 45)->nullable();
             $table->string('pais', 45)->nullable();
             $table->integer('horasSemanales')->nullable();
             $table->tinyInteger('parienteEmpresa')->nullable();
+						$table->string('rolPariente')->nullable();
 						$table->timestamps();
 
             $table->index("idEmpresa");

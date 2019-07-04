@@ -23,27 +23,25 @@
 		@endif
 	</div>
 	<div class="row">
-		<div class="table-responsive">
-			<table class="table">
+		<div class="table-responsive bootstrap-table">
+			<table class="table" id="table" data-toggle="table" data-sortable="true" data-search="true" data-locale="es-CL">
 			  <thead>
 			    <tr>
-			      <th scope="col">ID</th>
-			      <th scope="col">Nombre</th>
-			      <th scope="col">Rubro</th>
-						<th scope="col">Estado</th>
-			      <th scope="col">Sitio Web</th>
-						<th scope="col">Correo de contacto</th>
-						@if(Auth::user()->rol >= 4)<th scope="col">Acciones</th>@endif
+			      <th scope="col" data-field="nombre" data-sortable="true"><div class="th-inner">Nombre</div></th>
+			      <th scope="col" data-field="rubro" data-sortable="true"><div class="th-inner">Rubro</div></th>
+						<th scope="col" data-field="status" data-sortable="true"><div class="th-inner">Estado</div></th>
+			      <th scope="col" data-field="urlWeb" data-sortable="true"><div class="th-inner">Sitio Web</div></th>
+						<th scope="col" data-field="correoContacto" data-sortable="true"><div class="th-inner">Correo</div></th>
+						@if(Auth::user()->rol >= 4)<th scope="col" data-field="acciones" data-sortable="false"><div class="th-inner">Acciones</div></th>@endif
 			    </tr>
 			  </thead>
 			  <tbody>
 					@foreach($empresas as $empresa)
 			    <tr @if($empresa->status == 0)class="table-dark" @else @endif>
-			      <th scope="row">{{$empresa->idEmpresa}}</th>
 			      <td>{{$empresa->nombre}}</td>
 			      <td>{{$empresa->rubro}}</td>
-						<td>@if($empresa->status == 1)Activo @else Inactivo @endif</td>
-			      <td><a href="http://{{$empresa->urlWeb}}">{{$empresa->urlWeb}}</a></td>
+						<td>@if($empresa->status == 1)Activo @elseif($empresa->status == 2)Solicitado por alumno @else Inactivo @endif</td>
+			      <td><a href="{{$empresa->urlWeb}}">{{$empresa->urlWeb}}</a></td>
 						<td><a href="mailto:{{$empresa->correoContacto}}">{{$empresa->correoContacto}}</a></td>
 						@if(Auth::user()->rol >= 4)
 						<td>

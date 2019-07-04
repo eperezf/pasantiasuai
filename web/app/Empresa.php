@@ -16,4 +16,9 @@ class Empresa extends Model{
 		'correoContacto',
 		'status'
 	];
+
+	public function pasantias()
+    {
+        return $this->hasMany('App\Pasantia', 'idEmpresa', 'idEmpresa');
+    }
 }

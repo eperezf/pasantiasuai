@@ -21,9 +21,9 @@
 			@endif
 
 			@if($statusPaso1 == 2)
-				<li class="list-group-item list-group-item-success"><i class="fas fa-check"></i> Ya has completado tu práctica operario.</li>
+				<li class="list-group-item list-group-item-success"><i class="fas fa-check"></i> Cumples con todos los requerimientos académicos.</li>
 			@else
-				<li class="list-group-item list-group-item-warning"><i class="fas fa-exclamation"></i> Debes realizar tu práctica operario antes de realizar la pasantía</li>
+				<li class="list-group-item list-group-item-warning"><i class="fas fa-exclamation"></i> Uno o más requerimientos académicos están incompletos</li>
 			@endif
 
 			@if($statusPaso2 == 2)
@@ -31,21 +31,26 @@
 				<li class="list-group-item list-group-item-success"><i class="fas fa-check"></i> Comenzarás el {{$pasantia->fechaInicio}} trabajando {{$pasantia->horasSemanales}} horas semanales. </li>
 			@elseif($statusPaso2 == 1)
 				<li class="list-group-item list-group-item-warning"><i class="fas fa-exclamation"></i> Faltan uno o más datos del paso 2.</li>
+			@elseif($statusPaso2 == 3)
+				<li class="list-group-item list-group-item-warning"><i class="fas fa-exclamation"></i> Su pasantía quedará en un estado pendiente de aprobación, lo que podría tardar el proceso de su inscripción.</li>
 			@else
 				<li class="list-group-item list-group-item-warning"><i class="fas fa-exclamation"></i> No has iniciado el paso 2.</li>
 			@endif
 
-			@if($statusPaso3==3)
-				<li class="list-group-item list-group-item-success"><i class="fas fa-envelope-open"></i> Tu supervisor, {{$pasantia->nombreJefe}}, ha confirmado su correo.</li>
-			@elseif($statusPaso3==2)
+			@if($statusPaso3==4)
+				<li class="list-group-item list-group-item-success"><i class="fas fa-envelope-open"></i> Tu supervisor, {{$pasantia->nombreJefe}}, ha confirmado el correo.</li>
+			@elseif($statusPaso3==3)
 				<li class="list-group-item list-group-item-success"><i class="fas fa-envelope"></i> Tu supervisor, {{$pasantia->nombreJefe}}, ha recibido el correo pero no lo ha confirmado.</li>
+			@elseif($statusPaso3==2)
+				<li class="list-group-item list-group-item-success"><i class="fas fa-check"></i> Los datos de tu supervisor, {{$pasantia->nombreJefe}}, han sido guardados.</li>
 			@elseif($statusPaso3==1)
-				<li class="list-group-item list-group-item-success"><i class="fas fa-check"></i> Tienes guardados los datos de tu supervisor, {{$pasantia->nombreJefe}}.</li>
+				<li class="list-group-item list-group-item-warning"><i class="fas fa-exclamation"></i> Los datos de tu supervisor están incompletos</li>
 			@else
 				<li class="list-group-item list-group-item-warning"><i class="fas fa-exclamation"></i> No has iniciado el paso 3.</li>
 			@endif
 		</ul>
 	</div>
+	@if(Auth::user()->rol >= 4)
 	<div class="row justify-content-md-center mb-5">
 		<form style="display: inline-block;" action="{{ url('inscripcion/destroy', $pasantia->idPasantia)}}" method="post">
 			@csrf
@@ -53,5 +58,6 @@
 			<button class="btn btn-danger" type="submit">Eliminar</button>
 				</form>
 	</div>
+	@endif
 </div>
 @endsection

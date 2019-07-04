@@ -15,10 +15,15 @@ Route::get('/', function () {
 	return view('index');
 })->middleware('auth');
 
-Route::resource('/empresas', 'EmpresaController')->middleware('auth');;
-Route::resource('/admin', 'GraficasController')->middleware('auth');;
+Route::resource('/empresas', 'EmpresaController')->middleware('auth');
+Route::resource('/admin/estadisticas', 'GraficasController')->middleware('auth');
+Route::resource('/admin/importarlista', 'ListadoController')->middleware('auth');
 
-Route::resource('/perfil', 'PerfilController')->middleware('auth');;
+Route::resource('/admin/listadoInscripcion', 'ListadoInscripcionController')->middleware('auth');
+Route::get('/admin/tablaInscripciones', 'ListadoInscripcionController@export')->name( 'tablaInscripciones.export');
+
+Route::resource('/perfil', 'PerfilController')->middleware('auth');
+
 
 Route::get('/login', function(){
 	return view('login');
@@ -38,5 +43,7 @@ Route::post('/inscripcion/3/post','PasantiaController@paso3Control')->name('insc
 Route::get('/inscripcion/4', 'PasantiaController@paso4View')->name('inscripcion.4.view')->middleware('auth');
 Route::post('/inscripcion/4/post','PasantiaController@paso4Control')->name('inscripcion.4.post')->middleware('auth');
 Route::get('/inscripcion/resumen', 'PasantiaController@resumenView')->name('inscripcion.resumen')->middleware('auth');
+
+Route::get('/confirmarTutor/{id}', 'PasantiaController@confirmarTutor')->name('confTutor');
 
 Route::delete('/inscripcion/destroy/{id}','PasantiaController@destroy')->name('inscripcion.destroy')->middleware('auth');

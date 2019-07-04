@@ -3,10 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use App\Mail\ConfTutor;
+use Illuminate\Support\Facades\Mail;
+use Carbon\Carbon;
 use App\User;
+use App\AuthUsers;
 use App\Pasantia;
 use App\Empresa;
 use Auth;
+
 
 class PasantiaController extends Controller{
 	/**
@@ -87,13 +93,18 @@ class PasantiaController extends Controller{
 	public function paso1View(){
 		$userId = Auth::id();
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
+		$tipoMalla = AuthUsers::where('email', Auth::user()->email)->first()->tipoMalla;
+
 		if ($pasantia && $pasantia->statusPaso0==2){
+			$pasantia->modalidad = $tipoMalla;
+			$pasantia->save();
 			return view('pasantia.paso1',[
 				'statusPaso0'=>$pasantia->statusPaso0,
 				'statusPaso1'=>$pasantia->statusPaso1,
 				'statusPaso2'=>$pasantia->statusPaso2,
 				'statusPaso3'=>$pasantia->statusPaso3,
-				'statusPaso4'=>$pasantia->statusPaso4]);
+				'statusPaso4'=>$pasantia->statusPaso4,
+				'tipoMalla'=>$tipoMalla]);
 		}
 		else {
 			return redirect('/inscripcion/0');
@@ -118,13 +129,23 @@ class PasantiaController extends Controller{
 	/**
    * Muestra el Paso 2
    * @author Eduardo Pérez
-   * @version v1.0
+   * @version v1.1
    * @return \Illuminate\Http\Response
    */
 	public function paso2View(){
 		$userId = Auth::id();
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
-		$empresas = Empresa::all();
+		$empresas = Empresa::all()->sortBy('nombre');
+		$empresaSel = Empresa::where('idEmpresa', $pasantia->idEmpresa)->first();
+		if (!$empresaSel){
+			$empresaSel = new Empresa([
+				'nombre'=>"",
+				'rubro'=>"",
+				'urlWeb'=>"",
+				'correoContacto'=>"",
+				'status'=>"0"
+			]);
+		}
 		if ($pasantia && $pasantia->statusPaso0==2){
 			return view('pasantia.paso2', [
 				'statusPaso0'=>$pasantia->statusPaso0,
@@ -133,12 +154,13 @@ class PasantiaController extends Controller{
 				'statusPaso3'=>$pasantia->statusPaso3,
 				'statusPaso4'=>$pasantia->statusPaso4,
 				'empresas'=>$empresas,
-				'empresaSel'=>$pasantia->idEmpresa,
+				'empresaSel'=>$empresaSel,
 				'ciudad'=>$pasantia->ciudad,
 				'pais'=>$pasantia->pais,
 				'fecha'=>$pasantia->fechaInicio,
 				'horas'=>$pasantia->horasSemanales,
-				'pariente'=>$pasantia->parienteEmpresa
+				'pariente'=>$pasantia->parienteEmpresa,
+				'rolPariente' =>$pasantia->rolPariente
 			]);
 		}
 		else {
@@ -149,85 +171,123 @@ class PasantiaController extends Controller{
 	/**
    * Guarda los datos de la pasantía
    * @author Eduardo Pérez
-   * @version v1.0
+   * @version v2.0
 	 * @param  \Illuminate\Http\Request  $request
    * @return \Illuminate\Http\Response
    */
 	public function paso2Control(Request $request){
-		$incompleto = false;
+		$request->validate([
+			'empresa' => 'numeric|nullable',
+			'ciudad' => 'alpha|nullable',
+			'pais' => 'alpha|nullable',
+			'fecha' => 'date|nullable',
+			'horas' => 'integer|between:25,45|nullable',
+			'pariente' => 'boolean|nullable',
+			'otraEmpresa' => 'boolean|nullable',
+			'rolPariente' => 'required_if:pariente,1'
+		]);
 		$userId = Auth::id();
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
-		$pasantia->parienteEmpresa = $request->pariente;
-		$pasantia->save();
-		if ($request->empresa){
-			$pasantia->idEmpresa = $request->empresa;
-			$pasantia->save();
+		$incompleto = false;
+		if ($request->otraEmpresa){
+			if (!$request->nombreOtraEmpresa){
+				return redirect('/inscripcion/2')->with('danger', 'El nombre de la empresa no puede estar en blanco.');
+			}
+			else {
+				if(Empresa::where('nombre', $request->nombreOtraEmpresa)->first()){
+					$pasantia->idEmpresa = Empresa::where('nombre', $request->nombreOtraEmpresa)->first()->idEmpresa;
+				}
+				else {
+					$empresa = new Empresa([
+						'nombre'=>$request->get('nombreOtraEmpresa'),
+						'rubro'=>"Rubro " . $request->get('nombreOtraEmpresa'),
+						'urlWeb'=>Str::slug($request->get('nombreOtraEmpresa')).".com",
+						'correoContacto'=>"contacto@".Str::slug($request->get('nombreOtraEmpresa')).".com",
+						'status'=>"2"
+					]);
+					$empresa->save();
+					$pasantia->idEmpresa = $empresa->idEmpresa;
+				}
+			}
 		}
 		else {
-			$pasantia->idEmpresa = null;
-			$pasantia->save();
+			$pasantia->idEmpresa = Empresa::where('idEmpresa', $request->empresa)->first()->idEmpresa;
+		}
+		if (!$request->pais || !$request->ciudad || !$request->fecha || !$request->horas){
 			$incompleto = true;
 		}
 
-		if ($request->ciudad){
-			$pasantia->ciudad = $request->ciudad;
-			$pasantia->save();
+
+		if ($request->fecha) {
+			//Limite de la fecha de inscripcion respecto al año actual
+			$fechaInicio = Carbon::parse(Carbon::create(Carbon::now()->year, 6, 22)); //22 Julio
+			$fechaLimite = Carbon::parse(Carbon::create(Carbon::now()->year, 7, 16)); //16 Agosto
+			//Si hoy o la fecha de inscripcion es mayor a la fecha limite
+			if (Carbon::now() > $fechaLimite || Carbon::parse($request->fecha) > $fechaLimite) {
+				return redirect('/inscripcion/2')->with('danger', 'Su pasantía no la puede inscribir en esta fecha, si aún asi desea realizarla, deberá contactarse con pasantias.fic@uai.cl');
+			}
+			if (Carbon::parse($request->fecha) < $fechaInicio) {
+				return redirect('/inscripcion/2')->with('danger', 'El rango de fechas permitido para iniciar pasantías es desde el 22 de Julio hasta el 16 de Agosto.');
+			}
+			//Si desea inscribir en una fecha menor a la de hoy
+			if (Carbon::parse($request->fecha) < Carbon::now()) {
+				return redirect('/inscripcion/2')->with('danger', 'La fecha de inicio de su pasantía debe ser futura.');
+			}
+		}
+
+		if ($request->pariente == 1){
+			$pasantia->parienteEmpresa = 1;
+			if (!$request->rolPariente){
+				return redirect('/inscripcion/2')->with('danger', 'El rol del pariente no puede estar en blanco.');
+			}
+			else {
+				$pasantia->rolPariente = $request->rolPariente;
+			}
 		}
 		else {
-			$pasantia->ciudad = null;
-			$pasantia->save();
-			$incompleto = true;
-		}
-		if ($request->pais){
-			$pasantia->pais = $request->pais;
-			$pasantia->save();
-		}
-		else {
-			$incompleto = true;
-		}
-		if ($request->fecha){
-			$pasantia->fechaInicio = $request->fecha;
-			$pasantia->save();
-		}
-		else {
-			$incompleto = true;
-		}
-		if ($request->horas){
-			$pasantia->horasSemanales = $request->horas;
-			$pasantia->save();
-		}
-		else {
-			$incompleto = true;
+			$pasantia->parienteEmpresa = 0;
+			$pasantia->rolPariente = null;
 		}
 		if ($incompleto == true){
 			$pasantia->statusPaso2 = 1;
-			$pasantia->save();
 		}
 		else {
 			$pasantia->statusPaso2 = 2;
-			$pasantia->save();
 		}
+		if ($request->pariente == 1){
+			$pasantia->statusPaso2 = 3;
+		}
+		$pasantia->pais = $request->pais;
+		$pasantia->ciudad = $request->ciudad;
+		$pasantia->fechaInicio = $request->fecha;
+		$pasantia->horasSemanales = $request->horas;
+		$pasantia->save();
 		return redirect('/inscripcion/3');
 	}
 
 	/**
    * Muestra el Paso 3
    * @author Eduardo Pérez
-   * @version v1.0
+   * @version v1.1
    * @return \Illuminate\Http\Response
    */
 	public function paso3View(){
 		$userId = Auth::id();
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
 		if ($pasantia && $pasantia->statusPaso0==2){
-			return view('pasantia.paso3',[
-				'statusPaso0'=>$pasantia->statusPaso0,
-				'statusPaso1'=>$pasantia->statusPaso1,
-				'statusPaso2'=>$pasantia->statusPaso2,
-				'statusPaso3'=>$pasantia->statusPaso3,
-				'statusPaso4'=>$pasantia->statusPaso4,
-				'nombre'=>$pasantia->nombreJefe,
-				'correo'=>$pasantia->correoJefe]);
+			if ($pasantia->statusPaso2 == 3){
+				return redirect('/inscripcion/2')->with('danger', 'No puedes continuar tu proceso de inscripción si tienes un pariente en la empresa. Tu pasantía está a la espera de aprobación.');
+			}
+			else {
+				return view('pasantia.paso3',[
+					'statusPaso0'=>$pasantia->statusPaso0,
+					'statusPaso1'=>$pasantia->statusPaso1,
+					'statusPaso2'=>$pasantia->statusPaso2,
+					'statusPaso3'=>$pasantia->statusPaso3,
+					'statusPaso4'=>$pasantia->statusPaso4,
+					'nombre'=>$pasantia->nombreJefe,
+					'correo'=>$pasantia->correoJefe]);
+			}
 		}
 		else {
 			return redirect('/inscripcion/0');
@@ -237,13 +297,15 @@ class PasantiaController extends Controller{
 	/**
    * Guarda los datos del supervisor
    * @author Eduardo Pérez
-   * @version v1.1
+   * @version v1.2
 	 * @param  \Illuminate\Http\Request  $request
    * @return \Illuminate\Http\Response
    */
 	public function paso3Control(Request $request){
 		$userId = Auth::id();
+		$user = Auth::user();
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
+		$empresa = Empresa::where('idEmpresa', $pasantia->idEmpresa)->first();
 		if ($request->nombre == "" || $request->email == ""){
 			$pasantia->statusPaso3 = 1;
 		}
@@ -256,11 +318,14 @@ class PasantiaController extends Controller{
 			$pasantia->save();
 		}
 		if ($request->enviar){
+			while(Pasantia::where('tokenCorreo', $pasantia->tokenCorreo)->first()){
+				$pasantia->tokenCorreo = $string = str_random(10);
+			}
 			$pasantia->statusPaso3 = 3;
-			//Enviar correo
 			$pasantia->save();
+			Mail::to($pasantia->correoJefe)->send(new ConfTutor($pasantia, $user, $empresa));
 		}
-		return redirect('/inscripcion/4');
+		return redirect('/inscripcion/resumen');
 
 
 	}
@@ -268,19 +333,24 @@ class PasantiaController extends Controller{
 	/**
    * Muestra el Paso 4
    * @author Eduardo Pérez
-   * @version v1.0
+   * @version v1.1
    * @return \Illuminate\Http\Response
    */
 	public function paso4View(){
 		$userId = Auth::id();
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
 		if ($pasantia && $pasantia->statusPaso0==2){
-			return view('pasantia.paso4', [
-				'statusPaso0'=>$pasantia->statusPaso0,
-				'statusPaso1'=>$pasantia->statusPaso1,
-				'statusPaso2'=>$pasantia->statusPaso2,
-				'statusPaso3'=>$pasantia->statusPaso3,
-				'statusPaso4'=>$pasantia->statusPaso4]);
+			if ($pasantia->statusPaso2 == 3){
+				return redirect('/inscripcion/2')->with('danger', 'No puedes continuar tu proceso de inscripción si tienes un pariente en la empresa. Su pasantía quedará en un estado pendiente de aprobación, lo que podría tardar el proceso de su inscripción.');
+			}
+			else {
+				return view('pasantia.paso4', [
+					'statusPaso0'=>$pasantia->statusPaso0,
+					'statusPaso1'=>$pasantia->statusPaso1,
+					'statusPaso2'=>$pasantia->statusPaso2,
+					'statusPaso3'=>$pasantia->statusPaso3,
+					'statusPaso4'=>$pasantia->statusPaso4]);
+			}
 		}
 		else {
 			return redirect('/inscripcion/0');
@@ -340,5 +410,46 @@ class PasantiaController extends Controller{
 			return redirect('/inscripcion/resumen');
 		}
 
+	}
+
+	/**
+	 * Envía el correo de confirmación de tutor
+	 * @version v1.1
+	 * @author Eduardo Pérez
+	 */
+	public function enviarCorreo(){
+		$userId = Auth::id();
+		$user = Auth::user();
+		$pasantia = Pasantia::where('idAlumno', $userId)->first();
+		$empresa = Empresa::where('idEmpresa', $pasantia->idEmpresa)->first();
+		Mail::to($pasantia->correoJefe)->send($pasantia, $user, $empresa);
+
+	}
+
+	/**
+	 * Confirma que la persona será el tutor del alumno.
+	 * @version v1.0
+	 * @author Eduardo Pérez
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function confirmarTutor($id){
+		if (Pasantia::where('tokenCorreo', $id)->first()){
+			$pasantia = Pasantia::where('tokenCorreo', $id)->first();
+			$pasantia->statusPaso3 = 4;
+			$pasantia->save();
+
+			return view('pasantia.confTutor', [
+				'display'=>'confirmado',
+				'nombreJefe'=> $pasantia->nombreJefe,
+				'nombreAlumno' => $pasantia->alumno->nombres . " " . $pasantia->alumno->apellidoPaterno,
+				'nombreEmpresa' => $pasantia->empresa->nombre
+			]);
+		}
+		else {
+			return view('pasantia.confTutor', [
+				'display'=>'error'
+			]);
+		}
 	}
 }
