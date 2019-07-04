@@ -412,6 +412,11 @@ class PasantiaController extends Controller{
 
 	}
 
+	/**
+	 * Envía el correo de confirmación de tutor
+	 * @version v1.1
+	 * @author Eduardo Pérez
+	 */
 	public function enviarCorreo(){
 		$userId = Auth::id();
 		$user = Auth::user();
@@ -421,17 +426,23 @@ class PasantiaController extends Controller{
 
 	}
 
+	/**
+	 * Confirma que la persona será el tutor del alumno.
+	 * @version v1.0
+	 * @author Eduardo Pérez
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
 	public function confirmarTutor($id){
 		if (Pasantia::where('tokenCorreo', $id)->first()){
 			$pasantia = Pasantia::where('tokenCorreo', $id)->first();
-			$user = User::where('idUsuario', $pasantia->idAlumno)->first();
 			$pasantia->statusPaso3 = 4;
 			$pasantia->save();
 
 			return view('pasantia.confTutor', [
 				'display'=>'confirmado',
 				'nombreJefe'=> $pasantia->nombreJefe,
-				'nombreAlumno' => $user->nombres . " " . $user->apellidoPaterno,
+				'nombreAlumno' => $pasantia->alumno->nombres . " " . $pasantia->alumno->apellidoPaterno,
 				'nombreEmpresa' => $pasantia->empresa->nombre
 			]);
 		}
@@ -439,8 +450,6 @@ class PasantiaController extends Controller{
 			return view('pasantia.confTutor', [
 				'display'=>'error'
 			]);
-			return "No existe una pasantía asociada al token " . $id;
 		}
-
 	}
 }

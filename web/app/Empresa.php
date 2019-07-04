@@ -19,6 +19,6 @@ class Empresa extends Model{
 
 	public function pasantias()
     {
-        return $this->hasMany('App\Pasantia', 'idEmpresa');
+        return $this->hasMany('App\Pasantia', 'idEmpresa', 'idEmpresa');
     }
 }
