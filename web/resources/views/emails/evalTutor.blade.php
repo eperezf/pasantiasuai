@@ -1,19 +1,6 @@
 
+<table class="x_nl-container" cellpadding="0" cellspacing="0" style="border-collapse:collapse; table-layout:fixed; border-spacing:0; vertical-align:top; min-width:320px; margin:0 auto; background-color:#FFFFFF; width:100%">
 <tbody>
-
-<table class="x_nl-container" cellpadding="0" cellspacing="0" style="border-collapse:collapse; table-layout:fixed; border-spacing:0; vertical-align:top; min-width:320px; margin:0 auto; background-color:#FFFFFF; width:600px">
-<tr style="background-color:#000">
-<td width="600">
-<div id="x_titulo" style="font-family:Rockwell,'Courier Bold',Courier,Georgia,Times,'Times New Roman',serif; color:#FFF; margin:0 0 0 35px; text-decoration:underline; font-size:12px; text-transform:uppercase">
-<p><span style="font-size:larger">UAI</span><br>
-Dirección de Postgrado<br>
-</p>
-</div>
-</td>
-<td align="right"><img data-imagetype="External" src="http://marketing.uai.cl/mailing/plantillas/negocios/img/index_r1_c2.png" originalsrc="http://marketing.uai.cl/mailing/plantillas/negocios/img/index_r1_c2.png" data-connectorsauthtoken="1" data-imageproxyendpoint="/actions/ei" data-imageproxyid="" name="x_index_r1_c2" width="217" height="94" id="x_index_r1_c2" alt=""></td>
-
-
-</tr>
 <tr style="vertical-align:top">
 <td style="word-break:break-word; border-collapse:collapse!important; vertical-align:top">
 <div style="background-color:transparent">
@@ -117,7 +104,7 @@ Dirección de Postgrado<br>
 </div>
 </div>
 <div align="center" class="x_button-container x_center" style="padding-right:10px; padding-left:10px; padding-top:10px; padding-bottom:40px">
-<a href="[insertar link del sitio]/evaluacion/id"  target="_blank" rel="noopener noreferrer" data-auth="NotApplicable" style="display:block; text-decoration:none; text-align:center; color:#ffffff; background-color:transparent; border-radius:0px; -webkit-border-radius:0px; -moz-border-radius:0px; max-width:377px; width:337px; width:auto; border-top:1px solid #7FA3CE; border-right:1px solid #7FA3CE; border-bottom:1px solid #7FA3CE; border-left:1px solid #7FA3CE; padding-top:5px; padding-right:20px; padding-bottom:5px; padding-left:20px; font-family:'Trebuchet MS','Lucida Grande','Lucida Sans Unicode','Lucida Sans',Tahoma,sans-serif"><span style="font-size:16px; line-height:32px"><span style="font-size:18px; line-height:36px">CONTESTAR ENCUESTA AQUÍ</span></span> </a></div>
+<a href="http://gestionfic.uai.cl/evaluacion/{{$evalTutor->idEncuesta}}" target="_blank" rel="noopener noreferrer" data-auth="NotApplicable" style="display:block; text-decoration:none; text-align:center; color:#ffffff; background-color:transparent; border-radius:0px; -webkit-border-radius:0px; -moz-border-radius:0px; max-width:377px; width:337px; width:auto; border-top:1px solid #7FA3CE; border-right:1px solid #7FA3CE; border-bottom:1px solid #7FA3CE; border-left:1px solid #7FA3CE; padding-top:5px; padding-right:20px; padding-bottom:5px; padding-left:20px; font-family:'Trebuchet MS','Lucida Grande','Lucida Sans Unicode','Lucida Sans',Tahoma,sans-serif"><span style="font-size:16px; line-height:32px"><span style="font-size:18px; line-height:36px">CONTESTAR ENCUESTA AQUÍ</span></span> </a></div>
 </div>
 </div>
 </div>

@@ -45,4 +45,4 @@ Route::delete('/inscripcion/destroy/{id}','PasantiaController@destroy')->name('i
 
 Route::post('evaluacion/{id}','EvalTutorController@save')->name('evalTutor.save');
 Route::get('evaluacion/{id}', 'EvalTutorController@show')->name('evalTutor.show');
-Route::get('evaluacion/test', 'EvalTutorController@test');
+Route::get('eval/test', 'EvalTutorController@test');

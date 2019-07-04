@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use App\Mail\EvalTutorMail;
+use Illuminate\Support\Facades\Mail;
 use App\User;
 use App\AuthUsers;
 use App\Pasantia;
@@ -54,8 +56,14 @@ class EvalTutorController extends Controller{
 
 	public function test(){
 		$userId = Auth::id();
+		$user = Auth::user();
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
-		$empresa = Empresa::find($pasantia->idEmpresa);
-		Mail::to($pasantia->correoJefe)->send(new EvalTutor($pasantia, $user, $empresa));
+		$empresa = Empresa::where('idEmpresa', $pasantia->idEmpresa)->first();
+		$evalTutor = new EvalTutor;
+		$evalTutor->idEncuesta = $string = str_random(10);
+		$evalTutor->idPasantia = $pasantia->idPasantia;
+		$evalTutor->save();
+		Mail::to($pasantia->correoJefe)->send(new EvalTutorMail($pasantia, $user, $empresa, $evalTutor));
+		return "Correo enviado a " . $pasantia->correoJefe;
 	}
 }
