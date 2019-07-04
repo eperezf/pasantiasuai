@@ -297,7 +297,7 @@ class PasantiaController extends Controller{
 	/**
    * Guarda los datos del supervisor
    * @author Eduardo Pérez
-   * @version v1.1
+   * @version v1.2
 	 * @param  \Illuminate\Http\Request  $request
    * @return \Illuminate\Http\Response
    */
@@ -318,6 +318,9 @@ class PasantiaController extends Controller{
 			$pasantia->save();
 		}
 		if ($request->enviar){
+			while(Pasantia::where('tokenCorreo', $pasantia->tokenCorreo)->first()){
+				$pasantia->tokenCorreo = $string = str_random(10);
+			}
 			$pasantia->statusPaso3 = 3;
 			$pasantia->save();
 			Mail::to($pasantia->correoJefe)->send(new ConfTutor($pasantia, $user, $empresa));
@@ -415,6 +418,29 @@ class PasantiaController extends Controller{
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
 		$empresa = Empresa::where('idEmpresa', $pasantia->idEmpresa)->first();
 		Mail::to($pasantia->correoJefe)->send($pasantia, $user, $empresa);
+
+	}
+
+	public function confirmarTutor($id){
+		if (Pasantia::where('tokenCorreo', $id)->first()){
+			$pasantia = Pasantia::where('tokenCorreo', $id)->first();
+			$user = User::where('idUsuario', $pasantia->idAlumno)->first();
+			$pasantia->statusPaso3 = 4;
+			$pasantia->save();
+
+			return view('pasantia.confTutor', [
+				'display'=>'confirmado',
+				'nombreJefe'=> $pasantia->nombreJefe,
+				'nombreAlumno' => $user->nombres . " " . $user->apellidoPaterno,
+				'nombreEmpresa' => $pasantia->empresa->nombre
+			]);
+		}
+		else {
+			return view('pasantia.confTutor', [
+				'display'=>'error'
+			]);
+			return "No existe una pasantía asociada al token " . $id;
+		}
 
 	}
 }
