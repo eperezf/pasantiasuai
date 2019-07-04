@@ -37,12 +37,14 @@
 				<li class="list-group-item list-group-item-warning"><i class="fas fa-exclamation"></i> No has iniciado el paso 2.</li>
 			@endif
 
-			@if($statusPaso3==3)
-				<li class="list-group-item list-group-item-success"><i class="fas fa-envelope-open"></i> Tu supervisor, {{$pasantia->nombreJefe}}, ha confirmado su correo.</li>
-			@elseif($statusPaso3==2)
+			@if($statusPaso3==4)
+				<li class="list-group-item list-group-item-success"><i class="fas fa-envelope-open"></i> Tu supervisor, {{$pasantia->nombreJefe}}, ha confirmado el correo.</li>
+			@elseif($statusPaso3==3)
 				<li class="list-group-item list-group-item-success"><i class="fas fa-envelope"></i> Tu supervisor, {{$pasantia->nombreJefe}}, ha recibido el correo pero no lo ha confirmado.</li>
+			@elseif($statusPaso3==2)
+				<li class="list-group-item list-group-item-success"><i class="fas fa-check"></i> Los datos de tu supervisor, {{$pasantia->nombreJefe}}, han sido guardados.</li>
 			@elseif($statusPaso3==1)
-				<li class="list-group-item list-group-item-success"><i class="fas fa-check"></i> Tienes guardados los datos de tu supervisor, {{$pasantia->nombreJefe}}.</li>
+				<li class="list-group-item list-group-item-warning"><i class="fas fa-exclamation"></i> Los datos de tu supervisor están incompletos</li>
 			@else
 				<li class="list-group-item list-group-item-warning"><i class="fas fa-exclamation"></i> No has iniciado el paso 3.</li>
 			@endif
