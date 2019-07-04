@@ -19,6 +19,9 @@ Route::resource('/empresas', 'EmpresaController')->middleware('auth');
 Route::resource('/admin/estadisticas', 'GraficasController')->middleware('auth');
 Route::resource('/admin/importarlista', 'ListadoController')->middleware('auth');
 
+Route::resource('/admin/listadoInscripcion', 'ListadoInscripcionController')->middleware('auth');
+Route::get('/admin/tablaInscripciones', 'ListadoInscripcionController@export')->name( 'tablaInscripciones.export');
+
 Route::resource('/perfil', 'PerfilController')->middleware('auth');
 
 
