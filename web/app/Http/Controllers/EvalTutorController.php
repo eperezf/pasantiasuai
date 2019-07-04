@@ -38,6 +38,7 @@ class EvalTutorController extends Controller{
         	$evaltutor->certificadoTutor = $request->certificadoTutor;
         }
         $evaltutor->save();
+		return view("evalTutor.postformulario")		
 	}
 
 	public function create(){
