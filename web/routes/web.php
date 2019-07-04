@@ -18,6 +18,7 @@ Route::get('/', function () {
 Route::resource('/empresas', 'EmpresaController')->middleware('auth');
 Route::resource('/admin/estadisticas', 'GraficasController')->middleware('auth');
 Route::resource('/admin/importarlista', 'ListadoController')->middleware('auth');
+Route::resource('/admin/listadoInscripcion', 'ListadoInscripcionController')->middleware('auth');
 
 Route::resource('/perfil', 'PerfilController')->middleware('auth');
 
