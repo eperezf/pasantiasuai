@@ -25,8 +25,10 @@ class Pasantia extends Model{
 		'rolPariente'
 	];
 
-	public function empresa()
-    {
-        return $this->hasOne('App\Empresa', 'idEmpresa');
-    }
+	public function empresa(){
+    return $this->hasOne('App\Empresa', 'idEmpresa', 'idEmpresa');
+	}
+	public function alumno(){
+	  return $this->belongsTo('App\User', 'idAlumno', 'idUsuario');
+	}
 }
