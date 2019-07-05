@@ -38,7 +38,9 @@ class EvalTutorController extends Controller{
 		$evaltutor->etica = $request->etica;
 		$evaltutor->promedio = $promedio;
         $evaltutor->comentarios = $request->comentarios;
-        $evaltutor->certificadoTutor = $request->certificadoTutor;
+        if ($request->certificadoTutor) {
+        	$evaltutor->certificadoTutor = $request->certificadoTutor;
+        }
         $evaltutor->save();
 		return view("evalTutor.postformulario");
 	}
