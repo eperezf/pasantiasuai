@@ -15,7 +15,11 @@ use Auth;
 
 class EvalTutorController extends Controller{
 	public function show($id){
-		return view('evalTutor.formulario',['id' => $id]);
+		$evaltutor = EvalTutor::where('idEncuesta',$id)->first();
+		if(!$evaltutor->certificadoTutor)
+		{
+			return view('evalTutor.formulario',['id' => $id]);
+		}	
 	}
 
 	public function save(Request $request){
@@ -34,11 +38,9 @@ class EvalTutorController extends Controller{
 		$evaltutor->etica = $request->etica;
 		$evaltutor->promedio = $promedio;
         $evaltutor->comentarios = $request->comentarios;
-        if ($request->certificadoTutor) {
-        	$evaltutor->certificadoTutor = $request->certificadoTutor;
-        }
+        $evaltutor->certificadoTutor = $request->certificadoTutor;
         $evaltutor->save();
-		return view("evalTutor.postformulario")		
+		return view("evalTutor.postformulario");
 	}
 
 	public function create(){

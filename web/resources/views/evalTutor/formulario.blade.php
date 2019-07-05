@@ -23,22 +23,16 @@
 				<div class="text-center">
 					<img class="img-fluid mb-5" src="{{asset('img/logo_negro.gif')}}"/>
 				</div>
-				<div class="card">
-				  <div class="card-header text-center">
-
-				    Evaluacion <?php echo $id; ?>
-				  </div>
-				  <div class="card-body" align="justify">
                 <form action="/evaluacion/<?php echo $id; ?>" method="post" id="search">
                     @csrf
-                    <input type="hidden" name="idEncuesta" value="<?php echo $id;?>">
+                    <input type="hidden" name="idEncuesta" value={{$id}}>
     <br>
       <b>Compromiso y planificación: </b>asume y cumple con su trabajo, acuerdos y plazos. Organiza tareas simultáneamente, planifica y prioriza actividades
       <div class="row">
         <div class="col">1</div><div class="col">2</div><div class="col">3</div><div class="col">4</div><div class="col">5</div><div class="col">6</div><div class="col">7</div>
       </div>
       <div class="row">
-          <div class="col"><input type="radio" name="compromiso" value="1"></div>
+          <div class="col"><input type="radio" name="compromiso" value="1" required></div>
           <div class="col"><input type="radio" name="compromiso" value="2"></div>
           <div class="col"><input type="radio" name="compromiso" value="3"></div>
           <div class="col"><input type="radio" name="compromiso" value="4"></div>
@@ -52,7 +46,7 @@
          <div class="col">1</div><div class="col">2</div><div class="col">3</div><div class="col">4</div><div class="col">5</div><div class="col">6</div><div class="col">7</div>
        </div>
        <div class="row">
-         <div class="col"><input type="radio" name="adaptabilidad" value="1"></div>
+         <div class="col"><input type="radio" name="adaptabilidad" value="1" required></div>
          <div class="col"><input type="radio" name="adaptabilidad" value="2"></div>
          <div class="col"><input type="radio" name="adaptabilidad" value="3"></div>
          <div class="col"><input type="radio" name="adaptabilidad" value="4"></div>
@@ -66,7 +60,7 @@
            <div class="col">1</div><div class="col">2</div><div class="col">3</div><div class="col">4</div><div class="col">5</div><div class="col">6</div><div class="col">7</div>
          </div>
          <div class="row">
-           <div class="col"><input type="radio" name="comunicacion" value="1"></div>
+           <div class="col"><input type="radio" name="comunicacion" value="1" required></div>
            <div class="col"><input type="radio" name="comunicacion" value="2"></div>
            <div class="col"><input type="radio" name="comunicacion" value="3"></div>
            <div class="col"><input type="radio" name="comunicacion" value="4"></div>
@@ -80,7 +74,7 @@
              <div class="col">1</div><div class="col">2</div><div class="col">3</div><div class="col">4</div><div class="col">5</div><div class="col">6</div><div class="col">7</div>
            </div>
            <div class="row">
-             <div class="col"><input type="radio" name="equipo" value="1"></div>
+             <div class="col"><input type="radio" name="equipo" value="1" required></div>
              <div class="col"><input type="radio" name="equipo" value="2"></div>
              <div class="col"><input type="radio" name="equipo" value="3"></div>
              <div class="col"><input type="radio" name="equipo" value="4"></div>
@@ -94,7 +88,7 @@
              <div class="col">1</div><div class="col">2</div><div class="col">3</div><div class="col">4</div><div class="col">5</div><div class="col">6</div><div class="col">7</div>
            </div>
            <div class="row">
-             <div class="col"><input type="radio" name="liderazgo" value="1"></div>
+             <div class="col"><input type="radio" name="liderazgo" value="1" required></div>
              <div class="col"><input type="radio" name="liderazgo" value="2"></div>
              <div class="col"><input type="radio" name="liderazgo" value="3"></div>
              <div class="col"><input type="radio" name="liderazgo" value="4"></div>
@@ -108,7 +102,7 @@
              <div class="col">1</div><div class="col">2</div><div class="col">3</div><div class="col">4</div><div class="col">5</div><div class="col">6</div><div class="col">7</div>
            </div>
            <div class="row">
-             <div class="col"><input type="radio" name="sobreponerse" value="1"></div>
+             <div class="col"><input type="radio" name="sobreponerse" value="1" required></div>
              <div class="col"><input type="radio" name="sobreponerse" value="2"></div>
              <div class="col"><input type="radio" name="sobreponerse" value="3"></div>
              <div class="col"><input type="radio" name="sobreponerse" value="4"></div>
@@ -122,7 +116,7 @@
              <div class="col">1</div><div class="col">2</div><div class="col">3</div><div class="col">4</div><div class="col">5</div><div class="col">6</div><div class="col">7</div>
            </div>
            <div class="row">
-             <div class="col"><input type="radio" name="habilidades" value="1"></div>
+             <div class="col"><input type="radio" name="habilidades" value="1" required></div>
              <div class="col"><input type="radio" name="habilidades" value="2"></div>
              <div class="col"><input type="radio" name="habilidades" value="3"></div>
              <div class="col"><input type="radio" name="habilidades" value="4"></div>
@@ -136,7 +130,7 @@
              <div class="col">1</div><div class="col">2</div><div class="col">3</div><div class="col">4</div><div class="col">5</div><div class="col">6</div><div class="col">7</div>
            </div>
            <div class="row">
-             <div class="col"><input type="radio" name="proactividad" value="1"></div>
+             <div class="col"><input type="radio" name="proactividad" value="1" required></div>
              <div class="col"><input type="radio" name="proactividad" value="2"></div>
              <div class="col"><input type="radio" name="proactividad" value="3"></div>
              <div class="col"><input type="radio" name="proactividad" value="4"></div>
@@ -150,7 +144,7 @@
              <div class="col">1</div><div class="col">2</div><div class="col">3</div><div class="col">4</div><div class="col">5</div><div class="col">6</div><div class="col">7</div>
            </div>
            <div class="row">
-             <div class="col"><input type="radio" name="innovacion" value="1"></div>
+             <div class="col"><input type="radio" name="innovacion" value="1" required></div>
              <div class="col"><input type="radio" name="innovacion" value="2"></div>
              <div class="col"><input type="radio" name="innovacion" value="3"></div>
              <div class="col"><input type="radio" name="innovacion" value="4"></div>
@@ -164,7 +158,7 @@
              <div class="col">1</div><div class="col">2</div><div class="col">3</div><div class="col">4</div><div class="col">5</div><div class="col">6</div><div class="col">7</div>
            </div>
            <div class="row">
-             <div class="col"><input type="radio" name="etica" value="1"></div>
+             <div class="col"><input type="radio" name="etica" value="1" required></div>
              <div class="col"><input type="radio" name="etica" value="2"></div>
              <div class="col"><input type="radio" name="etica" value="3"></div>
              <div class="col"><input type="radio" name="etica" value="4"></div>
@@ -180,7 +174,7 @@
 
            <b>Certifico que el alumno en cuestión se encuentra trabajando en el proyecto asignado y que la información entregada en este formulario es verídica. </b>
            <div class="row" align="center">
-             <div class="col"><input type="checkbox" name="certificadoTutor" value="1" style="transform: scale(1.5);"> Aceptar</div>
+             <div class="col"><input type="checkbox" name="certificadoTutor" value="1" style="transform: scale(1.5);" required> Aceptar</div>
            </div><br>
 
            <div class="text-center align-center">
