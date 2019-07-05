@@ -27,7 +27,7 @@
 			@endif
 
 			@if($statusPaso2 == 2)
-				<li class="list-group-item list-group-item-success"><i class="fas fa-check"></i> Trabajarás en la empresa {{$empresa->nombre}} en {{$pasantia->ciudad}}, {{$pasantia->pais}}.</li>
+				<li class="list-group-item list-group-item-success"><i class="fas fa-check"></i> @if($empresa->status == 1) Trabajarás en la empresa {{$empresa->nombre}} en {{$pasantia->ciudad}}, {{$pasantia->pais}}. @else Declaraste que la empresa {{$empresa->nombre}} tiene su convenio en proceso de firma.</br> Asegúrate que de que la empresa haya comenzado la tramitación. @endif</li>
 				<li class="list-group-item list-group-item-success"><i class="fas fa-check"></i> Comenzarás el {{$pasantia->fechaInicio}} trabajando {{$pasantia->horasSemanales}} horas semanales. </li>
 			@elseif($statusPaso2 == 1)
 				<li class="list-group-item list-group-item-warning"><i class="fas fa-exclamation"></i> Faltan uno o más datos del paso 2.</li>
