@@ -43,11 +43,15 @@
 						  <div class="form-group">
 						    <label for="Password">Contraseña</label>
 						    <input type="password" class="form-control" id="Password" name="Password" placeholder="Contraseña">
-						  </div>
+							</div>
+
+							<!-- Boton recuerdame no disponible 
 						  <div class="form-group form-check">
 						    <input type="checkbox" class="form-check-input" id="Recordar" name="Recordar" disabled>
 						    <label class="form-check-label" for="Recordar">Recuérdame (no disponible)</label>
-						  </div>
+							</div>
+							-->
+							
 							<div class="text-center align-center">
 								<button type="submit" class="btn btn-primary btn-lg">Entrar</button>
 							</div>
