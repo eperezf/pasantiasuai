@@ -220,8 +220,8 @@ class PasantiaController extends Controller{
 
 		if ($request->fecha) {
 			//Limite de la fecha de inscripcion respecto al año actual
-			$fechaInicio = Carbon::parse(Carbon::create(Carbon::now()->year, 6, 22)); //22 Julio
-			$fechaLimite = Carbon::parse(Carbon::create(Carbon::now()->year, 7, 16)); //16 Agosto
+			$fechaInicio = Carbon::parse(Carbon::create(Carbon::now()->year, 7, 22)); //22 Julio
+			$fechaLimite = Carbon::parse(Carbon::create(Carbon::now()->year, 8, 31)); //31 Agosto
 			//Si hoy o la fecha de inscripcion es mayor a la fecha limite
 			if (Carbon::now() > $fechaLimite || Carbon::parse($request->fecha) > $fechaLimite) {
 				return redirect('/inscripcion/2')->with('danger', 'Su pasantía no la puede inscribir en esta fecha, si aún asi desea realizarla, deberá contactarse con pasantias.fic@uai.cl');
@@ -276,7 +276,7 @@ class PasantiaController extends Controller{
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
 		if ($pasantia && $pasantia->statusPaso0==2){
 			if ($pasantia->statusPaso2 == 3){
-				return redirect('/inscripcion/2')->with('danger', 'No puedes continuar tu proceso de inscripción si tienes un pariente en la empresa. Tu pasantía está a la espera de aprobación.');
+				return redirect('/inscripcion/2')->with('danger', 'No puedes continuar tu proceso de inscripción si tienes un pariente en la empresa. Tu pasantía está a la espera de validación.');
 			}
 			else {
 				return view('pasantia.paso3',[
@@ -341,7 +341,7 @@ class PasantiaController extends Controller{
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
 		if ($pasantia && $pasantia->statusPaso0==2){
 			if ($pasantia->statusPaso2 == 3){
-				return redirect('/inscripcion/2')->with('danger', 'No puedes continuar tu proceso de inscripción si tienes un pariente en la empresa. Su pasantía quedará en un estado pendiente de aprobación, lo que podría tardar el proceso de su inscripción.');
+				return redirect('/inscripcion/2')->with('danger', 'No puedes continuar tu proceso de inscripción si tienes un pariente en la empresa. Su pasantía quedará en un estado pendiente de validación, lo que podría tardar el proceso de su inscripción.');
 			}
 			else {
 				return view('pasantia.paso4', [
