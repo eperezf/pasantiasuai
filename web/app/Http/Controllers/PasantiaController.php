@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use App\Mail\ConfTutor;
+use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 use App\User;
 use App\AuthUsers;
@@ -179,7 +181,7 @@ class PasantiaController extends Controller{
 			'ciudad' => 'alpha|nullable',
 			'pais' => 'alpha|nullable',
 			'fecha' => 'date|nullable',
-			'horas' => 'integer|between:25,45|nullable',
+			'horas' => 'integer|between:20,45|nullable',
 			'pariente' => 'boolean|nullable',
 			'otraEmpresa' => 'boolean|nullable',
 			'rolPariente' => 'required_if:pariente,1'
@@ -218,14 +220,18 @@ class PasantiaController extends Controller{
 
 		if ($request->fecha) {
 			//Limite de la fecha de inscripcion respecto al año actual
-			$fechaLimite = Carbon::parse(Carbon::create(Carbon::now()->year, 7, 16));
+			$fechaInicio = Carbon::parse(Carbon::create(Carbon::now()->year, 7, 12)); //12 Julio
+			$fechaLimite = Carbon::parse(Carbon::create(Carbon::now()->year, 8, 31)); //31 Agosto
 			//Si hoy o la fecha de inscripcion es mayor a la fecha limite
 			if (Carbon::now() > $fechaLimite || Carbon::parse($request->fecha) > $fechaLimite) {
-				return redirect('/inscripcion/2')->with('danger', 'Su pasantía no la puede inscribir en este período, si aún asi desea realizarla, deberá contactarse con pasantias.fic@uai.cl');
+				return redirect('/inscripcion/2')->with('danger', 'Su pasantía no la puede inscribir en esta fecha, si aún asi desea realizarla, deberá contactarse con pasantias.fic@uai.cl');
+			}
+			if (Carbon::parse($request->fecha) < $fechaInicio) {
+				return redirect('/inscripcion/2')->with('danger', 'El rango de fechas permitido para iniciar pasantías es desde el 12 de Julio hasta el 31 de Agosto.');
 			}
 			//Si desea inscribir en una fecha menor a la de hoy
 			if (Carbon::parse($request->fecha) < Carbon::now()) {
-				return redirect('/inscripcion/2')->with('danger', 'La fecha de inicio de su pasantía no puede ser antes que la de hoy.');
+				return redirect('/inscripcion/2')->with('danger', 'La fecha de inicio de su pasantía debe ser futura.');
 			}
 		}
 
@@ -270,7 +276,7 @@ class PasantiaController extends Controller{
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
 		if ($pasantia && $pasantia->statusPaso0==2){
 			if ($pasantia->statusPaso2 == 3){
-				return redirect('/inscripcion/2')->with('danger', 'No puedes continuar tu proceso de inscripción si tienes un pariente en la empresa. Tu pasantía está a la espera de aprobación.');
+				return redirect('/inscripcion/2')->with('danger', 'No puedes continuar tu proceso de inscripción si tienes un pariente en la empresa. Tu pasantía está a la espera de validación.');
 			}
 			else {
 				return view('pasantia.paso3',[
@@ -291,13 +297,15 @@ class PasantiaController extends Controller{
 	/**
    * Guarda los datos del supervisor
    * @author Eduardo Pérez
-   * @version v1.1
+   * @version v1.2
 	 * @param  \Illuminate\Http\Request  $request
    * @return \Illuminate\Http\Response
    */
 	public function paso3Control(Request $request){
 		$userId = Auth::id();
+		$user = Auth::user();
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
+		$empresa = Empresa::where('idEmpresa', $pasantia->idEmpresa)->first();
 		if ($request->nombre == "" || $request->email == ""){
 			$pasantia->statusPaso3 = 1;
 		}
@@ -310,11 +318,14 @@ class PasantiaController extends Controller{
 			$pasantia->save();
 		}
 		if ($request->enviar){
+			while(Pasantia::where('tokenCorreo', $pasantia->tokenCorreo)->first()){
+				$pasantia->tokenCorreo = $string = str_random(10);
+			}
 			$pasantia->statusPaso3 = 3;
-			//Enviar correo
 			$pasantia->save();
+			Mail::to($pasantia->correoJefe)->send(new ConfTutor($pasantia, $user, $empresa));
 		}
-		return redirect('/inscripcion/4');
+		return redirect('/inscripcion/resumen');
 
 
 	}
@@ -330,7 +341,7 @@ class PasantiaController extends Controller{
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
 		if ($pasantia && $pasantia->statusPaso0==2){
 			if ($pasantia->statusPaso2 == 3){
-				return redirect('/inscripcion/2')->with('danger', 'No puedes continuar tu proceso de inscripción si tienes un pariente en la empresa. Tu pasantía está a la espera de aprobación.');
+				return redirect('/inscripcion/2')->with('danger', 'No puedes continuar tu proceso de inscripción si tienes un pariente en la empresa. Su pasantía quedará en un estado pendiente de validación, lo que podría tardar el proceso de su inscripción.');
 			}
 			else {
 				return view('pasantia.paso4', [
@@ -399,5 +410,46 @@ class PasantiaController extends Controller{
 			return redirect('/inscripcion/resumen');
 		}
 
+	}
+
+	/**
+	 * Envía el correo de confirmación de tutor
+	 * @version v1.1
+	 * @author Eduardo Pérez
+	 */
+	public function enviarCorreo(){
+		$userId = Auth::id();
+		$user = Auth::user();
+		$pasantia = Pasantia::where('idAlumno', $userId)->first();
+		$empresa = Empresa::where('idEmpresa', $pasantia->idEmpresa)->first();
+		Mail::to($pasantia->correoJefe)->send($pasantia, $user, $empresa);
+
+	}
+
+	/**
+	 * Confirma que la persona será el tutor del alumno.
+	 * @version v1.0
+	 * @author Eduardo Pérez
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function confirmarTutor($id){
+		if (Pasantia::where('tokenCorreo', $id)->first()){
+			$pasantia = Pasantia::where('tokenCorreo', $id)->first();
+			$pasantia->statusPaso3 = 4;
+			$pasantia->save();
+
+			return view('pasantia.confTutor', [
+				'display'=>'confirmado',
+				'nombreJefe'=> $pasantia->nombreJefe,
+				'nombreAlumno' => $pasantia->alumno->nombres . " " . $pasantia->alumno->apellidoPaterno,
+				'nombreEmpresa' => $pasantia->empresa->nombre
+			]);
+		}
+		else {
+			return view('pasantia.confTutor', [
+				'display'=>'error'
+			]);
+		}
 	}
 }

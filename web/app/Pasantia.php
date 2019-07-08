@@ -15,6 +15,7 @@ class Pasantia extends Model{
 		'idEmpresa',
 		'nombreJefe',
 		'correoJefe',
+		'tokenCorreo',
 		'lecReglamento',
 		'practicaOp',
 		'ciudad',
@@ -23,4 +24,11 @@ class Pasantia extends Model{
 		'parienteEmpresa',
 		'rolPariente'
 	];
+
+	public function empresa(){
+    return $this->hasOne('App\Empresa', 'idEmpresa', 'idEmpresa');
+	}
+	public function alumno(){
+	  return $this->belongsTo('App\User', 'idAlumno', 'idUsuario');
+	}
 }

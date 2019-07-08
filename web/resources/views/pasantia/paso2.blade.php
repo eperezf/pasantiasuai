@@ -8,7 +8,7 @@
 		<h2>Paso 2: Registro de datos</h2>
 	</div>
 	<div class="row justify-content-md-center mb-3">
-		<p>Una vez que tu práctica esté aprobada, no podrás volver a editar estos datos.</p>
+		<p>Una vez que tu práctica esté validada, no podrás volver a editar estos datos.</p>
 	</div>
 	<div class="row justify-content-md-center mb-5">
 		<div class="col-md-6">
@@ -51,7 +51,7 @@
 				</div>
 				<div class="form-group">
 					<label for="horas">Horas semanales de trabajo</label>
-					<input type="number" class="form-control" id="horas" name="horas" @if($horas) value="{{$horas}}" @else @endif min="25" max="45">
+					<input type="number" class="form-control" id="horas" name="horas" @if($horas) value="{{$horas}}" @else @endif min="20" max="45">
 				</div>
 				<div class="form-group">
 					<p>Tengo un familiar que trabaja en la empresa o es socio/dueño de esta</p>
@@ -69,7 +69,7 @@
 								<h5 class="text-center">¡Atención!</h3>
 							</div>
 							<div class="card-body">
-								<h6 class="card-title text-center">Su pasantía quedará en estado de aprobación, lo que podría tardar el proceso de su inscripción.</h6>
+								<h6 class="card-title text-center">Su pasantía quedará en un estado pendiente de validación, lo que podría tardar el proceso de su inscripción.</h6>
 							</div>
 						</div>
 						<label for="pais">Describa el parentesco, rol y relación de su pariente en la empresa</label>

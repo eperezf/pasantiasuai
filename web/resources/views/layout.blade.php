@@ -55,9 +55,11 @@
 					<li class="nav-item pt-3">
 						<a href="/" class="nav-link"><i class="fa fa-home"></i> Inicio</a>
 					</li>
+					@if(Auth::user()->rol == 1 || Auth::user()->rol == 5)
 					<li class="nav-item pt-3">
 						<a href="{{route('inscripcion.resumen')}}" class="nav-link"><i class="fas fa-paste"></i> Pasantia</a>
 					</li>
+					@endif
 					<li class="nav-item pt-3">
 						<a href="/empresas" class="nav-link"><i class="fas fa-industry"></i> Empresas</a>
 					</li>
@@ -66,9 +68,11 @@
 						<a href="#" class="nav-link"><i class="fas fa-chart-line"></i> Estadisticas </a>
 					</li>
 					@endif
+					@if(Auth::user()->rol == 1 || Auth::user()->rol == 5)
 					<li class="nav-item pt-3">
 						<a href="#" class="nav-link"><i class="fas fa-balance-scale"></i> Reglamento </a>
 					</li>
+					@endif
 				</ul>
 			</nav>
 			<!-- Barra de navegacion superior -->
@@ -77,10 +81,10 @@
 					<ul class="navbar-nav">
 						<li class="nav-item">
 							<!-- Nombre de usuario -->
-							<span class="navbar-brand"> Bienvenido 
+							<span class="navbar-brand"> Bienvenido
 								{{Auth::user()->nombres}}
 								{{Auth::user()->apellidoPaterno}}
-								{{Auth::user()->apellidoMaterno}} 
+								{{Auth::user()->apellidoMaterno}}
 							</span>
 						</li>
 					</ul>
