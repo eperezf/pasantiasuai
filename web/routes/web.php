@@ -20,7 +20,8 @@ Route::resource('/admin/estadisticas', 'GraficasController')->middleware('auth')
 Route::resource('/admin/importarlista', 'ListadoController')->middleware('auth');
 
 Route::resource('/admin/listadoInscripcion', 'ListadoInscripcionController')->middleware('auth');
-Route::get('/admin/tablaInscripciones', 'ListadoInscripcionController@export')->name( 'tablaInscripciones.export');
+Route::get('/admin/tablaInscripciones', 'ListadoInscripcionController@export')->name( 'tablaInscripciones.export')->middleware('auth');
+Route::get('/admin/listadoInscripcion/{id}', 'ListadoInscripcionController@validarPasantia')->name( 'listadoInscripcion.validarPasantia')->middleware('auth');
 
 Route::resource('/perfil', 'PerfilController')->middleware('auth');
 
