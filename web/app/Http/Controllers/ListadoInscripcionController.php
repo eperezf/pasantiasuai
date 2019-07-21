@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\InscripcionesExports;
+use App\Exports\ExportViews;
 use Maatwebsite\Excel\Facades\Excel;
 use App\User;
 use App\Pasantia;
@@ -25,14 +25,29 @@ class ListadoInscripcionController extends Controller
     $usuarios =  User::all();
     $pasantias = Pasantia::all();
     $empresas = Empresa::all();
-    return view('admin.listadoInscripcion', compact('usuarios', 'pasantias', 'empresas'));
+    $downloadExcel = FALSE;
+    return view('admin.listadoInscripcion', [
+      'usuarios' => $usuarios, 
+      'pasantias' => $pasantias, 
+      'empresas' => $empresas, 
+      'downloadExcel' => $downloadExcel
+    ]);
   }
 
   /*
   * Permite la exportacion de los datos hacia excel
   */
   public function export() {
-    return Excel::download(new InscripcionesExports, 'Inscripciones.xlsx', null, ['RUT', 'Nombre alumno']);
+    $usuarios =  User::all();
+    $pasantias = Pasantia::all();
+    $empresas = Empresa::all();
+    $downloadExcel = TRUE;
+    return Excel::download(new ExportViews('admin.tablaInscripciones', [
+      'usuarios' => $usuarios, 
+      'pasantias' => $pasantias, 
+      'empresas' => $empresas, 
+      'downloadExcel' => $downloadExcel
+      ]), 'Inscripciones.xlsx');
   }
 
   /*

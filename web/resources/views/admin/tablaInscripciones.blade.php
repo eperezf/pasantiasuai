@@ -26,9 +26,12 @@
 					<th scope="col" data-field="rubro">
 						<div class="th-inner">Rubro</div>
 					</th>
+					@if($downloadExcel == TRUE)
+					@elseif ($downloadExcel == FALSE)
 					<th scope="col" data-field="acciones">
 						<div class="th-inner">Acciones</div>
 					</th>
+					@else @endif
 				</tr>
 			</thead>
 			<tbody>
@@ -70,6 +73,8 @@
 						@endif
 					@endforeach
 					<!-- fin loop informacion empresas -->
+					@if($downloadExcel == TRUE)
+					@elseif ($downloadExcel == FALSE)
 					<td>
 						<a class="btn btn-primary" href="{{route('listadoInscripcion.validarPasantia', $pasantia->idPasantia)}}" role="button">Validar</a>
 						<a class="btn btn-warning" href="{{route('listadoInscripcion.edit', $pasantia->idPasantia)}}" role="button">Editar</a>
@@ -79,6 +84,7 @@
 	            <button class="btn btn-danger" type="submit">Eliminar</button>
 	          </form>
 					</td>
+					@else @endif
 				</tr>
 				@endforeach
 			</tbody>

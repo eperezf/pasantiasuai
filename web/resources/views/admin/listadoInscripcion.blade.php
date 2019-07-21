@@ -10,7 +10,7 @@
 <div class="row">
 	<a href="{{ route('tablaInscripciones.export') }}" class="btn btn-primary">Exportar a excel</a>
 	<div class="table-responsive bootstrap-table">
-		@include('admin.tablaInscripciones', compact($usuarios, $pasantias, $empresas))
+		@include('admin.tablaInscripciones')
 	</div>
 </div>
 
