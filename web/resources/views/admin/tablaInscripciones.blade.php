@@ -76,7 +76,11 @@
 					@if($downloadExcel == TRUE)
 					@elseif ($downloadExcel == FALSE)
 					<td>
-						<a class="btn btn-primary" href="{{route('listadoInscripcion.validarPasantia', $pasantia->idPasantia)}}" role="button">Validar</a>
+						<a class="btn btn-primary" href="{{route('listadoInscripcion.validarPasantia', $pasantia->idPasantia)}}" role="button" @if ($pasantia->statusPaso2 == 2 || $pasantia->statusPaso2 == 1) disabled @else @endif >
+							@if ($pasantia->statusPaso2 == 2) Validado
+							@else Validar
+							@endif
+							</a> 
 						<a class="btn btn-warning" href="{{route('listadoInscripcion.edit', $pasantia->idPasantia)}}" role="button">Editar</a>
 						<form style="display: inline-block;" action="{{ route('listadoInscripcion.destroy', $pasantia->idPasantia)}}" method="post">
 	            @csrf

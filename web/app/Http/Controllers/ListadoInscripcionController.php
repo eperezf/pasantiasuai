@@ -56,7 +56,8 @@ class ListadoInscripcionController extends Controller
   public function validarPasantia($id) {
     if (Auth::user()->rol >= 4) {
       $pasantia = Pasantia::find($id);
-      return view('admin/listadoInscripcion', compact('pasantia'));
+      $pasantia->statusPaso2 == 2;
+      return view('admin/listadoInscripcion')->with('success', 'Pasantía validada exitosamente');
     } else {
       return redirect('index');
     }
