@@ -82,7 +82,7 @@
 	</nav>
 	<div class="container-fluid">
 		<div class="row flex-xl-nowrap">
-			<div class="col-12 col-md-3 col-xl-2 bg-light collapse navbar-collapse show" id="MenuSidebar" style="transition: none">
+			<div class="col-12 col-md-3 col-xl-2 bg-light collapse navbar-collapse show border-right border-left border-bottom border-dark" id="MenuSidebar" style="transition: none">
 							<!-- Sidebar -->
 			<!--	<img src="../media/images/logo-iuai.png" alt="Responsive image" class="img-fluid">-->
 				<!-- Elementos del menu sidebar -->
@@ -112,6 +112,7 @@
 				<div class="container-fluid py-3">
 					<div class="row">
 						<div class="col-12">
+							<h1 class=""> Bienvenido a la plataforma de gestión FIC:</h1>
 							@yield('contenido')
 						</div>
 					</div>
@@ -120,7 +121,7 @@
 		</div>
 		<!-- Footer -->
 		<div class="row flex-xl-nowrap">
-			<div class="col-12 bg-dark">
+			<div class="col-12 bg-dark border-top border-dark">
 				<div class="text-center">
           <hr>
 					<span class="text-light small">©2019 UNIVERSIDAD ADOLFO IBAÑEZ</span>
