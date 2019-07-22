@@ -52,22 +52,37 @@
 				<td>{{$pasantia->horasSemanales}}</td>
 				<td>{{$pasantia->pais}}</td>
 				@if ($pasantia->parienteEmpresa == 1)
-					<td class="table-danger">{{$pasantia->rolPariente}}</td>
+					<td @if ($pasantia->statusPaso2 == 1) class="table-danger" @else @endif>
+						{{$pasantia->rolPariente}}
+
+						@if($downloadExcel == TRUE)
+						@elseif ($downloadExcel == FALSE)
+							<a class="btn btn-primary" href="{{route('listadoInscripcion.validarPariente', ['id' => $pasantia->idPasantia, 'statusPasantia' => $pasantia->statusPaso2])}}" role="button">
+								@if ($pasantia->statusPaso2 == 2) Invalidar pariente
+								@else Validar pariente @endif
+							@else @endif
+
+						</a> 
+					</td>
 				@elseif ($pasantia->parienteEmpresa == 0)
 					<td>Sin Pariente</td>
 				@else
 				@endif
 
-
 					<!-- inicio loop informacion empresas -->
 					@foreach($empresas as $empresa)
 						@if ($pasantia->idEmpresa == $empresa->idEmpresa)
-							@if ($empresa->status == 1)
-								<td class="table-warning">Pendiente</td>
-							@elseif ($empresa->status == 0)
-								<td>Activo</td>
-							@else
-							@endif
+								<td @if ($empresa->status != 1) class="table-warning" @else @endif>
+									{{$empresa->nombre}}
+									<!-- Descarga excel -->
+								@if($downloadExcel == TRUE)
+								@elseif ($downloadExcel == FALSE)
+								<!-- Boton accion empresa -->
+									<a class="btn btn-primary" href="{{route('listadoInscripcion.validarEmpresa', ['id' => $empresa->idEmpresa, 'statusEmpresa' => $empresa->status])}}" role="button">
+									@if ($empresa->status == 1) Desactivar convenio
+									@else Activar convenio @endif
+								@else @endif
+								</td>
 							<td>{{$empresa->rubro}}</td>
 						@else
 						@endif
@@ -76,11 +91,6 @@
 					@if($downloadExcel == TRUE)
 					@elseif ($downloadExcel == FALSE)
 					<td>
-						<a class="btn btn-primary" href="{{route('listadoInscripcion.validarPasantia', $pasantia->idPasantia)}}" role="button" @if ($pasantia->statusPaso2 == 2 || $pasantia->statusPaso2 == 1) disabled @else @endif >
-							@if ($pasantia->statusPaso2 == 2) Validado
-							@else Validar
-							@endif
-							</a> 
 						<a class="btn btn-warning" href="{{route('listadoInscripcion.edit', $pasantia->idPasantia)}}" role="button">Editar</a>
 						<form style="display: inline-block;" action="{{ route('listadoInscripcion.destroy', $pasantia->idPasantia)}}" method="post">
 	            @csrf
