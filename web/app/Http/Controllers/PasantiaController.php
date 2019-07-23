@@ -385,6 +385,7 @@ class PasantiaController extends Controller{
 				'statusPaso2'=>$pasantia->statusPaso2,
 				'statusPaso3'=>$pasantia->statusPaso3,
 				'statusPaso4'=>$pasantia->statusPaso4,
+				'statusGeneral' =>$pasantia->statusGeneral,
 				'pasantia'=>$pasantia,
 				'empresa'=>$empresa]);
 		}

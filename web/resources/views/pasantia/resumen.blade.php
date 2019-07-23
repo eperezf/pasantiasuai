@@ -59,5 +59,10 @@
 				</form>
 	</div>
 	@endif
+	@if ($statusGeneral == 1 || Auth::user()->rol >= 4)
+		<div class="row justify-content-md-center mb-5">
+			<a class="btn btn-success" href="{{route('inscripcion.certificado')}}">Descargar certificado</a>
+		</div>
+	@endif
 </div>
 @endsection
