@@ -8,6 +8,7 @@ use App\Mail\ConfTutor;
 use Illuminate\Support\Facades\Mail;
 use PhpOffice\PhpWord;
 use Carbon\Carbon;
+use DomPdf\DomPdf;
 use App\User;
 use App\AuthUsers;
 use App\Pasantia;
@@ -454,6 +455,14 @@ class PasantiaController extends Controller{
 		}
 	}
 
+
+	/**
+	 * Genera y descarga el certificado de inscripción de pasantía en PDF
+	 * @version v1.0
+	 * @author Eduardo Pérez
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
 	public function descargarCert(){
 		$fecha = Carbon::now()->locale('es');
 		$fechaParse = $fecha->isoFormat('LL');
@@ -467,6 +476,6 @@ class PasantiaController extends Controller{
 			array($fechaParse, $user->nombres . " " . $user->apellidoPaterno . " " . $user->apellidoMaterno, $user->rut, 'Ingeniería Civil', $empresa->nombre)
 		);
 		$templateProcessor->saveAs(storage_path('certificados/cert'. $user->rut .'.docx'));
-		return response()->download(storage_path('certificados/cert'. $user->rut .'.docx'));
+		//return response()->download(storage_path('certificados/cert'. $user->rut .'.docx'))->deleteFileAfterSend();
 	}
 }
