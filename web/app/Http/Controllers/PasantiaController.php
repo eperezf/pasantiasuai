@@ -477,8 +477,7 @@ class PasantiaController extends Controller{
 			'nombreEmpresa' => $empresa->nombre
 		];
 		//return view('pasantia/certificado', $data);
-
-		$pdf = PDF::loadView('pasantia/certificado', $data);
-		return $pdf->stream();
+		$pdf = PDF::loadView('pasantia/certificado', $data)->setPaper('letter', 'portrait');
+		return $pdf->download('Certificado Pasantía ' . $user->nombres . " " . $user->apellidoPaterno . " " . $user->apellidoMaterno . ".pdf");
 	}
 }

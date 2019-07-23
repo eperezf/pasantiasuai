@@ -9,7 +9,7 @@
 		padding-bottom: 10px;
 	}
 	body {
-		width: 85%;
+		width: 700px;
 		margin-left: auto;
 		margin-right: auto;
 		font-family: Calibri, sans-serif;
@@ -58,16 +58,16 @@
 
 	</p>
 	<p style ="text-align: center; display: block;">
-		<img src="{{ asset('img/firmapt.png') }}" style="margin-left: auto; margin-right: auto; display: block; text-align: center;" align="middle">
+		<img src="{{ asset('img/firmapt.png') }}">
 	</p>
-	<p style="text-align: center; padding-top: 100px;">
+	<p style="text-align: center;">
 		<b>Patricio Toledo Peña</b><br/>
 		Secretario Académico<br/>
 		Facultad de Ingeniería y Ciencias<br/>
 		Universidad Adolfo Ibáñez<br/>
 	</p>
 
-	<p style="text-align: right">
+	<p style="text-align: right; margin-top:45px;">
 		SANTIAGO: Diagonal Las Torres 2700, Peñalolén. Teléfono: (56 2) 2331 1000<br/>
 		Av. Presidente Errázuriz 3485 Las Condes. Teléfono: (56 2) 2331 1000<br/>
 		VIÑA DEL MAR: Av. Padre Hurtado 750. Teléfono: (56 32) 250 3500<br/>
