@@ -6,14 +6,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Mail\ConfTutor;
 use Illuminate\Support\Facades\Mail;
-use PhpOffice\PhpWord;
 use Carbon\Carbon;
-use DomPdf\DomPdf;
 use App\User;
 use App\AuthUsers;
 use App\Pasantia;
 use App\Empresa;
 use Auth;
+use PDF;
 
 
 class PasantiaController extends Controller{
@@ -470,12 +469,16 @@ class PasantiaController extends Controller{
 		$pasantia = $user->pasantia->first();
 		$empresa = Empresa::where('idEmpresa', $pasantia->idEmpresa)->first();
 
-		$templateProcessor = new PhpWord\TemplateProcessor(storage_path('certificados/template.docx'));
-		$templateProcessor->setValue(
-			array('emision', 'nombre', 'rut', 'carrera', 'nombreEmpresa'),
-			array($fechaParse, $user->nombres . " " . $user->apellidoPaterno . " " . $user->apellidoMaterno, $user->rut, 'Ingeniería Civil', $empresa->nombre)
-		);
-		$templateProcessor->saveAs(storage_path('certificados/cert'. $user->rut .'.docx'));
-		//return response()->download(storage_path('certificados/cert'. $user->rut .'.docx'))->deleteFileAfterSend();
+		$data = [
+			'fecha' => $fechaParse,
+			'nombre' => $user->nombres . " " . $user->apellidoPaterno . " " . $user->apellidoMaterno,
+			'rut' => $user->rut,
+			'carrera' => 'Ingeniería Civil',
+			'nombreEmpresa' => $empresa->nombre
+		];
+		//return view('pasantia/certificado', $data);
+
+		$pdf = PDF::loadView('pasantia/certificado', $data);
+		return $pdf->stream();
 	}
 }
