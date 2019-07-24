@@ -24,12 +24,22 @@
 			    <input class="form-control" id="area" name="area" placeholder="Area del proyecto">
 			  </div>
 				<div class="form-group">
-			    <label for="problematica">Problemática</label>
-			    <textarea class="form-control" id="problematica" name="problematica" rows="3" placeholder="Problemática del proyecto"></textarea>
+			    <label for="disciplina">Disciplina de ingeniería</label>
+			    <select class="form-control" id="disciplina" name="disciplina">
+			      <option value="1">1</option>
+			      <option value="2">2</option>
+			      <option value="3">3</option>
+			      <option value="4">4</option>
+			      <option value="5">5</option>
+			    </select>
 			  </div>
 				<div class="form-group">
-			    <label for="vision">Visión</label>
-			    <textarea class="form-control" id="vision" name="vision" rows="5" placeholder="Vision del proyecto"></textarea>
+			    <label for="problematica">Visión</label>
+			    <textarea class="form-control" id="problematica" name="problematica" rows="3" placeholder="Problemática del proyecto"></textarea>
+					<textarea class="form-control" id="objetivo" name="objetivo" rows="2" placeholder="Objetivo del proyecto"></textarea>
+					<textarea class="form-control" id="desempeño" name="desempeño" rows="2" placeholder="Medidas de desempeño"></textarea>
+					<textarea class="form-control" id="metodologia" name="metodologia" rows="2" placeholder="Metodología"></textarea>
+					<textarea class="form-control" id="planificacion" name="planificacion" rows="6" placeholder="Planificación"></textarea>
 			  </div>
 				<button type="submit" class="btn btn-primary">Continuar</button>
 			</form>

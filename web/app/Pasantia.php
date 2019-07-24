@@ -10,7 +10,6 @@ class Pasantia extends Model{
 
 	protected $fillable = [
 		'idAlumno',
-		'idProfesor',
 		'fechaInicio',
 		'idEmpresa',
 		'nombreJefe',

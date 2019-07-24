@@ -12,6 +12,7 @@ use App\AuthUsers;
 use App\Pasantia;
 use App\Empresa;
 use Auth;
+use App\Proyecto;
 
 
 class PasantiaController extends Controller{
@@ -360,10 +361,24 @@ class PasantiaController extends Controller{
 	/**
    * Guarda los datos del proyecto de pasantía
    * @author Eduardo Pérez
-   * @version v1.0
+   * @version v2.0
    * @return \Illuminate\Http\Response
    */
-	public function paso4Control(){
+	public function paso4Control(Request $request){
+		$userId = Auth::id();
+		$pasantia = Pasantia::where('idAlumno', $userId)->first();
+		if (Proyecto::where('idPasantia', $pasantia->idPasantia)->first()){
+			return "Ya existe un proyecto.";
+		}
+		else {
+			dd($request);
+			echo "No existe un proyecto. Creando.";
+			$proyecto = new Proyecto([
+
+			]);
+		}
+
+
 		return redirect('/inscripcion/resumen');
 	}
 
