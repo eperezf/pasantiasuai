@@ -367,15 +367,24 @@ class PasantiaController extends Controller{
 	public function paso4Control(Request $request){
 		$userId = Auth::id();
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
-		if (Proyecto::where('idPasantia', $pasantia->idPasantia)->first()){
+		if (Proyecto::where('idPasantia', $pasantia->idPasantia)){
 			return "Ya existe un proyecto.";
 		}
 		else {
-			dd($request);
+			//dd($request);
 			echo "No existe un proyecto. Creando.";
 			$proyecto = new Proyecto([
-
+				'idPasantia'=>$pasantia->idPasantia,
+				'nombre'=>$request->nombre,
+				'area'=>$request->area,
+				'disciplina'=>$request->disciplina,
+				'problematica' => $request->problematica,
+      'objetivo' => $request->objetivo,
+      'desempeño' => $request->medidas,
+      'metodologia' => $request->metodologia,
+      'planificacion' => $request->planificacion
 			]);
+			$proyecto->save();
 		}
 
 

@@ -33,6 +33,7 @@ class CreateProyectoTable extends Migration
             $table->string('medidas', 45)->nullable()->default(null);
             $table->string('metodologia', 45)->nullable()->default(null);
             $table->string('planificacion', 45)->nullable()->default(null);
+            $table->timestamps();
 
 
             $table->index(["idProfesor"], 'idProfesor_idx');
