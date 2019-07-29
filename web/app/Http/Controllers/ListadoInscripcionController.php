@@ -54,25 +54,22 @@ class ListadoInscripcionController extends Controller
   /*
   * Acceso rapido para que administrador valide la pasantia
   */
-  // status paso 2 = pariente validado
-  public function validarPariente($id, $statusPasantia) {
+  // parienteEmpresa = 2 -> pariente validado
+  public function validarPariente($id, $parienteEmpresa) {
     if (Auth::user()->rol >= 4) {
       $pasantia = Pasantia::find($id);
-
-      if ($statusPasantia == 1) {
-        $pasantia->statusPaso2 = 2;
+      if ($parienteEmpresa == 1) {
+        $pasantia->parienteEmpresa = 2;
         $pasantia->save();
         return redirect('admin/listadoInscripcion')->with('success', 'Pariente ' . $pasantia->rolPariente . ' validado exitosamente');
       }
-      elseif ($statusPasantia == 2) {
-        $pasantia->statusPaso2 = 1;
+      elseif ($parienteEmpresa == 2) {
+        $pasantia->parienteEmpresa = 1;
         $pasantia->save();
         return redirect('admin/listadoInscripcion')->with('success', 'Pariente ' . $pasantia->rolPariente . ' invalidado exitosamente');
-      }
-      else {
+      } else {
         return redirect('admin/listadoInscripcion');
       }
-      
     } else {
       return redirect('index');
     }
@@ -91,11 +88,27 @@ class ListadoInscripcionController extends Controller
         $empresa->status = 1;
         $empresa->save();
         return redirect('admin/listadoInscripcion')->with('success', 'Convenio con empresa ' . $empresa->nombre . ' activado exitosamente');
-      } 
-      else {
+      } else {
         return redirect('admin/listadoInscripcion');
       }
-    
+    } else {
+      return redirect('index');
+    }
+  }
+
+  public function validarTodo($idEmpresa, $idPasantia) {
+    if (Auth::user()->rol >= 4) {
+      $empresa = Empresa::find($idEmpresa);
+      $pasantia = Pasantia::find($idPasantia);
+      if ($empresa->status != 1) {
+        $empresa->status = 1;
+        $empresa->save();
+      }
+      if ($pasantia->parienteEmpresa == 1) {
+      $pasantia->parienteEmpresa = 2;
+      $pasantia->save();
+      }
+      return redirect('admin/listadoInscripcion')->with('success', 'Pasantía ha sido validada exitosamente.');
     } else {
       return redirect('index');
     }
@@ -121,7 +134,6 @@ class ListadoInscripcionController extends Controller
     } else {
       return redirect('index');
     }
-
   }
 
   /*
@@ -136,5 +148,4 @@ class ListadoInscripcionController extends Controller
         return redirect('index');
       }
     }
-
 }

@@ -50,24 +50,22 @@
 
 				<td>{{$pasantia->fechaInicio}}</td>
 				<td>{{$pasantia->horasSemanales}}</td>
+				<td>{{$pasantia->ciudad}}</td>
 				<td>{{$pasantia->pais}}</td>
-				@if ($pasantia->parienteEmpresa == 1)
-					<td @if ($pasantia->statusPaso2 == 1) class="table-danger" @else @endif>
-						{{$pasantia->rolPariente}}
-
-						@if($downloadExcel == TRUE)
-						@elseif ($downloadExcel == FALSE)
-							<a class="btn btn-primary" href="{{route('listadoInscripcion.validarPariente', ['id' => $pasantia->idPasantia, 'statusPasantia' => $pasantia->statusPaso2])}}" role="button">
-								@if ($pasantia->statusPaso2 == 2) Invalidar pariente
-								@else Validar pariente @endif
-							@else @endif
-
+				
+				
+				<td @if ($pasantia->parienteEmpresa == 1) class="table-danger" @else @endif>
+					@if ($pasantia->parienteEmpresa != 0)
+					{{$pasantia->rolPariente}}
+					@else Sin Pariente @endif
+					@if($downloadExcel == TRUE)
+					@elseif ($downloadExcel == FALSE)
+						<a class="btn btn-primary" href="{{route('listadoInscripcion.validarPariente', ['id' => $pasantia->idPasantia, 'parienteEmpresa' => $pasantia->parienteEmpresa])}}" role="button">
+							@if ($pasantia->parienteEmpresa == 2) Invalidar pariente
+							@else Validar pariente @endif
+						@else @endif
 						</a> 
-					</td>
-				@elseif ($pasantia->parienteEmpresa == 0)
-					<td>Sin Pariente</td>
-				@else
-				@endif
+				</td>
 
 					<!-- inicio loop informacion empresas -->
 					@foreach($empresas as $empresa)
@@ -91,7 +89,8 @@
 					@if($downloadExcel == TRUE)
 					@elseif ($downloadExcel == FALSE)
 					<td>
-						<a class="btn btn-warning" href="{{route('listadoInscripcion.edit', $pasantia->idPasantia)}}" role="button">Editar</a>
+						<a role="button" href="{{route('listadoInscripcion.validarTodo', ['idEmpresa' => $empresa->idEmpresa, 'idPasantia' => $pasantia->idPasantia])}}" class="btn btn-primary @if ($empresa->status == 1 && $pasantia->parienteEmpresa == 2) disabled @else @endif">Validar todo</a>
+						<a class="btn btn-warning disabled" href="{{route('listadoInscripcion.edit', $pasantia->idPasantia)}}" role="button">Editar</a>
 						<form style="display: inline-block;" action="{{ route('listadoInscripcion.destroy', $pasantia->idPasantia)}}" method="post">
 	            @csrf
 	            @method('DELETE')
