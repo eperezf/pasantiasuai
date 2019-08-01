@@ -48,6 +48,16 @@
 			@else
 				<li class="list-group-item list-group-item-warning"><i class="fas fa-exclamation"></i> No has iniciado el paso 3.</li>
 			@endif
+
+			@if($statusPaso4==0)
+				<li class="list-group-item list-group-item-secondary"><i class="fas fa-question"></i> No has iniciado el paso 4</li>
+			@elseif($statusPaso4==1)
+				<li class="list-group-item list-group-item-warning"><i class="fas fa-exclamation"></i> Los datos de tu proyecto están incompletos</li>
+			@elseif($statusPaso4==2)
+				<li class="list-group-item list-group-item-success"><i class="fas fa-check"></i> Los datos de tu proyecto están guarados pero aún no ha sido aprobado.</li>
+			@elseif($statusPaso4==3)
+				<li class="list-group-item list-group-item-success"><i class="fas fa-check"></i> Tu proyecto está aprobado.</li>
+			@endif
 		</ul>
 	</div>
 	@if(Auth::user()->rol >= 4)
