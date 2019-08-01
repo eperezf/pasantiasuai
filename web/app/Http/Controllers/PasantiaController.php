@@ -344,10 +344,12 @@ class PasantiaController extends Controller{
 			if ($pasantia->statusPaso2 == 3){
 				return redirect('/inscripcion/2')->with('danger', 'No puedes continuar tu proceso de inscripción si tienes un pariente en la empresa. Su pasantía quedará en un estado pendiente de validación, lo que podría tardar el proceso de su inscripción.');
 			}
+			if ($pasantia->statusGeneral != 1){
+				return redirect('/inscripcion/resumen')->with('error', "No puedes crear un proyecto si tu pasantía no está aprobada.");
+			}
 			else {
-				if (Proyecto::where([['idPasantia', '==', $pasantia->idPasantia],['status', '>=', '2']])->first()){
-					$proyecto = Proyecto::where([['idPasantia', '=', $pasantia->idPasantia],['status', '>=', '2']])->first();
-					return $proyecto;
+				if (Proyecto::where([['idPasantia', '=', $pasantia->idPasantia],['status', '<=', '2']])->first()){
+					$proyecto = Proyecto::where([['idPasantia', '=', $pasantia->idPasantia],['status', '<=', '2']])->first();
 					return view('pasantia.paso4', [
 						'statusPaso0'=>$pasantia->statusPaso0,
 						'statusPaso1'=>$pasantia->statusPaso1,
@@ -385,7 +387,27 @@ class PasantiaController extends Controller{
 		$userId = Auth::id();
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
 		if (Proyecto::where('idPasantia', $pasantia->idPasantia)->first()){
-			return "Ya existe un proyecto.";
+			$proyecto = Proyecto::where('idPasantia', $pasantia->idPasantia)->first();
+			$proyecto->nombre = $request->nombre;
+			$proyecto->area = $request->area;
+			$proyecto->disciplina = $request->disciplina;
+			$proyecto->problematica = $request->problematica;
+			$proyecto->objetivo = $request->objetivo;
+			$proyecto->medidas = $request->medidas;
+			$proyecto->metodologia = $request->metodologia;
+			$proyecto->planificacion = $request->planificacion;
+			if (!$request->nombre || !$request->area || !$request->disciplina || !$request->problematica || !$request->objetivo || !$request->medidas || !$request->metodologia || !$request->planificacion){
+				$proyecto->status = '1';
+				$pasantia->statusPaso4 = '1';
+				$pasantia->save();
+			}
+			else {
+				$proyecto->status = '2';
+				$pasantia->statusPaso4 = '2';
+				$pasantia->save();
+			}
+			$proyecto->save();
+			return redirect('/inscripcion/resumen');
 		}
 		else {
 			//dd($request);
