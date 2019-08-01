@@ -12,6 +12,7 @@ class Proyecto extends Model{
     'idProyecto',
     'idPasantia',
     'idProfesor',
+    'status',
     'nombre',
     'area',
     'disciplina',

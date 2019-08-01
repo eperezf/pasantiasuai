@@ -24,6 +24,7 @@ class CreateProyectoTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('idProyecto');
             $table->unsignedInteger('idPasantia');
+            $table->unsignedInteger('status');
             $table->unsignedInteger('idProfesor')->nullable()->default(null);
             $table->string('nombre', 45)->nullable()->default(null);
             $table->string('area', 45)->nullable()->default(null);

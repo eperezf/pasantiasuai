@@ -345,12 +345,29 @@ class PasantiaController extends Controller{
 				return redirect('/inscripcion/2')->with('danger', 'No puedes continuar tu proceso de inscripción si tienes un pariente en la empresa. Su pasantía quedará en un estado pendiente de validación, lo que podría tardar el proceso de su inscripción.');
 			}
 			else {
-				return view('pasantia.paso4', [
-					'statusPaso0'=>$pasantia->statusPaso0,
-					'statusPaso1'=>$pasantia->statusPaso1,
-					'statusPaso2'=>$pasantia->statusPaso2,
-					'statusPaso3'=>$pasantia->statusPaso3,
-					'statusPaso4'=>$pasantia->statusPaso4]);
+				if (Proyecto::where([['idPasantia', '==', $pasantia->idPasantia],['status', '>=', '2']])->first()){
+					$proyecto = Proyecto::where([['idPasantia', '=', $pasantia->idPasantia],['status', '>=', '2']])->first();
+					return $proyecto;
+					return view('pasantia.paso4', [
+						'statusPaso0'=>$pasantia->statusPaso0,
+						'statusPaso1'=>$pasantia->statusPaso1,
+						'statusPaso2'=>$pasantia->statusPaso2,
+						'statusPaso3'=>$pasantia->statusPaso3,
+						'statusPaso4'=>$pasantia->statusPaso4,
+						'proyecto'=>$proyecto
+					]);
+
+				}
+				else {
+					$proyecto = new Proyecto;
+					return view('pasantia.paso4', [
+						'statusPaso0'=>$pasantia->statusPaso0,
+						'statusPaso1'=>$pasantia->statusPaso1,
+						'statusPaso2'=>$pasantia->statusPaso2,
+						'statusPaso3'=>$pasantia->statusPaso3,
+						'statusPaso4'=>$pasantia->statusPaso4,
+						'proyecto'=>$proyecto]);
+				}
 			}
 		}
 		else {
@@ -367,7 +384,7 @@ class PasantiaController extends Controller{
 	public function paso4Control(Request $request){
 		$userId = Auth::id();
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
-		if (Proyecto::where('idPasantia', $pasantia->idPasantia)){
+		if (Proyecto::where('idPasantia', $pasantia->idPasantia)->first()){
 			return "Ya existe un proyecto.";
 		}
 		else {
@@ -380,10 +397,20 @@ class PasantiaController extends Controller{
 				'disciplina'=>$request->disciplina,
 				'problematica' => $request->problematica,
       'objetivo' => $request->objetivo,
-      'desempeño' => $request->medidas,
+      'medidas' => $request->medidas,
       'metodologia' => $request->metodologia,
       'planificacion' => $request->planificacion
 			]);
+			if (!$request->nombre || !$request->area || !$request->disciplina || !$request->problematica || !$request->objetivo || !$request->medidas || !$request->metodologia || !$request->planificacion){
+				$proyecto->status = '1';
+				$pasantia->statusPaso4 = '1';
+				$pasantia->save();
+			}
+			else {
+				$proyecto->status = '2';
+				$pasantia->statusPaso4 = '2';
+				$pasantia->save();
+			}
 			$proyecto->save();
 		}
 
