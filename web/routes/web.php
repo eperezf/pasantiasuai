@@ -22,9 +22,11 @@ Route::resource('/admin/estadisticas', 'GraficasController')->middleware('auth')
 Route::resource('/admin/importarlista', 'ListadoController')->middleware('auth');
 Route::resource('/admin/listadoInscripcion', 'ListadoInscripcionController')->middleware('auth');
 Route::get('/admin/tablaInscripciones', 'ListadoInscripcionController@export')->name( 'tablaInscripciones.export')->middleware('auth');
+Route::get('/admin/listadoInscripcion/{id}/statusPaso2/{statusPaso2}', 'ListadoInscripcionController@validarPariente')->name('listadoInscripcion.validarPariente')->middleware('auth');
+Route::get('/admin/listadoInscripcion/{id}/statusEmpresa/{statusEmpresa}', 'ListadoInscripcionController@validarEmpresa')->name('listadoInscripcion.validarEmpresa')->middleware('auth');
+Route::get('/admin/listadoInscripcion/{idEmpresa}/idPasantia/{idPasantia}', 'ListadoInscripcionController@validarTodo')->name('listadoInscripcion.validarTodo')->middleware('auth');
 
 Route::resource('/perfil', 'PerfilController')->middleware('auth');
-
 
 Route::get('/login', function(){
 	return view('login');
