@@ -14,6 +14,7 @@
 Route::get('/', function () {
 	return view('index');
 })->middleware('auth');
+Route::resource('/', 'IndexController')->middleware('auth');
 
 Route::resource('/empresas', 'EmpresaController')->middleware('auth');
 
