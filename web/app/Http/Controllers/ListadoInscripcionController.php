@@ -239,7 +239,7 @@ class ListadoInscripcionController extends Controller
       if ($pasantia->statusPaso4 != 3) {
         $pasantia->statusPaso4 = 3;
       }
-      */
+      
       // Estado de la pasantia (si la puede ejercer)
       if ($pasantia->statusGeneral != 1) {
         $pasantia->statusGeneral = 1;
