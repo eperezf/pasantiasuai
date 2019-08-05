@@ -18,6 +18,5 @@ class ListadoController extends Controller
       'listado' => 'required'
     ]);
 		Excel::import(new AuthUsersImport, $request->file('listado'));
-
 	}
 }

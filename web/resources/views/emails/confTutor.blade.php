@@ -95,8 +95,8 @@
                               </tr>
                               <tr>
                                 <td align="center" bgcolor="#AACB3C" style="color:#ffffff; padding: 23px 23px 23px 23px; font-family: Arial, sans-serif; font-size: 18px; line-height: 20px;">
-                                  <a href="https://gestionfic.uai.cl/confirmarTutor?token=IHfho384rh3fn39" target="_blank">
-                                    https://gestionfic.uai.cl/confirmarTutor?token=IHfho384rh3fn39
+                                  <a href="http://gestionfic.uai.cl/confirmarTutor/{{$pasantia->tokenCorreo}}" target="_blank">
+                                    http://gestionfic.uai.cl/confirmarTutor/{{$pasantia->tokenCorreo}}
                                   </a>
                                 </td>
                               </tr>

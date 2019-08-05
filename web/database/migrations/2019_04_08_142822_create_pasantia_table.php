@@ -24,7 +24,6 @@ class CreatePasantiaTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('idPasantia');
             $table->integer('idAlumno')->unsigned();
-            $table->integer('idProfesor')->unsigned()->nullable();
             $table->date('fechaInicio')->nullable();
             $table->date('fechaTermino')->nullable();
             $table->tinyInteger('modalidad')->default(0);
@@ -38,6 +37,7 @@ class CreatePasantiaTable extends Migration
             $table->integer('idEmpresa')->unsigned()->nullable();
             $table->string('nombreJefe', 45)->nullable();
             $table->string('correoJefe', 45)->nullable();
+						$table->string('tokenCorreo', 45)->nullable();
             $table->tinyInteger('lecReglamento')->default(0);
             $table->tinyInteger('practicaOp')->default(0);
             $table->string('ciudad', 45)->nullable();
@@ -51,15 +51,10 @@ class CreatePasantiaTable extends Migration
 
             $table->index("idAlumno");
 
-            $table->index("idProfesor");
-
             $table->unique("idPasantia");
 
 
             $table->foreign('idAlumno')
-                ->references('idUsuario')->on('users');
-
-            $table->foreign('idProfesor')
                 ->references('idUsuario')->on('users');
 
             $table->foreign('idEmpresa')
