@@ -35,7 +35,9 @@
 					<th scope="col" data-field="statuspaso4" data-sortable="true">
 						<div class="th-inner">Estado paso 4</div>
 					</th>
-
+					<th scope="col" data-field="statusGeneral" data-sortable="true">
+						<div class="th-inner">Status General</div>
+					</th>
 					<th scope="col" data-field="rolPariente">
 						<div class="th-inner">Familiar</div>
 					</th>
@@ -100,7 +102,20 @@
 					@else @endif
 				</td>
 				<!-- Paso 4 -->
-				<td>Aún no implementado</td>
+				<td>
+					@if ($pasantia->statusPaso4 == 0) No realizado
+					@elseif ($pasantia->statusPaso4 == 1) Datos incompletos
+					@elseif ($pasantia->statusPaso4 == 2) No validado
+					@elseif ($pasantia->statusPaso4 == 3) Validado
+					@elseif ($pasantia->statusPaso4 == 4) Reprobado
+					@else @endif
+				</td>
+				<!-- Status General -->
+				<td>
+					@if ($pasantia->statusGeneral == 0) Pasantía sin validar
+					@elseif ($pasantia->statusGeneral == 1) Pasantia validada
+					@else @endif
+				</td>
 				
 				
 				<td class="@if ($pasantia->statusPaso2 == 3) table-danger @else @endif">

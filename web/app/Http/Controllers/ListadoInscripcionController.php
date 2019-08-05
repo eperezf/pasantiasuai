@@ -53,13 +53,14 @@ class ListadoInscripcionController extends Controller
   /*
   * Sacar todos los datos de las pasantias y su usuario respectivo
   */
+  /* REFACTORIZACION DE CONTROL DE DATOS
   public function getAllUserData() {
     $authUsers = AuthUsers::all();
     $pasantias = Pasantia::all();
     $proyectos = Proyecto::all();
     $empresas = Empresa::all();
     $usuarios = User::all();
-    /*
+    
         DATOS NECESITADOS
       Pasantia
         'fechaInicio',
@@ -103,7 +104,7 @@ class ListadoInscripcionController extends Controller
         'tipoMalla'
       
 
-    */
+    
     $datos = [];
 
     //Loop pasantias
@@ -164,7 +165,7 @@ class ListadoInscripcionController extends Controller
               $authUser->tipoMalla);
     }
   }
-
+*/
   /*
   * Acceso rapido para que administrador valide la pasantia
   */
@@ -231,13 +232,12 @@ class ListadoInscripcionController extends Controller
       $pasantia->statusPaso2 = 2;
       }
       // Estado Mail
-      /*
       if ($pasantia->statusPaso3 != 2) {
-        $pasantia->statusPaso2 = 2;
+        $pasantia->statusPaso3 = 2;
       }
       // Estado Proyecto
-      if ($pasantia->statusPaso4 != 2) {
-        $pasantia->statusPaso2 = 2;
+      if ($pasantia->statusPaso4 != 3) {
+        $pasantia->statusPaso4 = 3;
       }
       */
       // Estado de la pasantia (si la puede ejercer)
