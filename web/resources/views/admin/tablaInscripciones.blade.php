@@ -107,8 +107,21 @@
 					@elseif ($pasantia->statusPaso4 == 1) Datos incompletos
 					@elseif ($pasantia->statusPaso4 == 2) No validado
 					@elseif ($pasantia->statusPaso4 == 3) Validado
-					@elseif ($pasantia->statusPaso4 == 4) Reprobado
+					@elseif ($pasantia->statusPaso4 == 4) Rechazado
 					@else @endif
+
+					@if($downloadExcel == TRUE)
+					@elseif ($downloadExcel == FALSE)
+					<!-- boton validacion de paso 4 -->
+					@if ($pasantia->statusPaso4 == 2)
+						<a class="btn btn-primary" href="{{route('listadoInscripcion.validarProyecto', ['id' => $pasantia->idPasantia, 'accion' => 'Validar'])}}" role="button">
+							Validar proyecto
+						</a>
+						<a class="btn btn-primary" href="{{route('listadoInscripcion.validarProyecto', ['id' => $pasantia->idPasantia, 'accion' => 'Rechazar'])}}" role="button">
+							Rechazar proyecto
+						</a>
+						@else @endif <!-- endif de botones de accion hacia el paso 4 de la pasantia -->
+					@else @endif <!-- endif de "ignorar boton por descarga hacia excel" -->
 				</td>
 				<!-- Status General -->
 				<td>
