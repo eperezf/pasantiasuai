@@ -211,6 +211,23 @@ class ListadoInscripcionController extends Controller
     }
   }
 
+  public function validarProyecto($id, $accion)
+  {
+    if (Auth::user()->rol >= 4) {
+      $pasantia = Pasantia::find($id);
+      if ($accion == 'Validar') {
+        $pasantia->statusPaso4 = 3;
+      }
+      elseif ($accion == 'Rechazar') {
+        $pasantia->statusPaso4 = 4;
+      }
+      $pasantia->save();
+      return redirect('admin/listadoInscripcion')->with('success', 'Operacion realizada correctamente.');
+    } else {
+      return redirect('admin/listadoInscripcion');
+    }
+  }
+
   public function validarTodo($idEmpresa, $idPasantia) {
     if (Auth::user()->rol >= 4) {
       $empresa = Empresa::find($idEmpresa);
@@ -234,12 +251,7 @@ class ListadoInscripcionController extends Controller
       // Estado Mail
       if ($pasantia->statusPaso3 != 2) {
         $pasantia->statusPaso3 = 2;
-      }
-      // Estado Proyecto
-      if ($pasantia->statusPaso4 != 3) {
-        $pasantia->statusPaso4 = 3;
-      }
-      
+      }    
       // Estado de la pasantia (si la puede ejercer)
       if ($pasantia->statusGeneral != 1) {
         $pasantia->statusGeneral = 1;
