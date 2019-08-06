@@ -348,10 +348,6 @@ class PasantiaController extends Controller{
 	public function paso4View(){
 		$userId = Auth::id();
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
-		//Control de Status General
-		if ($pasantia->statusGeneral == 1) {
-			return redirect('/inscripcion/resumen')->with('success', 'No puede cambiar los datos ingresados, su pasantía ya ha sido validada.');
-		}
 		if ($pasantia && $pasantia->statusPaso0==2){
 			if ($pasantia->statusPaso2 == 3){
 				return redirect('/inscripcion/2')->with('danger', 'No puedes continuar tu proceso de inscripción si tienes un pariente en la empresa. Su pasantía quedará en un estado pendiente de validación, lo que podría tardar el proceso de su inscripción.');
