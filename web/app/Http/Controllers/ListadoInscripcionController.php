@@ -27,11 +27,13 @@ class ListadoInscripcionController extends Controller
     $pasantias = Pasantia::all();
     $empresas = Empresa::all();
     $downloadExcel = FALSE;
+    $datosPasantias = $this->getDatosPasantias();
     return view('admin.listadoInscripcion', [
       'usuarios' => $usuarios, 
       'pasantias' => $pasantias, 
       'empresas' => $empresas, 
-      'downloadExcel' => $downloadExcel
+      'downloadExcel' => $downloadExcel,
+      'datosPasantias' => $datosPasantias,
     ]);
   }
 
@@ -51,121 +53,65 @@ class ListadoInscripcionController extends Controller
       ]), 'Inscripciones.xlsx');
   }
   /*
-  * Sacar todos los datos de las pasantias y su usuario respectivo
+  * Saca los datos de cada pasantia
   */
-  /* REFACTORIZACION DE CONTROL DE DATOS
-  public function getAllUserData() {
-    $authUsers = AuthUsers::all();
+  public function getDatosPasantias() {
+    //Saca todas las pasantias
     $pasantias = Pasantia::all();
-    $proyectos = Proyecto::all();
-    $empresas = Empresa::all();
-    $usuarios = User::all();
-    
-        DATOS NECESITADOS
-      Pasantia
-        'fechaInicio',
-        'nombreJefe',
-        'correoJefe',
-        'lecReglamento',
-        'practicaOp',
-        'ciudad',
-        'pais',
-        'horasSemanales',
-        'parienteEmpresa',
-        'rolPariente'
-        'statusGeneral' 
-        'statusPaso0' 
-        'statusPaso1' 
-        'statusPaso2' 
-        'statusPaso3' 
-        'statusPaso4' 
-
-      Proyecto
-        'status'
-        'nombre'
-
-      Empresa
-		    'nombre'
-		    'rubro'
-		    'urlWeb'
-		    'correoContacto'
-        'status'
-        
-      Usuario
-        'nombres'
-			  'apellidoPaterno'
-			  'apellidoMaterno'
-			  'idCarrera'
-			  'statusPregrado'
-			  'rut'
-        'email'
-        
-      AuthUser
-        'tipoMalla'
-      
-
-    
-    $datos = [];
-
-    //Loop pasantias
+    //Definicion de arreglo a contener datos
+    $datosPasantias = [];
+    //Iterar sobre cada pasantia
     foreach ($pasantias as $pasantia) {
-      //Loop saca proyecto de la pasantia i
-      foreach ($proyectos as $proyecto) {
-        $pasantia->$proyecto->first();
-      }
-      //Loop saca empresa de la pasantia i
-      foreach ($empresas as $empresa) {
-        $empresa = $pasantia->$empresa->first();
-      }
-      //Loop saca usuario de la pasantia i
-      foreach ($usuarios as $usuario) {
-        $usuario = $pasantia->$usuario->first();
-        //Loop saca authUser del usuario i
-        foreach ($authUsers as $authUser) {
-          if ($usuario->email == $authUser->email){
-            $authUser = $authUser->tipoMalla;
-          }
-        }
-      }
-      array_push($datos, 
-              $pasantia->fechaInicio,
-              $pasantia->nombreJefe,
-              $pasantia->correoJefe,
-              $pasantia->lecReglamento,
-              $pasantia->practicaOp,
-              $pasantia->ciudad,
-              $pasantia->pais,
-              $pasantia->horasSemanales,
-              $pasantia->parienteEmpresa,
-              $pasantia->rolPariente,
-              $pasantia->statusGeneral ,
-              $pasantia->statusPaso0, 
-              $pasantia->statusPaso1, 
-              $pasantia->statusPaso2, 
-              $pasantia->statusPaso3, 
-              $pasantia->statusPaso4,
+      //Sacar datos de cada pasantia
+      $proyecto = Proyecto::where('idPasantia', $pasantia->idPasantia)->first();
+      $empresas = Empresa::where('idEmpresa', $pasantia->idEmpresa)->first();
+      $usuarios = User::where('idUsuario', $pasantia->idAlumno)->first();
+      $authUsers = AuthUsers::where('email', $usuarios->email)->first();
 
-              $proyecto->status,
-              $proyecto->nombre,
-
-              $empresa->nombre,
-              $empresa->rubro,
-              $empresa->urlWeb,
-              $empresa->correoContacto,
-              $empresa->status,
-
-              $usuario->nombres,
-              $usuario->apellidoPaterno,
-              $usuario->apellidoMaterno,
-              $usuario->idCarrera,
-              $usuario->statusPregrado,
-              $usuario->rut,
-              $usuario->email,
- 
-              $authUser->tipoMalla);
+      //nombre de valor -> atributoTabla
+      //Cada $datos[i] contiene un arreglo con los datos de la pasantia i
+      array_push($datosPasantias, array(
+        //Atributos Pasantia
+        'fechaInicioPasantia' => $pasantia->fechaInicio,
+        'nombreJefePasantia' => $pasantia->nombreJefe,
+        'correoJefePasantia' => $pasantia->correoJefe,
+        'lecReglamentoPasantia' => $pasantia->lecReglamento,
+        'practicaOpPasantia' => $pasantia->practicaOp,
+        'ciudadPasantia' => $pasantia->ciudad,
+        'paisPasantia' => $pasantia->pais,
+        'horasSemanalesPasantia' => $pasantia->horasSemanales,
+        'parienteEmpresaPasantia' => $pasantia->parienteEmpresa,
+        'rolParientePasantia' => $pasantia->rolPariente,
+        'statusGeneralPasantia' => $pasantia->statusGeneral, 
+        'statusPaso0Pasantia' => $pasantia->statusPaso0,
+        'statusPaso1Pasantia' => $pasantia->statusPaso1, 
+        'statusPaso2Pasantia' => $pasantia->statusPaso2, 
+        'statusPaso3Pasantia' => $pasantia->statusPaso3,
+        'statusPaso4Pasantia' => $pasantia->statusPaso4,
+        //Atributos Proyecto
+        'statusProyecto' => $proyecto->status,
+        'nombreProyecto' => $proyecto->nombre,
+        //Atributos Empresa
+        'nombreEmpresa' => $empresas->nombre,
+        'rubroEmpresa' => $empresas->rubro,
+        'urlWebEmpresa' => $empresas->urlWeb,
+        'correoContactoEmpresa' => $empresas->correoContacto,
+        'statusEmpresa' => $empresas->status,
+        //Atributos Usuarios
+        'nombresUsuario' => $usuarios->nombres,
+        'apellidoPaternoUsuario' => $usuarios->apellidoPaterno,
+        'apellidoMaternoUsuario' => $usuarios->apellidoMaterno,
+        'idCarreraUsuario' => $usuarios->idCarrera,
+        'statusPregradoUsuario' => $usuarios->statusPregrado,
+        'rutUsuario' => $usuarios->rut,
+        'emailUsuario' => $usuarios->email,
+        //Atributos AuthUsers
+        'tipoMallaAuth' => $authUsers->tipoMalla,
+      ));
     }
+    return $datos;
   }
-*/
+
   /*
   * Acceso rapido para que administrador valide la pasantia
   */
