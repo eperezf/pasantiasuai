@@ -23,15 +23,9 @@ class ListadoInscripcionController extends Controller
   * Muestra el listado de las pasantias
   */
   public function index() {
-    $usuarios =  User::all();
-    $pasantias = Pasantia::all();
-    $empresas = Empresa::all();
     $downloadExcel = FALSE;
     $datosPasantias = $this->getDatosPasantias();
-    return view('admin.listadoInscripcion', [
-      'usuarios' => $usuarios, 
-      'pasantias' => $pasantias, 
-      'empresas' => $empresas, 
+    return view('admin.listadoInscripcion', [ 
       'downloadExcel' => $downloadExcel,
       'datosPasantias' => $datosPasantias,
     ]);
@@ -41,15 +35,11 @@ class ListadoInscripcionController extends Controller
   * Permite la exportacion de los datos hacia excel
   */
   public function export() {
-    $usuarios = User::all();
-    $pasantias = Pasantia::all();
-    $empresas = Empresa::all();
     $downloadExcel = TRUE;
-    return Excel::download(new ExportViews('admin.tablaInscripciones', [
-      'usuarios' => $usuarios, 
-      'pasantias' => $pasantias, 
-      'empresas' => $empresas, 
-      'downloadExcel' => $downloadExcel
+    $datosPasantias = $this->getDatosPasantias();
+    return Excel::download(new ExportViews('admin.tablaInscripciones', [ 
+      'downloadExcel' => $downloadExcel,
+      'datosPasantias' => $datosPasantias,
       ]), 'Inscripciones.xlsx');
   }
   /*
@@ -72,6 +62,7 @@ class ListadoInscripcionController extends Controller
       //Cada $datos[i] contiene un arreglo con los datos de la pasantia i
       array_push($datosPasantias, array(
         //Atributos Pasantia
+        'idPasantia' => $pasantia->idPasantia,
         'fechaInicioPasantia' => $pasantia->fechaInicio,
         'nombreJefePasantia' => $pasantia->nombreJefe,
         'correoJefePasantia' => $pasantia->correoJefe,
@@ -89,15 +80,18 @@ class ListadoInscripcionController extends Controller
         'statusPaso3Pasantia' => $pasantia->statusPaso3,
         'statusPaso4Pasantia' => $pasantia->statusPaso4,
         //Atributos Proyecto
+        'idProyecto' => $proyecto->idProyecto,
         'statusProyecto' => $proyecto->status,
         'nombreProyecto' => $proyecto->nombre,
         //Atributos Empresa
+        'idEmpresa' => $empresas->idEmpresa,
         'nombreEmpresa' => $empresas->nombre,
         'rubroEmpresa' => $empresas->rubro,
         'urlWebEmpresa' => $empresas->urlWeb,
         'correoContactoEmpresa' => $empresas->correoContacto,
         'statusEmpresa' => $empresas->status,
         //Atributos Usuarios
+        'idUsuario' => $usuarios->idUsuario,
         'nombresUsuario' => $usuarios->nombres,
         'apellidoPaternoUsuario' => $usuarios->apellidoPaterno,
         'apellidoMaternoUsuario' => $usuarios->apellidoMaterno,
@@ -109,7 +103,7 @@ class ListadoInscripcionController extends Controller
         'tipoMallaAuth' => $authUsers->tipoMalla,
       ));
     }
-    return $datos;
+    return $datosPasantias;
   }
 
   /*
