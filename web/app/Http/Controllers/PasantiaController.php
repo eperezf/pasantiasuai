@@ -13,6 +13,7 @@ use App\Pasantia;
 use App\Empresa;
 use Auth;
 use App\Proyecto;
+use PDF;
 
 
 class PasantiaController extends Controller{
