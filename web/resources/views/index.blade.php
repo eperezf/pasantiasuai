@@ -144,7 +144,7 @@
     <button type="button" class="btn btn-lg btn-light m-3" data-toggle="popover" data-placement="bottom" title="Empresa" 
     data-content="
     @if ($empresa == null)
-    Aún no has seleccionado una empresa para hacer tu pasantía.
+    Aún no ha seleccionado una empresa para hacer su pasantía.
     @elseif ($empresa != null && $empresa->status == 0)
     La empresa {{$empresa->nombre}} en la que realizará su pasantía aún no ha finalizado su proceso de convenio con la Universidad.
     @elseif ($empresa != null && $empresa->status == 1)
