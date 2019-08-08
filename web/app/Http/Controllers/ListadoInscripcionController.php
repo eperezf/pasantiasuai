@@ -58,6 +58,32 @@ class ListadoInscripcionController extends Controller
       $usuarios = User::where('idUsuario', $pasantia->idAlumno)->first();
       $authUsers = AuthUsers::where('email', $usuarios->email)->first();
 
+      if ($proyecto == null) {
+        $proyecto = (object) [
+          'idProyecto' => null,
+          'status' => 0,
+          'nombre' => 'Sin Nombre',
+        ];
+      }
+      if ($empresas == null) {
+        $empresas = (object) [
+          'idEmpresa' => null,
+          'nombreEmpresa' => 'No se ha seleccionado empresa',
+          'rubroEmpresa' => 'No se ha seleccionado empresa',
+          'urlWebEmpresa' => 'No se ha seleccionado empresa',
+          'correoContactoEmpresa' => 'No se ha seleccionado empresa',
+          'statusEmpresa' => 'No se ha seleccionado empresa',
+        ];
+      }
+
+      /*
+      $proyecto = new stdClass();
+      $proyecto->idProyecto = null;
+      $proyecto->status = 0;
+      $proyecto->nombre = 'Sin Nombre';
+      */
+
+
       //nombre de valor -> atributoTabla
       //Cada $datos[i] contiene un arreglo con los datos de la pasantia i
       array_push($datosPasantias, array(
