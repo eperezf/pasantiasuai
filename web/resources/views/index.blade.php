@@ -29,7 +29,7 @@
                 <p class="card-text">Pasantías válidas: {{array_values((array_values($datos[0]))[0])[1]}}</p>
                 <p class="card-text">Pasantías totales: {{array_values((array_values($datos[0]))[0])[2]}}</p>
                 <div class="text-right">
-                  <a href="/admin/inscripcionPasantias" class="btn btn-primary">Ver más <i class="fas fa-arrow-right"></i></a>
+                  <a href="/admin/listadoInscripcion" class="btn btn-primary">Ver más <i class="fas fa-arrow-right"></i></a>
                 </div>
               </div>
             </div>
