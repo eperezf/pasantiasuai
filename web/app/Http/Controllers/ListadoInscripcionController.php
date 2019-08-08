@@ -56,7 +56,6 @@ class ListadoInscripcionController extends Controller
       $proyecto = Proyecto::where('idPasantia', $pasantia->idPasantia)->first();
       $empresas = Empresa::where('idEmpresa', $pasantia->idEmpresa)->first();
       $usuarios = User::where('idUsuario', $pasantia->idAlumno)->first();
-      $authUsers = AuthUsers::where('email', $usuarios->email)->first();
 
       if ($proyecto == null) {
         $proyecto = (object) [
@@ -125,8 +124,7 @@ class ListadoInscripcionController extends Controller
         'statusPregradoUsuario' => $usuarios->statusPregrado,
         'rutUsuario' => $usuarios->rut,
         'emailUsuario' => $usuarios->email,
-        //Atributos AuthUsers
-        'tipoMallaAuth' => $authUsers->tipoMalla,
+        'tipoMallaUsuario' => $usuarios->tipoMalla,
       ));
     }
     return $datosPasantias;
