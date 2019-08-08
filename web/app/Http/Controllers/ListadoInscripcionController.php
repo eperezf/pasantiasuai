@@ -68,11 +68,11 @@ class ListadoInscripcionController extends Controller
       if ($empresas == null) {
         $empresas = (object) [
           'idEmpresa' => null,
-          'nombreEmpresa' => 'No se ha seleccionado empresa',
-          'rubroEmpresa' => 'No se ha seleccionado empresa',
-          'urlWebEmpresa' => 'No se ha seleccionado empresa',
-          'correoContactoEmpresa' => 'No se ha seleccionado empresa',
-          'statusEmpresa' => 'No se ha seleccionado empresa',
+          'nombre' => 'No se ha seleccionado empresa',
+          'rubro' => 'No se ha seleccionado empresa',
+          'urlWeb' => 'No se ha seleccionado empresa',
+          'correoContacto' => 'No se ha seleccionado empresa',
+          'status' => 'No se ha seleccionado empresa',
         ];
       }
 
