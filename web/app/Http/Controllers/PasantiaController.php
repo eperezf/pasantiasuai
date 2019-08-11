@@ -281,7 +281,7 @@ class PasantiaController extends Controller{
 		$userId = Auth::id();
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
 		//Control de Status General
-		if ($pasantia->statusGeneral == 1) {
+		if ($pasantia->statusGeneral == 1 && $pasantia->statusPaso3 == 4) {
 			return redirect('/inscripcion/resumen')->with('success', 'No puede cambiar los datos ingresados, su pasantía ya ha sido validada.');
 		}
 		if ($pasantia && $pasantia->statusPaso0==2){
