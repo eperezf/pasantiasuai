@@ -177,13 +177,10 @@
 						@if($downloadExcel == TRUE)
 						@elseif ($downloadExcel == FALSE)
 						<!-- Boton accion empresa -->
-							<a class="btn btn-primary" href="{{route('listadoInscripcion.validarEmpresa',
-							['id' => $datosPasantia['idEmpresa'], 
-							'statusEmpresa' => $datosPasantia['statusEmpresa']])}}" role="button">
-								@if ($datosPasantia['statusEmpresa'] == 1) Desactivar convenio
-								@else Activar convenio @endif
+							<a class="btn btn-warning @if ($datosPasantia['idEmpresa'] == null) disabled @else @endif" href="{{route('empresas.edit', ['id' => $datosPasantia['idEmpresa']])}}" role="button">
+								Editar convenio
 							</a>
-						@else @endif
+						@else @endif <!-- End if de excel -->
 					</td>
 
 					<td>{{$datosPasantia['rubroEmpresa']}}</td>
@@ -191,7 +188,7 @@
 					@elseif ($downloadExcel == FALSE)
 					<td>
 						<a role="button" href="{{route('listadoInscripcion.validarTodo', 
-						['idEmpresa' => $datosPasantia['idEmpresa'], 
+						['nombresUsuario' => $datosPasantia['nombresUsuario'], 
 						'idPasantia' => $datosPasantia['idPasantia']])}}" class="btn btn-primary 
 						@if ($datosPasantia['statusGeneralPasantia'] == 0 || $datosPasantia['statusPaso2Pasantia'] == 3) 
 						@else disabled @endif">Validar todo</a>

@@ -154,27 +154,6 @@ class ListadoInscripcionController extends Controller
     }
   }
 
-  // empresa = 1 -> convenio activo
-  public function validarEmpresa($id, $statusEmpresa){
-    if (Auth::user()->rol >= 4) {
-      $empresa = Empresa::find($id);
-      if ($statusEmpresa == 1) {
-        $empresa->status = 0;
-        $empresa->save();
-        return redirect('admin/listadoInscripcion')->with('success', 'Convenio con empresa ' . $empresa->nombre . ' desactivado exitosamente');
-      }
-      elseif ($statusEmpresa == 0) {
-        $empresa->status = 1;
-        $empresa->save();
-        return redirect('admin/listadoInscripcion')->with('success', 'Convenio con empresa ' . $empresa->nombre . ' activado exitosamente');
-      } else {
-        return redirect('admin/listadoInscripcion');
-      }
-    } else {
-      return redirect('index');
-    }
-  }
-
   public function validarProyecto($id, $accion)
   {
     if (Auth::user()->rol >= 4) {
@@ -195,14 +174,9 @@ class ListadoInscripcionController extends Controller
   /* 
     Validar todo valida paso 2 y paso general
   */
-  public function validarTodo($idEmpresa, $idPasantia) {
+  public function validarTodo($nombresUsuario, $idPasantia) {
     if (Auth::user()->rol >= 4) {
-      $empresa = Empresa::find($idEmpresa);
       $pasantia = Pasantia::find($idPasantia);
-      // Estado Empresa
-      if ($empresa->status != 1) {
-        $empresa->status = 1;
-      }
       // Estado Familiar (si es que tiene)
       if ($pasantia->statusPaso2 != 2) {
       $pasantia->statusPaso2 = 2;
@@ -211,9 +185,8 @@ class ListadoInscripcionController extends Controller
       if ($pasantia->statusGeneral != 1) {
         $pasantia->statusGeneral = 1;
       }
-      $empresa->save();
       $pasantia->save();
-      return redirect('admin/listadoInscripcion')->with('success', 'La pasantía ha sido validada exitosamente.');
+      return redirect('admin/listadoInscripcion')->with('success', 'La pasantía de '. $nombresUsuario . ' ha sido validada exitosamente.');
     } else {
       return redirect('index');
     }
