@@ -97,11 +97,11 @@
 						<i class="fas fa-industry"></i> Empresas
 					</a>
 					@if(Auth::user()->rol >= 4)
-					<a href="#" class="list-group-item list-group-item-action ">
+					<a href="/admin/estadisticas" class="list-group-item list-group-item-action ">
 						<i class="fas fa-chart-line"></i> Estadisticas
 					</a>
 					@endif
-  				<a href="#" class="list-group-item list-group-item-action">
+  				<a href="http://alumnosfic.uai.cl/wp-content/uploads/2018/07/Reglamento-de-Pasant%C3%ADas-a-partir-de-2018.pdf" class="list-group-item list-group-item-action" download>
 						<i class="fas fa-balance-scale"></i> Reglamento
 					</a>
 				</div>
