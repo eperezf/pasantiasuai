@@ -192,6 +192,9 @@ class ListadoInscripcionController extends Controller
     }
   }
 
+  /* 
+    Validar todo valida paso 2 y paso general
+  */
   public function validarTodo($idEmpresa, $idPasantia) {
     if (Auth::user()->rol >= 4) {
       $empresa = Empresa::find($idEmpresa);
@@ -200,22 +203,10 @@ class ListadoInscripcionController extends Controller
       if ($empresa->status != 1) {
         $empresa->status = 1;
       }
-      /*
-      if ($pasantia->statusPaso0 != 2) {
-        $pasantia->statusPaso2 = 2;
-      }
-      if ($pasantia->statusPaso1 != 2) {
-        $pasantia->statusPaso2 = 2;
-      }
-      */
       // Estado Familiar (si es que tiene)
       if ($pasantia->statusPaso2 != 2) {
       $pasantia->statusPaso2 = 2;
-      }
-      // Estado Mail
-      if ($pasantia->statusPaso3 != 2) {
-        $pasantia->statusPaso3 = 2;
-      }    
+      }  
       // Estado de la pasantia (si la puede ejercer)
       if ($pasantia->statusGeneral != 1) {
         $pasantia->statusGeneral = 1;
