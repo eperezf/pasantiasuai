@@ -14,7 +14,7 @@ class AuthUsersTableSeeder extends Seeder
       DB::table('authUsers')->insert([
 				['email'=>'eduperez@alumnos.uai.cl', 'tipoMalla'=>'1'],
 				['email'=>'pmoreau@alumnos.uai.cl', 'tipoMalla'=>'1'],
-				['email'=>'izenteno@alumnos.uai.cl', 'tipoMalla'=>'1'],
+				['email'=>'rzenteno@alumnos.uai.cl', 'tipoMalla'=>'1'],
 				['email'=>'rmatos@alumnos.uai.cl', 'tipoMalla'=>'1'],
 				['email'=>'rafael.cereceda2004@alumnos.uai.cl', 'tipoMalla'=>'1']
 			]);
