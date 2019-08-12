@@ -8,10 +8,10 @@ class CreateEmpresaTable extends Migration{
 	public function up(){
     Schema::create('empresa', function (Blueprint $table) {
       $table->increments('idEmpresa');
-      $table->string('nombre', 150);
-      $table->string('rubro', 150);
-      $table->string('urlWeb', 150);
-      $table->string('correoContacto', 150);
+      $table->string('nombre', 200);
+      $table->string('rubro', 250);
+      $table->string('urlWeb', 200);
+      $table->string('correoContacto', 200);
 			$table->integer('status');
 			$table->timestamps();
 
