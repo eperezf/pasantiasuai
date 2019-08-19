@@ -190,7 +190,7 @@
 						<a role="button" href="{{route('listadoInscripcion.validarTodo', 
 						['nombresUsuario' => $datosPasantia['nombresUsuario'], 
 						'idPasantia' => $datosPasantia['idPasantia']])}}" class="btn btn-primary 
-						@if ($datosPasantia['statusGeneralPasantia'] == 0 || $datosPasantia['statusPaso2Pasantia'] == 3) 
+						@if ($datosPasantia['statusGeneralPasantia'] == 0 && $datosPasantia['statusEmpresa'] == 1) 
 						@else disabled @endif">Validar todo</a>
 
 						<a class="btn btn-warning disabled" href="{{route('listadoInscripcion.edit', $datosPasantia['idPasantia'])}}" role="button">Editar</a>
