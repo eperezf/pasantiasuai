@@ -354,7 +354,7 @@ class PasantiaController extends Controller{
 				return redirect('/inscripcion/2')->with('danger', 'No puedes continuar tu proceso de inscripción si tienes un pariente en la empresa. Su pasantía quedará en un estado pendiente de validación, lo que podría tardar el proceso de su inscripción.');
 			}
 			if ($pasantia->statusGeneral != 1){
-				return redirect('/inscripcion/resumen')->with('error', "No puedes crear un proyecto si tu pasantía no está aprobada.");
+				return redirect('/inscripcion/resumen')->with('error', "No puedes crear un proyecto si tu pasantía no está validada.");
 			}
 			else {
 				if (Proyecto::where([['idPasantia', '=', $pasantia->idPasantia],['status', '<=', '2']])->first()){
