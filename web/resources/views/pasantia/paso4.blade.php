@@ -17,19 +17,29 @@
 				@csrf
 				<div class="form-group">
 			    <label for="nombre">Nombre</label>
-			    <input class="form-control" id="nombre" name="nombre" placeholder="Nombre del proyecto">
+			    <input class="form-control" id="nombre" name="nombre" placeholder="Nombre del proyecto" value="{{$proyecto->nombre}}">
 			  </div>
 				<div class="form-group">
 			    <label for="nombre">Area</label>
-			    <input class="form-control" id="area" name="area" placeholder="Area del proyecto">
+			    <input class="form-control" id="area" name="area" placeholder="Area del proyecto" value="{{$proyecto->area}}">
 			  </div>
 				<div class="form-group">
-			    <label for="problematica">Problemática</label>
-			    <textarea class="form-control" id="problematica" name="problematica" rows="3" placeholder="Problemática del proyecto"></textarea>
+			    <label for="disciplina">Disciplina de ingeniería</label>
+			    <select class="form-control" id="disciplina" name="disciplina" required>
+			      <option value="1" @if($proyecto->disciplina == '1') selected @endif>1</option>
+			      <option value="2" @if($proyecto->disciplina == '2') selected @endif>2</option>
+			      <option value="3" @if($proyecto->disciplina == '3') selected @endif>3</option>
+			      <option value="4" @if($proyecto->disciplina == '4') selected @endif>4</option>
+			      <option value="5" @if($proyecto->disciplina == '5') selected @endif>5</option>
+			    </select>
 			  </div>
 				<div class="form-group">
-			    <label for="vision">Visión</label>
-			    <textarea class="form-control" id="vision" name="vision" rows="5" placeholder="Vision del proyecto"></textarea>
+			    <label for="problematica">Visión</label>
+			    <textarea class="form-control mb-2" id="problematica" name="problematica" rows="3" placeholder="Problemática del proyecto" >{{$proyecto->problematica}}</textarea>
+					<textarea class="form-control mb-2" id="objetivo" name="objetivo" rows="2" placeholder="Objetivo del proyecto">{{$proyecto->objetivo}}</textarea>
+					<textarea class="form-control mb-2" id="medidas" name="medidas" rows="2" placeholder="Medidas de desempeño" >{{$proyecto->medidas}}</textarea>
+					<textarea class="form-control mb-2" id="metodologia" name="metodologia" rows="2" placeholder="Metodología" >{{$proyecto->metodologia}}</textarea>
+					<textarea class="form-control mb-2" id="planificacion" name="planificacion" rows="6" placeholder="Planificación" >{{$proyecto->planificacion}}</textarea>
 			  </div>
 				<button type="submit" class="btn btn-primary">Continuar</button>
 			</form>
