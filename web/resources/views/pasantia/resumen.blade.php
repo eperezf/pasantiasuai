@@ -12,7 +12,7 @@
 	<div class="row justify-content-md-center mb-5">
 		<h2>Resumen de tu inscripción</h2>
 	</div>
-	<div class="row justify-content-md-center mb-5">
+	<div class="row justify-content-md-center mb-3">
 		<ul class="list-group">
 			@if($statusPaso0 == 2)
 				<li class="list-group-item list-group-item-success"><i class="fas fa-check"></i> Has aceptado el reglamento de pasantías.</li>
@@ -61,7 +61,7 @@
 		</ul>
 	</div>
 	@if(Auth::user()->rol >= 4)
-	<div class="row justify-content-md-center mb-5">
+	<div class="row justify-content-md-center mb-3">
 		<form style="display: inline-block;" action="{{ url('inscripcion/destroy', $pasantia->idPasantia)}}" method="post">
 			@csrf
 			@method('DELETE')
@@ -70,7 +70,7 @@
 	</div>
 	@endif
 	@if ($statusGeneral == 1 || Auth::user()->rol >= 4)
-		<div class="row justify-content-md-center mb-5">
+		<div class="row justify-content-md-center mb-3">
 			<a class="btn btn-success" href="{{route('inscripcion.certificado')}}">Descargar certificado</a>
 		</div>
 	@endif

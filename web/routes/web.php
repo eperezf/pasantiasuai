@@ -20,14 +20,26 @@ Route::resource('/empresas', 'EmpresaController')->middleware('auth');
 
 Route::resource('/admin/estadisticas', 'GraficasController')->middleware('auth');
 Route::resource('/admin/importarlista', 'ListadoController')->middleware('auth');
+
+// Rutas de Listado Inscripcion
+// Ruta de editado de empresa unicamente
+Route::get('/admin/listadoInscripcion/{id}', 'EmpresaController@edit')->middleware('auth');
+// Ruta de CRUD Listado Inscripcion
 Route::resource('/admin/listadoInscripcion', 'ListadoInscripcionController')->middleware('auth');
+// Ruta de exportacion de excel
 Route::get('/admin/tablaInscripciones', 'ListadoInscripcionController@export')->name( 'tablaInscripciones.export')->middleware('auth');
+// Ruta de validar al pariente
 Route::get('/admin/listadoInscripcion/{id}/statusPaso2/{statusPaso2}', 'ListadoInscripcionController@validarPariente')->name('listadoInscripcion.validarPariente')->middleware('auth');
-Route::get('/admin/listadoInscripcion/{id}/statusEmpresa/{statusEmpresa}', 'ListadoInscripcionController@validarEmpresa')->name('listadoInscripcion.validarEmpresa')->middleware('auth');
+// Ruta de validar proyecto
 Route::get('/admin/listadoInscripcion/{id}/accion/{accion}', 'ListadoInscripcionController@validarProyecto')->name('listadoInscripcion.validarProyecto')->middleware('auth');
-Route::get('/admin/listadoInscripcion/{idEmpresa}/idPasantia/{idPasantia}', 'ListadoInscripcionController@validarTodo')->name('listadoInscripcion.validarTodo')->middleware('auth');
+// Ruta de validar todo
+Route::get('/admin/listadoInscripcion/{nombresUsuario}/idPasantia/{idPasantia}', 'ListadoInscripcionController@validarTodo')->name('listadoInscripcion.validarTodo')->middleware('auth');
 
 Route::resource('/perfil', 'PerfilController')->middleware('auth');
+
+
+
+
 
 Route::get('/login', function(){
 	return view('login');

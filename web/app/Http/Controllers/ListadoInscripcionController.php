@@ -23,15 +23,11 @@ class ListadoInscripcionController extends Controller
   * Muestra el listado de las pasantias
   */
   public function index() {
-    $usuarios =  User::all();
-    $pasantias = Pasantia::all();
-    $empresas = Empresa::all();
     $downloadExcel = FALSE;
-    return view('admin.listadoInscripcion', [
-      'usuarios' => $usuarios, 
-      'pasantias' => $pasantias, 
-      'empresas' => $empresas, 
-      'downloadExcel' => $downloadExcel
+    $datosPasantias = $this->getDatosPasantias();
+    return view('admin.listadoInscripcion', [ 
+      'downloadExcel' => $downloadExcel,
+      'datosPasantias' => $datosPasantias,
     ]);
   }
 
@@ -39,133 +35,101 @@ class ListadoInscripcionController extends Controller
   * Permite la exportacion de los datos hacia excel
   */
   public function export() {
-    $usuarios = User::all();
-    $pasantias = Pasantia::all();
-    $empresas = Empresa::all();
     $downloadExcel = TRUE;
-    return Excel::download(new ExportViews('admin.tablaInscripciones', [
-      'usuarios' => $usuarios, 
-      'pasantias' => $pasantias, 
-      'empresas' => $empresas, 
-      'downloadExcel' => $downloadExcel
+    $datosPasantias = $this->getDatosPasantias();
+    return Excel::download(new ExportViews('admin.tablaInscripciones', [ 
+      'downloadExcel' => $downloadExcel,
+      'datosPasantias' => $datosPasantias,
       ]), 'Inscripciones.xlsx');
   }
   /*
-  * Sacar todos los datos de las pasantias y su usuario respectivo
+  * Saca los datos de cada pasantia
   */
-  /* REFACTORIZACION DE CONTROL DE DATOS
-  public function getAllUserData() {
-    $authUsers = AuthUsers::all();
+  public function getDatosPasantias() {
+    //Saca todas las pasantias
     $pasantias = Pasantia::all();
-    $proyectos = Proyecto::all();
-    $empresas = Empresa::all();
-    $usuarios = User::all();
-    
-        DATOS NECESITADOS
-      Pasantia
-        'fechaInicio',
-        'nombreJefe',
-        'correoJefe',
-        'lecReglamento',
-        'practicaOp',
-        'ciudad',
-        'pais',
-        'horasSemanales',
-        'parienteEmpresa',
-        'rolPariente'
-        'statusGeneral' 
-        'statusPaso0' 
-        'statusPaso1' 
-        'statusPaso2' 
-        'statusPaso3' 
-        'statusPaso4' 
-
-      Proyecto
-        'status'
-        'nombre'
-
-      Empresa
-		    'nombre'
-		    'rubro'
-		    'urlWeb'
-		    'correoContacto'
-        'status'
-        
-      Usuario
-        'nombres'
-			  'apellidoPaterno'
-			  'apellidoMaterno'
-			  'idCarrera'
-			  'statusPregrado'
-			  'rut'
-        'email'
-        
-      AuthUser
-        'tipoMalla'
-      
-
-    
-    $datos = [];
-
-    //Loop pasantias
+    //Definicion de arreglo a contener datos
+    $datosPasantias = [];
+    //Iterar sobre cada pasantia
     foreach ($pasantias as $pasantia) {
-      //Loop saca proyecto de la pasantia i
-      foreach ($proyectos as $proyecto) {
-        $pasantia->$proyecto->first();
-      }
-      //Loop saca empresa de la pasantia i
-      foreach ($empresas as $empresa) {
-        $empresa = $pasantia->$empresa->first();
-      }
-      //Loop saca usuario de la pasantia i
-      foreach ($usuarios as $usuario) {
-        $usuario = $pasantia->$usuario->first();
-        //Loop saca authUser del usuario i
-        foreach ($authUsers as $authUser) {
-          if ($usuario->email == $authUser->email){
-            $authUser = $authUser->tipoMalla;
-          }
-        }
-      }
-      array_push($datos, 
-              $pasantia->fechaInicio,
-              $pasantia->nombreJefe,
-              $pasantia->correoJefe,
-              $pasantia->lecReglamento,
-              $pasantia->practicaOp,
-              $pasantia->ciudad,
-              $pasantia->pais,
-              $pasantia->horasSemanales,
-              $pasantia->parienteEmpresa,
-              $pasantia->rolPariente,
-              $pasantia->statusGeneral ,
-              $pasantia->statusPaso0, 
-              $pasantia->statusPaso1, 
-              $pasantia->statusPaso2, 
-              $pasantia->statusPaso3, 
-              $pasantia->statusPaso4,
+      //Sacar datos de cada pasantia
+      $proyecto = Proyecto::where('idPasantia', $pasantia->idPasantia)->first();
+      $empresas = Empresa::where('idEmpresa', $pasantia->idEmpresa)->first();
+      $usuarios = User::where('idUsuario', $pasantia->idAlumno)->first();
 
-              $proyecto->status,
-              $proyecto->nombre,
+      if ($proyecto == null) {
+        $proyecto = (object) [
+          'idProyecto' => null,
+          'status' => 0,
+          'nombre' => 'Sin Nombre',
+        ];
+      }
+      if ($empresas == null) {
+        $empresas = (object) [
+          'idEmpresa' => null,
+          'nombre' => 'No se ha seleccionado empresa',
+          'rubro' => 'No se ha seleccionado empresa',
+          'urlWeb' => 'No se ha seleccionado empresa',
+          'correoContacto' => 'No se ha seleccionado empresa',
+          'status' => 'No se ha seleccionado empresa',
+        ];
+      }
 
-              $empresa->nombre,
-              $empresa->rubro,
-              $empresa->urlWeb,
-              $empresa->correoContacto,
-              $empresa->status,
+      /*
+      $proyecto = new stdClass();
+      $proyecto->idProyecto = null;
+      $proyecto->status = 0;
+      $proyecto->nombre = 'Sin Nombre';
+      */
 
-              $usuario->nombres,
-              $usuario->apellidoPaterno,
-              $usuario->apellidoMaterno,
-              $usuario->idCarrera,
-              $usuario->statusPregrado,
-              $usuario->rut,
-              $usuario->email,
- 
-              $authUser->tipoMalla);
+
+      //nombre de valor -> atributoTabla
+      //Cada $datos[i] contiene un arreglo con los datos de la pasantia i
+      array_push($datosPasantias, array(
+        //Atributos Pasantia
+        'idPasantia' => $pasantia->idPasantia,
+        'fechaInicioPasantia' => $pasantia->fechaInicio,
+        'nombreJefePasantia' => $pasantia->nombreJefe,
+        'correoJefePasantia' => $pasantia->correoJefe,
+        'lecReglamentoPasantia' => $pasantia->lecReglamento,
+        'practicaOpPasantia' => $pasantia->practicaOp,
+        'ciudadPasantia' => $pasantia->ciudad,
+        'paisPasantia' => $pasantia->pais,
+        'horasSemanalesPasantia' => $pasantia->horasSemanales,
+        'parienteEmpresaPasantia' => $pasantia->parienteEmpresa,
+        'rolParientePasantia' => $pasantia->rolPariente,
+        'statusGeneralPasantia' => $pasantia->statusGeneral, 
+        'statusPaso0Pasantia' => $pasantia->statusPaso0,
+        'statusPaso1Pasantia' => $pasantia->statusPaso1, 
+        'statusPaso2Pasantia' => $pasantia->statusPaso2, 
+        'statusPaso3Pasantia' => $pasantia->statusPaso3,
+        'statusPaso4Pasantia' => $pasantia->statusPaso4,
+        //Atributos Proyecto
+        'idProyecto' => $proyecto->idProyecto,
+        'statusProyecto' => $proyecto->status,
+        'nombreProyecto' => $proyecto->nombre,
+        //Atributos Empresa
+        'idEmpresa' => $empresas->idEmpresa,
+        'nombreEmpresa' => $empresas->nombre,
+        'rubroEmpresa' => $empresas->rubro,
+        'urlWebEmpresa' => $empresas->urlWeb,
+        'correoContactoEmpresa' => $empresas->correoContacto,
+        'statusEmpresa' => $empresas->status,
+        //Atributos Usuarios
+        'idUsuario' => $usuarios->idUsuario,
+        'nombresUsuario' => $usuarios->nombres,
+        'apellidoPaternoUsuario' => $usuarios->apellidoPaterno,
+        'apellidoMaternoUsuario' => $usuarios->apellidoMaterno,
+        'idCarreraUsuario' => $usuarios->idCarrera,
+        'statusPregradoUsuario' => $usuarios->statusPregrado,
+        'rutUsuario' => $usuarios->rut,
+        'emailUsuario' => $usuarios->email,
+        'tipoMallaUsuario' => $usuarios->tipoMalla,
+      ));
     }
+    return $datosPasantias;
   }
-*/
+
   /*
   * Acceso rapido para que administrador valide la pasantia
   */
@@ -182,27 +146,6 @@ class ListadoInscripcionController extends Controller
         $pasantia->statusPaso2 = 3;
         $pasantia->save();
         return redirect('admin/listadoInscripcion')->with('success', 'Pariente ' . $pasantia->rolPariente . ' invalidado exitosamente');
-      } else {
-        return redirect('admin/listadoInscripcion');
-      }
-    } else {
-      return redirect('index');
-    }
-  }
-
-  // empresa = 1 -> convenio activo
-  public function validarEmpresa($id, $statusEmpresa){
-    if (Auth::user()->rol >= 4) {
-      $empresa = Empresa::find($id);
-      if ($statusEmpresa == 1) {
-        $empresa->status = 0;
-        $empresa->save();
-        return redirect('admin/listadoInscripcion')->with('success', 'Convenio con empresa ' . $empresa->nombre . ' desactivado exitosamente');
-      }
-      elseif ($statusEmpresa == 0) {
-        $empresa->status = 1;
-        $empresa->save();
-        return redirect('admin/listadoInscripcion')->with('success', 'Convenio con empresa ' . $empresa->nombre . ' activado exitosamente');
       } else {
         return redirect('admin/listadoInscripcion');
       }
@@ -228,37 +171,22 @@ class ListadoInscripcionController extends Controller
     }
   }
 
-  public function validarTodo($idEmpresa, $idPasantia) {
+  /* 
+    Validar todo valida paso 2 y paso general
+  */
+  public function validarTodo($nombresUsuario, $idPasantia) {
     if (Auth::user()->rol >= 4) {
-      $empresa = Empresa::find($idEmpresa);
       $pasantia = Pasantia::find($idPasantia);
-      // Estado Empresa
-      if ($empresa->status != 1) {
-        $empresa->status = 1;
-      }
-      /*
-      if ($pasantia->statusPaso0 != 2) {
-        $pasantia->statusPaso2 = 2;
-      }
-      if ($pasantia->statusPaso1 != 2) {
-        $pasantia->statusPaso2 = 2;
-      }
-      */
       // Estado Familiar (si es que tiene)
       if ($pasantia->statusPaso2 != 2) {
       $pasantia->statusPaso2 = 2;
-      }
-      // Estado Mail
-      if ($pasantia->statusPaso3 != 2) {
-        $pasantia->statusPaso3 = 2;
-      }    
+      }  
       // Estado de la pasantia (si la puede ejercer)
       if ($pasantia->statusGeneral != 1) {
         $pasantia->statusGeneral = 1;
       }
-      $empresa->save();
       $pasantia->save();
-      return redirect('admin/listadoInscripcion')->with('success', 'La pasantía ha sido validada exitosamente.');
+      return redirect('admin/listadoInscripcion')->with('success', 'La pasantía de '. $nombresUsuario . ' ha sido validada exitosamente.');
     } else {
       return redirect('index');
     }
