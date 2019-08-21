@@ -33,7 +33,6 @@ class CreatePasantiaTable extends Migration
 						$table->integer('statusPaso2')->default(0);
 						$table->integer('statusPaso3')->default(0);
 						$table->integer('statusPaso4')->default(0);
-						$table->integer('Status')->default(0);
             $table->integer('idEmpresa')->unsigned()->nullable();
             $table->string('nombreJefe', 45)->nullable();
             $table->string('correoJefe', 45)->nullable();
@@ -42,7 +41,7 @@ class CreatePasantiaTable extends Migration
             $table->tinyInteger('practicaOp')->default(0);
             $table->string('ciudad', 45)->nullable();
             $table->string('pais', 45)->nullable();
-            $table->integer('horasSemanales')->nullable();
+            $table->float('horasSemanales',3,1)->nullable();
             $table->tinyInteger('parienteEmpresa')->nullable();
 						$table->string('rolPariente')->nullable();
 						$table->timestamps();
