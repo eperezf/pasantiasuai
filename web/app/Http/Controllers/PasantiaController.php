@@ -11,8 +11,9 @@ use App\User;
 use App\AuthUsers;
 use App\Pasantia;
 use App\Empresa;
-use Auth;
 use App\Proyecto;
+use Auth;
+use PDF;
 
 
 class PasantiaController extends Controller{
@@ -138,6 +139,10 @@ class PasantiaController extends Controller{
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
 		$empresas = Empresa::all()->sortBy('nombre');
 		$empresaSel = Empresa::where('idEmpresa', $pasantia->idEmpresa)->first();
+		//Control de Status General
+		if ($pasantia->statusGeneral == 1) {
+			return redirect('/inscripcion/resumen')->with('success', 'No puede cambiar los datos ingresados, su pasantía ya ha sido validada.');
+		}
 		if (!$empresaSel){
 			$empresaSel = new Empresa([
 				'nombre'=>"",
@@ -182,7 +187,7 @@ class PasantiaController extends Controller{
 			'ciudad' => 'alpha|nullable',
 			'pais' => 'alpha|nullable',
 			'fecha' => 'date|nullable',
-			'horas' => 'integer|between:20,45|nullable',
+			'horas' => 'numeric|between:20,45|nullable',
 			'pariente' => 'boolean|nullable',
 			'otraEmpresa' => 'boolean|nullable',
 			'rolPariente' => 'required_if:pariente,1'
@@ -222,7 +227,7 @@ class PasantiaController extends Controller{
 		if ($request->fecha) {
 			//Limite de la fecha de inscripcion respecto al año actual
 			$fechaInicio = Carbon::parse(Carbon::create(Carbon::now()->year, 7, 22)); //22 Julio
-			$fechaLimite = Carbon::parse(Carbon::create(Carbon::now()->year, 8, 16)); //16 Agosto
+			$fechaLimite = Carbon::parse(Carbon::create(Carbon::now()->year, 10, 20)); //20 octubre
 			//Si hoy o la fecha de inscripcion es mayor a la fecha limite
 			if (Carbon::now() > $fechaLimite || Carbon::parse($request->fecha) > $fechaLimite) {
 				return redirect('/inscripcion/2')->with('danger', 'Su pasantía no la puede inscribir en esta fecha, si aún asi desea realizarla, deberá contactarse con pasantias.fic@uai.cl');
@@ -275,6 +280,10 @@ class PasantiaController extends Controller{
 	public function paso3View(){
 		$userId = Auth::id();
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
+		//Control de Status General
+		if ($pasantia->statusGeneral == 1 && $pasantia->statusPaso3 == 4) {
+			return redirect('/inscripcion/resumen')->with('success', 'No puede cambiar los datos ingresados, su pasantía ya ha sido validada.');
+		}
 		if ($pasantia && $pasantia->statusPaso0==2){
 			if ($pasantia->statusPaso2 == 3){
 				return redirect('/inscripcion/2')->with('danger', 'No puedes continuar tu proceso de inscripción si tienes un pariente en la empresa. Tu pasantía está a la espera de validación.');
@@ -345,7 +354,7 @@ class PasantiaController extends Controller{
 				return redirect('/inscripcion/2')->with('danger', 'No puedes continuar tu proceso de inscripción si tienes un pariente en la empresa. Su pasantía quedará en un estado pendiente de validación, lo que podría tardar el proceso de su inscripción.');
 			}
 			if ($pasantia->statusGeneral != 1){
-				return redirect('/inscripcion/resumen')->with('error', "No puedes crear un proyecto si tu pasantía no está aprobada.");
+				return redirect('/inscripcion/resumen')->with('error', "No puedes crear un proyecto si tu pasantía no está validada.");
 			}
 			else {
 				if (Proyecto::where([['idPasantia', '=', $pasantia->idPasantia],['status', '<=', '2']])->first()){
@@ -468,7 +477,7 @@ class PasantiaController extends Controller{
 
 	/**
 	 * Elimina la pasantía de la base de datos. (SOLO PARA QA)
-	 * @version v1.0
+	 * @version v1.1
 	 * @author Eduardo Pérez
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
@@ -476,7 +485,12 @@ class PasantiaController extends Controller{
 	public function destroy($id){
 		if (Auth::user()->rol >=4){
 			$userId = Auth::id();
+
 			$pasantia = Pasantia::where('idAlumno', $userId)->first();
+			if (Proyecto::where('idPasantia',$pasantia->idPasantia)){
+				$proyecto = Proyecto::where('idPasantia',$pasantia->idPasantia)->first();
+				$proyecto->delete();
+			}
 			$pasantia->delete();
 			return redirect('/inscripcion/0');
 		}

@@ -17,7 +17,12 @@ class IndexController extends Controller
   public function index() {
     $userId = Auth::id();
     $pasantia = Pasantia::where('idAlumno', $userId)->first();
-    $empresa = Empresa::where('idEmpresa', $pasantia->idEmpresa)->first();
+    if ($pasantia != null) {
+      $empresa = Empresa::where('idEmpresa', $pasantia->idEmpresa)->first();
+    }
+    else{
+      $empresa = null;
+    }
     $datos = $this->getResumenes();
     return view('index', compact('pasantia', 'empresa', 'datos'));
   }
