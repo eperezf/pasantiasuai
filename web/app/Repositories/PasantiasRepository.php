@@ -6,17 +6,73 @@ use App\User;
 use App\Pasantia;
 use App\Empresa;
 use App\Proyecto;
-use App\AuthUsers;
 
 class PasantiasRepository{
-  
-  public static function getDatosPasantias()
+
+  //Arreglo que contendra los datos de la pasantia
+  private static $datosPasantias = [];
+
+  //Datos asociados a la pasantia
+  public function llenaDatosPasantias($pasantia, $proyecto, $empresas, $usuarios)
   {
-    //Saca todas las pasantias
+    $pasantiaDatos = array(
+      //Atributos Pasantia
+      'idPasantia' => $pasantia->idPasantia,
+      'fechaInicioPasantia' => $pasantia->fechaInicio,
+      'nombreJefePasantia' => $pasantia->nombreJefe,
+      'correoJefePasantia' => $pasantia->correoJefe,
+      'lecReglamentoPasantia' => $pasantia->lecReglamento,
+      'practicaOpPasantia' => $pasantia->practicaOp,
+      'ciudadPasantia' => $pasantia->ciudad,
+      'paisPasantia' => $pasantia->pais,
+      'horasSemanalesPasantia' => $pasantia->horasSemanales,
+      'parienteEmpresaPasantia' => $pasantia->parienteEmpresa,
+      'rolParientePasantia' => $pasantia->rolPariente,
+      'statusGeneralPasantia' => $pasantia->statusGeneral,
+      'statusPaso0Pasantia' => $pasantia->statusPaso0,
+      'statusPaso1Pasantia' => $pasantia->statusPaso1,
+      'statusPaso2Pasantia' => $pasantia->statusPaso2,
+      'statusPaso3Pasantia' => $pasantia->statusPaso3,
+      'statusPaso4Pasantia' => $pasantia->statusPaso4,
+      //Atributos Proyecto
+      'idProyecto' => $proyecto->idProyecto,
+      'statusProyecto' => $proyecto->status,
+      'nombreProyecto' => $proyecto->nombre,
+      //Atributos Empresa
+      'idEmpresa' => $empresas->idEmpresa,
+      'nombreEmpresa' => $empresas->nombre,
+      'rubroEmpresa' => $empresas->rubro,
+      'urlWebEmpresa' => $empresas->urlWeb,
+      'correoContactoEmpresa' => $empresas->correoContacto,
+      'statusEmpresa' => $empresas->status,
+      //Atributos Usuarios
+      'idUsuario' => $usuarios->idUsuario,
+      'nombresUsuario' => $usuarios->nombres,
+      'apellidoPaternoUsuario' => $usuarios->apellidoPaterno,
+      'apellidoMaternoUsuario' => $usuarios->apellidoMaterno,
+      'idCarreraUsuario' => $usuarios->idCarrera,
+      'statusPregradoUsuario' => $usuarios->statusPregrado,
+      'rutUsuario' => $usuarios->rut,
+      'emailUsuario' => $usuarios->email,
+      'tipoMallaUsuario' => $usuarios->tipoMalla,
+    );
+    return $pasantiaDatos;
+  }
+
+  //Saca una unica pasantia y todos sus datos asociados
+  public static function getPasantia($id){
+    $pasantia = Pasantia::where('idPasantia', $id->idPasantia)->first();
+    $proyecto = Proyecto::where('idPasantia', $pasantia->idPasantia)->first();
+    $empresas = Empresa::where('idEmpresa', $pasantia->idEmpresa)->first();
+    $usuarios = User::where('idUsuario', $pasantia->idAlumno)->first();
+    array_push(self::$datosPasantias, (new self)->llenaDatosPasantias($pasantia, $proyecto, $empresas, $usuarios));
+    return self::$datosPasantias;
+  }
+
+  //Saca todas las pasantias y todos sus datos asociados
+  public static function getAllPasantias()
+  {
     $pasantias = Pasantia::all();
-    //Definicion de arreglo a contener datos
-    $datosPasantias = [];
-    //Iterar sobre cada pasantia
     foreach ($pasantias as $pasantia) {
       //Sacar datos de cada pasantia
       $proyecto = Proyecto::where('idPasantia', $pasantia->idPasantia)->first();
@@ -42,50 +98,8 @@ class PasantiasRepository{
       }
       //nombre de valor -> atributoTabla
       //Cada $datos[i] contiene un arreglo con los datos de la pasantia i
-      array_push($datosPasantias, array(
-        //Atributos Pasantia
-        'idPasantia' => $pasantia->idPasantia,
-        'fechaInicioPasantia' => $pasantia->fechaInicio,
-        'nombreJefePasantia' => $pasantia->nombreJefe,
-        'correoJefePasantia' => $pasantia->correoJefe,
-        'lecReglamentoPasantia' => $pasantia->lecReglamento,
-        'practicaOpPasantia' => $pasantia->practicaOp,
-        'ciudadPasantia' => $pasantia->ciudad,
-        'paisPasantia' => $pasantia->pais,
-        'horasSemanalesPasantia' => $pasantia->horasSemanales,
-        'parienteEmpresaPasantia' => $pasantia->parienteEmpresa,
-        'rolParientePasantia' => $pasantia->rolPariente,
-        'statusGeneralPasantia' => $pasantia->statusGeneral,
-        'statusPaso0Pasantia' => $pasantia->statusPaso0,
-        'statusPaso1Pasantia' => $pasantia->statusPaso1,
-        'statusPaso2Pasantia' => $pasantia->statusPaso2,
-        'statusPaso3Pasantia' => $pasantia->statusPaso3,
-        'statusPaso4Pasantia' => $pasantia->statusPaso4,
-        //Atributos Proyecto
-        'idProyecto' => $proyecto->idProyecto,
-        'statusProyecto' => $proyecto->status,
-        'nombreProyecto' => $proyecto->nombre,
-        //Atributos Empresa
-        'idEmpresa' => $empresas->idEmpresa,
-        'nombreEmpresa' => $empresas->nombre,
-        'rubroEmpresa' => $empresas->rubro,
-        'urlWebEmpresa' => $empresas->urlWeb,
-        'correoContactoEmpresa' => $empresas->correoContacto,
-        'statusEmpresa' => $empresas->status,
-        //Atributos Usuarios
-        'idUsuario' => $usuarios->idUsuario,
-        'nombresUsuario' => $usuarios->nombres,
-        'apellidoPaternoUsuario' => $usuarios->apellidoPaterno,
-        'apellidoMaternoUsuario' => $usuarios->apellidoMaterno,
-        'idCarreraUsuario' => $usuarios->idCarrera,
-        'statusPregradoUsuario' => $usuarios->statusPregrado,
-        'rutUsuario' => $usuarios->rut,
-        'emailUsuario' => $usuarios->email,
-        'tipoMallaUsuario' => $usuarios->tipoMalla,
-      ));
+      array_push(self::$datosPasantias, (new self)->llenaDatosPasantias($pasantia, $proyecto, $empresas, $usuarios));
     }
-    return $datosPasantias;
+    return self::$datosPasantias;
   }
-
-
 }

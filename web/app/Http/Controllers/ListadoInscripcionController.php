@@ -25,7 +25,7 @@ class ListadoInscripcionController extends Controller
   */
   public function index() {
     $downloadExcel = FALSE;
-    $datosPasantias = PasantiasRepository::getDatosPasantias();
+    $datosPasantias = PasantiasRepository::getAllPasantias();
     return view('admin.listadoInscripcion', [ 
       'downloadExcel' => $downloadExcel,
       'datosPasantias' => $datosPasantias,
@@ -37,7 +37,7 @@ class ListadoInscripcionController extends Controller
   */
   public function export() {
     $downloadExcel = TRUE;
-    $datosPasantias = PasantiasRepository::getDatosPasantias();
+    $datosPasantias = PasantiasRepository::getAllPasantias();
     return Excel::download(new ExportViews('admin.tablaInscripciones', [ 
       'downloadExcel' => $downloadExcel,
       'datosPasantias' => $datosPasantias,
@@ -116,7 +116,6 @@ class ListadoInscripcionController extends Controller
       return redirect('index');
     }
   }
-
   /*
   * Actualiza la pasantia respecto a los datos editados en el formulario de edit
   */
