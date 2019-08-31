@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\ExportViews;
+use App\Repositories\PasantiasRepository;
 use Maatwebsite\Excel\Facades\Excel;
 use App\User;
 use App\Pasantia;
@@ -24,7 +25,7 @@ class ListadoInscripcionController extends Controller
   */
   public function index() {
     $downloadExcel = FALSE;
-    $datosPasantias = $this->getDatosPasantias();
+    $datosPasantias = PasantiasRepository::getDatosPasantias();
     return view('admin.listadoInscripcion', [ 
       'downloadExcel' => $downloadExcel,
       'datosPasantias' => $datosPasantias,
@@ -36,98 +37,11 @@ class ListadoInscripcionController extends Controller
   */
   public function export() {
     $downloadExcel = TRUE;
-    $datosPasantias = $this->getDatosPasantias();
+    $datosPasantias = PasantiasRepository::getDatosPasantias();
     return Excel::download(new ExportViews('admin.tablaInscripciones', [ 
       'downloadExcel' => $downloadExcel,
       'datosPasantias' => $datosPasantias,
       ]), 'Inscripciones.xlsx');
-  }
-  /*
-  * Saca los datos de cada pasantia
-  */
-  public function getDatosPasantias() {
-    //Saca todas las pasantias
-    $pasantias = Pasantia::all();
-    //Definicion de arreglo a contener datos
-    $datosPasantias = [];
-    //Iterar sobre cada pasantia
-    foreach ($pasantias as $pasantia) {
-      //Sacar datos de cada pasantia
-      $proyecto = Proyecto::where('idPasantia', $pasantia->idPasantia)->first();
-      $empresas = Empresa::where('idEmpresa', $pasantia->idEmpresa)->first();
-      $usuarios = User::where('idUsuario', $pasantia->idAlumno)->first();
-
-      if ($proyecto == null) {
-        $proyecto = (object) [
-          'idProyecto' => null,
-          'status' => 0,
-          'nombre' => 'Sin Nombre',
-        ];
-      }
-      if ($empresas == null) {
-        $empresas = (object) [
-          'idEmpresa' => null,
-          'nombre' => 'No se ha seleccionado empresa',
-          'rubro' => 'No se ha seleccionado empresa',
-          'urlWeb' => 'No se ha seleccionado empresa',
-          'correoContacto' => 'No se ha seleccionado empresa',
-          'status' => 'No se ha seleccionado empresa',
-        ];
-      }
-
-      /*
-      $proyecto = new stdClass();
-      $proyecto->idProyecto = null;
-      $proyecto->status = 0;
-      $proyecto->nombre = 'Sin Nombre';
-      */
-
-
-      //nombre de valor -> atributoTabla
-      //Cada $datos[i] contiene un arreglo con los datos de la pasantia i
-      array_push($datosPasantias, array(
-        //Atributos Pasantia
-        'idPasantia' => $pasantia->idPasantia,
-        'fechaInicioPasantia' => $pasantia->fechaInicio,
-        'nombreJefePasantia' => $pasantia->nombreJefe,
-        'correoJefePasantia' => $pasantia->correoJefe,
-        'lecReglamentoPasantia' => $pasantia->lecReglamento,
-        'practicaOpPasantia' => $pasantia->practicaOp,
-        'ciudadPasantia' => $pasantia->ciudad,
-        'paisPasantia' => $pasantia->pais,
-        'horasSemanalesPasantia' => $pasantia->horasSemanales,
-        'parienteEmpresaPasantia' => $pasantia->parienteEmpresa,
-        'rolParientePasantia' => $pasantia->rolPariente,
-        'statusGeneralPasantia' => $pasantia->statusGeneral, 
-        'statusPaso0Pasantia' => $pasantia->statusPaso0,
-        'statusPaso1Pasantia' => $pasantia->statusPaso1, 
-        'statusPaso2Pasantia' => $pasantia->statusPaso2, 
-        'statusPaso3Pasantia' => $pasantia->statusPaso3,
-        'statusPaso4Pasantia' => $pasantia->statusPaso4,
-        //Atributos Proyecto
-        'idProyecto' => $proyecto->idProyecto,
-        'statusProyecto' => $proyecto->status,
-        'nombreProyecto' => $proyecto->nombre,
-        //Atributos Empresa
-        'idEmpresa' => $empresas->idEmpresa,
-        'nombreEmpresa' => $empresas->nombre,
-        'rubroEmpresa' => $empresas->rubro,
-        'urlWebEmpresa' => $empresas->urlWeb,
-        'correoContactoEmpresa' => $empresas->correoContacto,
-        'statusEmpresa' => $empresas->status,
-        //Atributos Usuarios
-        'idUsuario' => $usuarios->idUsuario,
-        'nombresUsuario' => $usuarios->nombres,
-        'apellidoPaternoUsuario' => $usuarios->apellidoPaterno,
-        'apellidoMaternoUsuario' => $usuarios->apellidoMaterno,
-        'idCarreraUsuario' => $usuarios->idCarrera,
-        'statusPregradoUsuario' => $usuarios->statusPregrado,
-        'rutUsuario' => $usuarios->rut,
-        'emailUsuario' => $usuarios->email,
-        'tipoMallaUsuario' => $usuarios->tipoMalla,
-      ));
-    }
-    return $datosPasantias;
   }
 
   /*
