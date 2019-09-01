@@ -110,7 +110,7 @@ class ListadoInscripcionController extends Controller
   */
   public function edit($id) {
     if (Auth::user()->rol >= 4) {
-      $pasantia = Pasantia::find($id);
+      $pasantia = PasantiasRepository::getPasantia($id);
       return view('admin/editInscripcion', compact('pasantia'));
     } else {
       return redirect('index');

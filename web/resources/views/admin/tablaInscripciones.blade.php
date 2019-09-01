@@ -11,11 +11,22 @@
 					<th scope="col" data-field="email" data-sortable="true">
 						<div class="th-inner">Email</div>
 					</th>
-					<th scope="col" data-field="carrera" data-sortable="true">
-						<div class="th-inner">Carrera</div>
-					</th>
 					<th scope="col" data-field="statusPregrado" data-sortable="true">
 						<div class="th-inner">Status pregrado</div>
+					</th>
+					<th scope="col" data-field="fechaInicio" data-sortable="true">
+						<div class="th-inner">Nombre jefe</div>
+					</th>
+					<th scope="col" data-field="fechaInicio" data-sortable="true">
+						<div class="th-inner">Email jefe</div>
+					</th>
+					<!-- Revisar cuando este implementado -->
+					<th scope="col" data-field="seccionAlumno">
+						<div class="th-inner">Sección alumno</div>
+					</th>
+					<!-- Revisar cuando este implementado -->
+					<th scope="col" data-field="profesorEncargado">
+						<div class="th-inner">Profesor encargado</div>
 					</th>
 					<th scope="col" data-field="fechaInicio" data-sortable="true">
 						<div class="th-inner">Fecha inicio</div>
@@ -41,6 +52,9 @@
 					<th scope="col" data-field="statuspaso3" data-sortable="true">
 						<div class="th-inner">Estado paso 3</div>
 					</th>
+					<th scope="col" data-field="nombreProyecto">
+						<div class="th-inner">Nombre proyecto</div>
+					</th>
 					<th scope="col" data-field="statuspaso4" data-sortable="true">
 						<div class="th-inner">Estado paso 4</div>
 					</th>
@@ -50,11 +64,11 @@
 					<th scope="col" data-field="rolPariente">
 						<div class="th-inner">Familiar</div>
 					</th>
-					<th scope="col" data-field="status" data-sortable="true">
+					<th scope="col" data-field="statusEmpresa" data-sortable="true">
 						<div class="th-inner">Empresa en convenio</div>
 					</th>
-					<th scope="col" data-field="rubro">
-						<div class="th-inner">Rubro</div>
+					<th scope="col" data-field="urlWeb">
+						<div class="th-inner">Página empresa</div>
 					</th>
 					@if($downloadExcel == TRUE)
 					@elseif ($downloadExcel == FALSE)
@@ -78,8 +92,15 @@
 						{{$datosPasantia['apellidoMaternoUsuario']}}
 					</td>
 					<td>{{$datosPasantia['emailUsuario']}}</td>
-					<td>{{$datosPasantia['idCarreraUsuario']}}</td>
+
 					<td>{{$datosPasantia['statusPregradoUsuario']}}</td>
+					<td>{{$datosPasantia['nombreJefePasantia']}}</td>
+					<td>{{$datosPasantia['correoJefePasantia']}}</td>
+
+					<!-- Seccion -->
+					<td>Aún no implementado</td>
+					<!-- Profe -->
+					<td>Aún no implementado</td>
 
 					<!-- Datos Pasantia -->
 					<td>{{$datosPasantia['fechaInicioPasantia']}}</td>
@@ -114,6 +135,8 @@
 						@elseif ($datosPasantia['statusPaso3Pasantia'] == 4) Correo confirmado
 						@else @endif
 					</td>
+					<!-- Nombre proyecto -->
+					<td>{{$datosPasantia['nombreProyecto']}}</td>
 					<!-- Paso 4 -->
 					<td>
 						@if ($datosPasantia['statusPaso4Pasantia'] == 0) No realizado
@@ -182,8 +205,8 @@
 							</a>
 						@else @endif <!-- End if de excel -->
 					</td>
+					<td>{{$datosPasantia['urlWebEmpresa']}}</td>
 
-					<td>{{$datosPasantia['rubroEmpresa']}}</td>
 					@if($downloadExcel == TRUE)
 					@elseif ($downloadExcel == FALSE)
 					<td>
