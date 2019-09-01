@@ -216,7 +216,7 @@
 						@if ($datosPasantia['statusGeneralPasantia'] == 0 && $datosPasantia['statusEmpresa'] == 1)
 						@else disabled @endif mb-2">Validar todo</a>
 
-						<a class="btn btn-warning disabled mb-2" href="{{route('listadoInscripcion.edit', $datosPasantia['idPasantia'])}}" role="button">Editar</a>
+						<a class="btn btn-warning mb-2" href="{{route('listadoInscripcion.edit', $datosPasantia['idPasantia'])}}" role="button">Editar</a>
 						<form style="display: inline-block;" action="{{ route('listadoInscripcion.destroy', $datosPasantia['idPasantia'])}}" method="post">
 	            @csrf
 	            @method('DELETE')

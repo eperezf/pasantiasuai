@@ -61,11 +61,11 @@ class PasantiasRepository{
 
   //Saca una unica pasantia y todos sus datos asociados
   public static function getPasantia($id){
-    $pasantia = Pasantia::where('idPasantia', $id->idPasantia)->first();
-    $proyecto = Proyecto::where('idPasantia', $pasantia->idPasantia)->first();
-    $empresas = Empresa::where('idEmpresa', $pasantia->idEmpresa)->first();
-    $usuarios = User::where('idUsuario', $pasantia->idAlumno)->first();
-    array_push(self::$datosPasantias, (new self)->llenaDatosPasantias($pasantia, $proyecto, $empresas, $usuarios));
+    $pasantia = Pasantia::where('idPasantia', $id)->first();
+    $proyecto = Proyecto::where('idPasantia', $id)->first();
+    $empresas = Empresa::where('idEmpresa', $id)->first();
+    $usuarios = User::where('idUsuario', $id)->first();
+    self::$datosPasantias = (new self)->llenaDatosPasantias($pasantia, $proyecto, $empresas, $usuarios);
     return self::$datosPasantias;
   }
 
