@@ -65,6 +65,23 @@ class PasantiasRepository{
     $proyecto = Proyecto::where('idPasantia', $id)->first();
     $empresas = Empresa::where('idEmpresa', $id)->first();
     $usuarios = User::where('idUsuario', $id)->first();
+    if ($proyecto == null) {
+      $proyecto = (object) [
+        'idProyecto' => null,
+        'status' => 0,
+        'nombre' => 'Sin Nombre',
+      ];
+    }
+    if ($empresas == null) {
+      $empresas = (object) [
+        'idEmpresa' => null,
+        'nombre' => 'No se ha seleccionado empresa',
+        'rubro' => 'No se ha seleccionado empresa',
+        'urlWeb' => 'No se ha seleccionado empresa',
+        'correoContacto' => 'No se ha seleccionado empresa',
+        'status' => 'No se ha seleccionado empresa',
+      ];
+    }
     self::$datosPasantias = (new self)->llenaDatosPasantias($pasantia, $proyecto, $empresas, $usuarios);
     return self::$datosPasantias;
   }
