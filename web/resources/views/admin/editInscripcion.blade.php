@@ -21,7 +21,7 @@
 			<h2 class="mt-4">Editando pasantia de alumno {{$datosPasantias['nombresUsuario']}} {{$datosPasantias['apellidoPaternoUsuario']}} {{$datosPasantias['apellidoMaternoUsuario']}}</h2>
 		</div>
 	</div>
-	<!-- Seleccion titulo -->
+	<!-- Seleccion pasos -->
 	<div class="row justify-content-center">
 		<div class="col-8">
 			<h3 class="my-4">Seleccione un paso para editar</h3>
@@ -64,42 +64,48 @@
               <div class="form-group">
                   <label for="empresa">Empresa en la que trabajarás</label>
                   <select class="form-control" id="empresa" name="empresa">
-                        <option value="{{$datosPasantias['nombreEmpresa']}}" selected>{{$datosPasantias['nombreEmpresa']}}</option>
+                    @foreach ($empresas as $empresa)
+                      <option value="{{$empresa->idEmpresa}}" @if ($datosPasantias['nombreEmpresa'] == $empresa->nombre) selected @else @endif>
+                        {{$empresa->nombre}}</option>
+                    @endforeach 
                   </select>
                 </div>
                 <div class="form-group">
                   <label for="ciudad">Ciudad en la que harás la pasantía</label>
-                  <input class="form-control" id="ciudad" name="ciudad" placeholder="Ciudad">
+                  <input class="form-control" id="ciudad" name="ciudad" placeholder="Ciudad" value="{{$datosPasantias['ciudadPasantia']}}">
                 </div>
                 <div class="form-group">
                   <label for="pais">País en la que harás la pasantía</label>
-                  <input class="form-control" id="pais" name="pais" placeholder="País">
+                  <input class="form-control" id="pais" name="pais" placeholder="País" value="{{$datosPasantias['paisPasantia']}}">
                 </div>
                 <div class="form-group">
                   <label for="fecha">Fecha en la que iniciarás tu pasantía</label>
-                  <input class="form-control" type="date" name="fecha" id="fecha">
+                  <input class="form-control" type="date" name="fecha" id="fecha" value="{{$datosPasantias['fechaInicioPasantia']}}">
                 </div>
                 <div class="form-group">
                   <label for="horas">Horas semanales de trabajo</label>
-                  <input type="number" class="form-control" id="horas" name="horas"  min="20" max="45" step="0.1">
+                  <input type="number" class="form-control" id="horas" name="horas"  min="20" max="45" step="0.1" value="{{$datosPasantias['horasSemanalesPasantia']}}">
                 </div>
                 <div class="form-group">
                   <p>Tengo un familiar que trabaja en la empresa o es socio/dueño de esta</p>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="pariente" id="pariente" value="0" >
+                    <input class="form-check-input" type="radio" name="pariente" id="pariente" value="0" @if ($datosPasantias['parienteEmpresaPasantia'] == 0) checked @else @endif>
                     <label class="form-check-label" for="parienteno">No</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="pariente" id="pariente" value="1">
+                    <input class="form-check-input" type="radio" name="pariente" id="pariente" value="1" @if ($datosPasantias['parienteEmpresaPasantia'] == 1) checked @else @endif>
                     <label class="form-check-label" for="parientesi">Sí</label>
                   </div>
                 </div>
-
-
-
+                @if ($datosPasantias['parienteEmpresaPasantia'] == 1)
+                <div class="form-check form-check-inline">
+                  <label for="pais">Describa el parentesco, rol y relación de su pariente en la empresa</label>
+                  <input class="form-control" id="rolPariente" name="rolPariente" placeholder="Ej.: Mi padre, subgerente de finanzas, no estará en mi misma área." value="{{$datosPasantias['rolParientePasantia']}}">
+                </div>
+                @else @endif
 
               <button type="submit" class="btn btn-primary">Editar</button>
-              <button type="buttpn" class="btn btn-warning" onclick="document.getElementById('paso2Edit').style.display = 'none';">Cancelar</button>
+              <button type="button" class="btn btn-warning" onclick="document.getElementById('paso2Edit').style.display = 'none';">Cancelar</button>
           </form>
       </div>
   </div>

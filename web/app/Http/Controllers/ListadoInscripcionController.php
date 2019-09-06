@@ -110,8 +110,9 @@ class ListadoInscripcionController extends Controller
   */
   public function edit($id) {
     if (Auth::user()->rol >= 4) {
+      $empresas = Empresa::all();
       $datosPasantias = PasantiasRepository::getPasantia($id);
-      return view('admin.editInscripcion', ['datosPasantias' => $datosPasantias]);
+      return view('admin.editInscripcion', ['datosPasantias' => $datosPasantias, 'empresas' => $empresas]);
     } else {
       return redirect('index');
     }
