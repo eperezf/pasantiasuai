@@ -14,10 +14,10 @@
 					<th scope="col" data-field="statusPregrado" data-sortable="true">
 						<div class="th-inner">Status pregrado</div>
 					</th>
-					<th scope="col" data-field="fechaInicio" data-sortable="true">
+					<th scope="col" data-field="nombreJefe" data-sortable="true">
 						<div class="th-inner">Nombre jefe</div>
 					</th>
-					<th scope="col" data-field="fechaInicio" data-sortable="true">
+					<th scope="col" data-field="emailJefe" data-sortable="true">
 						<div class="th-inner">Email jefe</div>
 					</th>
 					<!-- Revisar cuando este implementado -->
@@ -107,6 +107,7 @@
 					<td>{{$datosPasantia['horasSemanalesPasantia']}}</td>
 					<td>{{$datosPasantia['ciudadPasantia']}}</td>
 					<td>{{$datosPasantia['paisPasantia']}}</td>
+					
 					<!-- Paso 0 -->
 					<td>
 						@if ($datosPasantia['statusPaso0Pasantia'] == 2) Reglamento aceptado
