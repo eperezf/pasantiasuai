@@ -41,7 +41,7 @@
 			    <h5 class="card-title text-center">En caso de no querer hacer el tipo de pasantía ya asignada, debe enviar un correo a la gestión de pasantías de la Universidad.</h5>
 					<p class="card-text text-center">
 						mail:
-						<a class="text-white" href="mailto:pasantias.fic@uai.cl">pasantias.fic@uai.cl</a>
+						<a class="text-white" href="mailto:pasantias.fic@uai.cl">pasantia.fic@uai.cl</a>
 					</p>
 			  </div>
 			</div>

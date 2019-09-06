@@ -24,6 +24,6 @@ class confTutor extends Mailable{
 
   }
   public function build(){
-    return $this->subject('Correo confirmación de tutor')->view('emails.confTutor');
+    return $this->subject('Correo confirmación de tutor')->view('emails.confTutor')->attach( public_path() . '/documents/emailDocs/programa.pasantias.pdf');
   }
 }

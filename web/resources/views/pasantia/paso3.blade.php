@@ -14,9 +14,11 @@
 	</div>
 	<div class="row justify-content-md-center mb-2">
 		@if($statusPaso3==2)
-			<p>El correo ya se ha enviado a tu supervisor pero aún no ha sido respondido</p>
+			<p>El correo no ha sido enviado a tu supervisor.</p>
 		@elseif($statusPaso3==3)
-			<p>El correo ya fue respondido y aprobado por tu supervisor</p>
+			<p>El correo ya fue enviado a tu supervisor. No puedes editar estos datos.</p>
+		@elseif($statusPaso3==4)
+			<p>Tu supervisor ya ha confirmado su correo. No puedes editar estos datos.</p>
 		@endif
 	</div>
 	<div class="row justify-content-md-center mb-5">
@@ -25,15 +27,18 @@
 				@csrf
 				<div class="form-group">
 			    <label for="email">Correo</label>
-			    <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="correo@empresa.com" value="{{$correo}}" @if($statusPaso3==2 || $statusPaso3==3)disabled @endif>
+			    <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="correo@empresa.com" value="{{$correo}}" @if($statusPaso3==3 || $statusPaso3==4)disabled @endif>
 			  </div>
 			  <div class="form-group">
 			    <label for="nombre">Nombre</label>
-			    <input class="form-control" id="nombre" name="nombre" placeholder="Nombre" value="{{$nombre}}" @if($statusPaso3==2 || $statusPaso3==3)disabled @endif>
+			    <input class="form-control" id="nombre" name="nombre" placeholder="Nombre" value="{{$nombre}}" @if($statusPaso3==3 || $statusPaso3==4)disabled @endif>
 			  </div>
 				@if($statusPaso3 < 2)
 					<button type="submit" name="enviar" value="1" class="btn btn-primary" onsubmit="return confirm('¿Estás seguro que quieres enviar el correo? No podrás volver a modificar los datos.');">Enviar correo y guardar</button>
 					<button type="submit" name="guardar" value="1" class="btn btn-primary">Guardar</button>
+				@elseif ($statusPaso3 == 2)
+					<button type="submit" name="enviar" value="1" class="btn btn-primary" onsubmit="return confirm('¿Estás seguro que quieres enviar el correo? No podrás volver a modificar los datos.');">Enviar correo</button>
+					<button type="submit" name="continuar" value="1" class="btn btn-primary">Continuar</button>
 				@else
 					<button type="submit" name="continuar" value="1" class="btn btn-primary">Continuar</button>
 				@endif

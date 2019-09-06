@@ -63,7 +63,12 @@ class LoginController extends Controller
 					}
 					$nombres = $data[0]['givenname'][0];
 					$email = $data[0]['mail'][0];
-					$rut = $data[0]['employeeid'][0];
+					if (array_key_exists('employeeid', $data[0])){
+						$rut = $data[0]['employeeid'][0];
+					}
+					else {
+						$rut = "SIN RUT";
+					}
 					$org = $data[0]['distinguishedname'][0];
 					$org = str_replace("OU=","",$org);
 					$org = str_replace("CN=","",$org);
