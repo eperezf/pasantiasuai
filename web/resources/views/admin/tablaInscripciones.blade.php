@@ -206,7 +206,8 @@
 							</a>
 						@else @endif <!-- End if de excel -->
 					</td>
-					<td>{{$datosPasantia['urlWebEmpresa']}}</td>
+					
+					<td><a href="{{$datosPasantia['urlWebEmpresa']}}">{{$datosPasantia['urlWebEmpresa']}}</a></td>
 
 					@if($downloadExcel == TRUE)
 					@elseif ($downloadExcel == FALSE)
