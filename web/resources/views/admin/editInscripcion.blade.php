@@ -113,13 +113,20 @@
   <!-- Menu edit paso 3 -->
   <div class="row justify-content-md-center mt-2 mb-5" id="paso3Edit" style="display: none;">
       <div class="col-md-9 text-center">
-          <form method="" action="">
-
-
-
-              <button type="submit" class="btn btn-primary">Editar</button>
-              <button type="buttpn" class="btn btn-warning" onclick="document.getElementById('paso3Edit').style.display = 'none';">Cancelar</button>
-          </form>
+          <form method="" action="" class="text-center">
+				@csrf
+				<div class="form-group">
+			    <label for="email">Correo</label>
+			    <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="correo@empresa.com" value="">
+			  </div>
+			  <div class="form-group">
+			    <label for="nombre">Nombre</label>
+			    <input class="form-control" id="nombre" name="nombre" placeholder="Nombre" value="">
+			  </div>
+        <button type="submit" class="btn btn-primary">Editar</button>
+        <button type="buttpn" class="btn btn-warning" onclick="document.getElementById('paso3Edit').style.display = 'none';">Cancelar</button>
+      </form>
+      
       </div>
   </div>
 
