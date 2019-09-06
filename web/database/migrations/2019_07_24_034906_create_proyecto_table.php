@@ -26,14 +26,14 @@ class CreateProyectoTable extends Migration
             $table->unsignedInteger('idPasantia');
             $table->unsignedInteger('status');
             $table->unsignedInteger('idProfesor')->nullable()->default(null);
-            $table->string('nombre', 45)->nullable()->default(null);
-            $table->string('area', 45)->nullable()->default(null);
-            $table->string('disciplina', 45)->nullable()->default(null);
-            $table->string('problematica', 45)->nullable()->default(null);
-            $table->string('objetivo', 45)->nullable()->default(null);
-            $table->string('medidas', 45)->nullable()->default(null);
-            $table->string('metodologia', 45)->nullable()->default(null);
-            $table->string('planificacion', 45)->nullable()->default(null);
+            $table->text('nombre')->nullable()->default(null);
+            $table->text('area')->nullable()->default(null);
+            $table->text('disciplina')->nullable()->default(null);
+            $table->text('problematica')->nullable()->default(null);
+            $table->text('objetivo')->nullable()->default(null);
+            $table->text('medidas')->nullable()->default(null);
+            $table->text('metodologia')->nullable()->default(null);
+            $table->text('planificacion')->nullable()->default(null);
             $table->timestamps();
 
 

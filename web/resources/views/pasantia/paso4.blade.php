@@ -35,11 +35,11 @@
 			  </div>
 				<div class="form-group">
 			    <label for="problematica">Visión</label>
-			    <textarea class="form-control" id="problematica" name="problematica" rows="3" placeholder="Problemática del proyecto" >{{$proyecto->problematica}}</textarea>
-					<textarea class="form-control" id="objetivo" name="objetivo" rows="2" placeholder="Objetivo del proyecto">{{$proyecto->objetivo}}</textarea>
-					<textarea class="form-control" id="medidas" name="medidas" rows="2" placeholder="Medidas de desempeño" >{{$proyecto->medidas}}</textarea>
-					<textarea class="form-control" id="metodologia" name="metodologia" rows="2" placeholder="Metodología" >{{$proyecto->metodologia}}</textarea>
-					<textarea class="form-control" id="planificacion" name="planificacion" rows="6" placeholder="Planificación" >{{$proyecto->planificacion}}</textarea>
+			    <textarea class="form-control mb-2" id="problematica" name="problematica" rows="3" placeholder="Problemática del proyecto" >{{$proyecto->problematica}}</textarea>
+					<textarea class="form-control mb-2" id="objetivo" name="objetivo" rows="2" placeholder="Objetivo del proyecto">{{$proyecto->objetivo}}</textarea>
+					<textarea class="form-control mb-2" id="medidas" name="medidas" rows="2" placeholder="Medidas de desempeño" >{{$proyecto->medidas}}</textarea>
+					<textarea class="form-control mb-2" id="metodologia" name="metodologia" rows="2" placeholder="Metodología" >{{$proyecto->metodologia}}</textarea>
+					<textarea class="form-control mb-2" id="planificacion" name="planificacion" rows="6" placeholder="Planificación" >{{$proyecto->planificacion}}</textarea>
 			  </div>
 				<button type="submit" class="btn btn-primary">Continuar</button>
 			</form>

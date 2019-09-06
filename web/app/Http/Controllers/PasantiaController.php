@@ -11,8 +11,9 @@ use App\User;
 use App\AuthUsers;
 use App\Pasantia;
 use App\Empresa;
-use Auth;
 use App\Proyecto;
+use Auth;
+use PDF;
 
 
 class PasantiaController extends Controller{
@@ -186,7 +187,7 @@ class PasantiaController extends Controller{
 			'ciudad' => 'alpha|nullable',
 			'pais' => 'alpha|nullable',
 			'fecha' => 'date|nullable',
-			'horas' => 'integer|between:20,45|nullable',
+			'horas' => 'numeric|between:20,45|nullable',
 			'pariente' => 'boolean|nullable',
 			'otraEmpresa' => 'boolean|nullable',
 			'rolPariente' => 'required_if:pariente,1'
@@ -225,8 +226,8 @@ class PasantiaController extends Controller{
 
 		if ($request->fecha) {
 			//Limite de la fecha de inscripcion respecto al año actual
-			$fechaInicio = Carbon::parse(Carbon::create(Carbon::now()->year, 7, 12)); //12 Julio
-			$fechaLimite = Carbon::parse(Carbon::create(Carbon::now()->year, 8, 31)); //31 Agosto
+			$fechaInicio = Carbon::parse(Carbon::create(Carbon::now()->year, 7, 22)); //22 Julio
+			$fechaLimite = Carbon::parse(Carbon::create(Carbon::now()->year, 10, 20)); //20 octubre
 			//Si hoy o la fecha de inscripcion es mayor a la fecha limite
 			if (Carbon::now() > $fechaLimite || Carbon::parse($request->fecha) > $fechaLimite) {
 				return redirect('/inscripcion/2')->with('danger', 'Su pasantía no la puede inscribir en esta fecha, si aún asi desea realizarla, deberá contactarse con pasantias.fic@uai.cl');
@@ -280,7 +281,7 @@ class PasantiaController extends Controller{
 		$userId = Auth::id();
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
 		//Control de Status General
-		if ($pasantia->statusGeneral == 1) {
+		if ($pasantia->statusGeneral == 1 && $pasantia->statusPaso3 == 4) {
 			return redirect('/inscripcion/resumen')->with('success', 'No puede cambiar los datos ingresados, su pasantía ya ha sido validada.');
 		}
 		if ($pasantia && $pasantia->statusPaso0==2){
@@ -465,6 +466,7 @@ class PasantiaController extends Controller{
 				'statusPaso2'=>$pasantia->statusPaso2,
 				'statusPaso3'=>$pasantia->statusPaso3,
 				'statusPaso4'=>$pasantia->statusPaso4,
+				'statusGeneral' =>$pasantia->statusGeneral,
 				'pasantia'=>$pasantia,
 				'empresa'=>$empresa]);
 		}
@@ -475,7 +477,7 @@ class PasantiaController extends Controller{
 
 	/**
 	 * Elimina la pasantía de la base de datos. (SOLO PARA QA)
-	 * @version v1.0
+	 * @version v1.1
 	 * @author Eduardo Pérez
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
@@ -483,7 +485,12 @@ class PasantiaController extends Controller{
 	public function destroy($id){
 		if (Auth::user()->rol >=4){
 			$userId = Auth::id();
+
 			$pasantia = Pasantia::where('idAlumno', $userId)->first();
+			if (Proyecto::where('idPasantia',$pasantia->idPasantia)){
+				$proyecto = Proyecto::where('idPasantia',$pasantia->idPasantia)->first();
+				$proyecto->delete();
+			}
 			$pasantia->delete();
 			return redirect('/inscripcion/0');
 		}
@@ -532,5 +539,32 @@ class PasantiaController extends Controller{
 				'display'=>'error'
 			]);
 		}
+	}
+
+
+	/**
+	 * Genera y descarga el certificado de inscripción de pasantía en PDF
+	 * @version v1.0
+	 * @author Eduardo Pérez
+	 * @param  int  $id
+	 * @return \Illuminate\Http\Response
+	 */
+	public function descargarCert(){
+		$fecha = Carbon::now()->locale('es');
+		$fechaParse = $fecha->isoFormat('LL');
+		$user = Auth::user();
+		$pasantia = $user->pasantia->first();
+		$empresa = Empresa::where('idEmpresa', $pasantia->idEmpresa)->first();
+
+		$data = [
+			'fecha' => $fechaParse,
+			'nombre' => $user->nombres . " " . $user->apellidoPaterno . " " . $user->apellidoMaterno,
+			'rut' => $user->rut,
+			'carrera' => 'Ingeniería Civil',
+			'nombreEmpresa' => $empresa->nombre
+		];
+		//return view('pasantia/certificado', $data);
+		$pdf = PDF::loadView('pasantia/certificado', $data)->setPaper('letter', 'portrait');
+		return $pdf->download('Certificado Pasantía ' . $user->nombres . " " . $user->apellidoPaterno . " " . $user->apellidoMaterno . ".pdf");
 	}
 }

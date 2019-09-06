@@ -51,7 +51,7 @@
 				</div>
 				<div class="form-group">
 					<label for="horas">Horas semanales de trabajo</label>
-					<input type="number" class="form-control" id="horas" name="horas" @if($horas) value="{{$horas}}" @else @endif min="20" max="45">
+					<input type="number" class="form-control" id="horas" name="horas" @if($horas) value="{{$horas}}" @else @endif min="20" max="45" step="0.1">
 				</div>
 				<div class="form-group">
 					<p>Tengo un familiar que trabaja en la empresa o es socio/dueño de esta</p>
