@@ -296,7 +296,8 @@ class PasantiaController extends Controller{
 					'statusPaso3'=>$pasantia->statusPaso3,
 					'statusPaso4'=>$pasantia->statusPaso4,
 					'nombre'=>$pasantia->nombreJefe,
-					'correo'=>$pasantia->correoJefe]);
+					'correo'=>$pasantia->correoJefe,
+					'razon'=>false]);
 			}
 		}
 		else {
@@ -322,11 +323,11 @@ class PasantiaController extends Controller{
 		else {
 			$pasantia->statusPaso3 = 2;
 		}
+		if ($request->razonCambio){
+			$pasantia->razonCambio = $request->razonCambio;
+		}
 		$pasantia->nombreJefe = $request->nombre;
 		$pasantia->correoJefe = $request->email;
-		if ($request->guardar){
-			$pasantia->save();
-		}
 		if ($request->enviar){
 			while(Pasantia::where('tokenCorreo', $pasantia->tokenCorreo)->first()){
 				$pasantia->tokenCorreo = $string = str_random(10);
@@ -567,4 +568,24 @@ class PasantiaController extends Controller{
 		$pdf = PDF::loadView('pasantia/certificado', $data)->setPaper('letter', 'portrait');
 		return $pdf->download('Certificado Pasantía ' . $user->nombres . " " . $user->apellidoPaterno . " " . $user->apellidoMaterno . ".pdf");
 	}
+
+	/**
+	 * Carga el paso 3 con el formulario de razón de cambio de supervisor
+	 * @version v1.0
+	 * @author Eduardo Pérez
+	 * @return \Illuminate\Http\Response
+	 */
+	public function cambiarSupervisor(){
+		$userId = Auth::id();
+		$pasantia = Pasantia::where('idAlumno', $userId)->first();
+		return view('pasantia.paso3',[
+ 		 'statusPaso0'=>$pasantia->statusPaso0,
+ 		 'statusPaso1'=>$pasantia->statusPaso1,
+ 		 'statusPaso2'=>$pasantia->statusPaso2,
+ 		 'statusPaso3'=>$pasantia->statusPaso3,
+ 		 'statusPaso4'=>$pasantia->statusPaso4,
+ 		 'nombre'=>$pasantia->nombreJefe,
+ 		 'correo'=>$pasantia->correoJefe])->with('razon', true);
+	}
+
 }

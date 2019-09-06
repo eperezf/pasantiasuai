@@ -1,4 +1,4 @@
-<div class="row justify-content-md-center mb-5">
+<div class="row justify-content-md-center mb-3">
 	<div class="col-md-9 text-center">
 		<a class="btn btn-lg btn-outline-@if($statusPaso0=='2')success @else{{'secondary'}} @endif" href="{{route('inscripcion.0.view')}}" role="button">Paso 0 @if($statusPaso0=='2')<i class="fas fa-check"></i>@else @endif</a>
 		<a class="btn btn-lg btn-outline-@if($statusPaso1=='2')success @else{{'secondary'}} @endif" href="{{route('inscripcion.1.view')}}" role="button">Paso 1 @if($statusPaso1=='2')<i class="fas fa-check"></i>@else @endif</a>
