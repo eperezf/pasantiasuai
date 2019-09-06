@@ -185,7 +185,7 @@ class PasantiaController extends Controller{
 		$request->validate([
 			'empresa' => 'numeric|nullable',
 			'ciudad' => 'alpha|nullable',
-			'pais' => 'alpha|nullable',
+			'pais' => 'regex:/^[a-zA-ZÑñ\s]+$/|nullable',
 			'fecha' => 'date|nullable',
 			'horas' => 'numeric|between:20,45|nullable',
 			'pariente' => 'boolean|nullable',
