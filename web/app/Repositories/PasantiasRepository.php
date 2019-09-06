@@ -63,8 +63,8 @@ class PasantiasRepository{
   public static function getPasantia($id){
     $pasantia = Pasantia::where('idPasantia', $id)->first();
     $proyecto = Proyecto::where('idPasantia', $id)->first();
-    $empresas = Empresa::where('idEmpresa', $id)->first();
-    $usuarios = User::where('idUsuario', $id)->first();
+    $empresas = Empresa::where('idEmpresa', $pasantia->idEmpresa)->first();
+    $usuarios = User::where('idUsuario', $pasantia->idAlumno)->first();
     if ($proyecto == null) {
       $proyecto = (object) [
         'idProyecto' => null,
