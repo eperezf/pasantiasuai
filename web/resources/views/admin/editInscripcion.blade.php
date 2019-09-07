@@ -114,9 +114,37 @@
                   <input class="form-control" id="rolPariente" name="rolPariente" placeholder="Ej.: Mi padre, subgerente de finanzas, no estará en mi misma área." value="{{$datosPasantias['rolParientePasantia']}}" @if ($datosPasantias['parienteEmpresaPasantia'] == 1) required @endif>
                 </div>
                 @else @endif
-
-                <input type="submit"  value="Editar" class="btn btn-primary">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#paso2EditCheck">
+                  Editar
+                </button>
               <button type="button" class="btn btn-warning" onclick="document.getElementById('paso2Edit').style.display = 'none';">Cancelar</button>
+                
+                <!-- Modal -->
+                <div class="modal fade" id="paso2EditCheck" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content"> 
+                      <div class="modal-header bg-danger">
+                        <h3 class="modal-title text-white">¡Atención!</h3>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                      </div>
+                      <div class="modal-body">
+                        <p class="text-center">
+                        Usted esta a punto de editar el paso 2 del alumno: <p class="font-weight-bold">{{$datosPasantias['nombresUsuario']}} {{$datosPasantias['apellidoPaternoUsuario']}} {{$datosPasantias['apellidoMaternoUsuario']}}.</p>
+                        <p class="text-center">
+                        Si desea continuar con esta operacion, presione editar, de lo contrario, cierre esta ventana.
+                        </p>
+                      </div>
+                      <div class="modal-footer">
+                        <input type="submit"  value="Editar" class="btn btn-primary">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- End Modal -->
           </form>
       </div>
   </div>
