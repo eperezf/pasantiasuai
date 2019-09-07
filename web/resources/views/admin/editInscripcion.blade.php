@@ -114,13 +114,13 @@
                   <input class="form-control" id="rolPariente" name="rolPariente" placeholder="Ej.: Mi padre, subgerente de finanzas, no estará en mi misma área." value="{{$datosPasantias['rolParientePasantia']}}" @if ($datosPasantias['parienteEmpresaPasantia'] == 1) required @endif>
                 </div>
                 @else @endif
-                <!-- Button trigger modal -->
+                <!-- Button trigger modal paso 2 -->
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#paso2EditCheck">
                   Editar
                 </button>
               <button type="button" class="btn btn-warning" onclick="document.getElementById('paso2Edit').style.display = 'none';">Cancelar</button>
                 
-                <!-- Modal -->
+                <!-- Modal Paso 2 -->
                 <div class="modal fade" id="paso2EditCheck" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
                   <div class="modal-dialog" role="document">
                     <div class="modal-content"> 
@@ -144,7 +144,7 @@
                     </div>
                   </div>
                 </div>
-                <!-- End Modal -->
+                <!-- End Modal Paso 2 -->
           </form>
       </div>
   </div>
@@ -152,18 +152,52 @@
   <!-- Menu edit paso 3 -->
   <div class="row justify-content-md-center mt-2 mb-5" id="paso3Edit" style="display: none;">
       <div class="col-md-9 text-center">
-          <form method="" action="" class="text-center">
-				@csrf
+        <form method="post" action="{{route('listadoInscripcion.updatePaso3', $datosPasantias['idPasantia'])}}">
+            @csrf
+				    @method('POST')
 				<div class="form-group">
 			    <label for="email">Correo</label>
-			    <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="correo@empresa.com" value="{{$datosPasantias['correoJefePasantia']}}">
+			    <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="correo@empresa.com" value="{{$datosPasantias['correoJefePasantia']}}" required>
 			  </div>
 			  <div class="form-group">
 			    <label for="nombre">Nombre</label>
-			    <input class="form-control" id="nombre" name="nombre" placeholder="Nombre" value="{{$datosPasantias['nombreJefePasantia']}}">
+			    <input class="form-control" id="nombre" name="nombre" placeholder="Nombre" value="{{$datosPasantias['nombreJefePasantia']}}" required>
 			  </div>
-        <button type="submit" class="btn btn-primary">Editar</button>
-        <button type="buttpn" class="btn btn-warning" onclick="document.getElementById('paso3Edit').style.display = 'none';">Cancelar</button>
+        
+        
+        <!-- Button trigger modal paso 3 -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#paso3EditCheck">
+                  Editar
+                </button>
+              <button type="button" class="btn btn-warning" onclick="document.getElementById('paso3Edit').style.display = 'none';">Cancelar</button>
+                
+                <!-- Modal Paso 2 -->
+                <div class="modal fade" id="paso3EditCheck" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content"> 
+                      <div class="modal-header bg-danger">
+                        <h3 class="modal-title text-white">¡Atención!</h3>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                      </div>
+                      <div class="modal-body">
+                        <p class="text-center">
+                        Usted esta a punto de editar el paso 3 del alumno: <p class="font-weight-bold">{{$datosPasantias['nombresUsuario']}} {{$datosPasantias['apellidoPaternoUsuario']}} {{$datosPasantias['apellidoMaternoUsuario']}}.</p>
+                        <p class="text-center">
+                        Si desea continuar con esta operacion, presione editar, de lo contrario, cierre esta ventana.
+                        </p>
+                      </div>
+                      <div class="modal-footer">
+                        <input type="submit"  value="Editar" class="btn btn-primary">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- End Modal Paso 3 -->
+
+
       </form>
       
       </div>

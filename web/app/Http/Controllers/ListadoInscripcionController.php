@@ -121,7 +121,9 @@ class ListadoInscripcionController extends Controller
   /*
   * Actualiza la pasantia respecto a los datos editados en el formulario de edit
   */
-    public function updatePaso2(Request $request, $id) {
+
+  //Actualiza paso 2
+  public function updatePaso2(Request $request, $id) {
     if (Auth::user()->rol >= 4) {
       $request->validate([
         'empresa' => 'numeric|required',
@@ -146,6 +148,24 @@ class ListadoInscripcionController extends Controller
       return redirect('index');
     }
   }
+
+  //Actualiza paso 3
+  public function updatePaso3(Request $request, $id) {
+    if (Auth::user()->rol >= 4) {
+      $request->validate([
+        'nombre' => 'alpha|required',
+        'email' => 'email:rfc,dns|required'
+      ]);
+      $pasantia = Pasantia::find($id);
+      $pasantia->nombreJefe = $request->nombre;
+		  $pasantia->correoJefe = $request->email;
+      $pasantia->save();
+      return redirect('admin/listadoInscripcion/'. $id . '/edit')->with('success', 'Paso 3 editado exitosamente');
+    } else {
+      return redirect('index');
+    }
+  }
+
 
   /*
   * Elimina la pasantia seleccionada por el administrador
