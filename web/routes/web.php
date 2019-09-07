@@ -34,6 +34,11 @@ Route::get('/admin/listadoInscripcion/{id}/statusPaso2/{statusPaso2}', 'ListadoI
 Route::get('/admin/listadoInscripcion/{id}/accion/{accion}', 'ListadoInscripcionController@validarProyecto')->name('listadoInscripcion.validarProyecto')->middleware('auth');
 // Ruta de validar todo
 Route::get('/admin/listadoInscripcion/{nombresUsuario}/idPasantia/{idPasantia}', 'ListadoInscripcionController@validarTodo')->name('listadoInscripcion.validarTodo')->middleware('auth');
+//Ruta de Update Paso 2
+Route::post('/admin/listadoInscripcion/{id}/edit/', 'ListadoInscripcionController@updatePaso2')->name('listadoInscripcion.updatePaso2')->middleware('auth');
+
+
+
 
 Route::resource('/perfil', 'PerfilController')->middleware('auth');
 

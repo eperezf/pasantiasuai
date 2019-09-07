@@ -12,6 +12,7 @@ use App\Proyecto;
 use App\AuthUsers;
 use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 /**
  * ListadoInscripcionController es el controlador del listado de pasantias.
@@ -120,9 +121,27 @@ class ListadoInscripcionController extends Controller
   /*
   * Actualiza la pasantia respecto a los datos editados en el formulario de edit
   */
-  public function update(Request $request, $id) {
+    public function updatePaso2(Request $request, $id) {
     if (Auth::user()->rol >= 4) {
-
+      $request->validate([
+        'empresa' => 'numeric|required',
+        'ciudad' => 'alpha|required',
+        'pais' => 'alpha|required',
+        'fecha' => 'date|required',
+        'horas' => 'numeric|between:20,45|required',
+        'pariente' => 'boolean|required',
+        'rolPariente' => 'required_if:pariente,1'
+      ]);
+      $pasantia = Pasantia::find($id);
+      $pasantia->idEmpresa = $request->empresa;
+      $pasantia->ciudad = $request->ciudad;
+      $pasantia->pais = $request->pais;
+      $pasantia->fechaInicio = $request->fecha;
+      $pasantia->horasSemanales = $request->horas;
+      $pasantia->parienteEmpresa = $request->pariente;
+      $pasantia->rolPariente = $request->rolPariente;
+      $pasantia->save();
+      return redirect('admin/listadoInscripcion/'. $id . '/edit')->with('success', 'Paso 2 editado exitosamente');
     } else {
       return redirect('index');
     }
