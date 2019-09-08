@@ -118,10 +118,10 @@ class ListadoInscripcionController extends Controller
       return redirect('index');
     }
   }
+
   /*
   * Actualiza la pasantia respecto a los datos editados en el formulario de edit
   */
-
   //Actualiza paso 2
   public function updatePaso2(Request $request, $id) {
     if (Auth::user()->rol >= 4) {
@@ -167,6 +167,50 @@ class ListadoInscripcionController extends Controller
       if ($pasantia->isDirty()) {
         $pasantia->save();
         return redirect('admin/listadoInscripcion/' . $id . '/edit')->with('success', 'Paso 3 editado exitosamente');
+      } else {
+        return redirect('admin/listadoInscripcion/' . $id . '/edit');
+      }
+    } else {
+      return redirect('index');
+    }
+  }
+  /*
+  * Destruye el paso de la pasantia
+  */
+  //Destruye paso 2
+  public function destroyPaso2(Request $request, $id)
+  {
+    if (Auth::user()->rol >= 4) {
+      $pasantia = Pasantia::find($id);
+      $pasantia->idEmpresa = null;
+      $pasantia->ciudad = null;
+      $pasantia->pais = null;
+      $pasantia->fechaInicio = null;
+      $pasantia->horasSemanales = null;
+      $pasantia->parienteEmpresa = null;
+      $pasantia->rolPariente = null;
+
+      if ($pasantia->isDirty()) {
+        $pasantia->save();
+        return redirect('admin/listadoInscripcion/' . $id . '/edit')->with('success', 'Paso 2 eliminado exitosamente');
+      } else {
+        return redirect('admin/listadoInscripcion/' . $id . '/edit');
+      }
+    } else {
+      return redirect('index');
+    }
+  }
+
+  //Destruye paso 3
+  public function destroyPaso3(Request $request, $id)
+  {
+    if (Auth::user()->rol >= 4) {
+      $pasantia = Pasantia::find($id);
+      $pasantia->nombreJefe = null;
+      $pasantia->correoJefe = null;
+      if ($pasantia->isDirty()) {
+        $pasantia->save();
+        return redirect('admin/listadoInscripcion/' . $id . '/edit')->with('success', 'Paso 3 eliminado exitosamente');
       } else {
         return redirect('admin/listadoInscripcion/' . $id . '/edit');
       }
