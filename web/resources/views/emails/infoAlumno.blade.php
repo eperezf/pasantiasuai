@@ -25,8 +25,20 @@
           </tr>
           <tr>
             <td style="padding: 20px 0 30px 0; color: #333333; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
-              Informamos que uno de sus pasos en gestionFIC ha sido actualizado o eliminado.accordion<br>
-              Favor de verificar nuevamente gestion FIC.<br/>
+              Informamos que uno de sus pasos en gestion FIC ha sido actualizado o eliminado.
+              <br>
+              Favor de verificar nuevamente el portal de gestion FIC.
+              <br>
+              http://gestionfic.uai.cl/
+              <br>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 20px 0 30px 0; color: #333333; font-family: Arial, sans-serif; font-size: 16px; line-height: 20px;">
+              Saludos cordiales.
+              <br>
+              Gestión FIC UAI.
+              <br>
             </td>
           </tr>
         </table>

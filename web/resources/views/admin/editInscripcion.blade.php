@@ -41,7 +41,7 @@
   <div class="row justify-content-md-center mt-2 mb-5">
     <div class="col-md-9 text-center">
       <div class="btn-group">
-        <button type="button" class="btn btn-success dropdown-toggle mx-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button type="button" class="btn btn-primary dropdown-toggle mx-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Paso 2
         </button>
         <div class="dropdown-menu">
@@ -85,7 +85,7 @@
         
         <!-- End Modal Paso 2 Destroy -->     
         <div class="btn-group">
-          <button type="button" class="btn btn-success dropdown-toggle mx-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <button type="button" class="btn btn-primary dropdown-toggle mx-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Paso 3
           </button>
           <div class="dropdown-menu">
