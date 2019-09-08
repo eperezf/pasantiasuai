@@ -142,8 +142,13 @@ class ListadoInscripcionController extends Controller
       $pasantia->horasSemanales = $request->horas;
       $pasantia->parienteEmpresa = $request->pariente;
       $pasantia->rolPariente = $request->rolPariente;
-      $pasantia->save();
-      return redirect('admin/listadoInscripcion/'. $id . '/edit')->with('success', 'Paso 2 editado exitosamente');
+      
+      if ($pasantia->isDirty()) {
+        $pasantia->save();
+        return redirect('admin/listadoInscripcion/' . $id . '/edit')->with('success', 'Paso 2 editado exitosamente');
+      } else {
+        return redirect('admin/listadoInscripcion/' . $id . '/edit');
+      }
     } else {
       return redirect('index');
     }
@@ -159,12 +164,20 @@ class ListadoInscripcionController extends Controller
       $pasantia = Pasantia::find($id);
       $pasantia->nombreJefe = $request->nombre;
 		  $pasantia->correoJefe = $request->email;
-      $pasantia->save();
-      return redirect('admin/listadoInscripcion/'. $id . '/edit')->with('success', 'Paso 3 editado exitosamente');
+      if ($pasantia->isDirty()) {
+        $pasantia->save();
+        return redirect('admin/listadoInscripcion/' . $id . '/edit')->with('success', 'Paso 3 editado exitosamente');
+      } else {
+        return redirect('admin/listadoInscripcion/' . $id . '/edit');
+      }
     } else {
       return redirect('index');
     }
   }
+
+  // public function enviarMailNotificacion($pasantia) {
+
+  // }
 
 
   /*
