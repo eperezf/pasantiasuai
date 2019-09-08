@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\infoAlumno;
 use App\Exports\ExportViews;
 use App\Repositories\PasantiasRepository;
 use Maatwebsite\Excel\Facades\Excel;
@@ -12,7 +13,7 @@ use App\Proyecto;
 use App\AuthUsers;
 use Auth;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Mail;
 
 /**
  * ListadoInscripcionController es el controlador del listado de pasantias.
@@ -31,6 +32,12 @@ class ListadoInscripcionController extends Controller
       'downloadExcel' => $downloadExcel,
       'datosPasantias' => $datosPasantias,
     ]);
+  }
+
+  //Enviar mail a alumno
+  public function enviarMailNotificacion($pasantia) {
+    $user = User::where('idUsuario', $pasantia->idAlumno)->first();
+    Mail::to($user->email)->send(new InfoAlumno($pasantia, $user));
   }
 
   /*
@@ -145,6 +152,7 @@ class ListadoInscripcionController extends Controller
       
       if ($pasantia->isDirty()) {
         $pasantia->save();
+        self::enviarMailNotificacion($pasantia);
         return redirect('admin/listadoInscripcion/' . $id . '/edit')->with('success', 'Paso 2 editado exitosamente');
       } else {
         return redirect('admin/listadoInscripcion/' . $id . '/edit');
@@ -166,6 +174,7 @@ class ListadoInscripcionController extends Controller
 		  $pasantia->correoJefe = $request->email;
       if ($pasantia->isDirty()) {
         $pasantia->save();
+        self::enviarMailNotificacion($pasantia);
         return redirect('admin/listadoInscripcion/' . $id . '/edit')->with('success', 'Paso 3 editado exitosamente');
       } else {
         return redirect('admin/listadoInscripcion/' . $id . '/edit');
@@ -192,6 +201,7 @@ class ListadoInscripcionController extends Controller
 
       if ($pasantia->isDirty()) {
         $pasantia->save();
+        self::enviarMailNotificacion($pasantia);
         return redirect('admin/listadoInscripcion/' . $id . '/edit')->with('success', 'Paso 2 eliminado exitosamente');
       } else {
         return redirect('admin/listadoInscripcion/' . $id . '/edit');
@@ -210,6 +220,7 @@ class ListadoInscripcionController extends Controller
       $pasantia->correoJefe = null;
       if ($pasantia->isDirty()) {
         $pasantia->save();
+        self::enviarMailNotificacion($pasantia);
         return redirect('admin/listadoInscripcion/' . $id . '/edit')->with('success', 'Paso 3 eliminado exitosamente');
       } else {
         return redirect('admin/listadoInscripcion/' . $id . '/edit');
@@ -218,11 +229,6 @@ class ListadoInscripcionController extends Controller
       return redirect('index');
     }
   }
-
-  // public function enviarMailNotificacion($pasantia) {
-
-  // }
-
 
   /*
   * Elimina la pasantia seleccionada por el administrador

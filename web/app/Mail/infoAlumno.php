@@ -11,18 +11,16 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class confTutor extends Mailable
+class infoAlumno extends Mailable
 {
   use Queueable, SerializesModels;
 
   public $pasantia;
   public $user;
-  public $empresa;
-  public function __construct(Pasantia $pasantia, User $user, Empresa $empresa)
+  public function __construct(Pasantia $pasantia, User $user)
   {
     $this->user = $user;
     $this->pasantia = $pasantia;
-    $this->empresa = $empresa;
   }
   public function build()
   {
