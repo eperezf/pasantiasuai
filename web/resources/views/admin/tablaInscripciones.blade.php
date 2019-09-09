@@ -109,75 +109,42 @@
 			<td>{{$datosPasantia['paisPasantia']}}</td>
 
 			<!-- Paso 0 -->
-			<td>
-				@if ($datosPasantia['statusPaso0Pasantia'] == 2) Reglamento aceptado
-				@elseif ($datosPasantia['statusPaso0Pasantia'] != 2) Reglamento aún no aceptado
-				@else @endif
-			</td>
+			<td>{{$datosPasantia['statusPaso0Pasantia']}}</td>
 			<!-- Paso 1 -->
-			<td>
-				@if ($datosPasantia['statusPaso1Pasantia'] == 2) Cumple requerimientos académicos
-				@elseif ($datosPasantia['statusPaso1Pasantia'] != 2) No cumple todos los requerimientos académicos
-				@else @endif
-			</td>
+			<td>{{$datosPasantia['statusPaso1Pasantia']}}</td>
 			<!-- Paso 2 -->
-			<td>
-				@if ($datosPasantia['statusPaso2Pasantia'] == 1) Datos incompletos
-				@elseif ($datosPasantia['statusPaso2Pasantia'] == 2) Completado y validado
-				@elseif ($datosPasantia['statusPaso2Pasantia'] == 3) Pendiente por pariente
-				@else No ha iniciado el paso 2 @endif
-			</td>
+			<td>{{$datosPasantia['statusPaso2Pasantia']}}</td>
 			<!-- Paso 3 -->
-			<td>
-				@if ($datosPasantia['statusPaso3Pasantia'] == 0) No realizado
-				@elseif ($datosPasantia['statusPaso3Pasantia'] == 1) Datos incompletos
-				@elseif ($datosPasantia['statusPaso3Pasantia'] == 2) Correo no enviado
-				@elseif ($datosPasantia['statusPaso3Pasantia'] == 3) Correo no confirmado
-				@elseif ($datosPasantia['statusPaso3Pasantia'] == 4) Correo confirmado
-				@else @endif
-			</td>
+			<td>{{$datosPasantia['statusPaso3Pasantia']}}</td>
 			<!-- Nombre proyecto -->
 			<td>{{$datosPasantia['nombreProyecto']}}</td>
 			<!-- Paso 4 -->
 			<td>
-				@if ($datosPasantia['statusPaso4Pasantia'] == 0) No realizado
-				@elseif ($datosPasantia['statusPaso4Pasantia'] == 1) Datos incompletos
-				@elseif ($datosPasantia['statusPaso4Pasantia'] == 2) No validado
-				@elseif ($datosPasantia['statusPaso4Pasantia'] == 3) Validado
-				@elseif ($datosPasantia['statusPaso4Pasantia'] == 4) Rechazado
-				@else @endif
-
-				@if($downloadExcel == TRUE)
-				@elseif ($downloadExcel == FALSE)
-				<!-- boton validacion de paso 4 -->
-				@if ($datosPasantia['statusPaso4Pasantia'] == 2)
-				<a class="btn btn-primary" href="{{route('listadoInscripcion.validarProyecto',
-							['id' => $datosPasantia['idPasantia'],
-							'accion' => 'Validar'])}}" role="button">
-					Validar proyecto
-				</a>
-				<a class="btn btn-primary" href="{{route('listadoInscripcion.validarProyecto',
-							['id' => $datosPasantia['idPasantia'],
-							'accion' => 'Rechazar'])}}" role="button">
-					Rechazar proyecto
-				</a>
-				@else @endif
-				<!-- endif de botones de accion hacia el paso 4 de la pasantia -->
-				@else @endif
-				<!-- endif de "ignorar boton por descarga hacia excel" -->
+				{{$datosPasantia['statusPaso4Pasantia']}}
+					@if($downloadExcel == TRUE)
+					@elseif ($downloadExcel == FALSE)
+						<!-- boton validacion de paso 4 -->
+						@if ($datosPasantia['statusPaso4Pasantia'] == 'No validado')
+							<a class="btn btn-primary" href="{{route('listadoInscripcion.validarProyecto',
+										['id' => $datosPasantia['idPasantia'],
+										'accion' => 'Validar'])}}" role="button">
+								Validar proyecto
+							</a>
+							<a class="btn btn-primary" href="{{route('listadoInscripcion.validarProyecto',
+										['id' => $datosPasantia['idPasantia'],
+										'accion' => 'Rechazar'])}}" role="button">
+								Rechazar proyecto
+							</a>
+						@endif
+						<!-- endif de botones de accion hacia el paso 4 de la pasantia -->
+					@endif
+					<!-- endif de "ignorar boton por descarga hacia excel" -->
 			</td>
 			<!-- Status General -->
-			<td>
-				@if ($datosPasantia['statusGeneralPasantia'] == 0) Pasantía sin validar
-				@elseif ($datosPasantia['statusGeneralPasantia'] == 1) Pasantia validada
-				@else @endif
-			</td>
+			<td>{{$datosPasantia['statusGeneralPasantia']}}</td>
 
-
-			<td class="@if ($datosPasantia['statusPaso2Pasantia'] == 3) table-danger @else @endif">
-				@if ($datosPasantia['statusPaso2Pasantia'] == 3)
-				{{$datosPasantia['rolParientePasantia']}}
-				@elseif ($datosPasantia['statusPaso2Pasantia'] == 2 && $datosPasantia['parienteEmpresaPasantia'] == 1)
+			<td class="@if ($datosPasantia['statusPaso2Pasantia'] == 'Pendiente por pariente') table-danger @endif">
+				@if ($datosPasantia['rolParientePasantia'] != null)
 				{{$datosPasantia['rolParientePasantia']}}
 				@else Sin Pariente @endif
 				<!-- boton solo si tiene pariente -->
@@ -189,12 +156,12 @@
 				<a class="btn btn-primary" href="{{route('listadoInscripcion.validarPariente',
 							['id' => $datosPasantia['idPasantia'],
 							'statusPaso2' => $datosPasantia['statusPaso2Pasantia']])}}" role="button">
-					@if ($datosPasantia['statusPaso2Pasantia'] == 2) Invalidar pariente
+					@if ($datosPasantia['statusPaso2Pasantia'] == 'Completado y validado') Invalidar pariente
 					@else Validar pariente @endif
 				</a>
-				@else @endif
+				@endif
 				<!-- endif de "ignorar boton por descarga hacia excel" -->
-				@else @endif
+				@endif
 				<!-- endif de "boton solo si tiene pariente" -->
 			</td>
 
@@ -220,7 +187,7 @@
 				<a role="button" href="{{route('listadoInscripcion.validarTodo',
 						['nombresUsuario' => $datosPasantia['nombresUsuario'],
 						'idPasantia' => $datosPasantia['idPasantia']])}}" class="btn btn-primary
-						@if ($datosPasantia['statusGeneralPasantia'] == 0 && $datosPasantia['statusEmpresa'] == 1)
+						@if ($datosPasantia['statusGeneralPasantia'] == 'Pasantía sin validar' || $datosPasantia['statusPaso2Pasantia'] == 'Pendiente por pariente')
 						@else disabled @endif mb-2">Validar todo</a>
 
 				<a class="btn btn-warning mb-2" href="{{route('listadoInscripcion.edit', $datosPasantia['idPasantia'])}}"
