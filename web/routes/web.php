@@ -22,6 +22,14 @@ Route::resource('/admin/estadisticas', 'GraficasController')->middleware('auth')
 Route::resource('/admin/importarlista', 'ListadoController')->middleware('auth');
 
 // Rutas de Listado Inscripcion
+// Ruta de Destroy Paso 2
+Route::post('/admin/listadoInscripcion/{id}/edit/paso2D/', 'ListadoInscripcionController@destroyPaso2')->name('listadoInscripcion.destroyPaso2')->middleware('auth');
+// Ruta de Destroy Paso 3
+Route::post('/admin/listadoInscripcion/{id}/edit/paso3D/', 'ListadoInscripcionController@destroyPaso3')->name('listadoInscripcion.destroyPaso3')->middleware('auth');
+// Ruta de Update Paso 2
+Route::post('/admin/listadoInscripcion/{id}/edit/paso2E/', 'ListadoInscripcionController@updatePaso2')->name('listadoInscripcion.updatePaso2')->middleware('auth');
+//Ruta de Update Paso 3
+Route::post('/admin/listadoInscripcion/{id}/edit/paso3E/', 'ListadoInscripcionController@updatePaso3')->name('listadoInscripcion.updatePaso3')->middleware('auth');
 // Ruta de editado de empresa unicamente
 Route::get('/admin/listadoInscripcion/{id}', 'EmpresaController@edit')->middleware('auth');
 // Ruta de CRUD Listado Inscripcion
@@ -34,6 +42,9 @@ Route::get('/admin/listadoInscripcion/{id}/statusPaso2/{statusPaso2}', 'ListadoI
 Route::get('/admin/listadoInscripcion/{id}/accion/{accion}', 'ListadoInscripcionController@validarProyecto')->name('listadoInscripcion.validarProyecto')->middleware('auth');
 // Ruta de validar todo
 Route::get('/admin/listadoInscripcion/{nombresUsuario}/idPasantia/{idPasantia}', 'ListadoInscripcionController@validarTodo')->name('listadoInscripcion.validarTodo')->middleware('auth');
+
+
+
 
 Route::resource('/perfil', 'PerfilController')->middleware('auth');
 
