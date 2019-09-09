@@ -8,16 +8,7 @@
     <div class="col-12">
       <div class="my-3 p-3">
         @if(Auth::user()->rol >= 4)
-        <!-- 
-          ***Arreglo de la muerte***
-          $datos[i] recibe el primer nivel del arreglo: 'pasantias', 'usuarios' y 'empresas'
-          
-          array_values($datos[i])[i]) recibe el segundo nivel, dado que solo hay 1 por cada uno de los primeros, siempre  es 0, es un arreglo de tamaño 1
-          
-          array_values(array_values($datos[i])[i])) adquiere el arreglo que contiene los valores
-          
-          array_values(array_values($datos[i])[i])[i]) es finalmente el valor 
-        -->
+
         <div class="row">
           <div class="col-sm-6 my-3">
             <div class="card">
@@ -25,9 +16,9 @@
                 <h5 class="card-title text-white"> Resumen Pasantías <i class="fas fa-paste"></i></h5>
               </div>
               <div class="card-body">
-                <p class="card-text">Pasantías en santiago: {{array_values((array_values($datos[0]))[0])[0]}}</p>
-                <p class="card-text">Pasantías válidas: {{array_values((array_values($datos[0]))[0])[1]}}</p>
-                <p class="card-text">Pasantías totales: {{array_values((array_values($datos[0]))[0])[2]}}</p>
+                <p class="card-text">Pasantías en santiago: {{$estadisticas['pasantiasSantiago']}}</p>
+                <p class="card-text">Pasantías válidas: {{$estadisticas['pasantiasValidas']}}</p>
+                <p class="card-text">Pasantías totales: {{$estadisticas['pasantiasValidas']}}</p>
                 <div class="text-right">
                   <a href="/admin/listadoInscripcion" class="btn btn-primary">Ver más <i class="fas fa-arrow-right"></i></a>
                 </div>
@@ -40,9 +31,9 @@
                 <h5 class="card-title text-white"> Resumen Empresas <i class="fas fa-industry"></i></h5>
               </div>
               <div class="card-body">
-                <p class="card-text">Empresas totales: {{array_values((array_values($datos[2]))[0])[2]}}</p>
-                <p class="card-text">Empresas validas: {{array_values((array_values($datos[2]))[0])[0]}}</p>
-                <p class="card-text">Empresas no validas: {{array_values((array_values($datos[2]))[0])[1]}}</p>
+                <p class="card-text">Empresas totales: {{$estadisticas['empresasTotal']}}</p>
+                <p class="card-text">Empresas validas: {{$estadisticas['empresasValidadas']}}</p>
+                <p class="card-text">Empresas no validas: {{$estadisticas['empresasNoValidadas']}}</p>
                 <div class="text-right">
                   <a href="/empresas" class="btn btn-primary">Ver más <i class="fas fa-arrow-right"></i></a>
                 </div>
@@ -58,9 +49,9 @@
                 <h5 class="card-title text-white"> Resumen Usuarios <i class="fas fa-user-tie"></i></h5>
               </div>
               <div class="card-body">
-                <p class="card-text">Numero de pasantes: {{array_values((array_values($datos[1]))[0])[0]}}</p>
-                <p class="card-text">Numero de profesores: {{array_values((array_values($datos[1]))[0])[1]}}</p>
-                <p class="card-text">Numero de administradores: {{array_values((array_values($datos[1]))[0])[2]}}</p>
+                <p class="card-text">Numero de pasantes: {{$estadisticas['usuariosPasantes']}}</p>
+                <p class="card-text">Numero de profesores: {{$estadisticas['usuariosProfesores']}}</p>
+                <p class="card-text">Numero de administradores: {{$estadisticas['usuariosAdmin']}}</p>
                 <div class="text-right">
                   <a href="#" class="btn btn-primary disabled">Ver más <i class="fas fa-arrow-right"></i></a>
                 </div>
