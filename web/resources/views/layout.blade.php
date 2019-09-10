@@ -90,9 +90,11 @@
 					<a href="/" class="list-group-item list-group-item-action"> 
 						<i class="fa fa-home"></i> Inicio
 					</a>
+					@if(Auth::user()->rol == 1)
 					<a href="{{route('inscripcion.resumen')}}" class="list-group-item list-group-item-action">
-						<i class="fas fa-paste"></i> Pasantia
+						<i class="fas fa-paste"></i> Pasantía
 					</a>
+					@endif
 					<a href="/empresas" class="list-group-item list-group-item-action ">
 						<i class="fas fa-industry"></i> Empresas
 					</a>
@@ -100,9 +102,15 @@
 					<a href="#" class="list-group-item list-group-item-action ">
 						<i class="fas fa-chart-line"></i> Estadisticas
 					</a>
+					<a href="/admin/listadoInscripcion" class="list-group-item list-group-item-action">
+						<i class="fas fa-paste"></i> Listado pasantías
+					</a>
 					@endif
   				<a href="#" class="list-group-item list-group-item-action">
 						<i class="fas fa-balance-scale"></i> Reglamento
+					</a>
+					<a href="" class="list-group-item list-group-item-action">
+						<i class="fas fa-question"></i> Ayuda
 					</a>
 				</div>
 			</div>
