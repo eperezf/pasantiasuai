@@ -109,10 +109,9 @@ class PasantiasRepository
     return $pasantia;
   }
 
-  //Datos asociados a la pasantia
-  public function llenaDatosPasantias($pasantia, $proyecto, $empresas, $usuarios)
+  //Construccion de proyecto si no existe para mantener uniformidad de arreglo
+  public function checkProyecto($proyecto)
   {
-    $pasantia = $this->traductorPasos($pasantia);
     if ($proyecto == null) {
       $proyecto = (object) [
         'idProyecto' => null,
@@ -120,6 +119,12 @@ class PasantiasRepository
         'nombre' => 'Sin Nombre',
       ];
     }
+    return $proyecto;
+  }
+
+  //Construccion de empresa si no existe para mantener uniformidad de arreglo
+  public function checkEmpresas($empresas)
+  {
     if ($empresas == null) {
       $empresas = (object) [
         'idEmpresa' => null,
@@ -130,6 +135,15 @@ class PasantiasRepository
         'status' => 'No se ha seleccionado empresa',
       ];
     }
+    return $empresas;
+  }
+  //Datos asociados a la pasantia
+  public function llenaDatosPasantias($pasantia, $proyecto, $empresas, $usuarios)
+  {
+    $pasantia = $this->traductorPasos($pasantia);
+    $proyecto = $this->checkProyecto($proyecto);
+    $empresas = $this->checkEmpresas($empresas);
+
     $pasantiaDatos = array(
       //Atributos Pasantia
       'idPasantia' => $pasantia->idPasantia,
@@ -173,9 +187,6 @@ class PasantiasRepository
     );
     return $pasantiaDatos;
   }
-
-  public function checkNull($proyecto, $empresas)
-  { }
 
   //Saca una unica pasantia y todos sus datos asociados
   public static function getPasantia($id)
