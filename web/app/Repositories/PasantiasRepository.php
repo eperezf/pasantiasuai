@@ -13,8 +13,8 @@ class PasantiasRepository
   //Arreglo que contendra los datos de la pasantia
   private static $datosPasantias = [];
 
-  //Datos asociados a la pasantia
-  public function llenaDatosPasantias($pasantia, $proyecto, $empresas, $usuarios)
+  //Traductor de pasos a texto
+  public function traductorPasos($pasantia)
   {
     /*
     PASO 0
@@ -105,6 +105,14 @@ class PasantiasRepository
     } elseif ($pasantia->statusGeneral == 1) {
       $pasantia->statusGeneral = 'Pasantia validada';
     }
+
+    return $pasantia;
+  }
+
+  //Datos asociados a la pasantia
+  public function llenaDatosPasantias($pasantia, $proyecto, $empresas, $usuarios)
+  {
+    $pasantia = $this->traductorPasos($pasantia);
 
     $pasantiaDatos = array(
       //Atributos Pasantia
