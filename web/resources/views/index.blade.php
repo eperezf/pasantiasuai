@@ -90,22 +90,36 @@
         data-content="
         @if ($pasantia == null)
         Aún no ha empezado el proceso de su pasantía.
-        @elseif ($pasantia != null && $pasantia->statusPaso0 != 2)
+        @elseif ($pasantia->statusPaso0 != 2)
         Aún no ha aceptado el reglamento de pasantías.
-        @elseif ($pasantia != null && $pasantia->statusPaso1 != 2 && $pasantia->statusPaso0 == 2)
+        @elseif ($pasantia->statusPaso1 != 2)
         Uno o más requerimientos académicos de su pasantía están incompletos.
-        @elseif ($pasantia != null && $pasantia->statusPaso2 == 0 && $pasantia->statusPaso1 == 2)
+        @elseif ($pasantia->statusPaso2 == 0)
         Aún no ha iniciado el paso 2 de su pasantía.
-        @elseif ($pasantia != null && $pasantia->statusPaso2 == 1)
+        @elseif ($pasantia->statusPaso2 == 1)
         Faltan uno o más datos del paso 2.
-        @elseif ($pasantia != null && $pasantia->statusPaso2 == 3)
+        @elseif ($pasantia->statusPaso2 == 3)
         Su pasantía está en espera de validación por familiar en la empresa.
-        @elseif ($pasantia != null && $pasantia->statusPaso3 == 0)
-        El profesor tutor de su pasantía ha confirmado el mail.
-        @elseif ($pasantia != null && $pasantia->statusPaso3 != 0 && $pasantia->statusPaso2 == 2)
-        El proceso del profesor tutor de su pasantía aún no ha concluído, vea Mi profesor para más información.
-        @elseif ($pasantia != null && $pasantia->statusPaso4 == 0 && $pasantia->statusPaso3 == 4)
-        Aún no ha empezado la inscripción de su pasantía.
+        @elseif ($pasantia->statusPaso3 == 0)
+        Aún no ha iniciado el paso 3 de su pasantía.
+        @elseif ($pasantia->statusPaso3 == 1)
+        Faltan uno o más datos del paso 3.
+        @elseif ($pasantia->statusPaso3 == 2)
+        El correo aún no ha sido enviado.
+        @elseif ($pasantia->statusPaso3 == 3)
+        El correo aún no ha sido confirmado.
+        @elseif ($pasantia->statusGeneral == 0)
+        Su pasantia aún no ha sido validada.
+        @elseif ($pasantia->statusPaso4 == 0)
+        Usted puede ahora iniciar el paso 4 de su pasantía.
+        @elseif ($pasantia->statusPaso4 == 1)
+        Faltan uno o más datos del paso 4.
+        @elseif ($pasantia->statusPaso4 == 2)
+        El paso 4 de su pasantia aun no ha sido validado.
+        @elseif ($pasantia->statusPaso4 == 3)
+        El paso 4 de su pasantia ha sido validado.
+        @elseif ($pasantia->statusPaso4 == 4)
+        El paso 4 de su pasantia ha sido rechazado.
         @else
         Ha ocurrido un error, favor de intentar nuevamente.
         @endif"> 
