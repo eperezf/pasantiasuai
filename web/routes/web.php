@@ -77,3 +77,7 @@ Route::get('/inscripcion/certificado', 'PasantiaController@descargarCert')->name
 Route::get('/confirmarTutor/{id}', 'PasantiaController@confirmarTutor')->name('confTutor');
 
 Route::delete('/inscripcion/destroy/{id}','PasantiaController@destroy')->name('inscripcion.destroy')->middleware('auth');
+
+Route::post('evaluacion/{id}','EvalTutorController@save')->name('evalTutor.save');
+Route::get('evaluacion/{id}', 'EvalTutorController@show')->name('evalTutor.show');
+Route::get('eval/test', 'EvalTutorController@test');
