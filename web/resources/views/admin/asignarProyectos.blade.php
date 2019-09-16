@@ -23,7 +23,7 @@
     <h3>Editar manualmente</h3>
     <h4>Profesores:</h4>
     @foreach ($profesores as $profesor)
-    <a href="/admin/asignarProyectos/{{$profesor->idUsuario}}" class="btn btn-primary mb-2" role="button" aria-pressed="true">{{ $profesor->nombres }} {{$profesor->apellidoPaterno}} <span class="badge badge-light">{{$profesor->Proyectos}}</span></a>
+    <a href="/admin/asignarProyectos/{{$profesor->idUsuario}}" class="btn @if($profesor->rol == 5) btn-warning @else btn-primary @endif mb-2" role="button" aria-pressed="true">{{ $profesor->nombres }} {{$profesor->apellidoPaterno}} <span class="badge badge-light">{{$profesor->Proyectos}}</span></a>
     </br>
     @endforeach
     <p class="small">Si el profesor no aparece en la lista, este debe inicar sesión en la plataforma para aparecer</p>

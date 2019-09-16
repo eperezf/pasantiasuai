@@ -114,7 +114,7 @@
 					</a>
 					@endif
 					@if(Auth::user()->rol == 3 || Auth::user()->rol == 5)
-					<a href="#" class="list-group-item list-group-item-action">
+					<a href="{{route('profesor.index')}}" class="list-group-item list-group-item-action">
 						<i class="fas fa-chart-line"></i> Mis Alumnos
 					</a>
 					@endif
