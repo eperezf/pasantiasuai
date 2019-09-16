@@ -125,16 +125,15 @@
 					@elseif ($downloadExcel == FALSE)
 						<!-- boton validacion de paso 4 -->
 						@if ($datosPasantia['statusPaso4Pasantia'] == 'No validado')
-							<a class="btn btn-primary" href="{{route('listadoInscripcion.validarProyecto',
-										['id' => $datosPasantia['idPasantia'],
-										'accion' => 'Validar'])}}" role="button">
-								Validar proyecto
-							</a>
-							<a class="btn btn-primary" href="{{route('listadoInscripcion.validarProyecto',
-										['id' => $datosPasantia['idPasantia'],
-										'accion' => 'Rechazar'])}}" role="button">
-								Rechazar proyecto
-							</a>
+						<div class="dropdown">
+						  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						    Acciones
+						  </button>
+						  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+						    <a class="dropdown-item" href="{{route('listadoInscripcion.validarProyecto', ['id' => $datosPasantia['idPasantia'], 'accion' => 'Validar'])}}">Validar</a>
+						    <a class="dropdown-item" href="{{route('listadoInscripcion.validarProyecto', ['id' => $datosPasantia['idPasantia'], 'accion' => 'Rechazar'])}}">Rechazar</a>
+						  </div>
+						</div>
 						@endif
 						<!-- endif de botones de accion hacia el paso 4 de la pasantia -->
 					@endif

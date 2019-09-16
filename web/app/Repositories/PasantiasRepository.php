@@ -13,8 +13,8 @@ class PasantiasRepository
   //Arreglo que contendra los datos de la pasantia
   private static $datosPasantias = [];
 
-  //Datos asociados a la pasantia
-  public function llenaDatosPasantias($pasantia, $proyecto, $empresas, $usuarios)
+  //Traductor de pasos a texto
+  public function traductorPasos($pasantia)
   {
     /*
     PASO 0
@@ -106,6 +106,44 @@ class PasantiasRepository
       $pasantia->statusGeneral = 'Pasantia validada';
     }
 
+    return $pasantia;
+  }
+
+  //Construccion de proyecto si no existe para mantener uniformidad de arreglo
+  public function checkProyecto($proyecto)
+  {
+    if ($proyecto == null) {
+      $proyecto = (object) [
+        'idProyecto' => null,
+        'status' => 0,
+        'nombre' => 'Sin Nombre',
+      ];
+    }
+    return $proyecto;
+  }
+
+  //Construccion de empresa si no existe para mantener uniformidad de arreglo
+  public function checkEmpresas($empresas)
+  {
+    if ($empresas == null) {
+      $empresas = (object) [
+        'idEmpresa' => null,
+        'nombre' => 'No se ha seleccionado empresa',
+        'rubro' => 'No se ha seleccionado empresa',
+        'urlWeb' => '',
+        'correoContacto' => 'No se ha seleccionado empresa',
+        'status' => 'No se ha seleccionado empresa',
+      ];
+    }
+    return $empresas;
+  }
+  //Datos asociados a la pasantia
+  public function llenaDatosPasantias($pasantia, $proyecto, $empresas, $usuarios)
+  {
+    $pasantia = $this->traductorPasos($pasantia);
+    $proyecto = $this->checkProyecto($proyecto);
+    $empresas = $this->checkEmpresas($empresas);
+
     $pasantiaDatos = array(
       //Atributos Pasantia
       'idPasantia' => $pasantia->idPasantia,
@@ -157,23 +195,7 @@ class PasantiasRepository
     $proyecto = Proyecto::where('idPasantia', $id)->first();
     $empresas = Empresa::where('idEmpresa', $pasantia->idEmpresa)->first();
     $usuarios = User::where('idUsuario', $pasantia->idAlumno)->first();
-    if ($proyecto == null) {
-      $proyecto = (object) [
-        'idProyecto' => null,
-        'status' => 0,
-        'nombre' => 'Sin Nombre',
-      ];
-    }
-    if ($empresas == null) {
-      $empresas = (object) [
-        'idEmpresa' => null,
-        'nombre' => 'No se ha seleccionado empresa',
-        'rubro' => 'No se ha seleccionado empresa',
-        'urlWeb' => 'No se ha seleccionado empresa',
-        'correoContacto' => 'No se ha seleccionado empresa',
-        'status' => 'No se ha seleccionado empresa',
-      ];
-    }
+
     self::$datosPasantias = (new self)->llenaDatosPasantias($pasantia, $proyecto, $empresas, $usuarios);
     return self::$datosPasantias;
   }
@@ -188,23 +210,6 @@ class PasantiasRepository
       $empresas = Empresa::where('idEmpresa', $pasantia->idEmpresa)->first();
       $usuarios = User::where('idUsuario', $pasantia->idAlumno)->first();
 
-      if ($proyecto == null) {
-        $proyecto = (object) [
-          'idProyecto' => null,
-          'status' => 0,
-          'nombre' => 'Sin Nombre',
-        ];
-      }
-      if ($empresas == null) {
-        $empresas = (object) [
-          'idEmpresa' => null,
-          'nombre' => 'No se ha seleccionado empresa',
-          'rubro' => 'No se ha seleccionado empresa',
-          'urlWeb' => 'No se ha seleccionado empresa',
-          'correoContacto' => 'No se ha seleccionado empresa',
-          'status' => 'No se ha seleccionado empresa',
-        ];
-      }
       //nombre de valor -> atributoTabla
       //Cada $datos[i] contiene un arreglo con los datos de la pasantia i
       array_push(self::$datosPasantias, (new self)->llenaDatosPasantias($pasantia, $proyecto, $empresas, $usuarios));
