@@ -7,6 +7,7 @@ use App\Proyecto;
 use App\Pasantia;
 use App\Empresa;
 use App\User;
+use App\EvalTutor;
 use Auth;
 
 class ProfesorController extends Controller
@@ -22,9 +23,5 @@ class ProfesorController extends Controller
       $proyecto->empresa = $empresa;
     }
     return view('profesor.index', compact('proyectos'));
-  }
-
-  public function enviarEvaluacion(){
-    
   }
 }

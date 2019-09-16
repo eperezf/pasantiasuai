@@ -32,7 +32,7 @@ class CreateEvalTutorTable extends Migration
 						$table->timestamps();
             $table->unique("idEncuesta");
 						$table->index("idPasantia");
-						$table->foreign("idPasantia")->references("idPasantia")->on("pasantia");
+						$table->foreign("idPasantia")->references("idProyecto")->on("proyecto");
 
         });
     }

@@ -34,8 +34,8 @@
                   Acciones
                 </button>
                 <div class="dropdown-menu">
-                  <a class="dropdown-item" href="#">Enviar evaluación de desempeño a supervisor</a>
-                  <a class="dropdown-item" href="#">Revisar evaluaciones de desempeño</a>
+                  <a class="dropdown-item" href="/evaluacion/enviar/{{$proyecto->alumno->idUsuario}}">Enviar evaluación de desempeño a supervisor</a>
+                  <a class="dropdown-item" href="/evaluacion/listado/{{$proyecto->idProyecto}}">Revisar evaluaciones de desempeño</a>
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="#">Revisar datos del proyecto</a>
                   <a class="dropdown-item" href="#">Enviar correo al alumno</a>

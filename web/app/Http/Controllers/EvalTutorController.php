@@ -10,16 +10,23 @@ use App\User;
 use App\AuthUsers;
 use App\Pasantia;
 use App\Empresa;
+use App\Proyecto;
 use App\EvalTutor;
 use Auth;
 
 class EvalTutorController extends Controller{
 	public function show($id){
 		$evaltutor = EvalTutor::where('idEncuesta',$id)->first();
+		$proyecto = Proyecto::where('idProyecto', $evaltutor->idProyecto)->first();
+		$pasantia = Pasantia::where('idPasantia', $proyecto->idPasantia)->first();
+		$alumno = User::where('idUsuario', $pasantia->idAlumno)->first();
 		if(!$evaltutor->certificadoTutor)
 		{
-			return view('evalTutor.formulario',['id' => $id]);
-		}	
+			return view('evalTutor.formulario',[
+				'id' => $id,
+				'alumno'=>$alumno
+			]);
+		}
 	}
 
 	public function save(Request $request){
@@ -45,30 +52,26 @@ class EvalTutorController extends Controller{
 		return view("evalTutor.postformulario");
 	}
 
-	public function create(){
-		$userId = Auth::id();
-		$pasantia = Pasantia::where('idAlumno', $userId)->first();
-		$empresa = Empresa::find($pasantia->idEmpresa);
-
-		$evalTutor = new EvalTutor;
-		$evalTutor->idEncuesta = $string = str_random(10);
-		$evalTutor->idPasantia = $pasantia->idPasantia;
-		$evalTutor->save();
-
-
-		Mail::to($pasantia->correoJefe)->send(new ConfTutor($pasantia, $user, $empresa));
-	}
-
-	public function test(){
-		$userId = Auth::id();
-		$user = Auth::user();
-		$pasantia = Pasantia::where('idAlumno', $userId)->first();
+	public function enviar($idAlumno){
+		$user = User::where('idUsuario', $idAlumno)->first();
+		$pasantia = Pasantia::where('idAlumno', $idAlumno)->first();
+		$proyecto = Proyecto::where('idPasantia', $pasantia->idPasantia)->first();
 		$empresa = Empresa::where('idEmpresa', $pasantia->idEmpresa)->first();
 		$evalTutor = new EvalTutor;
 		$evalTutor->idEncuesta = $string = str_random(10);
-		$evalTutor->idPasantia = $pasantia->idPasantia;
+		$evalTutor->idProyecto = $proyecto->idProyecto;
 		$evalTutor->save();
+
 		Mail::to($pasantia->correoJefe)->send(new EvalTutorMail($pasantia, $user, $empresa, $evalTutor));
 		return "Correo enviado a " . $pasantia->correoJefe;
+	}
+
+	public function listado($idProyecto){
+    $proyecto = Proyecto::where('idProyecto', $idProyecto)->first();
+    $evaluaciones = EvalTutor::where('idProyecto', $proyecto->idProyecto)->first();
+
+		$pasantia = Pasantia::where('idPasantia', $proyecto->idPasantia)->first();
+		$alumno = User::where('idUsuario', $pasantia->idAlumno)->first();
+    return view('evalTutor.listado', compact('evaluaciones'), compact('alumno'));
 	}
 }
