@@ -18,9 +18,17 @@ Route::resource('/', 'IndexController')->middleware('auth');
 
 Route::resource('/empresas', 'EmpresaController')->middleware('auth');
 
-Route::resource('/admin/estadisticas', 'GraficasController')->middleware('auth');
-Route::resource('/admin/importarlista', 'ListadoController')->middleware('auth');
+
+//Rutas de administración
+//Index
 Route::get('/admin', 'AdminController@index')->name('admin.index')->middleware('auth');
+//Estadísticas de pasantías (TODO)
+Route::resource('/admin/estadisticas', 'GraficasController')->middleware('auth');
+//Importar listado de alumnos autorizados para usar la plataforma
+Route::resource('/admin/importarlista', 'ListadoController')->middleware('auth');
+//Asignar alumnos a los profesores correspondientes
+Route::get('/admin/asignarProyectos', 'AdminController@asignarProyectosView')->name('admin.asignarProyectos')->middleware('auth');
+Route::get('/admin/asignarProyectos/{id}', 'AdminController@asignarProyectosManual')->middleware('auth');
 
 // Rutas de Listado Inscripcion
 // Ruta de Destroy Paso 2

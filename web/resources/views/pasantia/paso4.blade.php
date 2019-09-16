@@ -24,14 +24,8 @@
 			    <input class="form-control" id="area" name="area" placeholder="Area del proyecto" value="{{$proyecto->area}}">
 			  </div>
 				<div class="form-group">
-			    <label for="disciplina">Disciplina de ingeniería</label>
-			    <select class="form-control" id="disciplina" name="disciplina" required>
-			      <option value="1" @if($proyecto->disciplina == '1') selected @endif>1</option>
-			      <option value="2" @if($proyecto->disciplina == '2') selected @endif>2</option>
-			      <option value="3" @if($proyecto->disciplina == '3') selected @endif>3</option>
-			      <option value="4" @if($proyecto->disciplina == '4') selected @endif>4</option>
-			      <option value="5" @if($proyecto->disciplina == '5') selected @endif>5</option>
-			    </select>
+					<label for="disciplina">Disciplina</label>
+			    <input class="form-control" id="disciplina" name="disciplina" placeholder="Disciplina" value="{{$proyecto->disciplina}}">
 			  </div>
 				<div class="form-group">
 			    <label for="problematica">Visión</label>
