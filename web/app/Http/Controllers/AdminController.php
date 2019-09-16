@@ -31,7 +31,7 @@ class AdminController extends Controller
   }
 
   public function asignarProyectosExcel(){
-
+    // TODO: Template excel y sistema de guardado
   }
 
   public function asignarProyectosManual($id){
