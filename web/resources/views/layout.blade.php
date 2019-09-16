@@ -92,7 +92,7 @@
 					</a>
 					@if(Auth::user()->rol <= 2 || Auth::user()->rol == 5)
 					<a href="{{route('inscripcion.resumen')}}" class="list-group-item list-group-item-action">
-						<i class="fas fa-paste"></i> Pasantia
+						<i class="fas fa-paste"></i> Pasantía
 					</a>
 					@endif
 					<a href="/empresas" class="list-group-item list-group-item-action ">
@@ -101,6 +101,9 @@
 					@if(Auth::user()->rol >= 4)
 					<a href="/admin/estadisticas" class="list-group-item list-group-item-action ">
 						<i class="fas fa-chart-line"></i> Estadisticas
+					</a>
+					<a href="/admin/listadoInscripcion" class="list-group-item list-group-item-action">
+						<i class="fas fa-paste"></i> Listado pasantías
 					</a>
 					@endif
 					@if(Auth::user()->rol >= 4)
