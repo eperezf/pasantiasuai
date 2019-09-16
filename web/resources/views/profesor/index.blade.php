@@ -44,11 +44,11 @@
                   Acciones
                 </button>
                 <div class="dropdown-menu">
-                  <a class="dropdown-item" href="/evaluacion/enviar/{{$proyecto->alumno->idUsuario}}">Enviar evaluación de desempeño a supervisor</a>
+                  <a class="dropdown-item" href="/evaluacion/enviar/{{$proyecto->alumno->idUsuario}}"><i class="fas fa-envelope"></i> Enviar evaluación de desempeño a supervisor</a>
                   <a class="dropdown-item" href="/evaluacion/listado/{{$proyecto->idProyecto}}">Revisar evaluaciones de desempeño</a>
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="#">Revisar datos del proyecto</a>
-                  <a class="dropdown-item" href="#">Enviar correo al alumno</a>
+                  <a class="dropdown-item" href="mailto:{{$proyecto->alumno->email}}">Enviar correo al alumno</a>
                 </div>
               </div>
             </td>

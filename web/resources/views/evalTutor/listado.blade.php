@@ -34,8 +34,14 @@
 			  <tbody>
 					@foreach($evaluaciones as $evaluacion)
 			    <tr>
-            <td>{{$evaluacion->created_at}}</td>
-            <td>{{$evaluacion->certificadoTutor}}</td>
+            <td>
+              <p class="mb-0">{{$evaluacion->created_at_parsed}}</p>
+              <p class="mb-0"><span class="badge badge-pill @if($evaluacion->hace_dias >= 7 && $evaluacion->certificadoTutor == 0)badge-warning @else badge-success @endif">Hace {{$evaluacion->hace_dias}} días</span></p>
+            </td>
+            @if($evaluacion->certificadoTutor == 1)<td class="table-success"><i class="fas fa-check"></i></td>
+            @else <td class="table-warning"><i class="fas fa-times"></i></td>
+            @endif
+
             <td>{{$evaluacion->promedio}}</td>
             <td>
               <div class="btn-group dropleft">

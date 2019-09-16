@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Mail\EvalTutorMail;
 use Illuminate\Support\Facades\Mail;
+use Carbon\Carbon;
 use App\User;
 use App\AuthUsers;
 use App\Pasantia;
@@ -57,6 +58,11 @@ class EvalTutorController extends Controller{
 		$pasantia = Pasantia::where('idAlumno', $idAlumno)->first();
 		$proyecto = Proyecto::where('idPasantia', $pasantia->idPasantia)->first();
 		$empresa = Empresa::where('idEmpresa', $pasantia->idEmpresa)->first();
+		$evaluacionPendiente = EvalTutor::where('idProyecto', $proyecto->idProyecto)->where('certificadoTutor', 0)->first();
+		if ($evaluacionPendiente){
+			Mail::to($pasantia->correoJefe)->send(new EvalTutorMail($pasantia, $user, $empresa, $evaluacionPendiente));
+			return redirect('/profesor')->with('success', 'Evaluación pendiente reenviada con éxito');
+		}
 		$evalTutor = new EvalTutor;
 		$evalTutor->idEncuesta = $string = str_random(10);
 		$evalTutor->idProyecto = $proyecto->idProyecto;
@@ -69,6 +75,12 @@ class EvalTutorController extends Controller{
 	public function listado($idProyecto){
     $proyecto = Proyecto::where('idProyecto', $idProyecto)->first();
     $evaluaciones = EvalTutor::where('idProyecto', $proyecto->idProyecto)->get();
+		foreach ($evaluaciones as $evaluacion) {
+			$carbon = Carbon::parse($evaluacion->created_at)->timezone('America/Santiago');
+			$now = Carbon::now();
+			$evaluacion->created_at_parsed = $carbon->format('d/m/Y H:m:s');
+			$evaluacion->hace_dias = $carbon->diffInDays($now);
+		}
 		$pasantia = Pasantia::where('idPasantia', $proyecto->idPasantia)->first();
 		$alumno = User::where('idUsuario', $pasantia->idAlumno)->first();
     return view('evalTutor.listado', compact('evaluaciones'), compact('alumno'));
