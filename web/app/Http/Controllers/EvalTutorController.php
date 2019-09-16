@@ -16,6 +16,7 @@ use App\EvalTutor;
 use Auth;
 
 class EvalTutorController extends Controller{
+	
 	public function show($id){
 		$evaltutor = EvalTutor::where('idEncuesta',$id)->first();
 		$proyecto = Proyecto::where('idProyecto', $evaltutor->idProyecto)->first();
@@ -78,7 +79,7 @@ class EvalTutorController extends Controller{
 		foreach ($evaluaciones as $evaluacion) {
 			$carbon = Carbon::parse($evaluacion->created_at)->timezone('America/Santiago');
 			$now = Carbon::now();
-			$evaluacion->created_at_parsed = $carbon->format('d/m/Y H:m:s');
+			$evaluacion->created_at_parsed = $carbon->format('d/m/Y H:i');
 			$evaluacion->hace_dias = $carbon->diffInDays($now);
 		}
 		$pasantia = Pasantia::where('idPasantia', $proyecto->idPasantia)->first();

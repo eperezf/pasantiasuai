@@ -49,7 +49,6 @@
                   Acciones
                 </button>
                 <div class="dropdown-menu">
-                  @if($evaluacion->certificadoTutor == 0)<a class="dropdown-item" href="/evaluacion/reenviar/{{$evaluacion->idEvaltutor}}">Reenviar evaluación</a>@endif
                   <a class="dropdown-item" href="/evaluacion/ver/{{$evaluacion->idEvalTutor}}">Revisar evaluación</a>
                 </div>
               </div>
