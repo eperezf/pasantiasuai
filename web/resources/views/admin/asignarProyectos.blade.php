@@ -3,6 +3,12 @@
 @section('title', 'Asignar alumnos')
 
 @section('contenido')
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item" aria-current="page"><a href="{{route('admin.index')}}">Administración</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Proyectos</li>
+  </ol>
+</nav>
 <div class="row">
   <div class="col">
     <h1>Asignar profesores a proyectos:</h1>

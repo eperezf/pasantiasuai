@@ -3,6 +3,11 @@
 @section('title', 'Administración')
 
 @section('contenido')
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">Administración</li>
+  </ol>
+</nav>
 <div class="row">
   <div class="col">
     <h1>Panel de administración</h1>

@@ -3,11 +3,18 @@
 @section('title', 'Asignar proyectos')
 
 @section('contenido')
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item" aria-current="page"><a href="{{route('admin.index')}}">Administración</a></li>
+    <li class="breadcrumb-item" aria-current="page"><a href="{{route('admin.asignarProyectos')}}">Proyectos</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Manual</li>
+  </ol>
+</nav>
 <div class="row">
   <div class="col">
     <h1>Asignación manual</h1>
     <h4>Usted está asignando los proyectos al profesor {{$profesor->nombres}} {{$profesor->apellidoPaterno}}</h4>
-    <a href="{{ route('admin.asignarProyectos') }}" class="btn btn-primary mb-2" role="button" aria-pressed="true">Volver al menu anterior</a>
+    <a href="{{route('admin.asignarProyectos')}}" class="btn btn-primary mb-2" role="button" aria-pressed="true">Volver al menu anterior</a>
 
   </div>
 </div>
