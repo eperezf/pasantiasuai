@@ -5,14 +5,14 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<title>@yield('title')</title>
-	
+
 	<!-- Highcharts -->
 	<script src="http://code.highcharts.com/stock/highstock.js"></script>
 	<script src="https://code.highcharts.com/modules/exporting.js"></script>
 	<script src="https://code.highcharts.com/modules/export-data.js"></script>
 	<script src="https://www.highcharts.com/media/com_demo/js/highslide-full.min.js"></script>
 	<script src="https://www.highcharts.com/media/com_demo/js/highslide.config.js" charset="utf-8"></script>
-	
+
 	<!-- CSS STYLES -->
 	<link href='https://fonts.googleapis.com/css?family=Titillium+Web' rel='stylesheet' type='text/css'>
 	<!-- Bootstrap CSS -->
@@ -21,7 +21,7 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 	<!-- Highcharts CSS -->
 	<link rel="stylesheet" type="text/css" href="https://www.highcharts.com/media/com_demo/css/highslide.css" />
-	
+
 	<!-- JS -->
 	<!-- Font Awesome JS -->
 	<script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
@@ -37,11 +37,11 @@
 	<!--Bootstrap Tables-->
 	<link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.14.2/dist/bootstrap-table.min.css">
 	<script src="https://unpkg.com/bootstrap-table@1.14.2/dist/bootstrap-table.min.js"></script>
-	
+
 </head>
 
 <body>
-	
+
 	<nav class="navbar navbar-expand navbar-dark bg-dark">
 		<!-- Logo SVG UAI -->
 		<a class="navbar-brand mr-1" href="https://www.uai.cl">
@@ -87,12 +87,14 @@
 			<!--	<img src="../media/images/logo-iuai.png" alt="Responsive image" class="img-fluid">-->
 				<!-- Elementos del menu sidebar -->
 				<div class="list-group my-3 p-3">
-					<a href="/" class="list-group-item list-group-item-action"> 
+					<a href="/" class="list-group-item list-group-item-action">
 						<i class="fa fa-home"></i> Inicio
 					</a>
+					@if(Auth::user()->rol <= 2 || Auth::user()->rol == 5)
 					<a href="{{route('inscripcion.resumen')}}" class="list-group-item list-group-item-action">
 						<i class="fas fa-paste"></i> Pasantia
 					</a>
+					@endif
 					<a href="/empresas" class="list-group-item list-group-item-action ">
 						<i class="fas fa-industry"></i> Empresas
 					</a>
@@ -101,9 +103,21 @@
 						<i class="fas fa-chart-line"></i> Estadisticas
 					</a>
 					@endif
+					@if(Auth::user()->rol >= 4)
+					<a href="/admin" class="list-group-item list-group-item-action ">
+						<i class="fas fa-cog"></i> Administración
+					</a>
+					@endif
+					@if(Auth::user()->rol <= 2 || Auth::user()->rol == 5)
   				<a href="http://alumnosfic.uai.cl/wp-content/uploads/2018/07/Reglamento-de-Pasant%C3%ADas-a-partir-de-2018.pdf" class="list-group-item list-group-item-action" download>
 						<i class="fas fa-balance-scale"></i> Reglamento
 					</a>
+					@endif
+					@if(Auth::user()->rol == 3 || Auth::user()->rol == 5)
+					<a href="{{route('profesor.index')}}" class="list-group-item list-group-item-action">
+						<i class="fas fa-chart-line"></i> Mis Alumnos
+					</a>
+					@endif
 				</div>
 			</div>
 			<!-- Fin Sidebar -->
@@ -112,7 +126,6 @@
 				<div class="container-fluid py-3">
 					<div class="row">
 						<div class="col-12">
-							<h1 class=""> Bienvenido a la plataforma de gestión FIC:</h1>
 							@yield('contenido')
 						</div>
 					</div>

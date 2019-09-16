@@ -3,6 +3,9 @@
 
 @section('contenido')
 <div class="container-fluid">
+	<div class="row justify-content-md-center mb-2">
+		<h1>Inscripción de pasantía</h1>
+	</div>
 	@if(session()->get('error'))
     <div class="alert alert-danger">
       {{ session()->get('error') }}

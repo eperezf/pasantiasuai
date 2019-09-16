@@ -18,8 +18,18 @@ Route::resource('/', 'IndexController')->middleware('auth');
 
 Route::resource('/empresas', 'EmpresaController')->middleware('auth');
 
+
+//Rutas de administración
+//Index
+Route::get('/admin', 'AdminController@index')->name('admin.index')->middleware('auth');
+//Estadísticas de pasantías (TODO)
 Route::resource('/admin/estadisticas', 'GraficasController')->middleware('auth');
+//Importar listado de alumnos autorizados para usar la plataforma
 Route::resource('/admin/importarlista', 'ListadoController')->middleware('auth');
+//Asignar alumnos a los profesores correspondientes
+Route::get('/admin/asignarProyectos', 'AdminController@asignarProyectosView')->name('admin.asignarProyectos')->middleware('auth');
+Route::get('/admin/asignarProyectos/{id}', 'AdminController@asignarProyectosManual')->middleware('auth');
+Route::get('/admin/asignarProyectos/{idProf}/{idProy}/{action}', 'AdminController@asignarProyectoQuick')->middleware('auth');
 
 // Rutas de Listado Inscripcion
 // Ruta de Destroy Paso 2
@@ -47,6 +57,8 @@ Route::get('/admin/listadoInscripcion/{nombresUsuario}/idPasantia/{idPasantia}',
 
 
 Route::resource('/perfil', 'PerfilController')->middleware('auth');
+
+Route::get('/profesor', 'ProfesorController@index')->name('profesor.index')->middleware('auth');
 
 
 
@@ -80,4 +92,6 @@ Route::delete('/inscripcion/destroy/{id}','PasantiaController@destroy')->name('i
 
 Route::post('evaluacion/{id}','EvalTutorController@save')->name('evalTutor.save');
 Route::get('evaluacion/{id}', 'EvalTutorController@show')->name('evalTutor.show');
-Route::get('eval/test', 'EvalTutorController@test');
+Route::get('evaluacion/enviar/{idAlumno}', 'EvalTutorController@enviar');
+Route::get('evaluacion/listado/{idProyecto}', 'EvalTutorController@listado')->name('EvalTutor.listado')->middleware('auth');
+Route::get('evaluacion/ver/{idEvaluacion}', 'EvalTutorController@ver')->middleware('auth');
