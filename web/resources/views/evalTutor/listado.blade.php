@@ -3,6 +3,12 @@
 @section('title', 'Mis alumnos')
 
 @section('contenido')
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item" aria-current="page"><a href="{{route('profesor.index')}}">Profesor</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Evaluaciones</li>
+  </ol>
+</nav>
 <div class="row">
   <div class="col">
     <h1>Listado de evaluaciones</h1>
@@ -31,7 +37,17 @@
             <td>{{$evaluacion->created_at}}</td>
             <td>{{$evaluacion->certificadoTutor}}</td>
             <td>{{$evaluacion->promedio}}</td>
-            <td>Nada por ahora</td>
+            <td>
+              <div class="btn-group dropleft">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Acciones
+                </button>
+                <div class="dropdown-menu">
+                  @if($evaluacion->certificadoTutor == 0)<a class="dropdown-item" href="/evaluacion/reenviar/{{$evaluacion->idEvaltutor}}">Reenviar evaluación</a>@endif
+                  <a class="dropdown-item" href="/evaluacion/ver/{{$evaluacion->idEvalTutor}}">Revisar evaluación</a>
+                </div>
+              </div>
+            </td>
 			    </tr>
 					@endforeach
 			  </tbody>

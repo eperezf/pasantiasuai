@@ -3,9 +3,19 @@
 @section('title', 'Mis alumnos')
 
 @section('contenido')
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">Profesor</li>
+  </ol>
+</nav>
 <div class="row">
   <div class="col">
     <h1>Panel de control de profesor</h1>
+    @if(session()->get('success'))
+    <div class="alert alert-success">
+      {{session()->get('success')}}
+    </div>
+    @endif
   </div>
 </div>
 <div class="row">

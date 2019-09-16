@@ -63,16 +63,23 @@ class EvalTutorController extends Controller{
 		$evalTutor->save();
 
 		Mail::to($pasantia->correoJefe)->send(new EvalTutorMail($pasantia, $user, $empresa, $evalTutor));
-		return "Correo enviado a " . $pasantia->correoJefe;
+		return redirect('/profesor')->with('success', 'Correo enviado correctamente');
 	}
 
 	public function listado($idProyecto){
     $proyecto = Proyecto::where('idProyecto', $idProyecto)->first();
     $evaluaciones = EvalTutor::where('idProyecto', $proyecto->idProyecto)->get();
-
 		$pasantia = Pasantia::where('idPasantia', $proyecto->idPasantia)->first();
-
 		$alumno = User::where('idUsuario', $pasantia->idAlumno)->first();
     return view('evalTutor.listado', compact('evaluaciones'), compact('alumno'));
+	}
+
+	public function ver ($idEvaluacion){
+		$evaluacion = EvalTutor::where('idEvalTutor', $idEvaluacion)->first();
+		$proyecto = Proyecto::where('idProyecto', $evaluacion->idProyecto)->first();
+		$pasantia = Pasantia::where('idPasantia', $proyecto->idPasantia)->first();
+		$alumno = User::where('idUsuario', $pasantia->idAlumno)->first();
+
+		return view('evalTutor.ver', compact('evaluacion'), compact('alumno'));
 	}
 }
