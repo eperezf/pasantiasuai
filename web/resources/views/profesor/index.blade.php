@@ -14,11 +14,11 @@
 			<table class="table" id="table" data-toggle="table" data-sortable="true" data-search="true" data-locale="es-CL">
 			  <thead>
 			    <tr>
-			      <th scope="col" data-field="nombre" data-sortable="true"><div class="th-inner">Alumno</div></th>
-			      <th scope="col" data-field="rubro" data-sortable="true"><div class="th-inner">Correo</div></th>
-						<th scope="col" data-field="status" data-sortable="true"><div class="th-inner">Empresa</div></th>
-			      <th scope="col" data-field="urlWeb" data-sortable="true"><div class="th-inner">Proyecto</div></th>
-						<th scope="col" data-field="correoContacto" data-sortable="true"><div class="th-inner">Acciones</div></th>
+			      <th scope="col" data-field="alumno" data-sortable="true"><div class="th-inner">Alumno</div></th>
+			      <th scope="col" data-field="correo" data-sortable="true"><div class="th-inner">Correo</div></th>
+						<th scope="col" data-field="empresa" data-sortable="true"><div class="th-inner">Empresa</div></th>
+			      <th scope="col" data-field="proyecto" data-sortable="true"><div class="th-inner">Proyecto</div></th>
+						<th scope="col" data-field="acciones" data-sortable="false"><div class="th-inner">Acciones</div></th>
 			    </tr>
 			  </thead>
 			  <tbody>

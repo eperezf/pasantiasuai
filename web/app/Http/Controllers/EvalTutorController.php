@@ -68,9 +68,10 @@ class EvalTutorController extends Controller{
 
 	public function listado($idProyecto){
     $proyecto = Proyecto::where('idProyecto', $idProyecto)->first();
-    $evaluaciones = EvalTutor::where('idProyecto', $proyecto->idProyecto)->first();
+    $evaluaciones = EvalTutor::where('idProyecto', $proyecto->idProyecto)->get();
 
 		$pasantia = Pasantia::where('idPasantia', $proyecto->idPasantia)->first();
+
 		$alumno = User::where('idUsuario', $pasantia->idAlumno)->first();
     return view('evalTutor.listado', compact('evaluaciones'), compact('alumno'));
 	}
