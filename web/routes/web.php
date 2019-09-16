@@ -29,6 +29,7 @@ Route::resource('/admin/importarlista', 'ListadoController')->middleware('auth')
 //Asignar alumnos a los profesores correspondientes
 Route::get('/admin/asignarProyectos', 'AdminController@asignarProyectosView')->name('admin.asignarProyectos')->middleware('auth');
 Route::get('/admin/asignarProyectos/{id}', 'AdminController@asignarProyectosManual')->middleware('auth');
+Route::get('/admin/asignarProyectos/{idProf}/{idProy}/{action}', 'AdminController@asignarProyectoQuick')->middleware('auth');
 
 // Rutas de Listado Inscripcion
 // Ruta de Destroy Paso 2
