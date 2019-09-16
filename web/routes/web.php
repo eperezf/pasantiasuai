@@ -20,6 +20,7 @@ Route::resource('/empresas', 'EmpresaController')->middleware('auth');
 
 Route::resource('/admin/estadisticas', 'GraficasController')->middleware('auth');
 Route::resource('/admin/importarlista', 'ListadoController')->middleware('auth');
+Route::get('/admin', 'AdminController@index')->name('admin.index')->middleware('auth');
 
 // Rutas de Listado Inscripcion
 // Ruta de Destroy Paso 2
