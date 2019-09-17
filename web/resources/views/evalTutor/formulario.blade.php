@@ -26,7 +26,7 @@
 				</div>
                 <form action="/evaluacion/{{$id}}" method="post" id="search">
                     @csrf
-                    <input type="hidden" name="idEncuesta" value={{$id}}>
+                    <input type="hidden" name="tokenCorreo" value={{$id}}>
     <br>
       <b>Compromiso y planificación: </b>asume y cumple con su trabajo, acuerdos y plazos. Organiza tareas simultáneamente, planifica y prioriza actividades
       <div class="row">

@@ -16,6 +16,7 @@ class CreateEvalTutorTable extends Migration
         Schema::create('evalTutor', function (Blueprint $table) {
             $table->Increments('idEvalTutor');
 						$table->unsignedInteger('idProyecto');
+            $table->string('tokenCorreo');
             $table->unsignedInteger('compromiso')->default(0);
             $table->unsignedInteger('adaptabilidad')->default(0);
             $table->unsignedInteger('comunicacion')->default(0);
