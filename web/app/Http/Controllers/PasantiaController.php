@@ -358,8 +358,8 @@ class PasantiaController extends Controller{
 				return redirect('/inscripcion/resumen')->with('error', "No puedes crear un proyecto si tu pasantía no está validada.");
 			}
 			else {
-				if (Proyecto::where([['idPasantia', '=', $pasantia->idPasantia],['status', '<=', '2']])->first()){
-					$proyecto = Proyecto::where([['idPasantia', '=', $pasantia->idPasantia],['status', '<=', '2']])->first();
+				if (Proyecto::where('idPasantia', '=', $pasantia->idPasantia)->first()){
+					$proyecto = Proyecto::where('idPasantia', '=', $pasantia->idPasantia)->first();
 					return view('pasantia.paso4', [
 						'statusPaso0'=>$pasantia->statusPaso0,
 						'statusPaso1'=>$pasantia->statusPaso1,

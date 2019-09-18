@@ -31,4 +31,17 @@ class ProfesorController extends Controller
     $alumno = User::find($pasantia->idAlumno)->first();
     return view('profesor.proyecto', compact('proyecto'), compact('alumno'));
   }
+
+  public function feedbackProyecto($id, Request $request){
+    $proyecto = Proyecto::find($id);
+    $proyecto->comentario = $request->comentario;
+    if ($request->botonAccion == "aprobar") {
+      $proyecto->status = 4;
+    }
+    else {
+      $proyecto->status = 3;
+    }
+    $proyecto->save();
+    return redirect()->back()->with('success', 'Proyecto modificado correctamente');
+  }
 }

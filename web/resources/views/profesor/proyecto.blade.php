@@ -9,6 +9,11 @@
     <li class="breadcrumb-item active" aria-current="page">Proyecto</li>
   </ol>
 </nav>
+@if(session()->get('success'))
+  <div class="alert alert-success">
+    {{ session()->get('success') }}
+  </div><br />
+@endif
 <div class="row">
   <div class="col">
     <h2>Visor de proyecto</h2>
@@ -67,5 +72,14 @@
     <p>{{$proyecto->planificacion}}</p>
   </div>
 </div>
+<form action="/profesor/proyecto/{{$proyecto->idProyecto}}/feedback" method="post">
+  @csrf
+  <div class="form-group">
+    <label for="comentarios">Ingrese sus comentarios aquí:</label>
+    <textarea class="form-control" id="comentario" name="comentario" rows="3">{{$proyecto->comentario}}</textarea>
+  </div>
+  <button type="submit" name="botonAccion" value="aprobar" class="btn btn-success mb-2">Aprobar proyecto</button>
+  <button type="submit" name="botonAccion" value="objetar" class="btn btn-danger mb-2">Objetar proyecto</button>
+</form>
 
 @endsection
