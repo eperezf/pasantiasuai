@@ -24,4 +24,28 @@ class ProfesorController extends Controller
     }
     return view('profesor.index', compact('proyectos'));
   }
+
+  public function verProyecto($id){
+    $proyecto = Proyecto::find($id);
+    $pasantia = Pasantia::find($proyecto->idPasantia);
+    $alumno = User::find($pasantia->idAlumno)->first();
+    return view('profesor.proyecto', compact('proyecto'), compact('alumno'));
+  }
+
+  public function feedbackProyecto($id, Request $request){
+    $proyecto = Proyecto::find($id);
+    $pasantia = Pasantia::where('idPasantia', $proyecto->idPasantia)->first();
+    $proyecto->comentario = $request->comentario;
+    if ($request->botonAccion == "aprobar") {
+      $proyecto->status = 4;
+      $pasantia->statusPaso4 = 4;
+    }
+    else {
+      $proyecto->status = 3;
+      $pasantia->statusPaso4 = 3;
+    }
+    $proyecto->save();
+    $pasantia->save();
+    return redirect()->back()->with('success', 'Proyecto modificado correctamente');
+  }
 }

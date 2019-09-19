@@ -37,7 +37,20 @@
             <td>{{$proyecto->alumno->nombres}} {{$proyecto->alumno->apellidoPaterno}}</td>
             <td>{{$proyecto->alumno->email}}</td>
             <td>{{$proyecto->empresa->nombre}}</td>
-            <td>{{$proyecto->nombre}}</td>
+            <td>
+              <p class="mb-1">{{$proyecto->nombre}}</p>
+              <p>
+                @if($proyecto->status == 1)
+                <span class="badge badge-secondary">Incompleto</span>
+                @elseif($proyecto->status == 2)
+                <span class="badge badge-primary">A la espera de revisión</span>
+                @elseif($proyecto->status == 3)
+                <span class="badge badge-danger">Objetado</span>
+                @elseif($proyecto->status == 4)
+                <span class="badge badge-success">Aprobado</span>
+                @endif
+              </p>
+            </td>
             <td>
               <div class="btn-group dropleft">
                 <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -47,7 +60,7 @@
                   <a class="dropdown-item" href="/evaluacion/enviar/{{$proyecto->alumno->idUsuario}}"><i class="fas fa-envelope"></i> Enviar evaluación de desempeño a supervisor</a>
                   <a class="dropdown-item" href="/evaluacion/listado/{{$proyecto->idProyecto}}">Revisar evaluaciones de desempeño</a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">Revisar datos del proyecto</a>
+                  <a class="dropdown-item" href="/profesor/proyecto/{{$proyecto->idProyecto}}">Revisar proyecto</a>
                   <a class="dropdown-item" href="mailto:{{$proyecto->alumno->email}}">Enviar correo al alumno</a>
                 </div>
               </div>

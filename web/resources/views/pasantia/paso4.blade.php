@@ -13,7 +13,17 @@
 	</div>
 	<div class="row justify-content-md-center mb-5">
 		<div class="col-md-9">
+			@if($proyecto->status == 3)
+			<div class="alert alert-danger">
+	      Tu proyecto ha sido objetado por tu profesor. Por favor revisa sus comentarios.
+	    </div>
+			@elseif($proyecto->status == 4)
+			<div class="alert alert-success">
+	      Tu proyecto ha sido aprobado por tu profesor. No puedes volver a editarlo.
+	    </div>
+			@endif
 			<form method="post" action="{{ route('inscripcion.4.post') }}" class="text-center">
+				<fieldset @if($proyecto->status == 4)disabled="disabled"@endif>
 				@csrf
 				<div class="form-group">
 			    <label for="nombre">Nombre</label>
@@ -35,7 +45,10 @@
 					<textarea class="form-control mb-2" id="metodologia" name="metodologia" rows="2" placeholder="Metodología" >{{$proyecto->metodologia}}</textarea>
 					<textarea class="form-control mb-2" id="planificacion" name="planificacion" rows="6" placeholder="Planificación" >{{$proyecto->planificacion}}</textarea>
 			  </div>
+				<h3>Comentarios de tu profesor:</h3>
+				<p>{{$proyecto->comentario}}</p>
 				<button type="submit" class="btn btn-primary">Continuar</button>
+				</fieldset>
 			</form>
 		</div>
 	</div>

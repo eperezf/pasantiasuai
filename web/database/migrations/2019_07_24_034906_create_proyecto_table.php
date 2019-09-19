@@ -22,7 +22,7 @@ class CreateProyectoTable extends Migration
     {
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->increments('idProyecto');
+            $table->Increments('idProyecto');
             $table->unsignedInteger('idPasantia');
             $table->unsignedInteger('status');
             $table->unsignedInteger('idProfesor')->nullable()->default(null);
@@ -34,6 +34,7 @@ class CreateProyectoTable extends Migration
             $table->text('medidas')->nullable()->default(null);
             $table->text('metodologia')->nullable()->default(null);
             $table->text('planificacion')->nullable()->default(null);
+            $table->text('comentario')->nullable()->default(null);
             $table->timestamps();
 
 

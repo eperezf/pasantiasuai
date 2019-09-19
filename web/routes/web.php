@@ -59,6 +59,8 @@ Route::get('/admin/listadoInscripcion/{nombresUsuario}/idPasantia/{idPasantia}',
 Route::resource('/perfil', 'PerfilController')->middleware('auth');
 
 Route::get('/profesor', 'ProfesorController@index')->name('profesor.index')->middleware('auth');
+Route::get('/profesor/proyecto/{id}', 'ProfesorController@verProyecto')->name('profesor.verProyecto')->middleware('auth');
+Route::post('/profesor/proyecto/{id}/feedback', 'ProfesorController@feedbackProyecto')->middleware('auth');
 
 
 

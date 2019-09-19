@@ -16,9 +16,9 @@ use App\EvalTutor;
 use Auth;
 
 class EvalTutorController extends Controller{
-	
+
 	public function show($id){
-		$evaltutor = EvalTutor::where('idEncuesta',$id)->first();
+		$evaltutor = EvalTutor::where('tokenCorreo',$id)->first();
 		$proyecto = Proyecto::where('idProyecto', $evaltutor->idProyecto)->first();
 		$pasantia = Pasantia::where('idPasantia', $proyecto->idPasantia)->first();
 		$alumno = User::where('idUsuario', $pasantia->idAlumno)->first();
@@ -32,7 +32,7 @@ class EvalTutorController extends Controller{
 	}
 
 	public function save(Request $request){
-		$evaltutor = EvalTutor::where('idEncuesta',$request->idEncuesta)->first();
+		$evaltutor = EvalTutor::where('tokenCorreo',$request->tokenCorreo)->first();
 		$suma = $request->compromiso+$request->adaptabilidad+$request->comunicacion+$request->equipo+$request->liderazgo+$request->sobreponerse+$request->habilidades+$request->proactividad+$request->innovacion+$request->etica;
 		$promedio = $suma/10;
 		$evaltutor->compromiso = $request->compromiso;
@@ -65,7 +65,7 @@ class EvalTutorController extends Controller{
 			return redirect('/profesor')->with('success', 'Evaluación pendiente reenviada con éxito');
 		}
 		$evalTutor = new EvalTutor;
-		$evalTutor->idEncuesta = $string = str_random(10);
+		$evalTutor->tokenCorreo = $string = str_random(10);
 		$evalTutor->idProyecto = $proyecto->idProyecto;
 		$evalTutor->save();
 
