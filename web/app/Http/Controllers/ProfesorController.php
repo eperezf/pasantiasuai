@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Mail\ProyectoAlumno;
+use Illuminate\Support\Facades\Mail;
 use App\Proyecto;
 use App\Pasantia;
 use App\Empresa;
@@ -35,6 +37,7 @@ class ProfesorController extends Controller
   public function feedbackProyecto($id, Request $request){
     $proyecto = Proyecto::find($id);
     $pasantia = Pasantia::where('idPasantia', $proyecto->idPasantia)->first();
+    $alumno = User::where('idUsuario', $pasantia->idAlumno)->first();
     $proyecto->comentario = $request->comentario;
     if ($request->botonAccion == "aprobar") {
       $proyecto->status = 4;
@@ -46,6 +49,7 @@ class ProfesorController extends Controller
     }
     $proyecto->save();
     $pasantia->save();
+    Mail::to($alumno->email)->send(new ProyectoAlumno($pasantia, $alumno, $proyecto));
     return redirect()->back()->with('success', 'Proyecto modificado correctamente');
   }
 }
