@@ -99,14 +99,6 @@
 						<i class="fas fa-industry"></i> Empresas
 					</a>
 					@if(Auth::user()->rol >= 4)
-					<a href="/admin/estadisticas" class="list-group-item list-group-item-action ">
-						<i class="fas fa-chart-line"></i> Estadisticas
-					</a>
-					<a href="/admin/listadoInscripcion" class="list-group-item list-group-item-action">
-						<i class="fas fa-paste"></i> Listado pasantías
-					</a>
-					@endif
-					@if(Auth::user()->rol >= 4)
 					<a href="/admin" class="list-group-item list-group-item-action ">
 						<i class="fas fa-cog"></i> Administración
 					</a>
