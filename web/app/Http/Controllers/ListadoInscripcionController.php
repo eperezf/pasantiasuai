@@ -96,7 +96,7 @@ class ListadoInscripcionController extends Controller
   }
 
 
-  /* 
+  /*
     Validar todo valida paso 2 y paso general
   */
   public function validarTodo($nombresUsuario, $idPasantia)
@@ -205,6 +205,7 @@ class ListadoInscripcionController extends Controller
       $pasantia->horasSemanales = null;
       $pasantia->parienteEmpresa = null;
       $pasantia->rolPariente = null;
+      $pasantia->statusPaso2 = 0;
 
       if ($pasantia->isDirty()) {
         $pasantia->save();

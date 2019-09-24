@@ -140,9 +140,9 @@ class PasantiaController extends Controller{
 		$empresas = Empresa::all()->sortBy('nombre');
 		$empresaSel = Empresa::where('idEmpresa', $pasantia->idEmpresa)->first();
 		//Control de Status General
-		if ($pasantia->statusGeneral == 1) {
-			return redirect('/inscripcion/resumen')->with('success', 'No puede cambiar los datos ingresados, su pasantía ya ha sido validada.');
-		}
+		//if ($pasantia->statusGeneral == 1) {
+		//	return redirect('/inscripcion/resumen')->with('success', 'No puede cambiar los datos ingresados, su pasantía ya ha sido validada.');
+		//}
 		if (!$empresaSel){
 			$empresaSel = new Empresa([
 				'nombre'=>"",
@@ -159,6 +159,7 @@ class PasantiaController extends Controller{
 				'statusPaso2'=>$pasantia->statusPaso2,
 				'statusPaso3'=>$pasantia->statusPaso3,
 				'statusPaso4'=>$pasantia->statusPaso4,
+				'statusGeneral'=>$pasantia->statusGeneral,
 				'empresas'=>$empresas,
 				'empresaSel'=>$empresaSel,
 				'ciudad'=>$pasantia->ciudad,
