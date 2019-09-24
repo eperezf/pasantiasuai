@@ -15,14 +15,14 @@ class AdminController extends Controller
   }
 
   public function asignarProyectosView(){
-    //Obtenemos listado de profesores en el sistema. SOlo mostraremos los administradores si la plataforma está siendo vista por un administrador.
+    //Obtenemos listado de profesores en el sistema. Solo mostraremos los administradores si la plataforma está siendo vista por un administrador.
     if (Auth::user()->rol == 5){
-      $profesores = User::where('rol', '3')->orWhere('rol', '5')->get(); //Listado de profesores y administrativos
+      $profesores = User::where('rol', '3')->orWhere('rol', '5')->get(); //Listado de profesores y administradores (Para debug y QA)
     }
     else {
       $profesores = User::where('rol', '3')->get(); //Listado de profesores
     }
-    //Buscamos la cantidad de alumnos asignados al profesores
+    //Buscamos la cantidad de alumnos asignados al profesor
     foreach ($profesores as $profesor) {
       $count = Proyecto::where('idProfesor', $profesor['idUsuario'])->count();
       $profesor["Proyectos"] = $count;

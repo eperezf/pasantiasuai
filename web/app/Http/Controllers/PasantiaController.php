@@ -139,10 +139,6 @@ class PasantiaController extends Controller{
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
 		$empresas = Empresa::all()->sortBy('nombre');
 		$empresaSel = Empresa::where('idEmpresa', $pasantia->idEmpresa)->first();
-		//Control de Status General
-		//if ($pasantia->statusGeneral == 1) {
-		//	return redirect('/inscripcion/resumen')->with('success', 'No puede cambiar los datos ingresados, su pasantía ya ha sido validada.');
-		//}
 		if (!$empresaSel){
 			$empresaSel = new Empresa([
 				'nombre'=>"",
@@ -178,7 +174,6 @@ class PasantiaController extends Controller{
 	/**
    * Guarda los datos de la pasantía
    * @author Eduardo Pérez
-   * @version v2.0
 	 * @param  \Illuminate\Http\Request  $request
    * @return \Illuminate\Http\Response
    */
@@ -195,6 +190,11 @@ class PasantiaController extends Controller{
 		]);
 		$userId = Auth::id();
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
+		// Detenemos el proceso si la pasantía ya está validada y el paso 2 ya fue completado. Esto no debería pasar a menos que se modifique el frontend.
+		// TODO: Log de errores que no deberían pasar.
+		if ($pasantia->statusPaso2 == 2 && $pasantia->statusGeneral == 1) {
+			return redirect('/inscripcion/resumen')->with('error', 'No puedes editar el paso 2.');
+		}
 		$incompleto = false;
 		if ($request->otraEmpresa){
 			if (!$request->nombreOtraEmpresa){
@@ -283,7 +283,7 @@ class PasantiaController extends Controller{
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
 		//Control de Status General
 		if ($pasantia->statusGeneral == 1 && $pasantia->statusPaso3 == 4) {
-			return redirect('/inscripcion/resumen')->with('success', 'No puede cambiar los datos ingresados, su pasantía ya ha sido validada.');
+			return redirect('/inscripcion/resumen')->with('error', 'Si quieres cambiar tu supervisor, has click en "Cambiar supervisor" más abajo.');
 		}
 		if ($pasantia && $pasantia->statusPaso0==2){
 			if ($pasantia->statusPaso2 == 3){
@@ -397,6 +397,9 @@ class PasantiaController extends Controller{
 	public function paso4Control(Request $request){
 		$userId = Auth::id();
 		$pasantia = Pasantia::where('idAlumno', $userId)->first();
+		if ($pasantia->statusPaso4 == 4) {
+			return redirect('/inscripcion/resumen')->with('error', 'No puedes editar el paso 4.');
+		}
 		if (Proyecto::where('idPasantia', $pasantia->idPasantia)->first()){
 			$proyecto = Proyecto::where('idPasantia', $pasantia->idPasantia)->first();
 			$proyecto->nombre = $request->nombre;
@@ -421,8 +424,6 @@ class PasantiaController extends Controller{
 			return redirect('/inscripcion/resumen');
 		}
 		else {
-			//dd($request);
-			echo "No existe un proyecto. Creando.";
 			$proyecto = new Proyecto([
 				'idPasantia'=>$pasantia->idPasantia,
 				'nombre'=>$request->nombre,
