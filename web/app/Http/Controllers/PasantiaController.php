@@ -488,10 +488,6 @@ class PasantiaController extends Controller{
 			$userId = Auth::id();
 
 			$pasantia = Pasantia::where('idAlumno', $userId)->first();
-			if (Proyecto::where('idPasantia',$pasantia->idPasantia)){
-				$proyecto = Proyecto::where('idPasantia',$pasantia->idPasantia)->first();
-				$proyecto->delete();
-			}
 			$pasantia->delete();
 			return redirect('/inscripcion/0');
 		}
