@@ -115,7 +115,7 @@
 				</div>
 			</div>
 			<!-- Fin Sidebar -->
-			<div class="col-12 col-md-9 col-xl-10 text-center">
+			<div class="col-12 col-md-9 col-xl-10">
 				<!-- Contenido del resto de la pagina -->
 				<div class="container-fluid py-3">
 					<div class="row">
