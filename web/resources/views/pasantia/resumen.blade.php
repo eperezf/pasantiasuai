@@ -7,11 +7,10 @@
       {{ session()->get('error') }}
     </div><br />
   @endif
-	@include('pasantia.pasos', ['statusPaso0'=>$statusPaso0, 'statusPaso1'=>$statusPaso1, 'statusPaso2'=>$statusPaso2, 'statusPaso3'=>$statusPaso3, 'statusPaso4'=>$statusPaso4])
-
-	<div class="row justify-content-md-center mb-5">
+	<div class="row justify-content-md-center mb-3">
 		<h2>Resumen de tu inscripción</h2>
 	</div>
+	@include('pasantia.pasos', ['statusPaso0'=>$statusPaso0, 'statusPaso1'=>$statusPaso1, 'statusPaso2'=>$statusPaso2, 'statusPaso3'=>$statusPaso3, 'statusPaso4'=>$statusPaso4])
 	<div class="row justify-content-md-center mb-3">
 		<ul class="list-group">
 			@if($statusPaso0 == 2)
@@ -54,25 +53,39 @@
 			@elseif($statusPaso4==1)
 				<li class="list-group-item list-group-item-warning"><i class="fas fa-exclamation"></i> Los datos de tu proyecto están incompletos</li>
 			@elseif($statusPaso4==2)
-				<li class="list-group-item list-group-item-success"><i class="fas fa-check"></i> Los datos de tu proyecto están guarados pero aún no ha sido aprobado.</li>
+				<li class="list-group-item list-group-item-primary"><i class="fas fa-user"></i> Los datos de tu proyecto están guarados pero aún no ha sido aprobado.</li>
 			@elseif($statusPaso4==3)
+				<li class="list-group-item list-group-item-danger"><i class="fas fa-times"></i> Tu proyecto ha sido objetado. <a href="{{route('inscripcion.4.view')}}">Has click aquí para revisarlo</a></li>
+			@elseif($statusPaso4==4)
 				<li class="list-group-item list-group-item-success"><i class="fas fa-check"></i> Tu proyecto está aprobado.</li>
 			@endif
 		</ul>
 	</div>
-	@if(Auth::user()->rol >= 4)
-	<div class="row justify-content-md-center mb-3">
-		<form style="display: inline-block;" action="{{ url('inscripcion/destroy', $pasantia->idPasantia)}}" method="post">
-			@csrf
-			@method('DELETE')
-			<button class="btn btn-danger" type="submit">Eliminar</button>
-				</form>
-	</div>
-	@endif
-	@if ($statusGeneral == 1 || Auth::user()->rol >= 4)
-		<div class="row justify-content-md-center mb-3">
-			<a class="btn btn-success" href="{{route('inscripcion.certificado')}}">Descargar certificado</a>
+	<div class="row justify-content-md-center">
+		<div class="col-md-12">
+			<h3>Panel de control</h3>
 		</div>
-	@endif
+		<div class="col-md-12">
+
+			@if(Auth::user()->rol >= 4)
+				<form style="display: inline-block;" action="{{ url('inscripcion/destroy', $pasantia->idPasantia)}}" method="post">
+					@csrf
+					@method('DELETE')
+					<button class="btn btn-danger" type="submit">Eliminar Pasantía</button>
+				</form>
+			@endif
+
+			@if ($statusPaso3 >= 3)
+					<a class="btn btn-success" href="{{route('inscripcion.cambiarSupervisor')}}">Cambiar Supervisor</a>
+			@endif
+
+			@if ($statusGeneral == 1 || Auth::user()->rol >= 4)
+				<a class="btn btn-success" href="{{route('inscripcion.certificado')}}">Descargar certificado</a>
+			@endif
+		</div>
+
+
+	</div>
+
 </div>
 @endsection
