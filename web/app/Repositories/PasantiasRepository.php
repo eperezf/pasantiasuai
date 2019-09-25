@@ -80,8 +80,8 @@ class PasantiasRepository
       statusPaso4Pasantia == 0 No realizado
 			statusPaso4Pasantia == 1 Datos incompletos
 			statusPaso4Pasantia == 2 No validado
-			statusPaso4Pasantia == 3 Validado
-      statusPaso4Pasantia == 4 Rechazado
+			statusPaso4Pasantia == 3 Rechazado
+      statusPaso4Pasantia == 4 Validado
     */
     if ($pasantia->statusPaso4 == 0) {
       $pasantia->statusPaso4 = 'No realizado';
@@ -90,9 +90,9 @@ class PasantiasRepository
     } elseif ($pasantia->statusPaso4 == 2) {
       $pasantia->statusPaso4 = 'No validado';
     } elseif ($pasantia->statusPaso4 == 3) {
-      $pasantia->statusPaso4 = 'Validado';
+      $pasantia->statusPaso4 = 'Objetado';
     } elseif ($pasantia->statusPaso4 == 4) {
-      $pasantia->statusPaso4 = 'Rechazado';
+      $pasantia->statusPaso4 = 'Aprobado';
     }
 
     /*

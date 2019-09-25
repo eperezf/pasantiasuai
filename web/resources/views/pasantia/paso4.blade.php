@@ -23,7 +23,7 @@
 	    </div>
 			@endif
 			<form method="post" action="{{ route('inscripcion.4.post') }}" class="text-center">
-				<fieldset @if($proyecto->status == 4)disabled="disabled"@endif>
+				<fieldset @if($proyecto->status == 4)disabled @endif>
 				@csrf
 				<div class="form-group">
 			    <label for="nombre">Nombre</label>

@@ -57,6 +57,9 @@ class EvalTutorController extends Controller{
 	public function enviar($idAlumno){
 		$user = User::where('idUsuario', $idAlumno)->first();
 		$pasantia = Pasantia::where('idAlumno', $idAlumno)->first();
+		if (!$pasantia->nombreJefe) {
+			return redirect('/profesor')->with('warning', 'El alumno no tiene a un supervisor asignado.');
+		}
 		$proyecto = Proyecto::where('idPasantia', $pasantia->idPasantia)->first();
 		$empresa = Empresa::where('idEmpresa', $pasantia->idEmpresa)->first();
 		$evaluacionPendiente = EvalTutor::where('idProyecto', $proyecto->idProyecto)->where('certificadoTutor', 0)->first();
