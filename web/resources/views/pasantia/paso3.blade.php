@@ -23,7 +23,7 @@
 	</div>
 	<div class="row justify-content-md-center mb-5">
 		<div class="col-md-6">
-			<form method="post" action="{{ route('inscripcion.3.post') }}" class="text-center">
+			<form method="post" action="{{ route('inscripcion.3.post') }}">
 				@csrf
 				<div class="form-group">
 			    <label for="email">Correo</label>

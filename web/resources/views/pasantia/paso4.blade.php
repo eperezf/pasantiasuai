@@ -13,7 +13,7 @@
 	</div>
 	<div class="row justify-content-md-center mb-5">
 		<div class="col-md-9">
-			<form method="post" action="{{ route('inscripcion.4.post') }}" class="text-center">
+			<form method="post" action="{{ route('inscripcion.4.post') }}">
 				@csrf
 				<div class="form-group">
 			    <label for="nombre">Nombre</label>

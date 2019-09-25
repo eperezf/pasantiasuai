@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('contenido')
-<div class="container-fluid">
+<div class="container-fluid text-center">
 	@if(session()->get('error'))
     <div class="alert alert-danger">
       {{ session()->get('error') }}
@@ -60,12 +60,12 @@
 			@endif
 		</ul>
 	</div>
+
 	<div class="row justify-content-md-center">
 		<div class="col-md-12">
 			<h3>Panel de control</h3>
 		</div>
 		<div class="col-md-12">
-
 			@if(Auth::user()->rol >= 4)
 				<form style="display: inline-block;" action="{{ url('inscripcion/destroy', $pasantia->idPasantia)}}" method="post">
 					@csrf
@@ -73,18 +73,13 @@
 					<button class="btn btn-danger" type="submit">Eliminar Pasantía</button>
 				</form>
 			@endif
-
 			@if ($statusPaso3 >= 3)
 					<a class="btn btn-success" href="{{route('inscripcion.cambiarSupervisor')}}">Cambiar Supervisor</a>
 			@endif
-
 			@if ($statusGeneral == 1 || Auth::user()->rol >= 4)
 				<a class="btn btn-success" href="{{route('inscripcion.certificado')}}">Descargar certificado</a>
 			@endif
 		</div>
-
-
 	</div>
-
 </div>
 @endsection
