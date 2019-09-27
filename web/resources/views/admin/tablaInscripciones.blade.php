@@ -1,4 +1,4 @@
-<table class="table table-hover w-auto" id="table" data-toggle="table" data-sortable="true" data-search="true"
+<table class="table table-hover w-auto text-nowrap" id="table" data-toggle="table" data-sortable="true" data-search="true"
 	data-locale="es-CL">
 	<thead>
 		<tr>
@@ -187,9 +187,9 @@
 						['nombresUsuario' => $datosPasantia['nombresUsuario'],
 						'idPasantia' => $datosPasantia['idPasantia']])}}" class="btn btn-primary
 						@if ($datosPasantia['statusGeneralPasantia'] == 'Pasantía sin validar' || $datosPasantia['statusPaso2Pasantia'] == 'Pendiente por pariente')
-						@else disabled @endif mb-2">Validar todo</a>
+						@else disabled @endif">Validar todo</a>
 
-				<a class="btn btn-warning mb-2" href="{{route('listadoInscripcion.edit', $datosPasantia['idPasantia'])}}"
+				<a class="btn btn-warning" href="{{route('listadoInscripcion.edit', $datosPasantia['idPasantia'])}}"
 					role="button">Editar</a>
 				<form style="display: inline-block;"
 					action="{{ route('listadoInscripcion.destroy', $datosPasantia['idPasantia'])}}" method="post">
