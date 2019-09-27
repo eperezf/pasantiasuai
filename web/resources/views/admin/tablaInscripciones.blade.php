@@ -11,11 +11,8 @@
 			<th scope="col" data-field="email" data-sortable="true">
 				<div class="th-inner">Email</div>
 			</th>
-			<th scope="col" data-field="nombreJefe" data-sortable="true">
-				<div class="th-inner">Nombre jefe</div>
-			</th>
-			<th scope="col" data-field="emailJefe" data-sortable="true">
-				<div class="th-inner">Email jefe</div>
+			<th scope="col" data-field="jefeEncargado" data-sortable="true">
+				<div class="th-inner">Jefe encargado</div>
 			</th>
 			<!-- Revisar cuando este implementado -->
 			<th scope="col" data-field="profesorEncargado">
@@ -83,8 +80,7 @@
 			</td>
 			<td>{{$datosPasantia['emailUsuario']}}</td>
 
-			<td>{{$datosPasantia['nombreJefePasantia']}}</td>
-			<td>{{$datosPasantia['correoJefePasantia']}}</td>
+			<td>{{$datosPasantia['nombreJefePasantia']}} <br> {{$datosPasantia['correoJefePasantia']}}</td>
 
 			<!-- Profe -->
 			<td>Aún no implementado</td>
