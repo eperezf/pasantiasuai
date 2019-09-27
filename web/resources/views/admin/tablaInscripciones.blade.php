@@ -11,18 +11,11 @@
 			<th scope="col" data-field="email" data-sortable="true">
 				<div class="th-inner">Email</div>
 			</th>
-			<th scope="col" data-field="statusPregrado" data-sortable="true">
-				<div class="th-inner">Status pregrado</div>
-			</th>
 			<th scope="col" data-field="nombreJefe" data-sortable="true">
 				<div class="th-inner">Nombre jefe</div>
 			</th>
 			<th scope="col" data-field="emailJefe" data-sortable="true">
 				<div class="th-inner">Email jefe</div>
-			</th>
-			<!-- Revisar cuando este implementado -->
-			<th scope="col" data-field="seccionAlumno">
-				<div class="th-inner">Sección alumno</div>
 			</th>
 			<!-- Revisar cuando este implementado -->
 			<th scope="col" data-field="profesorEncargado">
@@ -67,9 +60,6 @@
 			<th scope="col" data-field="statusEmpresa" data-sortable="true">
 				<div class="th-inner">Empresa en convenio</div>
 			</th>
-			<th scope="col" data-field="urlWeb">
-				<div class="th-inner">Página empresa</div>
-			</th>
 			@if($downloadExcel == TRUE)
 			@elseif ($downloadExcel == FALSE)
 			<th scope="col" data-field="acciones">
@@ -93,12 +83,9 @@
 			</td>
 			<td>{{$datosPasantia['emailUsuario']}}</td>
 
-			<td>{{$datosPasantia['statusPregradoUsuario']}}</td>
 			<td>{{$datosPasantia['nombreJefePasantia']}}</td>
 			<td>{{$datosPasantia['correoJefePasantia']}}</td>
 
-			<!-- Seccion -->
-			<td>Aún no implementado</td>
 			<!-- Profe -->
 			<td>Aún no implementado</td>
 
@@ -177,9 +164,6 @@
 				@else @endif
 				<!-- End if de excel -->
 			</td>
-
-			<td><a href="{{$datosPasantia['urlWebEmpresa']}}">{{$datosPasantia['urlWebEmpresa']}}</a></td>
-
 			@if($downloadExcel == TRUE)
 			@elseif ($downloadExcel == FALSE)
 			<td>
