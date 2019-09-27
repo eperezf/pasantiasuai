@@ -93,7 +93,7 @@
 			</div>
 
 			<!-- End Modal Paso 2 Destroy -->
-			<div class="btn-group">
+			{{-- <div class="btn-group">
 				<button type="button" class="btn btn-primary dropdown-toggle mx-1" data-toggle="dropdown" aria-haspopup="true"
 					aria-expanded="false">
 					Paso 3
@@ -109,10 +109,10 @@
 					<a class="dropdown-item" href="#"><button class="btn btn-danger" type="button" data-toggle="modal"
 							data-target="#paso3DestroyCheck">Eliminar</button></a>
 				</div>
-			</div>
+			</div> --}}
 
 			<!-- Modal Paso 3 Destroy -->
-			<div class="modal fade" id="paso3DestroyCheck" tabindex="0" role="dialog" aria-labelledby="modelTitleId"
+			{{-- <div class="modal fade" id="paso3DestroyCheck" tabindex="0" role="dialog" aria-labelledby="modelTitleId"
 				aria-hidden="true">
 				<form method="post" action="{{route('listadoInscripcion.destroyPaso3', $datosPasantias['idPasantia'])}}">
 					@csrf
@@ -141,7 +141,7 @@
 						</div>
 					</div>
 				</form>
-			</div>
+			</div> --}}
 			<!-- End Modal Paso 3 Destroy -->
 		</div>
 	</div>
