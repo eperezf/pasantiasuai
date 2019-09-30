@@ -21,5 +21,6 @@ class Proyecto extends Model{
     'medidas',
     'metodologia',
     'planificacion',
+    'comentario'
 	];
 }
