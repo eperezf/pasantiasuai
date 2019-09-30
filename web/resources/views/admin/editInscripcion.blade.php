@@ -19,7 +19,7 @@
 @endif
 
 <div class="container">
-	<div class="row justify-content-center">
+	<div class="row ">
 		<div class="col-8">
 			@if ($errors->any())
 			<div class="alert alert-danger">
@@ -30,19 +30,20 @@
 				</ul>
 			</div><br />
 			@endif
-			<h2 class="mt-4">Editando pasantia de alumno {{$datosPasantias['nombresUsuario']}}
-				{{$datosPasantias['apellidoPaternoUsuario']}} {{$datosPasantias['apellidoMaternoUsuario']}}</h2>
+			<h2 class="mt-4">Editor de pasantias</h2>
+				<h5>Alumno: {{$datosPasantias['nombresUsuario']}}
+						{{$datosPasantias['apellidoPaternoUsuario']}} {{$datosPasantias['apellidoMaternoUsuario']}}</h5>
 		</div>
 	</div>
 	<!-- Seleccion pasos -->
-	<div class="row justify-content-center">
+	<div class="row">
 		<div class="col-8">
-			<h3 class="my-4">Seleccione un paso para editar</h3>
+			<h5 class="my-4">Seleccione un paso para editar</h5>
 		</div>
 	</div>
 	<!-- Botones acciones -->
-	<div class="row justify-content-md-center mt-2 mb-5">
-		<div class="col-md-9 text-center">
+	<div class="row mt-2 mb-5">
+		<div class="col-md-9">
 			<div class="btn-group">
 				<button type="button" class="btn btn-primary dropdown-toggle mx-1" data-toggle="dropdown" aria-haspopup="true"
 					aria-expanded="false">
@@ -148,7 +149,7 @@
 
 	<!-- Menu edit paso 2 -->
 	<div class="row justify-content-md-center mt-2 mb-5" id="paso2Edit" style="display: none;">
-		<div class="col-md-9 text-center">
+		<div class="col-md-9">
 			<form method="post" action="{{route('listadoInscripcion.updatePaso2', $datosPasantias['idPasantia'])}}">
 				@csrf
 				@method('POST')
