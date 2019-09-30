@@ -128,6 +128,7 @@
 				</div>
 			</div>
 		</div>
+	</div>
 		<!-- Footer -->
 	<div class="container-fluid">
 		<div class="row flex-xl-nowrap">
@@ -146,6 +147,6 @@
 		</div>
 	</div>
 		<!-- Fin Footer -->
-</div>
+
 </body>
 </html>
