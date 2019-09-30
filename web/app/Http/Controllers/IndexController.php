@@ -11,49 +11,52 @@ use App\Empresa;
 use App\User;
 
 
+
 class IndexController extends Controller
 {
   //
-  public function index() {
+  public function index()
+  {
     $userId = Auth::id();
     $pasantia = Pasantia::where('idAlumno', $userId)->first();
-    $empresa = Empresa::where('idEmpresa', $pasantia->idEmpresa)->first();
-    $datos = $this->getResumenes();
-    return view('index', compact('pasantia', 'empresa', 'datos'));
+    if ($pasantia != null) {
+      $empresa = Empresa::where('idEmpresa', $pasantia->idEmpresa)->first();
+    } else {
+      $empresa = null;
+    }
+    $estadisticas = $this->getEstadisticas();
+    return view('index', compact('pasantia', 'empresa', 'estadisticas'));
   }
 
-  public function getResumenes() {
-    //Datos Pasantias
+  public function getEstadisticas()
+  {
+    //estadisticas Pasantias
     $pasantiasTotal = Pasantia::all()->count();
     $pasantiasSantiago = Pasantia::where('ciudad', '=', 'Santiago')->count();
     $pasantiasValidas = Pasantia::where('statusPaso4', '=', '2')->count();
-    
-    //Datos Usuarios
+
+    //estadisticas Usuarios
     $usuariosPasantes = User::where('rol', '=', '1')->count();
     $usuariosProfesores = User::where('rol', '=', '2')->count();
     $usuariosAdmin = User::where('rol', '>=', '4')->count();
 
-    //Datos Empresas
+    //estadisticas Empresas
     $empresasValidadas = Empresa::where('status', '=', '1')->count();
     $empresasNoValidadas = Empresa::where('status', '=', '0')->count();
     $empresasTotal = $empresasValidadas + $empresasNoValidadas;
 
-    //Array de datos
-    $myArray = array(
-      array("one", "two", "three"),
-      array("four", "five", "six")
+    //Array de estadisticas
+    $estadisticas = array(
+      'pasantiasSantiago' => $pasantiasSantiago,
+      'pasantiasValidas' => $pasantiasValidas,
+      'pasantiasTotal' => $pasantiasTotal,
+      'usuariosPasantes' => $usuariosPasantes,
+      'usuariosProfesores' => $usuariosProfesores,
+      'usuariosAdmin' => $usuariosAdmin,
+      'empresasValidadas' => $empresasValidadas,
+      'empresasNoValidadas' => $empresasNoValidadas,
+      'empresasTotal' => $empresasTotal,
     );
-    $datos = [
-      ['pasantias' => ['santiago' => $pasantiasSantiago, 
-                      'validas' => $pasantiasValidas, 
-                      'total' => $pasantiasTotal]],
-      ['usuarios' => ['pasantes' => $usuariosPasantes, 
-                      'profesores' => $usuariosProfesores, 
-                      'admin' => $usuariosAdmin]],
-      ['empresas' => ['validas' => $empresasValidadas, 
-                      'noValidas' => $empresasNoValidadas, 
-                      'total' => $empresasTotal]]
-    ];
-    return $datos;
+    return $estadisticas;
   }
 }

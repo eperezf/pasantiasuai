@@ -90,7 +90,7 @@
 					<a href="/" class="list-group-item list-group-item-action">
 						<i class="fa fa-home"></i> Inicio
 					</a>
-					@if(Auth::user()->rol == 1)
+					@if(Auth::user()->rol <= 2 || Auth::user()->rol == 5)
 					<a href="{{route('inscripcion.resumen')}}" class="list-group-item list-group-item-action">
 						<i class="fas fa-paste"></i> Pasantía
 					</a>
@@ -99,19 +99,20 @@
 						<i class="fas fa-industry"></i> Empresas
 					</a>
 					@if(Auth::user()->rol >= 4)
-					<a href="#" class="list-group-item list-group-item-action ">
-						<i class="fas fa-chart-line"></i> Estadisticas
-					</a>
-					<a href="/admin/listadoInscripcion" class="list-group-item list-group-item-action">
-						<i class="fas fa-paste"></i> Listado pasantías
+					<a href="/admin" class="list-group-item list-group-item-action ">
+						<i class="fas fa-cog"></i> Administración
 					</a>
 					@endif
-  				<a href="#" class="list-group-item list-group-item-action">
+					@if(Auth::user()->rol <= 2 || Auth::user()->rol == 5)
+  				<a href="http://alumnosfic.uai.cl/wp-content/uploads/2018/07/Reglamento-de-Pasant%C3%ADas-a-partir-de-2018.pdf" class="list-group-item list-group-item-action" download>
 						<i class="fas fa-balance-scale"></i> Reglamento
 					</a>
-					<a href="" class="list-group-item list-group-item-action">
-						<i class="fas fa-question"></i> Ayuda
+					@endif
+					@if(Auth::user()->rol == 3 || Auth::user()->rol == 5)
+					<a href="{{route('profesor.index')}}" class="list-group-item list-group-item-action">
+						<i class="fas fa-chart-line"></i> Mis Alumnos
 					</a>
+					@endif
 				</div>
 			</div>
 			<!-- Fin Sidebar -->

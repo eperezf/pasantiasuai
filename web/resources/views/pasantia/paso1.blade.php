@@ -3,6 +3,9 @@
 
 @section('contenido')
 <div class="container-fluid">
+	<div class="row justify-content-md-center mb-2">
+		<h1>Inscripción de pasantía</h1>
+	</div>
 	@include('pasantia.pasos', ['statusPaso0'=>$statusPaso0, 'statusPaso1'=>$statusPaso1, 'statusPaso2'=>$statusPaso2, 'statusPaso3'=>$statusPaso3, 'statusPaso4'=>$statusPaso4])
 	<div class="row justify-content-md-center mb-5">
 		<h2>Paso 1: Requisitos académicos</h2>
@@ -41,7 +44,7 @@
 			    <h5 class="card-title text-center">En caso de no querer hacer el tipo de pasantía ya asignada, debe enviar un correo a la gestión de pasantías de la Universidad.</h5>
 					<p class="card-text text-center">
 						mail:
-						<a class="text-white" href="mailto:pasantias.fic@uai.cl">pasantias.fic@uai.cl</a>
+						<a class="text-white" href="mailto:pasantias.fic@uai.cl">pasantia.fic@uai.cl</a>
 					</p>
 			  </div>
 			</div>
