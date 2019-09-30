@@ -45,7 +45,7 @@
 	<nav class="navbar navbar-expand navbar-dark bg-dark">
 		<!-- Logo SVG UAI -->
 		<a class="navbar-brand mr-1" href="https://www.uai.cl">
-			<img src="../media/images/logouai.svg" alt="Universidad Adolfo Ibáñez">
+			<img src="{{asset('media/images/').'/'.'logouai.svg'}}" alt="Universidad Adolfo Ibáñez">
 		</a>
 		<!-- Boton Collapse Sidebar -->
 		<button class="btn btn-link text-white" type="button" data-toggle="collapse" data-target="#MenuSidebar" aria-expanded="true" aria-controls="MenuSidebar" href="#">
@@ -116,11 +116,12 @@
 				</div>
 			</div>
 			<!-- Fin Sidebar -->
-			<div class="col-12 col-md-9 col-xl-10 text-center">
+			<div class="col-12 col-md-9 col-xl-10">
 				<!-- Contenido del resto de la pagina -->
 				<div class="container-fluid py-3">
 					<div class="row">
 						<div class="col-12">
+
 							@yield('contenido')
 						</div>
 					</div>
