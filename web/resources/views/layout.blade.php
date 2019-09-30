@@ -63,16 +63,6 @@
 					</button>
 					<!-- Menu desplegable del perfil -->
 					<ul class="dropdown-menu dropdown-menu-right">
-						<li class="nav-item">
-							<a href="{{route('inscripcion.resumen')}}" class="dropdown-item nav-link"><i class="fas fa-paste"></i> Mis Pasantias</a>
-						</li>
-						<li class="nav-item">
-							<a href="#" class="dropdown-item nav-link"><i class="fas fa-user-tie"></i> Mi Profesor</a>
-						</li>
-						<li class="nav-item">
-							<a href="/perfil" class="dropdown-item nav-link"><i class="fas fa-wrench"></i> Configuracion</a>
-						</li>
-						<div class="dropdown-divider"></div>
 						<li>
 							<a href="{{route('logout')}}" class="dropdown-item nav-link"><i class="fa fa-fw fa-power-off"></i> Cerrar Sesion</a>
 						</li>
