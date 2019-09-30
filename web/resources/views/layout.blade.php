@@ -129,6 +129,7 @@
 			</div>
 		</div>
 		<!-- Footer -->
+	<div class="container-fluid">
 		<div class="row flex-xl-nowrap">
 			<div class="col-12 bg-dark border-top border-dark">
 				<div class="text-center">
@@ -143,7 +144,8 @@
 				</div>
 			</div>
 		</div>
-		<!-- Fin Footer -->
 	</div>
+		<!-- Fin Footer -->
+</div>
 </body>
 </html>
