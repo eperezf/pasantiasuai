@@ -8,6 +8,9 @@
       {{ session()->get('error') }}
     </div><br />
   @endif
+	<div class="row justify-content-md-center mb-2">
+		<h1>Inscripción de pasantía</h1>
+	</div>
 	@include('pasantia.pasos', ['statusPaso0'=>$statusPaso0, 'statusPaso1'=>$statusPaso1, 'statusPaso2'=>$statusPaso2, 'statusPaso3'=>$statusPaso3, 'statusPaso4'=>$statusPaso4])
 	<div class="row justify-content-md-center mb-5">
 		<h2>Paso 0: Reglamento</h2>
