@@ -1,21 +1,27 @@
 <?php
 
-namespace App\Mail;
+namespace App\Jobs;
 
 use App\Pasantia;
 use App\User;
 use App\Empresa;
 use App\EvalTutor;
+use App\Mail\infoAlumno;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
 
-class infoAlumno extends Mailable
-{
-  use Queueable, SerializesModels;
+class QueueEmailJob implements ShouldQueue {
+  use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+  /**
+  * Create a new job instance.
+  *
+  * @return void
+  */
   public $pasantia;
 	public $user;
 	public $empresa;
@@ -30,9 +36,14 @@ class infoAlumno extends Mailable
 		$this->evalTutor = $evalTutor;
 		$this->mailSubject = $mailSubject;
 		$this->mailView = $mailView;
-  }
-  public function build()
-  {
-    return $this->subject($this->mailSubject)->view($this->mailView);
+	}
+
+	/**
+  * Execute the job.
+  *
+  * @return void
+  */
+  public function handle() {
+		Mail::to($this->user->email)->send(new InfoAlumno($this->pasantia, $this->user, $this->empresa, $this->evalTutor, $this->mailSubject, $this->mailView));
   }
 }
