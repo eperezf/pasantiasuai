@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\infoAlumno;
+use App\Jobs\QueueEmailJob;
+use App\Mail\emailSend;
 use App\Exports\ExportViews;
 use App\Repositories\PasantiasRepository;
 use Maatwebsite\Excel\Facades\Excel;
@@ -38,8 +39,11 @@ class ListadoInscripcionController extends Controller
   //Enviar mail a alumno
   public function enviarMailNotificacion($pasantia)
   {
-    $user = User::where('idUsuario', $pasantia->idAlumno)->first();
-    Mail::to($user->email)->send(new InfoAlumno($pasantia, $user));
+		$user = User::where('idUsuario', $pasantia->idAlumno)->first();
+		$mailSubject = 'Correo pasos modificados alumno';
+		$mailView = 'emails.infoAlumno';
+		$mailJob = (new QueueEmailJob($mailSubject, $mailView, $pasantia, $user));
+		dispatch($mailJob);
   }
 
   /*
