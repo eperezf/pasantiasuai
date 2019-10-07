@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\QueueEmailJob;
-use App\Mail\infoAlumno;
+use App\Mail\emailSend;
 use App\Exports\ExportViews;
 use App\Repositories\PasantiasRepository;
 use Maatwebsite\Excel\Facades\Excel;
@@ -42,7 +42,7 @@ class ListadoInscripcionController extends Controller
 		$user = User::where('idUsuario', $pasantia->idAlumno)->first();
 		$mailSubject = 'Correo pasos modificados alumno';
 		$mailView = 'emails.infoAlumno';
-		$mailJob = (new QueueEmailJob($pasantia, $user, null, null, $mailSubject, $mailView));
+		$mailJob = (new QueueEmailJob($mailSubject, $mailView, $pasantia, $user));
 		dispatch($mailJob);
   }
 
