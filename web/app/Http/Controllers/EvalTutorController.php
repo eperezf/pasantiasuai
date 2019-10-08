@@ -93,6 +93,6 @@ class EvalTutorController extends Controller{
 		$pasantia = Pasantia::where('idPasantia', $proyecto->idPasantia)->first();
 		$alumno = User::where('idUsuario', $pasantia->idAlumno)->first();
 
-		return view('evalTutor.ver', compact('evaluacion'), compact('alumno'));
+		return view('evalTutor.ver', compact('evaluacion'), compact('alumno'), compact('proyecto'));
 	}
 }
