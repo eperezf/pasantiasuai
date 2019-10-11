@@ -185,13 +185,11 @@
 				<div class="form-group">
 					<p>Tengo un familiar que trabaja en la empresa o es socio/dueño de esta</p>
 					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" name="pariente" id="pariente" value="0" @if
-							($datosPasantias['parienteEmpresaPasantia']==0) checked @endif required>
+						<input class="form-check-input" type="radio" name="pariente" id="pariente" value="0" @if($datosPasantias['parienteEmpresaPasantia']==0) checked @endif required>
 						<label class="form-check-label" for="parienteno">No</label>
 					</div>
 					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" name="pariente" id="pariente" value="1" @if
-							($datosPasantias['parienteEmpresaPasantia']==1) checked @endif>
+						<input class="form-check-input" type="radio" name="pariente" id="pariente" value="1" @if($datosPasantias['parienteEmpresaPasantia']==1) checked @endif>
 						<label class="form-check-label" for="parientesi">Sí</label>
 					</div>
 				</div>

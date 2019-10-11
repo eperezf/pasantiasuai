@@ -3,7 +3,7 @@
 @section('title', 'Inicio')
 @section('contenido')
 
-<h1 class=""> Bienvenido a la plataforma de gestión FIC:</h1>
+<h1 class="text-center"> Bienvenido a la plataforma de gestión FIC:</h1>
 <div class="container">
   <div class="row">
     <div class="col-12">
@@ -42,7 +42,7 @@
             </div>
           </div>
         </div>
-        
+
         <div class="row">
           <div class="col-sm-6 my-3">
             <div class="card">
@@ -74,10 +74,10 @@
             </div>
           </div>
         </div>
-        
+
         @else <!-- Usuarios normales -->
-        
-        
+
+
         <!-- Script permitir popover en la pagina -->
         <script>
           $(function () {
@@ -87,7 +87,7 @@
         <!-- botones popover -->
         <!-- terminar informacion paso 4 cuando este listo -->
         <!-- boton popover pasantia -->
-        <button type="button" class="btn btn-lg btn-light m-3" data-toggle="popover" data-placement="bottom" title="Pasantia" 
+        <button type="button" class="btn btn-lg btn-light m-3" data-toggle="popover" data-placement="bottom" title="Pasantia"
         data-content="
         @if ($pasantia == null)
         Aún no ha empezado el proceso de su pasantía.
@@ -140,7 +140,7 @@
       El profesor tutor de su pasantía aún no ha aceptado el mail de confirmación.
       @elseif ($pasantia->statusPaso3 == 4)
       El profesor tutor de su pasantía ha confirmado el mail.
-      @else 
+      @else
       Ha ocurrido un error, favor de intentar nuevamente.
       @endif">
 					<i class="fas fa-user-tie"></i> Mi profesor
@@ -155,7 +155,7 @@
     La empresa {{$empresa->nombre}} en la que realizará su pasantía aún no ha finalizado su proceso de convenio con la Universidad.
     @elseif ($empresa != null && $empresa->status == 1)
     La empresa {{$empresa->nombre}} en la que realizará su pasantía tiene su convenio activado con la universidad
-    @else 
+    @else
     Ha ocurrido un error, favor de intentar nuevamente.
     @endif">
 					<i class="fas fa-industry"></i> Mi empresa

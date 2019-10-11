@@ -44,7 +44,7 @@ class CreateProyectoTable extends Migration
 
 
             $table->foreign('idPasantia')
-                ->references('idPasantia')->on('pasantia');
+                ->references('idPasantia')->on('pasantia')->onDelete('cascade');
 
             $table->foreign('idProfesor')
                 ->references('idUsuario')->on('users');

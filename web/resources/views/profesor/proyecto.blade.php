@@ -72,14 +72,16 @@
     <p>{{$proyecto->planificacion}}</p>
   </div>
 </div>
-<form action="/profesor/proyecto/{{$proyecto->idProyecto}}/feedback" method="post">
-  @csrf
-  <div class="form-group">
-    <label for="comentarios">Ingrese sus comentarios aquí:</label>
-    <textarea class="form-control" id="comentario" name="comentario" rows="3">{{$proyecto->comentario}}</textarea>
-  </div>
-  <button type="submit" name="botonAccion" value="aprobar" class="btn btn-success mb-2">Aprobar proyecto</button>
-  <button type="submit" name="botonAccion" value="objetar" class="btn btn-danger mb-2">Objetar proyecto</button>
-</form>
+<fieldset @if($proyecto->status >= 3 ) disabled="disabled" @endif>
+  <form action="/profesor/proyecto/{{$proyecto->idProyecto}}/feedback" method="post">
+    @csrf
+    <div class="form-group">
+      <label for="comentarios">Ingrese sus comentarios aquí:</label>
+      <textarea class="form-control" id="comentario" name="comentario" rows="3">{{$proyecto->comentario}}</textarea>
+    </div>
+    <button type="submit" name="botonAccion" value="aprobar" class="btn btn-success mb-2">Aprobar proyecto</button>
+    <button type="submit" name="botonAccion" value="objetar" class="btn btn-danger mb-2">Objetar proyecto</button>
+  </form>
+</fieldset>
 
 @endsection
