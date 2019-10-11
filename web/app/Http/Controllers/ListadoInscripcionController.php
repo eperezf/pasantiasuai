@@ -88,9 +88,9 @@ class ListadoInscripcionController extends Controller
     if (Auth::user()->rol >= 4) {
       $pasantia = Pasantia::find($id);
       if ($accion == 'Validar') {
-        $pasantia->statusPaso4 = 3;
-      } elseif ($accion == 'Rechazar') {
         $pasantia->statusPaso4 = 4;
+      } elseif ($accion == 'Rechazar') {
+        $pasantia->statusPaso4 = 3;
       }
       $pasantia->save();
       return redirect('admin/listadoInscripcion')->with('success', 'Operacion realizada correctamente.');
