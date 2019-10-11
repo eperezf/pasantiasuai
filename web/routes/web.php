@@ -91,5 +91,6 @@ Route::delete('/inscripcion/destroy/{id}','PasantiaController@destroy')->name('i
 Route::post('evaluacion/{id}','EvalTutorController@save')->name('evalTutor.save');
 Route::get('evaluacion/{id}', 'EvalTutorController@show')->name('evalTutor.show');
 Route::get('evaluacion/enviar/{idAlumno}', 'EvalTutorController@enviar');
+Route::post('evaluacion/enviar/enviarSeleccionados', 'EvalTutorController@enviarSeleccionados');
 Route::get('evaluacion/listado/{idProyecto}', 'EvalTutorController@listado')->name('EvalTutor.listado')->middleware('auth', 'noAlumno');
 Route::get('evaluacion/ver/{idEvaluacion}', 'EvalTutorController@ver')->middleware('auth', 'noAlumno');
