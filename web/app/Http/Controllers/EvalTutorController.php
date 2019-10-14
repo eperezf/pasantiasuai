@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Jobs\QueueEmailJob;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Mail\EvalTutorMail;
@@ -77,11 +77,16 @@ class EvalTutorController extends Controller{
 	}
 
 	public function enviarSeleccionados(Request $request) {
-		//$request->btSelectItem es el ID del alumno, se obtiene el valor del ID del alumno en cada checkbox
-		$idAlumnos = $request->btSelectItem;
+		//$request->selectAlumno es el ID del alumno, se obtiene el valor del ID del alumno en cada checkbox
+		$idAlumnos = $request->selectAlumno;
+
 		foreach ($idAlumnos as $idAlumno) {
 			$user = User::where('idUsuario', $idAlumno)->first();
 			$pasantia = Pasantia::where('idAlumno', $idAlumno)->first();
+
+			$mailSubject = 'Correo evaluación pasantía';
+			$mailView = 'emails.evalTutor';
+
 			if ($pasantia->nombreJefe) {
 				$proyecto = Proyecto::where('idPasantia', $pasantia->idPasantia)->first();
 				$empresa = Empresa::where('idEmpresa', $pasantia->idEmpresa)->first();
@@ -89,7 +94,8 @@ class EvalTutorController extends Controller{
 				$evaluacionPendiente = EvalTutor::where('idProyecto', $proyecto->idProyecto)->where('certificadoTutor', 0)->first();
 				//Si ya tiene una instancia de evaluacion pendiente, re enviar
 				if ($evaluacionPendiente) {
-					Mail::to($pasantia->correoJefe)->send(new EvalTutorMail($pasantia, $user, $empresa, $evaluacionPendiente));
+					$mailJob = (new QueueEmailJob($mailSubject, $mailView, $pasantia, $user, $empresa, $evaluacionPendiente));
+					dispatch($mailJob);
 				}
 				//Nueva instancia de evaluacion para el tutor
 				$evalTutor = new EvalTutor;
@@ -97,11 +103,11 @@ class EvalTutorController extends Controller{
 				$evalTutor->idProyecto = $proyecto->idProyecto;
 				$evalTutor->save();
 				//Envia mail
-				Mail::to($pasantia->correoJefe)->send(new EvalTutorMail($pasantia, $user, $empresa, $evalTutor));
+				$mailJob = (new QueueEmailJob($mailSubject, $mailView, $pasantia, $user, $empresa, $evalTutor));
+				dispatch($mailJob);
 			}
 		}
-		//RETURN PARA DEBUG
-		return $request;
+		return redirect('/profesor')->with('success', 'Correos enviados correctamente');
 	}
 
 	public function listado($idProyecto){

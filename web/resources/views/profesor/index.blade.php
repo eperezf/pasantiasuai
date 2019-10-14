@@ -32,7 +32,7 @@
 					<label for="submit">Enviar correo de evaluacion de desempeño a todos los seleccionados</label><br>
 					<button class="btn btn-secondary" type="submit" id="submit">Enviar</button>
 				</div>
-				<table class="table" id="table" data-toggle="table" data-sortable="true" data-search="true" data-locale="es-CL">
+				<table class="table" id="table" data-toggle="table" data-sortable="true" data-search="true" data-locale="es-CL" data-select-item-name='selectAlumno[]'>
 					<thead>
 						<tr>
 							<th class="bs-checkbox" data-field="state"><div class="th-inner"><input name="btSelectAll" type="checkbox"></div></th>
@@ -46,7 +46,7 @@
 					<tbody>
 						@foreach($proyectos as $key => $proyecto)
 						<tr>
-							<td class="bs-checkbox"><input data-index="{{$key}}" value="{{$proyecto->alumno->idUsuario}}" name="btSelectItem" type="checkbox"></td>
+							<td class="bs-checkbox"><input data-index="{{$key}}" value="{{$proyecto->alumno->idUsuario}}" name="selectAlumno[]" id="asd" type="checkbox"></td>
 							<td>{{$proyecto->alumno->nombres}} {{$proyecto->alumno->apellidoPaterno}}</td>
 							<td>{{$proyecto->alumno->email}}</td>
 							<td>{{$proyecto->empresa->nombre}}</td>
