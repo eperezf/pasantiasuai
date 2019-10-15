@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Jobs\QueueEmailJob;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Mail\EvalTutorMail;
@@ -76,6 +76,40 @@ class EvalTutorController extends Controller{
 		return redirect('/profesor')->with('success', 'Correo enviado correctamente');
 	}
 
+	public function enviarSeleccionados(Request $request) {
+		//$request->selectAlumno es el ID del alumno, se obtiene el valor del ID del alumno en cada checkbox
+		$idAlumnos = $request->selectAlumno;
+
+		foreach ($idAlumnos as $idAlumno) {
+			$user = User::where('idUsuario', $idAlumno)->first();
+			$pasantia = Pasantia::where('idAlumno', $idAlumno)->first();
+
+			$mailSubject = 'Correo evaluación pasantía';
+			$mailView = 'emails.evalTutor';
+
+			if ($pasantia->nombreJefe) {
+				$proyecto = Proyecto::where('idPasantia', $pasantia->idPasantia)->first();
+				$empresa = Empresa::where('idEmpresa', $pasantia->idEmpresa)->first();
+				//Encuentra evaluacion del alumno
+				$evaluacionPendiente = EvalTutor::where('idProyecto', $proyecto->idProyecto)->where('certificadoTutor', 0)->first();
+				//Si ya tiene una instancia de evaluacion pendiente, re enviar
+				if ($evaluacionPendiente) {
+					$mailJob = (new QueueEmailJob($mailSubject, $mailView, $pasantia, $user, $empresa, $evaluacionPendiente));
+					dispatch($mailJob);
+				}
+				//Nueva instancia de evaluacion para el tutor
+				$evalTutor = new EvalTutor;
+				$evalTutor->tokenCorreo = $string = str_random(10);
+				$evalTutor->idProyecto = $proyecto->idProyecto;
+				$evalTutor->save();
+				//Envia mail
+				$mailJob = (new QueueEmailJob($mailSubject, $mailView, $pasantia, $user, $empresa, $evalTutor));
+				dispatch($mailJob);
+			}
+		}
+		return redirect('/profesor')->with('success', 'Correos enviados correctamente');
+	}
+
 	public function listado($idProyecto){
     $proyecto = Proyecto::where('idProyecto', $idProyecto)->first();
     $evaluaciones = EvalTutor::where('idProyecto', $proyecto->idProyecto)->get();
@@ -96,6 +130,6 @@ class EvalTutorController extends Controller{
 		$pasantia = Pasantia::where('idPasantia', $proyecto->idPasantia)->first();
 		$alumno = User::where('idUsuario', $pasantia->idAlumno)->first();
 
-		return view('evalTutor.ver', compact('evaluacion'), compact('alumno'));
+		return view('evalTutor.ver', compact('evaluacion'), compact('alumno'), compact('proyecto'));
 	}
 }
