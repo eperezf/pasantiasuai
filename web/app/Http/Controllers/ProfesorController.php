@@ -30,7 +30,7 @@ class ProfesorController extends Controller
   public function verProyecto($id){
     $proyecto = Proyecto::find($id);
     $pasantia = Pasantia::find($proyecto->idPasantia);
-    $alumno = User::find($pasantia->idAlumno)->first();
+    $alumno = User::find($pasantia->idAlumno);
     return view('profesor.proyecto', compact('proyecto'), compact('alumno'));
   }
 
