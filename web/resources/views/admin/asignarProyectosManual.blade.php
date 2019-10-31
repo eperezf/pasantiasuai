@@ -35,7 +35,7 @@
     @endforeach
   </div>
   <div class="col">
-    <h4>listado de proyectos asignados a {{$profesor->nombres}}</h4>
+    <h4>Listado de proyectos asignados a {{$profesor->nombres}}</h4>
     @foreach($proyectos as $proyecto)
     @if($proyecto->idProfesor == $profesor->idUsuario)
     <div class="card">
