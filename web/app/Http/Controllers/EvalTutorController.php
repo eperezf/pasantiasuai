@@ -94,15 +94,16 @@ class EvalTutorController extends Controller{
 					if ($evaluacionPendiente) {
 						$mailJob = (new QueueEmailJob($mailSubject, $mailView, $pasantia, $user, $empresa, $evaluacionPendiente));
 						dispatch($mailJob);
+					} else {
+						//Nueva instancia de evaluacion para el tutor
+						$evalTutor = new EvalTutor;
+						$evalTutor->tokenCorreo = $string = str_random(10);
+						$evalTutor->idProyecto = $proyecto->idProyecto;
+						$evalTutor->save();
+						//Envia mail
+						$mailJob = (new QueueEmailJob($mailSubject, $mailView, $pasantia, $user, $empresa, $evalTutor));
+						dispatch($mailJob);
 					}
-					//Nueva instancia de evaluacion para el tutor
-					$evalTutor = new EvalTutor;
-					$evalTutor->tokenCorreo = $string = str_random(10);
-					$evalTutor->idProyecto = $proyecto->idProyecto;
-					$evalTutor->save();
-					//Envia mail
-					$mailJob = (new QueueEmailJob($mailSubject, $mailView, $pasantia, $user, $empresa, $evalTutor));
-					dispatch($mailJob);
 				}
 			}
 			return redirect('/profesor')->with('success', 'Correos enviados correctamente');
