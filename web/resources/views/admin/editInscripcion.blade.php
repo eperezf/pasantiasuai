@@ -19,7 +19,7 @@
 @endif
 
 <div class="container">
-	<div class="row justify-content-center">
+	<div class="row ">
 		<div class="col-8">
 			@if ($errors->any())
 			<div class="alert alert-danger">
@@ -30,19 +30,20 @@
 				</ul>
 			</div><br />
 			@endif
-			<h2 class="mt-4">Editando pasantia de alumno {{$datosPasantias['nombresUsuario']}}
-				{{$datosPasantias['apellidoPaternoUsuario']}} {{$datosPasantias['apellidoMaternoUsuario']}}</h2>
+			<h2 class="mt-4">Editor de pasantias</h2>
+				<h5>Alumno: {{$datosPasantias['nombresUsuario']}}
+						{{$datosPasantias['apellidoPaternoUsuario']}} {{$datosPasantias['apellidoMaternoUsuario']}}</h5>
 		</div>
 	</div>
 	<!-- Seleccion pasos -->
-	<div class="row justify-content-center">
+	<div class="row">
 		<div class="col-8">
-			<h3 class="my-4">Seleccione un paso para editar</h3>
+			<h5 class="my-4">Seleccione un paso para editar</h5>
 		</div>
 	</div>
 	<!-- Botones acciones -->
-	<div class="row justify-content-md-center mt-2 mb-5">
-		<div class="col-md-9 text-center">
+	<div class="row mt-2 mb-5">
+		<div class="col-md-9">
 			<div class="btn-group">
 				<button type="button" class="btn btn-primary dropdown-toggle mx-1" data-toggle="dropdown" aria-haspopup="true"
 					aria-expanded="false">
@@ -93,7 +94,7 @@
 			</div>
 
 			<!-- End Modal Paso 2 Destroy -->
-			<div class="btn-group">
+			{{-- <div class="btn-group">
 				<button type="button" class="btn btn-primary dropdown-toggle mx-1" data-toggle="dropdown" aria-haspopup="true"
 					aria-expanded="false">
 					Paso 3
@@ -109,10 +110,10 @@
 					<a class="dropdown-item" href="#"><button class="btn btn-danger" type="button" data-toggle="modal"
 							data-target="#paso3DestroyCheck">Eliminar</button></a>
 				</div>
-			</div>
+			</div> --}}
 
 			<!-- Modal Paso 3 Destroy -->
-			<div class="modal fade" id="paso3DestroyCheck" tabindex="0" role="dialog" aria-labelledby="modelTitleId"
+			{{-- <div class="modal fade" id="paso3DestroyCheck" tabindex="0" role="dialog" aria-labelledby="modelTitleId"
 				aria-hidden="true">
 				<form method="post" action="{{route('listadoInscripcion.destroyPaso3', $datosPasantias['idPasantia'])}}">
 					@csrf
@@ -141,14 +142,14 @@
 						</div>
 					</div>
 				</form>
-			</div>
+			</div> --}}
 			<!-- End Modal Paso 3 Destroy -->
 		</div>
 	</div>
 
 	<!-- Menu edit paso 2 -->
 	<div class="row justify-content-md-center mt-2 mb-5" id="paso2Edit" style="display: none;">
-		<div class="col-md-9 text-center">
+		<div class="col-md-9">
 			<form method="post" action="{{route('listadoInscripcion.updatePaso2', $datosPasantias['idPasantia'])}}">
 				@csrf
 				@method('POST')

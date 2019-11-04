@@ -24,7 +24,7 @@
 				@csrf
 				<div class="form-group">
 			    <label for="name">Nombre</label>
-			    <input class="form-control" id="nombre" name="nombre" aria-describedby="nombreHelp" placeholder="Nombre de la empresa">
+			    <input class="form-control" id="nombre" name="nombre" aria-describedby="nombreHelp" placeholder="Nombre de la empresa" required>
 			  </div>
 				<div class="form-group">
 			    <label for="rubro">Rubro</label>
@@ -37,7 +37,7 @@
 			  </div>
         <div class="form-group">
 			    <label for="correoContacto">Correo(s) de contacto</label>
-			    <input class="form-control" id="correoContacto" name="correoContacto" aria-describedby="correoContactoHelp" placeholder="email@empresa.com, email2@empresa.com">
+			    <input class="form-control" id="correoContacto" name="correoContacto" aria-describedby="correoContactoHelp" placeholder="email@empresa.com, email2@empresa.com" required>
           <small id="rubroHelp" class="form-text text-muted">Si es más de uno, separarlos por coma.</small>
 			  </div>
         <div class="form-check">

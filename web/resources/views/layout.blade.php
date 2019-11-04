@@ -45,7 +45,7 @@
 	<nav class="navbar navbar-expand navbar-dark bg-dark">
 		<!-- Logo SVG UAI -->
 		<a class="navbar-brand mr-1" href="https://www.uai.cl">
-			<img src="../media/images/logouai.svg" alt="Universidad Adolfo Ibáñez">
+			<img src="{{asset('media/images/').'/'.'logouai.svg'}}" alt="Universidad Adolfo Ibáñez">
 		</a>
 		<!-- Boton Collapse Sidebar -->
 		<button class="btn btn-link text-white" type="button" data-toggle="collapse" data-target="#MenuSidebar" aria-expanded="true" aria-controls="MenuSidebar" href="#">
@@ -63,16 +63,6 @@
 					</button>
 					<!-- Menu desplegable del perfil -->
 					<ul class="dropdown-menu dropdown-menu-right">
-						<li class="nav-item">
-							<a href="{{route('inscripcion.resumen')}}" class="dropdown-item nav-link"><i class="fas fa-paste"></i> Mis Pasantias</a>
-						</li>
-						<li class="nav-item">
-							<a href="#" class="dropdown-item nav-link"><i class="fas fa-user-tie"></i> Mi Profesor</a>
-						</li>
-						<li class="nav-item">
-							<a href="/perfil" class="dropdown-item nav-link"><i class="fas fa-wrench"></i> Configuracion</a>
-						</li>
-						<div class="dropdown-divider"></div>
 						<li>
 							<a href="{{route('logout')}}" class="dropdown-item nav-link"><i class="fa fa-fw fa-power-off"></i> Cerrar Sesion</a>
 						</li>
@@ -116,18 +106,21 @@
 				</div>
 			</div>
 			<!-- Fin Sidebar -->
-			<div class="col-12 col-md-9 col-xl-10 text-center">
+			<div class="col-12 col-md-9 col-xl-10">
 				<!-- Contenido del resto de la pagina -->
 				<div class="container-fluid py-3">
 					<div class="row">
 						<div class="col-12">
+
 							@yield('contenido')
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
 		<!-- Footer -->
+	<div class="container-fluid">
 		<div class="row flex-xl-nowrap">
 			<div class="col-12 bg-dark border-top border-dark">
 				<div class="text-center">
@@ -142,7 +135,8 @@
 				</div>
 			</div>
 		</div>
-		<!-- Fin Footer -->
 	</div>
+		<!-- Fin Footer -->
+
 </body>
 </html>
