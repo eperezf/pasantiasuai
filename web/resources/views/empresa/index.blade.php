@@ -24,7 +24,7 @@
 	</div>
 	<div class="row">
 		<div class="table-responsive bootstrap-table">
-			<table class="table" id="table" data-toggle="table" data-sortable="true" data-search="true" data-locale="es-CL">
+			<table class="table" id="table" data-toggle="table" data-sortable="true" data-search="true" data-locale="es-CL" data-show-subtext="true" data-live-search="true">
 			  <thead>
 			    <tr>
 			      <th scope="col" data-field="nombre" data-sortable="true"><div class="th-inner">Nombre</div></th>

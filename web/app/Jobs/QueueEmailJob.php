@@ -8,6 +8,7 @@ use App\Empresa;
 use App\EvalTutor;
 use App\Proyecto;
 use App\Mail\emailSend;
+use Mail;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;

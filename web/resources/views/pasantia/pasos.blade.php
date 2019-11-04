@@ -44,4 +44,4 @@
 		<a class="btn btn-lg btn-outline-success" href="{{route('inscripcion.4.view')}}" role="button">Paso 4 <i class="fas fa-check ml-1"></i></a>
 		@endif
 	</div>
-</div
+</div>
