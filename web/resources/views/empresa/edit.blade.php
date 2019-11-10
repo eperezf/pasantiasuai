@@ -25,7 +25,7 @@
 				@method('PATCH')
 				<div class="form-group">
 			    <label for="name">Nombre</label>
-			    <input class="form-control" id="nombre" name="nombre" aria-describedby="nombreHelp" placeholder="Nombre de la empresa" value="{{$empresa->nombre}}">
+			    <input class="form-control" id="nombre" name="nombre" aria-describedby="nombreHelp" placeholder="Nombre de la empresa" value="{{$empresa->nombre}}" required>
 			  </div>
 				<div class="form-group">
 			    <label for="rubro">Rubro</label>
@@ -35,11 +35,12 @@
 				<div class="form-group">
 			    <label for="urlWeb">Página web</label>
 			    <input class="form-control" id="urlWeb" name="urlWeb" aria-describedby="urlWebHelp" placeholder="https://..." value="{{$empresa->urlWeb}}">
+					<small id="urlWebHelp" class="form-text text-muted">Ej.: http://empresa.com</small>
 			  </div>
         <div class="form-group">
 			    <label for="correoContacto">Correo(s) de contacto</label>
-			    <input class="form-control" id="correoContacto" name="correoContacto" aria-describedby="correoContactoHelp" placeholder="email@empresa.com, email2@empresa.com"value="{{$empresa->correoContacto}}">
-          <small id="rubroHelp" class="form-text text-muted">Si es más de uno, separarlos por coma.</small>
+			    <input class="form-control" id="correoContacto" name="correoContacto" aria-describedby="correoContactoHelp" placeholder="email@empresa.com"value="{{$empresa->correoContacto}}" required>
+          <small id="correoContactoHelp" class="form-text text-muted">correo@empresa.com</small>
 			  </div>
         <div class="form-check">
           <input class="form-check-input" type="checkbox" value="1" id="status" name="status" @if ($empresa->status == 1) checked @else @endif>

@@ -1,12 +1,3 @@
-/*jshint esversion: 6 */
-
-// JQUERY Colapsar menu al clikear boton sidebarCollapse
-$(document).ready(function () {
-  $('#sidebarCollapse').on('click', function () {
-    $('#sidebar').toggleClass('active');
-    $(this).toggleClass('active');
-  });
-});
 
 //FUNCION FECHA
 function fecha(){
