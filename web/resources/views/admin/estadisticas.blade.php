@@ -112,7 +112,7 @@ window.chart = new Highcharts.chart({
 							},
 							//Mostrar contenido
 							headingText: this.series.data[this.x].name,
-							maincontentText: 'Fecha: ' + fecha() + ':<br /> ' +
+							maincontentText:
 							'<table class="table table-striped">' +
 							'<thead>' +
 							'<tr>' +
@@ -168,20 +168,20 @@ window.chart = new Highcharts.chart({
 		}],
 		//Datos
 		data: [{
-			y: {!! json_encode($estadisticas['pasantiasPaso1']) !!},
-			porcentajePostulantes: {!! (json_encode($estadisticas['pasantiasPaso1']) / json_encode($estadisticas['pasantiasTotal'])) * 100 !!},
+			y: {!! json_encode($estadisticas['pasantiasPaso1Count']) !!},
+			porcentajePostulantes: {!! (json_encode($estadisticas['pasantiasPaso1Count']) / json_encode($estadisticas['pasantiasTotal'])) * 100 !!},
 			name: 'Requisitos académicos'
 		}, {
-			y: {!! json_encode($estadisticas['pasantiasPaso2']) !!},
-			porcentajePostulantes: {!! (json_encode($estadisticas['pasantiasPaso2']) / json_encode($estadisticas['pasantiasTotal'])) * 100 !!},
+			y: {!! json_encode($estadisticas['pasantiasPaso2Count']) !!},
+			porcentajePostulantes: {!! (json_encode($estadisticas['pasantiasPaso2Count']) / json_encode($estadisticas['pasantiasTotal'])) * 100 !!},
 			name: 'Inscripción pasantía'
 		}, {
-			y: {!! json_encode($estadisticas['pasantiasPaso3']) !!},
-			porcentajePostulantes: {!! (json_encode($estadisticas['pasantiasPaso3']) / json_encode($estadisticas['pasantiasTotal'])) * 100 !!},
+			y: {!! json_encode($estadisticas['pasantiasPaso3Count']) !!},
+			porcentajePostulantes: {!! (json_encode($estadisticas['pasantiasPaso3Count']) / json_encode($estadisticas['pasantiasTotal'])) * 100 !!},
 			name: 'Inscripción supervisor',
 		}, {
-			y: {!! json_encode($estadisticas['pasantiasPaso4']) !!},
-			porcentajePostulantes: {!! (json_encode($estadisticas['pasantiasPaso4']) / json_encode($estadisticas['pasantiasTotal'])) * 100 !!},
+			y: {!! json_encode($estadisticas['pasantiasPaso4Count']) !!},
+			porcentajePostulantes: {!! (json_encode($estadisticas['pasantiasPaso4Count']) / json_encode($estadisticas['pasantiasTotal'])) * 100 !!},
 			name: 'Inscripción proyecto',
 		}],
 		showInLegend: false
@@ -245,7 +245,7 @@ window.chart = new Highcharts.chart({
 								y: e.pageY || e.clientY
 							},
 							headingText: this.series.data[this.x].name,
-							maincontentText: 'Fecha: ' + fecha() + ':<br /> ' +
+							maincontentText:
 							// TABLA FIJA -- DUMMY
 							'<table class="table table-striped">' +
 							'<thead>' +
@@ -395,7 +395,7 @@ window.chart = new Highcharts.chart({
 								y: e.pageY || e.clientY
 							},
 							headingText: this.series.data[this.x].name,
-							maincontentText: 'Fecha: ' + fecha() + ':<br /> ' +
+							maincontentText:
 							// TABLA FIJA -- DUMMY
 							'<table class="table table-striped">' +
 							'<thead>' +
@@ -445,18 +445,18 @@ window.chart = new Highcharts.chart({
     colorByPoint: true,
     data: [{
       name: 'Empresas con convenio',
-			cantidadEmpresas: {!! json_encode($estadisticas['empresasValidadas']) !!},
-      y: {!! (json_encode($estadisticas['empresasValidadas']) / json_encode($estadisticas['empresasTotal'])) * 100 !!},
+			cantidadEmpresas: {!! json_encode($estadisticas['empresasValidadasCount']) !!},
+      y: {!! (json_encode($estadisticas['empresasValidadasCount']) / json_encode($estadisticas['empresasTotal'])) * 100 !!},
       sliced: true,
       selected: true
     }, {
       name: 'Empresas en proceso',
-			cantidadEmpresas: {!! json_encode($estadisticas['empresasEnProceso']) !!},
-      y: {!! (json_encode($estadisticas['empresasEnProceso']) / json_encode($estadisticas['empresasTotal'])) * 100 !!},
+			cantidadEmpresas: {!! json_encode($estadisticas['empresasEnProcesoCount']) !!},
+      y: {!! (json_encode($estadisticas['empresasEnProcesoCount']) / json_encode($estadisticas['empresasTotal'])) * 100 !!},
     }, {
       name: 'Empresas sin convenio',
-			cantidadEmpresas: {!! json_encode($estadisticas['empresasNoValidadas']) !!},
-      y: {!! (json_encode($estadisticas['empresasNoValidadas']) / json_encode($estadisticas['empresasTotal'])) * 100 !!},
+			cantidadEmpresas: {!! json_encode($estadisticas['empresasNoValidadasCount']) !!},
+      y: {!! (json_encode($estadisticas['empresasNoValidadasCount']) / json_encode($estadisticas['empresasTotal'])) * 100 !!},
     }]
   }]
 });
