@@ -31,54 +31,43 @@
 
 
 <script>
+//Fecha en forma SIF (self invoking function)
+(function() {
+	const hoy = new Date().getFullYear() + '-' + (new Date().getMonth()+1) + '-' + new Date().getDate();
+	document.getElementById('estadisticas').innerHTML += hoy;
+})();
 
-//FECHA ACTUAL
-appendFecha('estadisticas');
-/////////////
-// // TODO: REFACTORIZAR EL CODIGO EN ARCHIVO JS APARTE DE HIGHCHARTS Y LLAMAR SOLO FUNCIONES EN ESTE LUGAR
-////////////
 
-/*
-/
-/
-/
-/
-/
-/
-/
-*/
-// GRAFICO 1 //
-//GRAFICO POSTULANTES VS NUMERO DE PASO
+//Grafico pasos de cada alumno
 window.chart = new Highcharts.chart({
-	//EN DONDE UBICARLO
 	chart: {
+		//forma
 		type: 'bar',
+		//ubicacion
 		renderTo: 'pasos',
+		//tamaño
 		height: (9 / 16 * 75) + '%'
 	},
-
-	//TITULO
 	title: {
+		//texto titulo
 		text: 'Porcentaje de postulantes en cada paso ',
+		//estilos del titulo
 		style: {
 			fontSize: '22px'
 		}
 	},
-
-	//BOTONES DE DESCARGA
+	//Habilitar botones de descarga
 	exporting: {
 		enabled: true,
 		csv: {
 			dateFormat:'%A, %b %e, %Y'
 		}
 	},
-
-	//SACAR CREDITOS
+	//Eliminar creditos del grafico
 	credits: {
 		enabled: false
 	},
-
-	//LABEL EJE X
+	//Todo sobre el eje X
 	xAxis: {
 		type: 'category',
 		labels: {
@@ -88,8 +77,7 @@ window.chart = new Highcharts.chart({
 			}
 		}
 	},
-
-	//LABEL EJE Y
+	//Todo sobre el eje Y
 	yAxis: {
 		title: {
       text: 'Porcentaje de postulantes',
@@ -104,8 +92,7 @@ window.chart = new Highcharts.chart({
 			}
 		}
 	},
-
-	//COLORES Y LABEL DE CADA COLUMNA
+	//Columnas del grafico
 	plotOptions: {
 		series: {
 			colorByPoint: true,
@@ -116,15 +103,16 @@ window.chart = new Highcharts.chart({
 			},
 			point: {
 				events: {
+					//Que hacer al clickear una barra
 					click: function (e) {
 						hs.htmlExpand(null, {
 							pageOrigin: {
 								x: e.pageX || e.clientX,
 								y: e.pageY || e.clientY
 							},
+							//Mostrar contenido
 							headingText: this.series.data[this.x].name,
 							maincontentText: 'Fecha: ' + fecha() + ':<br /> ' +
-							// TABLA FIJA -- DUMMY
 							'<table class="table table-striped">' +
 							'<thead>' +
 							'<tr>' +
@@ -161,46 +149,46 @@ window.chart = new Highcharts.chart({
 							'</tr>' +
 							'</tbody>' +
 							'</table>'
-
 						});
 					}
 				}
 			}
 		}
 	},
-
-	//DATA
+	//Datos del grafico
 	series: [{
 		name: 'Postulantes',
 		dataLabels: [{
+			//Lo que se debe ver en el grafico
 			align: 'right',
 			format: '{y} '
 		},{
 			align: 'center',
 			format: '{point.porcentajePostulantes} %'
 		}],
+		//Datos
 		data: [{
-			y: 600,
-			porcentajePostulantes: 30,
+			y: {!! json_encode($estadisticas['pasantiasPaso1']) !!},
+			porcentajePostulantes: {!! (json_encode($estadisticas['pasantiasPaso1']) / json_encode($estadisticas['pasantiasTotal'])) * 100 !!},
 			name: 'Requisitos académicos'
 		}, {
-			y: 400,
-			porcentajePostulantes: 20,
+			y: {!! json_encode($estadisticas['pasantiasPaso2']) !!},
+			porcentajePostulantes: {!! (json_encode($estadisticas['pasantiasPaso2']) / json_encode($estadisticas['pasantiasTotal'])) * 100 !!},
 			name: 'Inscripción pasantía'
 		}, {
-			y: 800,
-			porcentajePostulantes: 40,
+			y: {!! json_encode($estadisticas['pasantiasPaso3']) !!},
+			porcentajePostulantes: {!! (json_encode($estadisticas['pasantiasPaso3']) / json_encode($estadisticas['pasantiasTotal'])) * 100 !!},
 			name: 'Inscripción supervisor',
 		}, {
-			y: 200,
-			porcentajePostulantes: 10,
+			y: {!! json_encode($estadisticas['pasantiasPaso4']) !!},
+			porcentajePostulantes: {!! (json_encode($estadisticas['pasantiasPaso4']) / json_encode($estadisticas['pasantiasTotal'])) * 100 !!},
 			name: 'Inscripción proyecto',
 		}],
 		showInLegend: false
 	}]
 });
 
-
+//Grafico de estado de pasantisa y defensas de los alumnos
 window.chart = new Highcharts.chart({
 	//EN DONDE UBICARLO
 	chart: {
@@ -211,7 +199,6 @@ window.chart = new Highcharts.chart({
 		plotBorderWidth: null,
 		plotShadow: false
 	},
-
 	//TITULO
 	title: {
 		text: 'Estado de pasantías y defensas ',
@@ -219,12 +206,10 @@ window.chart = new Highcharts.chart({
 			fontSize: '22px'
 		}
 	},
-
 	//TOOLTIP
 	tooltip: {
-			pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+		pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
 	},
-
 	//BOTONES DE DESCARGA
 	exporting: {
 		enabled: true,
@@ -232,115 +217,101 @@ window.chart = new Highcharts.chart({
 			dateFormat:'%A, %b %e, %Y'
 		}
 	},
-
 	//SACAR CREDITOS
 	credits: {
 		enabled: false
 	},
-
-		//COLORES Y LABEL DE CADA PARTE
-    plotOptions: {
-        pie: {
-            allowPointSelect: true,
-            dataLabels: {
-                enabled: true,
-                format: '<b>{point.name}</b>: {point.cantidadPasantias}',
-                style: {
-                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black',
-										fontSize: '1em'
-                }
-            }
-        },
-
-				series: {
-            cursor: 'pointer',
-						point: {
-							events: {
-								click: function (e) {
-									hs.htmlExpand(null, {
-										pageOrigin: {
-											x: e.pageX || e.clientX,
-											y: e.pageY || e.clientY
-										},
-										headingText: this.series.data[this.x].name,
-										maincontentText: 'Fecha: ' + fecha() + ':<br /> ' +
-										// TABLA FIJA -- DUMMY
-										'<table class="table table-striped">' +
-										'<thead>' +
-										'<tr>' +
-										'<th scope="col">#</th>' +
-										'<th scope="col">Nombre</th>' +
-										'<th scope="col">Apellido</th>' +
-										'<th scope="col">Carrera</th>' +
-										'</tr>' +
-										'</thead>' +
-										'<tbody>' +
-										'<tr>' +
-										'<th scope="row">1</th>' +
-										'<td>Jaime</td>' +
-										'<td>Maxwell</td>' +
-										'<td>Derecho</td>' +
-										'</tr>' +
-										'<tr>' +
-										'<th scope="row">2</th>' +
-										'<td>Juana</td>' +
-										'<td>Thomson</td>' +
-										'<td>Ingeniería Comercial</td>' +
-										'</tr>' +
-										'<tr>' +
-										'<th scope="row">3</th>' +
-										'<td>Alberta</td>' +
-										'<td>Einstein</td>' +
-										'<td>Diseño</td>' +
-										'</tr>' +
-										'<tr>' +
-										'<th scope="row">4</th>' +
-										'<td>Elizabeth</td>' +
-										'<td>Mary</td>' +
-										'<td>Psicología</td>' +
-										'</tr>' +
-										'</tbody>' +
-										'</table>'
-
-									});
-								}
-							}
-						}
+	//COLORES Y LABEL DE CADA PARTE
+  plotOptions: {
+    pie: {
+      allowPointSelect: true,
+      dataLabels: {
+        enabled: true,
+        format: '<b>{point.name}</b>: {point.cantidadPasantias}',
+        style: {
+          color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black',
+					fontSize: '1em'
         }
+      }
     },
-		//DATA
-    series: [{
-        name: 'Pasantías',
-        colorByPoint: true,
-        data: [{
-            name: 'Pasantías terminadas con defensa disponible',
-            y: 35.98,
-						cantidadPasantias: 350,
-            sliced: true,
-            selected: true
-        }, {
-            name: 'Pasantías terminadas sin defensa disponible',
-            y: 19.14,
-						cantidadPasantias: 190
-        }, {
-            name: 'Pasantías no terminadas',
-            y: 44.88,
-						cantidadPasantias: 440
-        }]
+		series: {
+      cursor: 'pointer',
+			point: {
+				events: {
+					click: function (e) {
+						hs.htmlExpand(null, {
+							pageOrigin: {
+								x: e.pageX || e.clientX,
+								y: e.pageY || e.clientY
+							},
+							headingText: this.series.data[this.x].name,
+							maincontentText: 'Fecha: ' + fecha() + ':<br /> ' +
+							// TABLA FIJA -- DUMMY
+							'<table class="table table-striped">' +
+							'<thead>' +
+							'<tr>' +
+							'<th scope="col">#</th>' +
+							'<th scope="col">Nombre</th>' +
+							'<th scope="col">Apellido</th>' +
+							'<th scope="col">Carrera</th>' +
+							'</tr>' +
+							'</thead>' +
+							'<tbody>' +
+							'<tr>' +
+							'<th scope="row">1</th>' +
+							'<td>Jaime</td>' +
+							'<td>Maxwell</td>' +
+							'<td>Derecho</td>' +
+							'</tr>' +
+							'<tr>' +
+							'<th scope="row">2</th>' +
+							'<td>Juana</td>' +
+							'<td>Thomson</td>' +
+							'<td>Ingeniería Comercial</td>' +
+							'</tr>' +
+							'<tr>' +
+							'<th scope="row">3</th>' +
+							'<td>Alberta</td>' +
+							'<td>Einstein</td>' +
+							'<td>Diseño</td>' +
+							'</tr>' +
+							'<tr>' +
+							'<th scope="row">4</th>' +
+							'<td>Elizabeth</td>' +
+							'<td>Mary</td>' +
+							'<td>Psicología</td>' +
+							'</tr>' +
+							'</tbody>' +
+							'</table>'
+						});
+					}
+				}
+			}
+    }
+  },
+	//DATA
+  series: [{
+    name: 'Pasantías',
+    colorByPoint: true,
+    data: [{
+      name: 'Pasantías terminadas con defensa disponible',
+      y: 35.98,
+			cantidadPasantias: 350,
+      sliced: true,
+      selected: true
+  	}, {
+    	name: 'Pasantías terminadas sin defensa disponible',
+    	y: 19.14,
+			cantidadPasantias: 190
+  	}, {
+    	name: 'Pasantías no terminadas',
+      y: 44.88,
+			cantidadPasantias: 440
     }]
+  }]
 });
 
-/*
-/
-/
-/
-/
-/
-/
-/
-*/
-// GRAFICO 3 //
-//GRAFICO EMPRESAS EN CONVENIO, EN PROCESO, SIN CONVENIO
+//Grafico de empresas en convenio, proceso y sin convenio
 window.chart = new Highcharts.chart({
 	//EN DONDE UBICARLO
 	chart: {
@@ -351,7 +322,6 @@ window.chart = new Highcharts.chart({
 		plotBorderWidth: null,
 		plotShadow: false,
 	},
-
 	//TITULO
 	title: {
 		text: 'Proceso de convenio de empresas para pasantías ',
@@ -359,12 +329,10 @@ window.chart = new Highcharts.chart({
 			fontSize: '22px'
 		}
 	},
-
 	//TOOLTIP
 	tooltip: {
 			pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
 	},
-
 	//BOTONES DE DESCARGA
 	exporting: {
 		enabled: true,
@@ -372,12 +340,10 @@ window.chart = new Highcharts.chart({
 			dateFormat:'%A, %b %e, %Y'
 		}
 	},
-
 	//SACAR CREDITOS
 	credits: {
 		enabled: false
 	},
-
 	//LABEL EJE X
 	xAxis: {
 		type: 'category',
@@ -388,7 +354,6 @@ window.chart = new Highcharts.chart({
 			}
 		}
 	},
-
 	//LABEL EJE Y
 	yAxis: {
 		min: 0,
@@ -406,106 +371,94 @@ window.chart = new Highcharts.chart({
 			}
 		}
 	},
-
-
-
-
-		//COLORES Y LABEL DE CADA PARTE
-    plotOptions: {
-        pie: {
-            allowPointSelect: true,
-            dataLabels: {
-                enabled: true,
-                format: '<b>{point.name}</b>: {point.cantidadEmpresas} ',
-                style: {
-                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black',
-										fontSize: '1em'
-                },
-
-            }
+	//COLORES Y LABEL DE CADA PARTE
+  plotOptions: {
+    pie: {
+      allowPointSelect: true,
+      dataLabels: {
+        enabled: true,
+        format: '<b>{point.name}</b>: {point.cantidadEmpresas} ',
+        style: {
+          color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black',
+					fontSize: '1em'
         },
-
-				series: {
-            cursor: 'pointer',
-						point: {
-							events: {
-								click: function (e) {
-									hs.htmlExpand(null, {
-										pageOrigin: {
-											x: e.pageX || e.clientX,
-											y: e.pageY || e.clientY
-										},
-										headingText: this.series.data[this.x].name,
-										maincontentText: 'Fecha: ' + fecha() + ':<br /> ' +
-										// TABLA FIJA -- DUMMY
-										'<table class="table table-striped">' +
-										'<thead>' +
-										'<tr>' +
-										'<th scope="col">#</th>' +
-										'<th scope="col">Nombre</th>' +
-										'<th scope="col">Sitio Web</th>' +
-										'<th scope="col">Rubro</th>' +
-										'</tr>' +
-										'</thead>' +
-										'<tbody>' +
-										'<tr>' +
-										'<th scope="row">1</th>' +
-										'<td>Neztle</td>' +
-										'<td>www.neztle.cl</td>' +
-										'<td>Ingeniería Civil</td>' +
-										'</tr>' +
-										'<tr>' +
-										'<th scope="row">2</th>' +
-										'<td>Falabela</td>' +
-										'<td>www.falabela.cl</td>' +
-										'<td>Ingeniería Comercial</td>' +
-										'</tr>' +
-										'<tr>' +
-										'<th scope="row">3</th>' +
-										'<td>Ryplei</td>' +
-										'<td>www.ryplei.cl</td>' +
-										'<td>Ingeniería Civil</td>' +
-										'</tr>' +
-										'<tr>' +
-										'<th scope="row">4</th>' +
-										'<td>Junbo</td>' +
-										'<td>www.junbo.cl</td>' +
-										'<td>Derecho</td>' +
-										'</tr>' +
-										'</tbody>' +
-										'</table>'
-
-									});
-								}
-							}
-						}
-        }
+      }
     },
-		//DATA
-    series: [{
-        name: 'Empresas',
-        colorByPoint: true,
-        data: [{
-            name: 'Empresas con convenio',
-						cantidadEmpresas: 265,
-            y: 53.41,
-            sliced: true,
-            selected: true
-        }, {
-            name: 'Empresas en proceso',
-						cantidadEmpresas: 140,
-            y: 28.84
-        }, {
-            name: 'Empresas sin convenio',
-						cantidadEmpresas: 85,
-            y: 17.75
-        }]
+		series: {
+			cursor: 'pointer',
+			point: {
+				events: {
+					click: function (e) {
+						hs.htmlExpand(null, {
+							pageOrigin: {
+								x: e.pageX || e.clientX,
+								y: e.pageY || e.clientY
+							},
+							headingText: this.series.data[this.x].name,
+							maincontentText: 'Fecha: ' + fecha() + ':<br /> ' +
+							// TABLA FIJA -- DUMMY
+							'<table class="table table-striped">' +
+							'<thead>' +
+							'<tr>' +
+							'<th scope="col">#</th>' +
+							'<th scope="col">Nombre</th>' +
+							'<th scope="col">Sitio Web</th>' +
+							'<th scope="col">Rubro</th>' +
+							'</tr>' +
+							'</thead>' +
+							'<tbody>' +
+							'<tr>' +
+							'<th scope="row">1</th>' +
+							'<td>Neztle</td>' +
+							'<td>www.neztle.cl</td>' +
+							'<td>Ingeniería Civil</td>' +
+							'</tr>' +
+							'<tr>' +
+							'<th scope="row">2</th>' +
+							'<td>Falabela</td>' +
+							'<td>www.falabela.cl</td>' +
+							'<td>Ingeniería Comercial</td>' +
+							'</tr>' +
+							'<tr>' +
+							'<th scope="row">3</th>' +
+							'<td>Ryplei</td>' +
+							'<td>www.ryplei.cl</td>' +
+							'<td>Ingeniería Civil</td>' +
+							'</tr>' +
+							'<tr>' +
+							'<th scope="row">4</th>' +
+							'<td>Junbo</td>' +
+							'<td>www.junbo.cl</td>' +
+							'<td>Derecho</td>' +
+							'</tr>' +
+							'</tbody>' +
+							'</table>'
+						});
+					}
+				}
+			}
+		}
+	},
+	//DATA
+  series: [{
+    name: 'Empresas',
+    colorByPoint: true,
+    data: [{
+      name: 'Empresas con convenio',
+			cantidadEmpresas: {!! json_encode($estadisticas['empresasValidadas']) !!},
+      y: {!! (json_encode($estadisticas['empresasValidadas']) / json_encode($estadisticas['empresasTotal'])) * 100 !!},
+      sliced: true,
+      selected: true
+    }, {
+      name: 'Empresas en proceso',
+			cantidadEmpresas: {!! json_encode($estadisticas['empresasEnProceso']) !!},
+      y: {!! (json_encode($estadisticas['empresasEnProceso']) / json_encode($estadisticas['empresasTotal'])) * 100 !!},
+    }, {
+      name: 'Empresas sin convenio',
+			cantidadEmpresas: {!! json_encode($estadisticas['empresasNoValidadas']) !!},
+      y: {!! (json_encode($estadisticas['empresasNoValidadas']) / json_encode($estadisticas['empresasTotal'])) * 100 !!},
     }]
+  }]
 });
-
-
-
 </script>
-
-
 @endsection
