@@ -59,20 +59,27 @@ class GraficasController extends Controller {
 		//Hasta paso 4 completo
 		$pasantiasPaso4 = Pasantia::where('statusPaso4','=','4')->get();
 		$pasantiasPaso4Count = $pasantiasPaso4->count();
+		$alumnosPasantiaPaso4 = $this->getAlumnos($pasantiasPaso4);
 		//Hasta paso 3 completo
 		$pasantiasPaso3 = Pasantia::where('statusPaso3','=','4')->where('statusPaso4', '!=', '4')->get();
 		$pasantiasPaso3Count = $pasantiasPaso3->count();
+		$alumnosPasantiaPaso3 = $this->getAlumnos($pasantiasPaso3);
 		//Hasta paso 2 completo
 		$pasantiasPaso2 = Pasantia::where('statusPaso2','=','2')->where('statusPaso3', '!=', '4')->where('statusPaso4', '!=', '4')->get();
 		$pasantiasPaso2Count = $pasantiasPaso2->count();
+		$alumnosPasantiaPaso2 = $this->getAlumnos($pasantiasPaso2);
 		//Hasta paso 1 completo
 		$pasantiasPaso1 = Pasantia::where('statusPaso1','=','2')->where('statusPaso2','!=','2')->where('statusPaso3', '!=', '4')->where('statusPaso4', '!=', '4')->get();
 		$pasantiasPaso1Count = $pasantiasPaso1->count();
+		$alumnosPasantiaPaso1 = $this->getAlumnos($pasantiasPaso1);
 		//total
 		$pasantiasTotal = $pasantiasPaso4Count + $pasantiasPaso3Count + $pasantiasPaso2Count + $pasantiasPaso1Count;
-
 		//Array de estadisticas
     $estadisticasPasantias = array(
+			'alumnosPasantiaPaso4' => $alumnosPasantiaPaso4,
+      'alumnosPasantiaPaso3' => $alumnosPasantiaPaso3,
+      'alumnosPasantiaPaso2' => $alumnosPasantiaPaso2,
+			'alumnosPasantiaPaso1' => $alumnosPasantiaPaso1,
 			'pasantiasPaso4' => $pasantiasPaso4,
       'pasantiasPaso3' => $pasantiasPaso3,
       'pasantiasPaso2' => $pasantiasPaso2,
@@ -84,6 +91,13 @@ class GraficasController extends Controller {
 			'pasantiasTotal' => $pasantiasTotal,
 		);
     return $estadisticasPasantias;
+	}
+	public function getAlumnos($pasantias) {
+		$alumnosPasantia = array();
+		foreach ($pasantias as $pasantia) {
+			array_push($alumnosPasantia, User::where('idUsuario', $pasantia->idAlumno)->get());
+		}
+		return Arr::flatten($alumnosPasantia);
 	}
 }
 
