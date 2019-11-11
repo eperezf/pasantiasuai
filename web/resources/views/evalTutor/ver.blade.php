@@ -98,7 +98,7 @@
 </div>
 <div class="row">
   <div class="col">
-    <a href="/evaluacion/listado/{{$alumno->idUsuario}}" class="btn btn-primary mb-2" role="button" aria-pressed="true">Volver al menu anterior</a>
+    <a href="/evaluacion/listado/{{$proyecto->idProyecto}}" class="btn btn-primary mb-2" role="button" aria-pressed="true">Volver al menu anterior</a>
   </div>
 </div>
 @endsection
