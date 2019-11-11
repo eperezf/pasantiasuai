@@ -1,5 +1,4 @@
-<table class="table table-hover w-auto text-nowrap" id="table" data-toggle="table" data-sortable="true" data-search="true"
-	data-locale="es-CL">
+<table class="table table-hover w-auto text-nowrap" id="table" data-toggle="table" data-sortable="true" data-search="true" data-locale="es-CL" data-show-subtext="true" data-live-search="true">
 	<thead>
 		<tr>
 			<th scope="col" data-field="rut" data-sortable="true">
