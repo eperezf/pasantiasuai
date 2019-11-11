@@ -37,7 +37,6 @@
 	document.getElementById('estadisticas').innerHTML += hoy;
 })();
 
-
 //Grafico pasos de cada alumno
 window.chart = new Highcharts.chart({
 	chart: {
@@ -112,43 +111,7 @@ window.chart = new Highcharts.chart({
 							},
 							//Mostrar contenido
 							headingText: this.series.data[this.x].name,
-							maincontentText:
-							'<table class="table table-striped">' +
-							'<thead>' +
-							'<tr>' +
-							'<th scope="col">#</th>' +
-							'<th scope="col">Nombre</th>' +
-							'<th scope="col">Apellido</th>' +
-							'<th scope="col">Carrera</th>' +
-							'</tr>' +
-							'</thead>' +
-							'<tbody>' +
-							'<tr>' +
-							'<th scope="row">1</th>' +
-							'<td>Alberto</td>' +
-							'<td>Johnson</td>' +
-							'<td>Ingeniería Civil</td>' +
-							'</tr>' +
-							'<tr>' +
-							'<th scope="row">2</th>' +
-							'<td>Juana</td>' +
-							'<td>Thornton</td>' +
-							'<td>Ingeniería Comercial</td>' +
-							'</tr>' +
-							'<tr>' +
-							'<th scope="row">3</th>' +
-							'<td>Lucia</td>' +
-							'<td>Fuentes</td>' +
-							'<td>Ingeniería Civil</td>' +
-							'</tr>' +
-							'<tr>' +
-							'<th scope="row">4</th>' +
-							'<td>Pedro</td>' +
-							'<td>Smith</td>' +
-							'<td>Psicología</td>' +
-							'</tr>' +
-							'</tbody>' +
-							'</table>'
+							maincontentText: this.detalleDatos
 						});
 					}
 				}
@@ -168,21 +131,25 @@ window.chart = new Highcharts.chart({
 		}],
 		//Datos
 		data: [{
-			y: {!! json_encode($estadisticas['pasantiasPaso1Count']) !!},
-			porcentajePostulantes: {!! (json_encode($estadisticas['pasantiasPaso1Count']) / json_encode($estadisticas['pasantiasTotal'])) * 100 !!},
-			name: 'Requisitos académicos'
+			y: @json($estadisticas['pasantiasPaso1Count']),
+			porcentajePostulantes: @json($estadisticas['pasantiasPaso1Count']) / @json($estadisticas['pasantiasTotal']) * 100,
+			name: 'Requisitos académicos',
+			detalleDatos: JSON.stringify(@json($estadisticas['pasantiasPaso1']))
 		}, {
-			y: {!! json_encode($estadisticas['pasantiasPaso2Count']) !!},
-			porcentajePostulantes: {!! (json_encode($estadisticas['pasantiasPaso2Count']) / json_encode($estadisticas['pasantiasTotal'])) * 100 !!},
-			name: 'Inscripción pasantía'
+			y: @json($estadisticas['pasantiasPaso2Count']),
+			porcentajePostulantes: @json($estadisticas['pasantiasPaso2Count']) / @json($estadisticas['pasantiasTotal']) * 100,
+			name: 'Inscripción pasantía',
+			detalleDatos: JSON.stringify(@json($estadisticas['pasantiasPaso2']))
 		}, {
-			y: {!! json_encode($estadisticas['pasantiasPaso3Count']) !!},
-			porcentajePostulantes: {!! (json_encode($estadisticas['pasantiasPaso3Count']) / json_encode($estadisticas['pasantiasTotal'])) * 100 !!},
+			y: @json($estadisticas['pasantiasPaso3Count']),
+			porcentajePostulantes: @json($estadisticas['pasantiasPaso3Count']) / @json($estadisticas['pasantiasTotal']) * 100,
 			name: 'Inscripción supervisor',
+			detalleDatos: JSON.stringify(@json($estadisticas['pasantiasPaso3']))
 		}, {
-			y: {!! json_encode($estadisticas['pasantiasPaso4Count']) !!},
-			porcentajePostulantes: {!! (json_encode($estadisticas['pasantiasPaso4Count']) / json_encode($estadisticas['pasantiasTotal'])) * 100 !!},
+			y: @json($estadisticas['pasantiasPaso4Count']),
+			porcentajePostulantes: @json($estadisticas['pasantiasPaso4Count']) / @json($estadisticas['pasantiasTotal']) * 100,
 			name: 'Inscripción proyecto',
+			detalleDatos: JSON.stringify(@json($estadisticas['pasantiasPaso4']))
 		}],
 		showInLegend: false
 	}]
@@ -395,44 +362,7 @@ window.chart = new Highcharts.chart({
 								y: e.pageY || e.clientY
 							},
 							headingText: this.series.data[this.x].name,
-							maincontentText:
-							// TABLA FIJA -- DUMMY
-							'<table class="table table-striped">' +
-							'<thead>' +
-							'<tr>' +
-							'<th scope="col">#</th>' +
-							'<th scope="col">Nombre</th>' +
-							'<th scope="col">Sitio Web</th>' +
-							'<th scope="col">Rubro</th>' +
-							'</tr>' +
-							'</thead>' +
-							'<tbody>' +
-							'<tr>' +
-							'<th scope="row">1</th>' +
-							'<td>Neztle</td>' +
-							'<td>www.neztle.cl</td>' +
-							'<td>Ingeniería Civil</td>' +
-							'</tr>' +
-							'<tr>' +
-							'<th scope="row">2</th>' +
-							'<td>Falabela</td>' +
-							'<td>www.falabela.cl</td>' +
-							'<td>Ingeniería Comercial</td>' +
-							'</tr>' +
-							'<tr>' +
-							'<th scope="row">3</th>' +
-							'<td>Ryplei</td>' +
-							'<td>www.ryplei.cl</td>' +
-							'<td>Ingeniería Civil</td>' +
-							'</tr>' +
-							'<tr>' +
-							'<th scope="row">4</th>' +
-							'<td>Junbo</td>' +
-							'<td>www.junbo.cl</td>' +
-							'<td>Derecho</td>' +
-							'</tr>' +
-							'</tbody>' +
-							'</table>'
+							maincontentText: this.detalleDatos
 						});
 					}
 				}
@@ -445,18 +375,21 @@ window.chart = new Highcharts.chart({
     colorByPoint: true,
     data: [{
       name: 'Empresas con convenio',
-			cantidadEmpresas: {!! json_encode($estadisticas['empresasValidadasCount']) !!},
-      y: {!! (json_encode($estadisticas['empresasValidadasCount']) / json_encode($estadisticas['empresasTotal'])) * 100 !!},
+			cantidadEmpresas: @json($estadisticas['empresasValidadasCount']),
+      y: @json($estadisticas['empresasValidadasCount']) / @json($estadisticas['empresasTotal']) * 100,
       sliced: true,
-      selected: true
+			selected: true,
+			detalleDatos: JSON.stringify(@json($estadisticas['empresasValidadas']))
     }, {
       name: 'Empresas en proceso',
-			cantidadEmpresas: {!! json_encode($estadisticas['empresasEnProcesoCount']) !!},
-      y: {!! (json_encode($estadisticas['empresasEnProcesoCount']) / json_encode($estadisticas['empresasTotal'])) * 100 !!},
+			cantidadEmpresas: @json($estadisticas['empresasEnProcesoCount']),
+			y: @json($estadisticas['empresasEnProcesoCount']) / @json($estadisticas['empresasTotal']) * 100,
+			detalleDatos: JSON.stringify(@json($estadisticas['empresasEnProceso']))
     }, {
       name: 'Empresas sin convenio',
-			cantidadEmpresas: {!! json_encode($estadisticas['empresasNoValidadasCount']) !!},
-      y: {!! (json_encode($estadisticas['empresasNoValidadasCount']) / json_encode($estadisticas['empresasTotal'])) * 100 !!},
+			cantidadEmpresas: @json($estadisticas['empresasNoValidadasCount']),
+			y: @json($estadisticas['empresasNoValidadasCount']) / @json($estadisticas['empresasTotal']) * 100,
+			detalleDatos: JSON.stringify(@json($estadisticas['empresasNoValidadas']))
     }]
   }]
 });

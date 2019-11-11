@@ -28,16 +28,16 @@ class GraficasController extends Controller {
 
 		/* ---------- cantidad de alumnos en cada paso ---------- */
 		//Hasta paso 4 completo
-		$pasantiasPaso4 = Pasantia::where('statusPaso4','=','4');
+		$pasantiasPaso4 = Pasantia::where('statusPaso4','=','4')->get();
 		$pasantiasPaso4Count = $pasantiasPaso4->count();
 		//Hasta paso 3 completo
-		$pasantiasPaso3 = Pasantia::where('statusPaso3','=','4')->where('statusPaso4', '!=', '4');
+		$pasantiasPaso3 = Pasantia::where('statusPaso3','=','4')->where('statusPaso4', '!=', '4')->get();
 		$pasantiasPaso3Count = $pasantiasPaso3->count();
 		//Hasta paso 2 completo
-		$pasantiasPaso2 = Pasantia::where('statusPaso2','=','2')->where('statusPaso3', '!=', '4')->where('statusPaso4', '!=', '4');
+		$pasantiasPaso2 = Pasantia::where('statusPaso2','=','2')->where('statusPaso3', '!=', '4')->where('statusPaso4', '!=', '4')->get();
 		$pasantiasPaso2Count = $pasantiasPaso2->count();
 		//Hasta paso 1 completo
-		$pasantiasPaso1 = Pasantia::where('statusPaso1','=','2')->where('statusPaso2','!=','2')->where('statusPaso3', '!=', '4')->where('statusPaso4', '!=', '4');
+		$pasantiasPaso1 = Pasantia::where('statusPaso1','=','2')->where('statusPaso2','!=','2')->where('statusPaso3', '!=', '4')->where('statusPaso4', '!=', '4')->get();
 		$pasantiasPaso1Count = $pasantiasPaso1->count();
 		//total
 		$pasantiasTotal = $pasantiasPaso4Count + $pasantiasPaso3Count + $pasantiasPaso2Count + $pasantiasPaso1Count;
@@ -47,9 +47,9 @@ class GraficasController extends Controller {
 
 
     //estadisticas Empresas --> en convenio, sin convenio, proceso convenio
-		$empresasEnProceso = Empresa::where('status', '=', '2');
-		$empresasValidadas = Empresa::where('status', '=', '1');
-		$empresasNoValidadas = Empresa::where('status', '=', '0');
+		$empresasEnProceso = Empresa::where('status', '=', '2')->get();
+		$empresasValidadas = Empresa::where('status', '=', '1')->get();
+		$empresasNoValidadas = Empresa::where('status', '=', '0')->get();
 		$empresasEnProcesoCount = $empresasEnProceso->count();
 		$empresasValidadasCount = $empresasValidadas->count();
 		$empresasNoValidadasCount = $empresasNoValidadas->count();
