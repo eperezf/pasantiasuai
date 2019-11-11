@@ -53,8 +53,11 @@
 			<th scope="col" data-field="rolPariente">
 				<div class="th-inner">Familiar</div>
 			</th>
+			<th scope="col" data-field="nombreEmpresa" data-sortable="true">
+				<div class="th-inner">Nombre de Empresa</div>
+			</th>
 			<th scope="col" data-field="statusEmpresa" data-sortable="true">
-				<div class="th-inner">Empresa en convenio</div>
+				<div class="th-inner">Estado de convenio</div>
 			</th>
 			@if($downloadExcel == TRUE)
 			@elseif ($downloadExcel == FALSE)
@@ -146,8 +149,14 @@
 				<!-- endif de "boton solo si tiene pariente" -->
 			</td>
 
-			<td @if ($datosPasantia['statusEmpresa'] !=1) class="table-warning" @else @endif>
-				{{$datosPasantia['nombreEmpresa']}}
+			<td>{{$datosPasantia['nombreEmpresa']}}</td>
+
+			<td class=" @if ($datosPasantia['statusEmpresa'] == 0) table-danger
+									@elseif ($datosPasantia['statusEmpresa'] == 1) table-success
+									@else table-warning @endif">
+				@if ($datosPasantia['statusEmpresa'] == 0) Inactivo
+				@elseif ($datosPasantia['statusEmpresa'] == 1) Activo
+				@else En proceso @endif
 				<!-- Descarga excel -->
 				@if($downloadExcel == TRUE)
 				@elseif ($downloadExcel == FALSE)
@@ -159,6 +168,7 @@
 				@else @endif
 				<!-- End if de excel -->
 			</td>
+
 			@if($downloadExcel == TRUE)
 			@elseif ($downloadExcel == FALSE)
 			<td>
