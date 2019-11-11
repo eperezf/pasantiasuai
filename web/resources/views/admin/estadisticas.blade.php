@@ -161,25 +161,25 @@ window.chart = new Highcharts.chart({
 		}],
 		//Datos
 		data: [{
-			y: @json($estadisticas['pasantiasPaso1Count']),
-			porcentajePostulantes: @json($estadisticas['pasantiasPaso1Count']) / @json($estadisticas['pasantiasTotal']) * 100,
+			y: @json($estadisticasPasantias['pasantiasPaso1Count']),
+			porcentajePostulantes: @json($estadisticasPasantias['pasantiasPaso1Count']) / @json($estadisticasPasantias['pasantiasTotal']) * 100,
 			name: 'Requisitos académicos',
-			detalleDatos: detalleDatosAlumnos(@json($estadisticas['pasantiasPaso1']))
+			detalleDatos: detalleDatosAlumnos(@json($estadisticasPasantias['pasantiasPaso1']))
 		}, {
-			y: @json($estadisticas['pasantiasPaso2Count']),
-			porcentajePostulantes: @json($estadisticas['pasantiasPaso2Count']) / @json($estadisticas['pasantiasTotal']) * 100,
+			y: @json($estadisticasPasantias['pasantiasPaso2Count']),
+			porcentajePostulantes: @json($estadisticasPasantias['pasantiasPaso2Count']) / @json($estadisticasPasantias['pasantiasTotal']) * 100,
 			name: 'Inscripción pasantía',
-			detalleDatos: detalleDatosAlumnos(@json($estadisticas['pasantiasPaso2']))
+			detalleDatos: detalleDatosAlumnos(@json($estadisticasPasantias['pasantiasPaso2']))
 		}, {
-			y: @json($estadisticas['pasantiasPaso3Count']),
-			porcentajePostulantes: @json($estadisticas['pasantiasPaso3Count']) / @json($estadisticas['pasantiasTotal']) * 100,
+			y: @json($estadisticasPasantias['pasantiasPaso3Count']),
+			porcentajePostulantes: @json($estadisticasPasantias['pasantiasPaso3Count']) / @json($estadisticasPasantias['pasantiasTotal']) * 100,
 			name: 'Inscripción supervisor',
-			detalleDatos: detalleDatosAlumnos(@json($estadisticas['pasantiasPaso3']))
+			detalleDatos: detalleDatosAlumnos(@json($estadisticasPasantias['pasantiasPaso3']))
 		}, {
-			y: @json($estadisticas['pasantiasPaso4Count']),
-			porcentajePostulantes: @json($estadisticas['pasantiasPaso4Count']) / @json($estadisticas['pasantiasTotal']) * 100,
+			y: @json($estadisticasPasantias['pasantiasPaso4Count']),
+			porcentajePostulantes: @json($estadisticasPasantias['pasantiasPaso4Count']) / @json($estadisticasPasantias['pasantiasTotal']) * 100,
 			name: 'Inscripción proyecto',
-			detalleDatos: detalleDatosAlumnos(@json($estadisticas['pasantiasPaso4']))
+			detalleDatos: detalleDatosAlumnos(@json($estadisticasPasantias['pasantiasPaso4']))
 		}],
 		showInLegend: false
 	}]
@@ -405,21 +405,21 @@ window.chart = new Highcharts.chart({
     colorByPoint: true,
     data: [{
       name: 'Empresas con convenio',
-			cantidadEmpresas: @json($estadisticas['empresasValidadasCount']),
-      y: @json($estadisticas['empresasValidadasCount']) / @json($estadisticas['empresasTotal']) * 100,
+			cantidadEmpresas: @json($estadisticasEmpresas['empresasValidadasCount']),
+      y: @json($estadisticasEmpresas['empresasValidadasCount']) / @json($estadisticasEmpresas['empresasTotal']) * 100,
       sliced: true,
 			selected: true,
-			detalleDatos: JSON.stringify(@json($estadisticas['empresasValidadas']))
+			detalleDatos: JSON.stringify(@json($estadisticasEmpresas['empresasValidadas']))
     }, {
       name: 'Empresas en proceso',
-			cantidadEmpresas: @json($estadisticas['empresasEnProcesoCount']),
-			y: @json($estadisticas['empresasEnProcesoCount']) / @json($estadisticas['empresasTotal']) * 100,
-			detalleDatos: JSON.stringify(@json($estadisticas['empresasEnProceso']))
+			cantidadEmpresas: @json($estadisticasEmpresas['empresasEnProcesoCount']),
+			y: @json($estadisticasEmpresas['empresasEnProcesoCount']) / @json($estadisticasEmpresas['empresasTotal']) * 100,
+			detalleDatos: JSON.stringify(@json($estadisticasEmpresas['empresasEnProceso']))
     }, {
       name: 'Empresas sin convenio',
-			cantidadEmpresas: @json($estadisticas['empresasNoValidadasCount']),
-			y: @json($estadisticas['empresasNoValidadasCount']) / @json($estadisticas['empresasTotal']) * 100,
-			detalleDatos: JSON.stringify(@json($estadisticas['empresasNoValidadas']))
+			cantidadEmpresas: @json($estadisticasEmpresas['empresasNoValidadasCount']),
+			y: @json($estadisticasEmpresas['empresasNoValidadasCount']) / @json($estadisticasEmpresas['empresasTotal']) * 100,
+			detalleDatos: JSON.stringify(@json($estadisticasEmpresas['empresasNoValidadas']))
     }]
   }]
 });
