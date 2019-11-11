@@ -37,6 +37,36 @@
 	document.getElementById('estadisticas').innerHTML += hoy;
 })();
 
+const detalleDatosAlumnos = (JSONdatosAlumnos) => {
+	//Tabla HTML a desplegar
+	let tablaHTML =
+		'<table class="table table-striped">' +
+		'<thead>' +
+		'<tr>' +
+		'<th scope="col">#</th>' +
+		'<th scope="col">Nombre</th>' +
+		'<th scope="col">Apellido</th>' +
+		'<th scope="col">Carrera</th>' +
+		'</tr>' +
+		'</thead>';
+	const datosAlumnos = JSONdatosAlumnos;
+
+	for (let i = 0; i < datosAlumnos.length; i++){
+		let datosAlumno = datosAlumnos[i];
+		tablaHTML += '<tr>' +
+			'<th scope="row">'+ (i + 1) +'</th>' +
+			'<td>'+ datosAlumno['ciudad'] +'</td>' +
+			'<td>'+ datosAlumno['pais'] +'</td>' +
+			'<td>'+ datosAlumno['idAlumno'] +'</td>' +
+			'</tr>';
+	}
+	tablaHTML += '<tbody>' +
+		'</tbody>' +
+		'</table>';
+	return tablaHTML;
+}
+
+
 //Grafico pasos de cada alumno
 window.chart = new Highcharts.chart({
 	chart: {
@@ -134,22 +164,22 @@ window.chart = new Highcharts.chart({
 			y: @json($estadisticas['pasantiasPaso1Count']),
 			porcentajePostulantes: @json($estadisticas['pasantiasPaso1Count']) / @json($estadisticas['pasantiasTotal']) * 100,
 			name: 'Requisitos académicos',
-			detalleDatos: JSON.stringify(@json($estadisticas['pasantiasPaso1']))
+			detalleDatos: detalleDatosAlumnos(@json($estadisticas['pasantiasPaso1']))
 		}, {
 			y: @json($estadisticas['pasantiasPaso2Count']),
 			porcentajePostulantes: @json($estadisticas['pasantiasPaso2Count']) / @json($estadisticas['pasantiasTotal']) * 100,
 			name: 'Inscripción pasantía',
-			detalleDatos: JSON.stringify(@json($estadisticas['pasantiasPaso2']))
+			detalleDatos: detalleDatosAlumnos(@json($estadisticas['pasantiasPaso2']))
 		}, {
 			y: @json($estadisticas['pasantiasPaso3Count']),
 			porcentajePostulantes: @json($estadisticas['pasantiasPaso3Count']) / @json($estadisticas['pasantiasTotal']) * 100,
 			name: 'Inscripción supervisor',
-			detalleDatos: JSON.stringify(@json($estadisticas['pasantiasPaso3']))
+			detalleDatos: detalleDatosAlumnos(@json($estadisticas['pasantiasPaso3']))
 		}, {
 			y: @json($estadisticas['pasantiasPaso4Count']),
 			porcentajePostulantes: @json($estadisticas['pasantiasPaso4Count']) / @json($estadisticas['pasantiasTotal']) * 100,
 			name: 'Inscripción proyecto',
-			detalleDatos: JSON.stringify(@json($estadisticas['pasantiasPaso4']))
+			detalleDatos: detalleDatosAlumnos(@json($estadisticas['pasantiasPaso4']))
 		}],
 		showInLegend: false
 	}]

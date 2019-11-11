@@ -16,16 +16,45 @@ use App\User;
 class GraficasController extends Controller {
   public function index() {
 		if (Auth::user()->rol >= 4) {
-			$estadisticas = $this->getEstadisticas();
-			return view('admin.estadisticas', compact('estadisticas'));
+			$estadisticasEstadoDefensas = $this->getEstadisticasEstadoDefensas();
+			$estadisticasEmpresas = $this->getEstadisticasEmpresas();
+			$estadisticasPasantias = $this->getEstadisticasPasantias();
+			return view('admin.estadisticas', compact('estadisticasEstadoDefensas', 'estadisticasEmpresas', 'estadisticasPasantias'));
     } else {
       return redirect('index');
     }
 	}
 
-	public function getEstadisticas() {
-		//estadisticas Pasantias --> cantidad de alumnos en cada paso + estado defensas
+	public function getEstadisticasEstadoDefensas(){
+		//estadisticas defensas
+		/* ---------- estado defensas ---------- */
+		$estadisticasEstadoDefensas = array();
+		return $estadisticasEstadoDefensas;
+	}
+	public function getEstadisticasEmpresas() {
+		//estadisticas Empresas --> en convenio, sin convenio, proceso convenio
+		/* ---------- convenios ---------- */
+		$empresasEnProceso = Empresa::where('status', '=', '2')->get();
+		$empresasValidadas = Empresa::where('status', '=', '1')->get();
+		$empresasNoValidadas = Empresa::where('status', '=', '0')->get();
+		$empresasEnProcesoCount = $empresasEnProceso->count();
+		$empresasValidadasCount = $empresasValidadas->count();
+		$empresasNoValidadasCount = $empresasNoValidadas->count();
+		$empresasTotal = $empresasEnProcesoCount + $empresasValidadasCount + $empresasNoValidadasCount;
 
+		$estadisticasEmpresas = array(
+			'empresasEnProceso' => $empresasEnProceso,
+      'empresasValidadas' => $empresasValidadas,
+			'empresasNoValidadas' => $empresasNoValidadas,
+      'empresasEnProcesoCount' => $empresasEnProcesoCount,
+      'empresasValidadasCount' => $empresasValidadasCount,
+			'empresasNoValidadasCount' => $empresasNoValidadasCount,
+			'empresasTotal' => $empresasTotal,
+		);
+		return $estadisticasEmpresas;
+	}
+	public function getEstadisticasPasantias() {
+		//estadisticas Pasantias --> cantidad de alumnos en cada paso
 		/* ---------- cantidad de alumnos en cada paso ---------- */
 		//Hasta paso 4 completo
 		$pasantiasPaso4 = Pasantia::where('statusPaso4','=','4')->get();
@@ -42,21 +71,8 @@ class GraficasController extends Controller {
 		//total
 		$pasantiasTotal = $pasantiasPaso4Count + $pasantiasPaso3Count + $pasantiasPaso2Count + $pasantiasPaso1Count;
 
-		/* ---------- estado defensas ---------- */
-
-
-
-    //estadisticas Empresas --> en convenio, sin convenio, proceso convenio
-		$empresasEnProceso = Empresa::where('status', '=', '2')->get();
-		$empresasValidadas = Empresa::where('status', '=', '1')->get();
-		$empresasNoValidadas = Empresa::where('status', '=', '0')->get();
-		$empresasEnProcesoCount = $empresasEnProceso->count();
-		$empresasValidadasCount = $empresasValidadas->count();
-		$empresasNoValidadasCount = $empresasNoValidadas->count();
-		$empresasTotal = $empresasEnProcesoCount + $empresasValidadasCount + $empresasNoValidadasCount;
-
 		//Array de estadisticas
-    $estadisticas = array(
+    $estadisticasPasantias = array(
 			'pasantiasPaso4' => $pasantiasPaso4,
       'pasantiasPaso3' => $pasantiasPaso3,
       'pasantiasPaso2' => $pasantiasPaso2,
@@ -66,15 +82,8 @@ class GraficasController extends Controller {
       'pasantiasPaso2Count' => $pasantiasPaso2Count,
       'pasantiasPaso1Count' => $pasantiasPaso1Count,
 			'pasantiasTotal' => $pasantiasTotal,
-			'empresasEnProceso' => $empresasEnProceso,
-      'empresasValidadas' => $empresasValidadas,
-			'empresasNoValidadas' => $empresasNoValidadas,
-      'empresasEnProcesoCount' => $empresasEnProcesoCount,
-      'empresasValidadasCount' => $empresasValidadasCount,
-			'empresasNoValidadasCount' => $empresasNoValidadasCount,
-			'empresasTotal' => $empresasTotal,
 		);
-    return $estadisticas;
+    return $estadisticasPasantias;
 	}
 }
 
