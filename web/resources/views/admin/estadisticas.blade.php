@@ -37,9 +37,37 @@
 	document.getElementById('estadisticas').innerHTML += hoy;
 })();
 
+//Funcion para obtener todo el html dinamico a mostrar cuando se clickea una barra de empresas
+const detalleDatosEmpresas = (JSONdatosEmpresas) => {
+	//Tabla HTML a desplegar
+	let tablaHTMLEmpresas =
+		'<table class="table table-striped">' +
+		'<thead>' +
+		'<tr>' +
+		'<th scope="col">#</th>' +
+		'<th scope="col">Nombre</th>' +
+		'<th scope="col">URL</th>' +
+		'</tr>' +
+		'</thead>';
+	const datosEmpresas = JSONdatosEmpresas;
+	for (let i = 0; i < datosEmpresas.length; i++){
+		let datosEmpresa = datosEmpresas[i];
+		tablaHTMLEmpresas += '<tr>' +
+			'<th scope="row">'+ (i + 1) +'</th>' +
+			'<td>'+ datosEmpresa['nombre'] +'</td>' +
+			'<td>'+ datosEmpresa['urlWeb'] +'</td>' +
+			'</tr>';
+	}
+	tablaHTMLEmpresas += '<tbody>' +
+		'</tbody>' +
+		'</table>';
+	return tablaHTMLEmpresas;
+}
+
+//Funcion para obtener todo el html dinamico a mostrar cuando se clickea una barra de alumnos
 const detalleDatosAlumnos = (JSONdatosAlumnos) => {
 	//Tabla HTML a desplegar
-	let tablaHTML =
+	let tablaHTMLAlumnos =
 		'<table class="table table-striped">' +
 		'<thead>' +
 		'<tr>' +
@@ -50,21 +78,19 @@ const detalleDatosAlumnos = (JSONdatosAlumnos) => {
 		'</tr>' +
 		'</thead>';
 	const datosAlumnos = JSONdatosAlumnos;
-	console.log(JSONdatosAlumnos);
-
 	for (let i = 0; i < datosAlumnos.length; i++){
 		let datosAlumno = datosAlumnos[i];
-		tablaHTML += '<tr>' +
+		tablaHTMLAlumnos += '<tr>' +
 			'<th scope="row">'+ (i + 1) +'</th>' +
 			'<td>'+ datosAlumno['nombres'] +'</td>' +
 			'<td>'+ datosAlumno['apellidoPaterno'] +'</td>' +
 			'<td>'+ datosAlumno['email'] +'</td>' +
 			'</tr>';
 	}
-	tablaHTML += '<tbody>' +
+	tablaHTMLAlumnos += '<tbody>' +
 		'</tbody>' +
 		'</table>';
-	return tablaHTML;
+	return tablaHTMLAlumnos;
 }
 
 
@@ -408,19 +434,19 @@ window.chart = new Highcharts.chart({
       name: 'Empresas con convenio',
 			cantidadEmpresas: @json($estadisticasEmpresas['empresasValidadasCount']),
       y: @json($estadisticasEmpresas['empresasValidadasCount']) / @json($estadisticasEmpresas['empresasTotal']) * 100,
-      sliced: true,
-			selected: true,
-			detalleDatos: JSON.stringify(@json($estadisticasEmpresas['empresasValidadas']))
+			detalleDatos: detalleDatosEmpresas(@json($estadisticasEmpresas['empresasValidadas']))
     }, {
       name: 'Empresas en proceso',
 			cantidadEmpresas: @json($estadisticasEmpresas['empresasEnProcesoCount']),
 			y: @json($estadisticasEmpresas['empresasEnProcesoCount']) / @json($estadisticasEmpresas['empresasTotal']) * 100,
-			detalleDatos: JSON.stringify(@json($estadisticasEmpresas['empresasEnProceso']))
+			detalleDatos: detalleDatosEmpresas(@json($estadisticasEmpresas['empresasEnProceso']))
     }, {
       name: 'Empresas sin convenio',
 			cantidadEmpresas: @json($estadisticasEmpresas['empresasNoValidadasCount']),
 			y: @json($estadisticasEmpresas['empresasNoValidadasCount']) / @json($estadisticasEmpresas['empresasTotal']) * 100,
-			detalleDatos: JSON.stringify(@json($estadisticasEmpresas['empresasNoValidadas']))
+			sliced: true,
+			selected: true,
+			detalleDatos: detalleDatosEmpresas(@json($estadisticasEmpresas['empresasNoValidadas']))
     }]
   }]
 });
