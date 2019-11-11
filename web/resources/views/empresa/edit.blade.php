@@ -29,12 +29,12 @@
 			  </div>
 				<div class="form-group">
 			    <label for="rubro">Rubro</label>
-			    <input class="form-control" id="rubro" name="rubro" aria-describedby="rubroHelp" placeholder="Rubro de la empresa" value="{{$empresa->rubro}}" required>
+			    <input class="form-control" id="rubro" name="rubro" aria-describedby="rubroHelp" placeholder="Rubro de la empresa" value="{{$empresa->rubro}}">
 			    <small id="rubroHelp" class="form-text text-muted">Ej.: Consultoría en TI.</small>
 			  </div>
 				<div class="form-group">
 			    <label for="urlWeb">Página web</label>
-			    <input class="form-control" id="urlWeb" name="urlWeb" aria-describedby="urlWebHelp" placeholder="https://..." value="{{$empresa->urlWeb}}" required>
+			    <input class="form-control" id="urlWeb" name="urlWeb" aria-describedby="urlWebHelp" placeholder="https://..." value="{{$empresa->urlWeb}}">
 					<small id="urlWebHelp" class="form-text text-muted">Ej.: http://empresa.com</small>
 			  </div>
         <div class="form-group">

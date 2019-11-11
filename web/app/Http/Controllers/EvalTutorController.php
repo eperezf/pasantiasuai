@@ -78,36 +78,38 @@ class EvalTutorController extends Controller{
 
 	public function enviarSeleccionados(Request $request) {
 		//$request->selectAlumno es el ID del alumno, se obtiene el valor del ID del alumno en cada checkbox
-		$idAlumnos = $request->selectAlumno;
-
-		foreach ($idAlumnos as $idAlumno) {
-			$user = User::where('idUsuario', $idAlumno)->first();
-			$pasantia = Pasantia::where('idAlumno', $idAlumno)->first();
-
-			$mailSubject = 'Correo evaluación pasantía';
-			$mailView = 'emails.evalTutor';
-
-			if ($pasantia->nombreJefe) {
-				$proyecto = Proyecto::where('idPasantia', $pasantia->idPasantia)->first();
-				$empresa = Empresa::where('idEmpresa', $pasantia->idEmpresa)->first();
-				//Encuentra evaluacion del alumno
-				$evaluacionPendiente = EvalTutor::where('idProyecto', $proyecto->idProyecto)->where('certificadoTutor', 0)->first();
-				//Si ya tiene una instancia de evaluacion pendiente, re enviar
-				if ($evaluacionPendiente) {
-					$mailJob = (new QueueEmailJob($mailSubject, $mailView, $pasantia, $user, $empresa, $evaluacionPendiente));
-					dispatch($mailJob);
+		if ($request->selectAlumno != null) {
+			$idAlumnos = $request->selectAlumno;
+			foreach ($idAlumnos as $idAlumno) {
+				$user = User::where('idUsuario', $idAlumno)->first();
+				$pasantia = Pasantia::where('idAlumno', $idAlumno)->first();
+				$mailSubject = 'Correo evaluación pasantía';
+				$mailView = 'emails.evalTutor';
+				if ($pasantia->nombreJefe) {
+					$proyecto = Proyecto::where('idPasantia', $pasantia->idPasantia)->first();
+					$empresa = Empresa::where('idEmpresa', $pasantia->idEmpresa)->first();
+					//Encuentra evaluacion del alumno
+					$evaluacionPendiente = EvalTutor::where('idProyecto', $proyecto->idProyecto)->where('certificadoTutor', 0)->first();
+					//Si ya tiene una instancia de evaluacion pendiente, re enviar
+					if ($evaluacionPendiente) {
+						$mailJob = (new QueueEmailJob($mailSubject, $mailView, $pasantia, $user, $empresa, $evaluacionPendiente));
+						dispatch($mailJob);
+					} else {
+						//Nueva instancia de evaluacion para el tutor
+						$evalTutor = new EvalTutor;
+						$evalTutor->tokenCorreo = $string = str_random(10);
+						$evalTutor->idProyecto = $proyecto->idProyecto;
+						$evalTutor->save();
+						//Envia mail
+						$mailJob = (new QueueEmailJob($mailSubject, $mailView, $pasantia, $user, $empresa, $evalTutor));
+						dispatch($mailJob);
+					}
 				}
-				//Nueva instancia de evaluacion para el tutor
-				$evalTutor = new EvalTutor;
-				$evalTutor->tokenCorreo = $string = str_random(10);
-				$evalTutor->idProyecto = $proyecto->idProyecto;
-				$evalTutor->save();
-				//Envia mail
-				$mailJob = (new QueueEmailJob($mailSubject, $mailView, $pasantia, $user, $empresa, $evalTutor));
-				dispatch($mailJob);
 			}
+			return redirect('/profesor')->with('success', 'Correos enviados correctamente');
+		} else {
+			return redirect('/profesor')->with('warning', 'Porfavor seleccione alumnos que desea enviar los correos.');
 		}
-		return redirect('/profesor')->with('success', 'Correos enviados correctamente');
 	}
 
 	public function listado($idProyecto){
@@ -130,6 +132,6 @@ class EvalTutorController extends Controller{
 		$pasantia = Pasantia::where('idPasantia', $proyecto->idPasantia)->first();
 		$alumno = User::where('idUsuario', $pasantia->idAlumno)->first();
 
-		return view('evalTutor.ver', compact('evaluacion'), compact('alumno'), compact('proyecto'));
+		return view('evalTutor.ver', compact('evaluacion', 'alumno', 'proyecto'));
 	}
 }
