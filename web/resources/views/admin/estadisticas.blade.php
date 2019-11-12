@@ -30,10 +30,10 @@
 		</div>
 		<div class="row">
 			<div class="col-md-6">
-				<div id="proyectosValidados"></div>
+				<div id="inscripcionesTerminadas"></div>
 			</div>
 			<div class="col-md-6">
-				<div id="empresasEnConvenio"></div>
+				<div id="validacionSupervisor"></div>
 			</div>
 		</div>
 
@@ -336,13 +336,39 @@ pieChartConstructor('empresasEnConvenio', 'Convenios de empresas', 'Empresas',
 pieChartConstructor('proyectosValidados', 'Estado de los proyectos', 'Proyectos',
 	//data_Attributes1
 	['Proyectos validados',
-	@json($estadisticasPasantias['pasantiasPaso4Count']),
-	@json($estadisticasPasantias['pasantiasPaso4Count']) / @json($estadisticasPasantias['pasantiasTotal']) * 100,
-	detalleDatosAlumnos(@json($estadisticasPasantias['alumnosPasantiaPaso4']))],
+	@json($estadisticasProyectos['proyectosAprobadosCount']),
+	@json($estadisticasProyectos['proyectosAprobadosPorcentaje']),
+	detalleDatosAlumnos(@json($estadisticasProyectos['alumnosProyectosAprobados']))],
 	//data_Attributes2
 	['Proyectos no validados',
-	@json($estadisticasPasantias['pasantiasPaso1Count']) + @json($estadisticasPasantias['pasantiasPaso2Count']) + @json($estadisticasPasantias['pasantiasPaso3Count']),
-	(@json($estadisticasPasantias['pasantiasPaso1Count']) + @json($estadisticasPasantias['pasantiasPaso2Count']) + @json($estadisticasPasantias['pasantiasPaso3Count'])) / @json($estadisticasPasantias['pasantiasTotal']) * 100,
-	detalleDatosAlumnos(@json($estadisticasPasantias['alumnosPasantiaPaso1']))]);
+	@json($estadisticasProyectos['proyectosNoAprobadosCount']),
+	@json($estadisticasProyectos['proyectosNoAprobadosPorcentaje']),
+	detalleDatosAlumnos(@json($estadisticasProyectos['alumnosProyectosNoAprobados']))]);
+
+//Pie chart de inscripciones terminadas
+pieChartConstructor('inscripcionesTerminadas', 'Estado de las pasantías', 'Pasantías',
+	//data_Attributes1
+	['Pasantías terminadas',
+	@json($estadisticasInscripciones['inscripcionesTerminadasCount']),
+	@json($estadisticasInscripciones['inscripcionesTerminadasPorcentaje']),
+	detalleDatosAlumnos(@json($estadisticasInscripciones['alumnosInscripcionesTerminadas']))],
+	//data_Attributes2
+	['Pasantías no terminadas',
+	@json($estadisticasInscripciones['inscripcionesNoTerminadasCount']),
+	@json($estadisticasInscripciones['inscripcionesNoTerminadasPorcentaje']),
+	detalleDatosAlumnos(@json($estadisticasInscripciones['alumnosInscripcionesNoTerminadas']))]);
+
+//Pie chart de validaciones de supervisor
+pieChartConstructor('validacionSupervisor', 'Pasantías validadas por supervisor', 'Pasantía',
+	//data_Attributes1
+	['Pasantías no validadas por supervisor',
+	@json($estadisticasSupervisores['pasantiasValidadasSupervisorCount']),
+	@json($estadisticasSupervisores['pasantiasValidadasSupervisorPorcentaje']),
+	detalleDatosAlumnos(@json($estadisticasSupervisores['alumnosPasantiasValidadasSupervisor']))],
+	//data_Attributes2
+	['Pasantías validadas por supervisor',
+	@json($estadisticasSupervisores['pasantiasNoValidadasSupervisorCount']),
+	@json($estadisticasSupervisores['pasantiasNoValidadasSupervisorPorcentaje']),
+	detalleDatosAlumnos(@json($estadisticasSupervisores['alumnosNoPasantiasValidadasSupervisor']))]);
 	</script>
 @endsection
