@@ -34,19 +34,20 @@ class GraficasController extends Controller {
 	public function getEstadisticasEmpresas() {
 		//estadisticas Empresas --> en convenio, sin convenio, proceso convenio
 		/* ---------- convenios ---------- */
-		$empresasEnProceso = Empresa::where('status', '=', '2')->get();
 		$empresasValidadas = Empresa::where('status', '=', '1')->get();
 		$empresasNoValidadas = Empresa::where('status', '=', '0')->get();
-		$empresasEnProcesoCount = $empresasEnProceso->count();
 		$empresasValidadasCount = $empresasValidadas->count();
 		$empresasNoValidadasCount = $empresasNoValidadas->count();
-		$empresasTotal = $empresasEnProcesoCount + $empresasValidadasCount + $empresasNoValidadasCount;
+		$empresasTotal = $empresasValidadasCount + $empresasNoValidadasCount;
+		$empresasPorcentajeValidadas = round($empresasValidadasCount / $empresasTotal * 100, 2);
+		$empresasPorcentajeNoValidadas = round($empresasNoValidadasCount / $empresasTotal * 100, 2);
+
 
 		$estadisticasEmpresas = array(
-			'empresasEnProceso' => $empresasEnProceso,
+			'empresasPorcentajeValidadas' => $empresasPorcentajeValidadas,
+			'empresasPorcentajeNoValidadas' => $empresasPorcentajeNoValidadas,
       'empresasValidadas' => $empresasValidadas,
 			'empresasNoValidadas' => $empresasNoValidadas,
-      'empresasEnProcesoCount' => $empresasEnProcesoCount,
       'empresasValidadasCount' => $empresasValidadasCount,
 			'empresasNoValidadasCount' => $empresasNoValidadasCount,
 			'empresasTotal' => $empresasTotal,
