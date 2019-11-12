@@ -18,10 +18,10 @@ class GraficasController extends Controller {
 		if (Auth::user()->rol >= 4) {
 			$estadisticasSupervisores = $this->getEstadisticasSupervisores();
 			$estadisticasInscripciones = $this->getEstadisticasInscripciones();
-			$getEstadisticasProyectos = $this->getEstadisticasProyectos();
+			$estadisticasProyectos = $this->getEstadisticasProyectos();
 			$estadisticasEmpresas = $this->getEstadisticasEmpresas();
 			$estadisticasPasantias = $this->getEstadisticasPasantias();
-			return view('admin.estadisticas', compact('estadisticasSupervisores', 'estadisticasInscripciones', 'getEstadisticasProyectos', 'estadisticasEmpresas', 'estadisticasPasantias'));
+			return view('admin.estadisticas', compact('estadisticasSupervisores', 'estadisticasInscripciones', 'estadisticasProyectos', 'estadisticasEmpresas', 'estadisticasPasantias'));
     } else {
       return redirect('index');
     }
@@ -44,10 +44,17 @@ class GraficasController extends Controller {
 
 		//Porcentaje
 		$total = $pasantiasNoValidadasSupervisorCount + $pasantiasValidadasSupervisorCount;
-		$pasantiasValidadasSupervisorPorcentaje = round($pasantiasValidadasSupervisorCount / $total * 100, 2);
-		$pasantiasNoValidadasSupervisorPorcentaje = round($pasantiasNoValidadasSupervisorCount / $total * 100, 2);
+		if ($total == 0) {
+			$pasantiasValidadasSupervisorPorcentaje = 0;
+			$pasantiasNoValidadasSupervisorPorcentaje = 0;
+		}
+		else {
+			$pasantiasValidadasSupervisorPorcentaje = round($pasantiasValidadasSupervisorCount / $total * 100, 2);
+			$pasantiasNoValidadasSupervisorPorcentaje = round($pasantiasNoValidadasSupervisorCount / $total * 100, 2);
+		}
 
-		$estadisticasInscripciones = array(
+
+		$estadisticasSupervisores = array(
 			'pasantiasValidadasSupervisor' => $pasantiasValidadasSupervisor,
 			'pasantiasValidadasSupervisorCount' => $pasantiasValidadasSupervisorCount,
 			'alumnosPasantiasValidadasSupervisor' => $alumnosPasantiasValidadasSupervisor,
@@ -59,7 +66,7 @@ class GraficasController extends Controller {
 			'pasantiasValidadasSupervisorPorcentaje' => $pasantiasValidadasSupervisorPorcentaje,
 			'pasantiasNoValidadasSupervisorPorcentaje' => $pasantiasNoValidadasSupervisorPorcentaje
 		);
-		return $estadisticasInscripciones;
+		return $estadisticasSupervisores;
 	}
 
 	public function getEstadisticasProyectos() {
@@ -79,20 +86,31 @@ class GraficasController extends Controller {
 
 		//Porcentaje
 		$total = $proyectosNoAprobadosCount + $proyectosAprobadosCount;
+		if ($total == 0) {
+			$proyectosAprobadosPorcentaje = 0;
+			$proyectosNoAprobadosPorcentaje = 0;
+		}
+		else {
+			$proyectosAprobadosPorcentaje = round($proyectosAprobadosCount / $total * 100, 2);
+			$proyectosNoAprobadosPorcentaje = round($proyectosNoAprobadosPorcentaje / $total * 100, 2);
+		}
+
 		$proyectosAprobadosPorcentaje = round($proyectosAprobadosCount / $total * 100, 2);
 		$proyectosNoAprobadosPorcentaje = round($proyectosNoAprobadosCount / $total * 100, 2);
 
-		$estadisticasInscripciones = array(
+		$estadisticasProyectos = array(
 			'proyectosAprobados' => $proyectosAprobados,
 			'proyectosAprobadosCount' => $proyectosAprobadosCount,
-      'alumnosProyectosAprobados' => $alumnosProyectosAprobados,
+			'alumnosProyectosAprobados' => $alumnosProyectosAprobados,
+
 			'proyectosNoAprobados' => $proyectosNoAprobados,
       'proyectosNoAprobadosCount' => $proyectosNoAprobadosCount,
 			'alumnosProyectosNoAprobados' => $alumnosProyectosNoAprobados,
+
 			'proyectosAprobadosPorcentaje' => $proyectosAprobadosPorcentaje,
 			'proyectosNoAprobadosPorcentaje' => $proyectosNoAprobadosPorcentaje
 		);
-		return $estadisticasInscripciones;
+		return $estadisticasProyectos;
 	}
 
 	public function getEstadisticasInscripciones() {
@@ -118,10 +136,13 @@ class GraficasController extends Controller {
 		$estadisticasInscripciones = array(
 			'inscripcionesTerminadas' => $inscripcionesTerminadas,
 			'alumnosInscripcionesTerminadas' => $alumnosInscripcionesTerminadas,
-      'inscripcionesNoTerminadas' => $inscripcionesNoTerminadas,
+
+			'inscripcionesNoTerminadas' => $inscripcionesNoTerminadas,
 			'alumnosInscripcionesNoTerminadas' => $alumnosInscripcionesNoTerminadas,
+
       'inscripcionesTerminadasCount' => $inscripcionesTerminadasCount,
 			'inscripcionesNoTerminadasCount' => $inscripcionesNoTerminadasCount,
+
 			'inscripcionesTerminadasPorcentaje' => $inscripcionesTerminadasPorcentaje,
 			'inscripcionesNoTerminadasPorcentaje' => $inscripcionesNoTerminadasPorcentaje
 		);
