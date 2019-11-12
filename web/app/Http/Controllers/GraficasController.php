@@ -16,21 +16,82 @@ use App\User;
 class GraficasController extends Controller {
   public function index() {
 		if (Auth::user()->rol >= 4) {
-			$estadisticasEstadoDefensas = $this->getEstadisticasEstadoDefensas();
+			$estadisticasInscripciones = $this->getEstadisticasInscripciones();
+			$estadisticasEstadoDefensas = $this->getEstadisticasProyectos();
 			$estadisticasEmpresas = $this->getEstadisticasEmpresas();
 			$estadisticasPasantias = $this->getEstadisticasPasantias();
-			return view('admin.estadisticas', compact('estadisticasEstadoDefensas', 'estadisticasEmpresas', 'estadisticasPasantias'));
+			return view('admin.estadisticas', compact('getEstadisticasProyectos', 'estadisticasEmpresas', 'estadisticasPasantias', 'estadisticasInscripciones'));
     } else {
       return redirect('index');
     }
 	}
 
-	public function getEstadisticasEstadoDefensas(){
-		//estadisticas defensas
-		/* ---------- estado defensas ---------- */
-		$estadisticasEstadoDefensas = array();
-		return $estadisticasEstadoDefensas;
+	public function getEstadisticasProyectos(){
+		//Proyectos aprobados
+		$proyectosAprobados = Pasantia::where('statusPaso4','=','4')->get();
+		//cantidad
+		$proyectosAprobadosCount = $proyectosAprobados->count();
+		//alumnos
+		$alumnosProyectosAprobados = $this->getAlumnos($proyectosAprobados);
+
+		//Distinto de aprobados
+		$proyectosNoAprobados = Pasantia::where('statusPaso4','!=','4')->get();
+		//cantidad
+		$proyectosNoAprobadosCount = $proyectosNoAprobados->count();
+		//alumnos
+		$alumnosProyectosNoAprobados = $this->getAlumnos($proyectosNoAprobados);
+
+		//Porcentaje
+		$total = $proyectosNoAprobadosCount + $proyectosAprobadosCount;
+		$proyectosAprobadosPorcentaje = round($proyectosAprobadosCount / $total * 100, 2);
+		$proyectosNoAprobadosPorcentaje = round($proyectosNoAprobadosCount / $total * 100, 2);
+
+		$estadisticasInscripciones = array(
+			'proyectosAprobados' => $proyectosAprobados,
+			'proyectosAprobadosCount' => $proyectosAprobadosCount,
+      'alumnosProyectosAprobados' => $alumnosProyectosAprobados,
+			'proyectosNoAprobados' => $proyectosNoAprobados,
+      'proyectosNoAprobadosCount' => $proyectosNoAprobadosCount,
+			'alumnosProyectosNoAprobados' => $alumnosProyectosNoAprobados,
+			'proyectosAprobadosPorcentaje' => $proyectosAprobadosPorcentaje,
+			'proyectosNoAprobadosPorcentaje' => $proyectosNoAprobadosPorcentaje
+		);
+		return $estadisticasInscripciones;
 	}
+
+	public function getEstadisticasInscripciones() {
+		//Terminadas
+		$inscripcionesTerminadas = Pasantia::where('statusGeneral','=','1')->get();
+		//cantidad
+		$inscripcionesTerminadasCount = $inscripcionesTerminadas->count();
+		//alumnos
+		$alumnosInscripcionesTerminadas = $this->getAlumnos($inscripcionesTerminadas);
+
+		//No terminadas
+		$inscripcionesNoTerminadas = Pasantia::where('statusGeneral','=','0')->get();
+		//cantidad
+		$inscripcionesNoTerminadasCount = $inscripcionesNoTerminadas->count();
+		//alumnos
+		$alumnosInscripcionesNoTerminadas = $this->getAlumnos($inscripcionesNoTerminadas);
+
+		//Porcentaje
+		$total = $inscripcionesNoTerminadasCount + $inscripcionesTerminadasCount;
+		$inscripcionesTerminadasPorcentaje = round($inscripcionesTerminadasCount / $total * 100, 2);
+		$inscripcionesNoTerminadasPorcentaje = round($inscripcionesNoTerminadasCount / $total * 100, 2);
+
+		$estadisticasInscripciones = array(
+			'inscripcionesTerminadas' => $inscripcionesTerminadas,
+			'alumnosInscripcionesTerminadas' => $alumnosInscripcionesTerminadas,
+      'inscripcionesNoTerminadas' => $inscripcionesNoTerminadas,
+			'alumnosInscripcionesNoTerminadas' => $alumnosInscripcionesNoTerminadas,
+      'inscripcionesTerminadasCount' => $inscripcionesTerminadasCount,
+			'inscripcionesNoTerminadasCount' => $inscripcionesNoTerminadasCount,
+			'inscripcionesTerminadasPorcentaje' => $inscripcionesTerminadasPorcentaje,
+			'inscripcionesNoTerminadasPorcentaje' => $inscripcionesNoTerminadasPorcentaje
+		);
+		return $estadisticasInscripciones;
+	}
+
 	public function getEstadisticasEmpresas() {
 		//estadisticas Empresas --> en convenio, sin convenio, proceso convenio
 		/* ---------- convenios ---------- */
@@ -101,8 +162,3 @@ class GraficasController extends Controller {
 		return Arr::flatten($alumnosPasantia);
 	}
 }
-
-
-
-
-
