@@ -92,11 +92,8 @@ class GraficasController extends Controller {
 		}
 		else {
 			$proyectosAprobadosPorcentaje = round($proyectosAprobadosCount / $total * 100, 2);
-			$proyectosNoAprobadosPorcentaje = round($proyectosNoAprobadosPorcentaje / $total * 100, 2);
+			$proyectosNoAprobadosPorcentaje = round($proyectosNoAprobadosCount / $total * 100, 2);
 		}
-
-		$proyectosAprobadosPorcentaje = round($proyectosAprobadosCount / $total * 100, 2);
-		$proyectosNoAprobadosPorcentaje = round($proyectosNoAprobadosCount / $total * 100, 2);
 
 		$estadisticasProyectos = array(
 			'proyectosAprobados' => $proyectosAprobados,
@@ -130,8 +127,14 @@ class GraficasController extends Controller {
 
 		//Porcentaje
 		$total = $inscripcionesNoTerminadasCount + $inscripcionesTerminadasCount;
-		$inscripcionesTerminadasPorcentaje = round($inscripcionesTerminadasCount / $total * 100, 2);
-		$inscripcionesNoTerminadasPorcentaje = round($inscripcionesNoTerminadasCount / $total * 100, 2);
+		if ($total == 0) {
+			$inscripcionesTerminadasPorcentaje = 0;
+			$inscripcionesNoTerminadasPorcentaje = 0;
+		}
+		else {
+			$inscripcionesTerminadasPorcentaje = round($inscripcionesTerminadasCount / $total * 100, 2);
+			$inscripcionesNoTerminadasPorcentaje = round($inscripcionesNoTerminadasCount / $total * 100, 2);
+		}
 
 		$estadisticasInscripciones = array(
 			'inscripcionesTerminadas' => $inscripcionesTerminadas,
