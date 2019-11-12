@@ -16,17 +16,53 @@ use App\User;
 class GraficasController extends Controller {
   public function index() {
 		if (Auth::user()->rol >= 4) {
+			$estadisticasSupervisores = $this->getEstadisticasSupervisores();
 			$estadisticasInscripciones = $this->getEstadisticasInscripciones();
-			$estadisticasEstadoDefensas = $this->getEstadisticasProyectos();
+			$getEstadisticasProyectos = $this->getEstadisticasProyectos();
 			$estadisticasEmpresas = $this->getEstadisticasEmpresas();
 			$estadisticasPasantias = $this->getEstadisticasPasantias();
-			return view('admin.estadisticas', compact('getEstadisticasProyectos', 'estadisticasEmpresas', 'estadisticasPasantias', 'estadisticasInscripciones'));
+			return view('admin.estadisticas', compact('estadisticasSupervisores', 'estadisticasInscripciones', 'getEstadisticasProyectos', 'estadisticasEmpresas', 'estadisticasPasantias'));
     } else {
       return redirect('index');
     }
 	}
 
-	public function getEstadisticasProyectos(){
+	public function getEstadisticasSupervisores() {
+		//Proyectos aprobados
+		$pasantiasValidadasSupervisor = Pasantia::where('statusPaso3','=','4')->get();
+		//cantidad
+		$pasantiasValidadasSupervisorCount = $pasantiasValidadasSupervisor->count();
+		//alumnos
+		$alumnosPasantiasValidadasSupervisor = $this->getAlumnos($pasantiasValidadasSupervisor);
+
+		//Distinto de aprobados -> objetado o no validado
+		$pasantiasNoValidadasSupervisor = Pasantia::where('statusPaso3','=','3')->get();
+		//cantidad
+		$pasantiasNoValidadasSupervisorCount = $pasantiasNoValidadasSupervisor->count();
+		//alumnos
+		$alumnosNoPasantiasValidadasSupervisor = $this->getAlumnos($pasantiasNoValidadasSupervisor);
+
+		//Porcentaje
+		$total = $pasantiasNoValidadasSupervisorCount + $pasantiasValidadasSupervisorCount;
+		$pasantiasValidadasSupervisorPorcentaje = round($pasantiasValidadasSupervisorCount / $total * 100, 2);
+		$pasantiasNoValidadasSupervisorPorcentaje = round($pasantiasNoValidadasSupervisorCount / $total * 100, 2);
+
+		$estadisticasInscripciones = array(
+			'pasantiasValidadasSupervisor' => $pasantiasValidadasSupervisor,
+			'pasantiasValidadasSupervisorCount' => $pasantiasValidadasSupervisorCount,
+			'alumnosPasantiasValidadasSupervisor' => $alumnosPasantiasValidadasSupervisor,
+
+			'pasantiasNoValidadasSupervisor' => $pasantiasNoValidadasSupervisor,
+      'pasantiasNoValidadasSupervisorCount' => $pasantiasNoValidadasSupervisorCount,
+			'alumnosNoPasantiasValidadasSupervisor' => $alumnosNoPasantiasValidadasSupervisor,
+
+			'pasantiasValidadasSupervisorPorcentaje' => $pasantiasValidadasSupervisorPorcentaje,
+			'pasantiasNoValidadasSupervisorPorcentaje' => $pasantiasNoValidadasSupervisorPorcentaje
+		);
+		return $estadisticasInscripciones;
+	}
+
+	public function getEstadisticasProyectos() {
 		//Proyectos aprobados
 		$proyectosAprobados = Pasantia::where('statusPaso4','=','4')->get();
 		//cantidad
@@ -34,8 +70,8 @@ class GraficasController extends Controller {
 		//alumnos
 		$alumnosProyectosAprobados = $this->getAlumnos($proyectosAprobados);
 
-		//Distinto de aprobados
-		$proyectosNoAprobados = Pasantia::where('statusPaso4','!=','4')->get();
+		//Distinto de aprobados -> objetado o no validado
+		$proyectosNoAprobados = Pasantia::whereBetween('statusPaso4', [2,3])->get();
 		//cantidad
 		$proyectosNoAprobadosCount = $proyectosNoAprobados->count();
 		//alumnos
