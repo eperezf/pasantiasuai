@@ -86,7 +86,9 @@
         </script>
         <!-- botones popover -->
         <!-- terminar informacion paso 4 cuando este listo -->
-        <!-- boton popover pasantia -->
+				<!-- boton popover pasantia -->
+				<div class="row">
+					<div class="col-md-12 text-center">
         <button type="button" class="btn btn-lg btn-light m-3" data-toggle="popover" data-placement="bottom" title="Pasantia"
         data-content="
         @if ($pasantia == null)
@@ -163,6 +165,8 @@
 
 				@endif
 				<!-- endif del if que permite quienes ven (admin / usuarios) -->
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
