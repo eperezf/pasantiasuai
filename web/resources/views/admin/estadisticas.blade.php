@@ -252,7 +252,7 @@ const pieChartConstructor = (chart_RenderTo, title_Text, series_Name, data_Attri
 		},
 		//lo que muestra al hover
 		tooltip: {
-			pointFormat: '{series.name}: <b>{point.percentage:.2f}%</b>'
+			pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
 		},
 		//descarga habilitada
 		exporting: {
@@ -272,7 +272,7 @@ const pieChartConstructor = (chart_RenderTo, title_Text, series_Name, data_Attri
 				allowPointSelect: true,
 				dataLabels: {
 					enabled: true,
-					format: '<b>{point.name}</b>: {point.percentage:.2f}%',
+					format: '<b>{point.name}</b>: {point.y} ({point.percentage:.1f}%)',
 					style: {
 						color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black',
 						fontSize: '1em'
@@ -364,11 +364,11 @@ pieChartConstructor('validacionSupervisor', 'Pasantías validadas por supervisor
 	['Pasantías no validadas por supervisor',
 	@json($estadisticasSupervisores['pasantiasNoValidadasSupervisorCount']),
 	@json($estadisticasSupervisores['pasantiasNoValidadasSupervisorPorcentaje']),
-	detalleDatosAlumnos(@json($estadisticasSupervisores['alumnosNoPasantiasValidadasSupervisor']))]);
+	detalleDatosAlumnos(@json($estadisticasSupervisores['alumnosNoPasantiasValidadasSupervisor']))],
 	//data_Attributes2
 	['Pasantías validadas por supervisor',
 	@json($estadisticasSupervisores['pasantiasValidadasSupervisorCount']),
 	@json($estadisticasSupervisores['pasantiasValidadasSupervisorPorcentaje']),
-	detalleDatosAlumnos(@json($estadisticasSupervisores['alumnosPasantiasValidadasSupervisor']))],
+	detalleDatosAlumnos(@json($estadisticasSupervisores['alumnosPasantiasValidadasSupervisor']))]);
 	</script>
 @endsection
