@@ -99,8 +99,8 @@ class GraficasController extends Controller
 			$proyectosAprobadosPorcentaje = 0;
 			$proyectosNoAprobadosPorcentaje = 0;
 		} else {
-			$proyectosAprobadosPorcentaje = round($proyectosAprobadosCount / $total * 100, 2);
-			$proyectosNoAprobadosPorcentaje = round($proyectosNoAprobadosCount / $total * 100, 2);
+			$proyectosAprobadosPorcentaje = round($proyectosAprobadosCount / $totalAprobados * 100, 2);
+			$proyectosNoAprobadosPorcentaje = round($proyectosNoAprobadosCount / $totalAprobados * 100, 2);
 		}
 		/* ******************************** Proyectos Inscritos ******************************** */
 		//Proyectos Inscritos --> Paso 4 = 4 o 2
