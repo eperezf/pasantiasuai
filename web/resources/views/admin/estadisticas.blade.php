@@ -36,6 +36,14 @@
 				<div id="validacionSupervisor"></div>
 			</div>
 		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<div id="proyectosInscritos"></div>
+			</div>
+			<div class="col-md-6">
+				<div id=""></div>
+			</div>
+		</div>
 
 
 <script>
@@ -344,6 +352,19 @@ pieChartConstructor('proyectosValidados', 'Estado de los proyectos', 'Proyectos'
 	@json($estadisticasProyectos['proyectosNoAprobadosCount']),
 	@json($estadisticasProyectos['proyectosNoAprobadosPorcentaje']),
 	detalleDatosAlumnos(@json($estadisticasProyectos['alumnosProyectosNoAprobados']))]);
+
+//Pie chart de proyectos inscritos vs no inscritos
+pieChartConstructor('proyectosInscritos', 'Inscripciones de proyectos', 'Inscripciones',
+	//data_Attributes1
+	['Proyectos inscritos',
+	@json($estadisticasProyectos['proyectosInscritosCount']),
+	@json($estadisticasProyectos['proyectosInscritosPorcentaje']),
+	detalleDatosAlumnos(@json($estadisticasProyectos['alumnosProyectosInscritos']))],
+	//data_Attributes2
+	['Proyectos no inscritos',
+	@json($estadisticasProyectos['proyectosNOInscritosCount']),
+	@json($estadisticasProyectos['proyectosNoInscritosPorcentaje']),
+	detalleDatosAlumnos(@json($estadisticasProyectos['alumnosProyectosNOInscritos']))]);
 
 //Pie chart de inscripciones terminadas
 pieChartConstructor('inscripcionesTerminadas', 'Estado de las pasantías', 'Pasantías',
