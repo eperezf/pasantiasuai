@@ -81,7 +81,7 @@ class GraficasController extends Controller
 		$alumnosProyectosAprobados = $this->getAlumnos($proyectosAprobados);
 
 		//Distinto de aprobados -> objetado o no validado
-		$proyectosNoAprobados = Pasantia::whereBetween('statusPaso4', [2, 3])->get();
+		$proyectosNoAprobados = Pasantia::where('statusPaso4', '2')->get();
 		//cantidad
 		$proyectosNoAprobadosCount = $proyectosNoAprobados->count();
 		//alumnos
