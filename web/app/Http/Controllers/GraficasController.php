@@ -73,6 +73,12 @@ class GraficasController extends Controller
 
 	public function getEstadisticasProyectos()
 	{
+
+
+
+		/* ******************************** Proyectos Validos ******************************** */
+		//Proyectos Validos --> paso 4 = 4
+		//Proyectos No validos --> paso 4 = 2
 		//Proyectos aprobados
 		$proyectosAprobados = Pasantia::where('statusPaso4', '=', '4')->get();
 		//cantidad
@@ -88,16 +94,45 @@ class GraficasController extends Controller
 		$alumnosProyectosNoAprobados = $this->getAlumnos($proyectosNoAprobados);
 
 		//Porcentaje
-		$total = $proyectosNoAprobadosCount + $proyectosAprobadosCount;
-		if ($total == 0) {
+		$totalAprobados = $proyectosNoAprobadosCount + $proyectosAprobadosCount;
+		if ($totalAprobados == 0) {
 			$proyectosAprobadosPorcentaje = 0;
 			$proyectosNoAprobadosPorcentaje = 0;
 		} else {
 			$proyectosAprobadosPorcentaje = round($proyectosAprobadosCount / $total * 100, 2);
 			$proyectosNoAprobadosPorcentaje = round($proyectosNoAprobadosCount / $total * 100, 2);
 		}
+		/* ******************************** Proyectos Inscritos ******************************** */
+		//Proyectos Inscritos --> Paso 4 = 4 o 2
+		//Proyectos no inscritos --> Paso 4 = 0 o 1
+		//Inscritos
+		$proyectosInscritos = Pasantia::whereIn('statusPaso4', [4, 2])->get();
+		//cantidad
+		$proyectosInscritosCount = $proyectosInscritos->count();
+		//alumnos
+		$alumnosProyectosInscritos = $this->getAlumnos($proyectosInscritos);
+
+
+		$proyectosNOInscritos = Pasantia::whereIn('statusPaso4', [0, 1])->get();
+		//cantidad
+		$proyectosNOInscritosCount = $proyectosNOInscritos->count();
+		//alumnos
+		$alumnosProyectosNOInscritos = $this->getAlumnos($proyectosNOInscritos);
+
+
+		//Porcentaje
+		$totalInscritos = $proyectosNOInscritosCount + $proyectosInscritosCount;
+		if ($totalInscritos == 0) {
+			$proyectosInscritosPorcentaje = 0;
+			$proyectosNoInscritosPorcentaje = 0;
+		} else {
+			$proyectosInscritosPorcentaje = round($proyectosInscritosCount / $totalInscritos * 100, 2);
+			$proyectosNoInscritosPorcentaje = round($proyectosNOInscritosCount / $totalInscritos * 100, 2);
+		}
+
 
 		$estadisticasProyectos = array(
+			/* ******************************** Proyectos Validos ******************************** */
 			'proyectosAprobados' => $proyectosAprobados,
 			'proyectosAprobadosCount' => $proyectosAprobadosCount,
 			'alumnosProyectosAprobados' => $alumnosProyectosAprobados,
@@ -107,7 +142,18 @@ class GraficasController extends Controller
 			'alumnosProyectosNoAprobados' => $alumnosProyectosNoAprobados,
 
 			'proyectosAprobadosPorcentaje' => $proyectosAprobadosPorcentaje,
-			'proyectosNoAprobadosPorcentaje' => $proyectosNoAprobadosPorcentaje
+			'proyectosNoAprobadosPorcentaje' => $proyectosNoAprobadosPorcentaje,
+			/* ******************************** Proyectos Inscritos ******************************** */
+			'proyectosInscritos' => $proyectosInscritos,
+			'proyectosInscritosCount' => $proyectosInscritosCount,
+			'alumnosProyectosInscritos' => $alumnosProyectosInscritos,
+
+			'proyectosNOInscritos' => $proyectosNOInscritos,
+			'proyectosNOInscritosCount' => $proyectosNOInscritosCount,
+			'alumnosProyectosNOInscritos' => $alumnosProyectosNOInscritos,
+
+			'proyectosInscritosPorcentaje' => $proyectosInscritosPorcentaje,
+			'proyectosNoInscritosPorcentaje' => $proyectosNoInscritosPorcentaje,
 		);
 		return $estadisticasProyectos;
 	}
