@@ -362,13 +362,13 @@ pieChartConstructor('inscripcionesTerminadas', 'Estado de las pasantías', 'Pasa
 pieChartConstructor('validacionSupervisor', 'Pasantías validadas por supervisor', 'Pasantía',
 	//data_Attributes1
 	['Pasantías no validadas por supervisor',
-	@json($estadisticasSupervisores['pasantiasValidadasSupervisorCount']),
-	@json($estadisticasSupervisores['pasantiasValidadasSupervisorPorcentaje']),
-	detalleDatosAlumnos(@json($estadisticasSupervisores['alumnosPasantiasValidadasSupervisor']))],
-	//data_Attributes2
-	['Pasantías validadas por supervisor',
 	@json($estadisticasSupervisores['pasantiasNoValidadasSupervisorCount']),
 	@json($estadisticasSupervisores['pasantiasNoValidadasSupervisorPorcentaje']),
 	detalleDatosAlumnos(@json($estadisticasSupervisores['alumnosNoPasantiasValidadasSupervisor']))]);
+	//data_Attributes2
+	['Pasantías validadas por supervisor',
+	@json($estadisticasSupervisores['pasantiasValidadasSupervisorCount']),
+	@json($estadisticasSupervisores['pasantiasValidadasSupervisorPorcentaje']),
+	detalleDatosAlumnos(@json($estadisticasSupervisores['alumnosPasantiasValidadasSupervisor']))],
 	</script>
 @endsection

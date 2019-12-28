@@ -31,15 +31,15 @@ class GraficasController extends Controller
 
 	public function getEstadisticasSupervisores()
 	{
-		//Proyectos aprobados
+		//Pasantias confirmadas supervisor
 		$pasantiasValidadasSupervisor = Pasantia::where('statusPaso3', '=', '4')->get();
 		//cantidad
 		$pasantiasValidadasSupervisorCount = $pasantiasValidadasSupervisor->count();
 		//alumnos
 		$alumnosPasantiasValidadasSupervisor = $this->getAlumnos($pasantiasValidadasSupervisor);
 
-		//Distinto de aprobados -> objetado o no validado
-		$pasantiasNoValidadasSupervisor = Pasantia::where('statusPaso3', '=', '3')->get();
+		//Pasantias no confirmadas supervisor
+		$pasantiasNoValidadasSupervisor = Pasantia::where('statusPaso3', '!=', '4')->get();
 		//cantidad
 		$pasantiasNoValidadasSupervisorCount = $pasantiasNoValidadasSupervisor->count();
 		//alumnos
