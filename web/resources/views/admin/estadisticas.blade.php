@@ -499,6 +499,11 @@ tabla_detalleAlumnos(@json($estadisticasInscripciones['alumnosInscripcionesTermi
 //Inscripciones NO terminadas
 tabla_detalleAlumnos(@json($estadisticasInscripciones['alumnosInscripcionesNoTerminadas']), 'g_inscripcionesNoTerminadas', 'bodyModal_inscripcionesNoTerminadas');
 
+//Validadas Supervisor
+tabla_detalleAlumnos(@json($estadisticasSupervisores['alumnosPasantiasValidadasSupervisor']), 'g_PasantiasValidadasSupervisor', 'bodyModal_PasantiasValidadasSupervisor');
+//NO Validadas Supervisor
+tabla_detalleAlumnos(@json($estadisticasSupervisores['alumnosNoPasantiasValidadasSupervisor']), 'g_NoPasantiasValidadasSupervisor', 'bodyModal_NoPasantiasValidadasSupervisor');
+
 //Grafico pasos de cada alumno
 window.chart = new Highcharts.chart({
 	chart: {
