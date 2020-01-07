@@ -475,6 +475,15 @@ const tabla_detalleAlumnos = (JSONdatosAlumnos, idTabla, idBodyModal) => {
 	});
 }
 
+//Estadisticas Paso 1
+tabla_detalleAlumnos(@json($estadisticasPasantias['alumnosPasantiaPaso1']), 'g_pasantiaPaso1', 'bodyModal_pasantiaPaso1');
+//Estadisticas Paso 2
+tabla_detalleAlumnos(@json($estadisticasPasantias['alumnosPasantiaPaso2']), 'g_pasantiaPaso2', 'bodyModal_pasantiaPaso2');
+//Estadisticas Paso 3
+tabla_detalleAlumnos(@json($estadisticasPasantias['alumnosPasantiaPaso3']), 'g_pasantiaPaso3', 'bodyModal_pasantiaPaso3');
+//Estadisticas Paso 4
+tabla_detalleAlumnos(@json($estadisticasPasantias['alumnosPasantiaPaso4']), 'g_pasantiaPaso4', 'bodyModal_pasantiaPaso4');
+
 
 //Grafico pasos de cada alumno
 window.chart = new Highcharts.chart({
