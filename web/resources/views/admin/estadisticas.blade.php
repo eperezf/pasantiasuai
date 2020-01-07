@@ -489,6 +489,11 @@ tabla_detalleAlumnos(@json($estadisticasProyectos['alumnosProyectosAprobados']),
 //Proyectos NO Aprobados
 tabla_detalleAlumnos(@json($estadisticasProyectos['alumnosProyectosAprobados']), 'g_proyectosNoAprobados', 'bodyModal_proyectosNoAprobados');
 
+//Proyectos Inscritos
+tabla_detalleAlumnos(@json($estadisticasProyectos['alumnosProyectosInscritos']), 'g_proyectosInscritos', 'bodyModal_proyectosInscritos');
+//Proyectos NO inscritos
+tabla_detalleAlumnos(@json($estadisticasProyectos['alumnosProyectosNOInscritos']), 'g_proyectosNoInscritos', 'bodyModal_proyectosNoInscritos');
+
 //Grafico pasos de cada alumno
 window.chart = new Highcharts.chart({
 	chart: {
