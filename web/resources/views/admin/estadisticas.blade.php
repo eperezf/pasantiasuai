@@ -332,32 +332,77 @@
 	document.getElementById('estadisticas').innerHTML += hoy;
 })();
 
-//Funcion para obtener todo el html dinamico a mostrar cuando se clickea una barra de empresas
-const detalleDatosEmpresas = (JSONdatosEmpresas) => {
+//Funcion para obtener todo el html a mostrar cuando se clickea el grafico de empresas
+const tabla_empresasEnConvenio = (JSONdatosEmpresas, idTabla, idBodyModal) => {
 	//Tabla HTML a desplegar
 	let tablaHTMLEmpresas =
-		'<table class="table table-striped">' +
+		'<table id="'+idTabla+'" class="table table-striped shadow-lg" data-show-export="true" data-pagination="true" data-click-to-select="true" data-toolbar="#toolbar" data-show-toggle="true" data-show-columns="true" data-sortable="true" data-toggle="table" data-search="true" data-live-search="true">' +
 		'<thead>' +
 		'<tr>' +
-		'<th scope="col">#</th>' +
-		'<th scope="col">Nombre</th>' +
-		'<th scope="col">URL</th>' +
+		'<th scope="col">id</th>'+
+		'<th scope="col" data-field="#" data-sortable="true"><div class="th-inner">#</div></th>' +
+		'<th scope="col" data-field="Nombre" data-sortable="true"><div class="th-inner">Nombre</div></th>' +
+		'<th scope="col" data-field="URL" data-sortable="true"><div class="th-inner">URL</div></th>' +
 		'</tr>' +
-		'</thead>';
+		'</thead>'+
+		'<tbody>';
 	const datosEmpresas = JSONdatosEmpresas;
-	for (let i = 0; i < datosEmpresas.length; i++){
+	for (let i = 0; i < datosEmpresas.length; i++) {
 		let datosEmpresa = datosEmpresas[i];
 		tablaHTMLEmpresas += '<tr>' +
+			'<td></td>' +
 			'<th scope="row">'+ (i + 1) +'</th>' +
 			'<td>'+ datosEmpresa['nombre'] +'</td>' +
 			'<td>'+ datosEmpresa['urlWeb'] +'</td>' +
 			'</tr>';
 	}
-	tablaHTMLEmpresas += '<tbody>' +
-		'</tbody>' +
-		'</table>';
-	return tablaHTMLEmpresas;
+	tablaHTMLEmpresas +='</tbody>' + '</table>';
+	//Toolbar HTML para la tabla
+	const toolbarEmpresas =
+		'<div id="'+idTabla+'toolbar" class="select">'+
+			'<select class="form-control">'+
+				'<option value="all">Exportar todo</option>'+
+				'<option value="selected">Exportar seleccionado</option>'+
+			'</select>'+
+		'</div>';
+
+	//ID del BODY del modal
+	let modalBodyEmpresas = document.getElementById(idBodyModal);
+	//Primero toolbar, luego tabla
+	modalBodyEmpresas.innerHTML += toolbarEmpresas;
+	modalBodyEmpresas.innerHTML += tablaHTMLEmpresas;
+	//JQuery forma de descarga de tabla y cuales columnas
+	const $tablaEmpresas = $('#'+idTabla);
+	$(function() {
+		$('#'+idTabla+'toolbar').find('select').change(function () {
+			$tablaEmpresas.bootstrapTable('destroy').bootstrapTable({
+				exportDataType: $(this).val(),
+				exportTypes: ['csv', 'excel', 'pdf'],
+				columns: [
+					{
+						field: 'state',
+						checkbox: true,
+						visible: $(this).val() === 'selected'
+					},  {
+						field: '#',
+						title: '#'
+					}, {
+						field: 'Nombre',
+						title: 'Nombre'
+					}, {
+						field: 'URL',
+						title: 'URL'
+					}
+				]
+			})
+		}).trigger('change');
+	});
 }
+//Empresas validas
+tabla_empresasEnConvenio(@json($estadisticasEmpresas['empresasValidadas']), 'g_empresasConvenio_Validas', 'bodyModal_EmpresasValidas');
+//Empresas no validas
+tabla_empresasEnConvenio(@json($estadisticasEmpresas['empresasNoValidadas']), 'g_empresasConvenio_Novalidas', 'bodyModal_EmpresasNoValidas');
+
 
 //Funcion para obtener todo el html dinamico a mostrar cuando se clickea una barra de alumnos
 const detalleDatosAlumnos = (JSONdatosAlumnos) => {
