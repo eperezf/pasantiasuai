@@ -618,9 +618,8 @@ window.chart = new Highcharts.chart({
 chart_RenderTo -> id del elemento en donde se mostrara este grafico STRING
 title_Text -> titulo del grafico STRING
 series_Name -> nombre general de los datos STRING
-data_Attributes1 -> [nombre, valorNumerico, valorPorcentaje, detalleDatos] STRING, INT, FLOAT, OBJECT
-data_Attributes2 -> [nombre, valorNumerico, valorPorcentaje, detalleDatos] STRING, INT, FLOAT, OBJECT
-	*****detalleDatos -> funcion que da HTML a mostrar cuando se clickea un elemento del grafico
+data_Attributes1 -> [nombre, valorNumerico, valorPorcentaje, NOMBRE MODAL] STRING, INT, FLOAT, STRING
+data_Attributes2 -> [nombre, valorNumerico, valorPorcentaje, NOMBRE MODAL] STRING, INT, FLOAT, STRING
 */
 const pieChartConstructor = (chart_RenderTo, title_Text, series_Name, data_Attributes1, data_Attributes2) => {
 	//Grafico de torta genérico
@@ -678,15 +677,8 @@ const pieChartConstructor = (chart_RenderTo, title_Text, series_Name, data_Attri
 				point: {
 					events: {
 						click: function (e) {
-							hs.htmlExpand(null, {
-								pageOrigin: {
-									x: e.pageX || e.clientX,
-									y: e.pageY || e.clientY
-								},
-								//lo que se mostrara al clickear
-								headingText: this.series.data[this.x].name,
-								maincontentText:this.detalleDatos
-							});
+							//Que hacer al clickear una parte de la torta
+							$('#'+this.modal_ID).modal('toggle');
 						}
 					}
 				}
@@ -700,14 +692,14 @@ const pieChartConstructor = (chart_RenderTo, title_Text, series_Name, data_Attri
 				name: data_Attributes1[0],
 				y: data_Attributes1[1],
 				value: data_Attributes1[2],
-				detalleDatos: data_Attributes1[3],
+				modal_ID: data_Attributes1[3],
 				sliced: true,
 				selected: true
 			}, {
 				name: data_Attributes2[0],
 				y: data_Attributes2[1],
 				value: data_Attributes2[2],
-				detalleDatos: data_Attributes2[3],
+				modal_ID: data_Attributes2[3]
 			}]
 		}]
 	});
