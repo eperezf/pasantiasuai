@@ -484,6 +484,10 @@ tabla_detalleAlumnos(@json($estadisticasPasantias['alumnosPasantiaPaso3']), 'g_p
 //Estadisticas Paso 4
 tabla_detalleAlumnos(@json($estadisticasPasantias['alumnosPasantiaPaso4']), 'g_pasantiaPaso4', 'bodyModal_pasantiaPaso4');
 
+//Proyectos Aprobados
+tabla_detalleAlumnos(@json($estadisticasProyectos['alumnosProyectosAprobados']), 'g_proyectosAprobados', 'bodyModal_proyectosAprobados');
+//Proyectos NO Aprobados
+tabla_detalleAlumnos(@json($estadisticasProyectos['alumnosProyectosAprobados']), 'g_proyectosNoAprobados', 'bodyModal_proyectosNoAprobados');
 
 //Grafico pasos de cada alumno
 window.chart = new Highcharts.chart({
