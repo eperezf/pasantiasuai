@@ -705,31 +705,18 @@ const pieChartConstructor = (chart_RenderTo, title_Text, series_Name, data_Attri
 	});
 }
 
-//Pie chart de empresas
-pieChartConstructor('empresasEnConvenio', 'Convenios de empresas', 'Empresas',
-	//data_Attributes1
-	['Empresas con convenio',
-	@json($estadisticasEmpresas['empresasValidadasCount']),
-	@json($estadisticasEmpresas['empresasPorcentajeValidadas']),
-	detalleDatosEmpresas(@json($estadisticasEmpresas['empresasValidadas']))],
-	//data_Attributes2
-	['Empresas sin convenio',
-	@json($estadisticasEmpresas['empresasNoValidadasCount']),
-	@json($estadisticasEmpresas['empresasPorcentajeNoValidadas']),
-	detalleDatosEmpresas(@json($estadisticasEmpresas['empresasNoValidadas']))]);
-
 //Pie chart de proyectos validados vs no validados
 pieChartConstructor('proyectosValidados', 'Estado de los proyectos', 'Proyectos',
 	//data_Attributes1
 	['Proyectos validados',
 	@json($estadisticasProyectos['proyectosAprobadosCount']),
 	@json($estadisticasProyectos['proyectosAprobadosPorcentaje']),
-	detalleDatosAlumnos(@json($estadisticasProyectos['alumnosProyectosAprobados']))],
+	'Modal_proyectosAprobados'],
 	//data_Attributes2
 	['Proyectos no validados',
 	@json($estadisticasProyectos['proyectosNoAprobadosCount']),
 	@json($estadisticasProyectos['proyectosNoAprobadosPorcentaje']),
-	detalleDatosAlumnos(@json($estadisticasProyectos['alumnosProyectosNoAprobados']))]);
+	'Modal_proyectosNoAprobados']);
 
 //Pie chart de proyectos inscritos vs no inscritos
 pieChartConstructor('proyectosInscritos', 'Inscripciones de proyectos', 'Inscripciones',
@@ -737,12 +724,12 @@ pieChartConstructor('proyectosInscritos', 'Inscripciones de proyectos', 'Inscrip
 	['Proyectos inscritos',
 	@json($estadisticasProyectos['proyectosInscritosCount']),
 	@json($estadisticasProyectos['proyectosInscritosPorcentaje']),
-	detalleDatosAlumnos(@json($estadisticasProyectos['alumnosProyectosInscritos']))],
+	'Modal_proyectosInscritos'],
 	//data_Attributes2
 	['Proyectos no inscritos',
 	@json($estadisticasProyectos['proyectosNOInscritosCount']),
 	@json($estadisticasProyectos['proyectosNoInscritosPorcentaje']),
-	detalleDatosAlumnos(@json($estadisticasProyectos['alumnosProyectosNOInscritos']))]);
+	'Modal_proyectosNoInscritos']);
 
 //Pie chart de inscripciones terminadas
 pieChartConstructor('inscripcionesTerminadas', 'Estado de las pasantías', 'Pasantías',
@@ -750,12 +737,12 @@ pieChartConstructor('inscripcionesTerminadas', 'Estado de las pasantías', 'Pasa
 	['Pasantías terminadas',
 	@json($estadisticasInscripciones['inscripcionesTerminadasCount']),
 	@json($estadisticasInscripciones['inscripcionesTerminadasPorcentaje']),
-	detalleDatosAlumnos(@json($estadisticasInscripciones['alumnosInscripcionesTerminadas']))],
+	'Modal_inscripcionesTerminadas'],
 	//data_Attributes2
 	['Pasantías no terminadas',
 	@json($estadisticasInscripciones['inscripcionesNoTerminadasCount']),
 	@json($estadisticasInscripciones['inscripcionesNoTerminadasPorcentaje']),
-	detalleDatosAlumnos(@json($estadisticasInscripciones['alumnosInscripcionesNoTerminadas']))]);
+	'Modal_inscripcionesNoTerminadas']);
 
 //Pie chart de validaciones de supervisor
 pieChartConstructor('validacionSupervisor', 'Pasantías validadas por supervisor', 'Pasantía',
@@ -763,11 +750,24 @@ pieChartConstructor('validacionSupervisor', 'Pasantías validadas por supervisor
 	['Pasantías no validadas por supervisor',
 	@json($estadisticasSupervisores['pasantiasNoValidadasSupervisorCount']),
 	@json($estadisticasSupervisores['pasantiasNoValidadasSupervisorPorcentaje']),
-	detalleDatosAlumnos(@json($estadisticasSupervisores['alumnosNoPasantiasValidadasSupervisor']))],
+	'Modal_NoPasantiasValidadasSupervisor'],
 	//data_Attributes2
 	['Pasantías validadas por supervisor',
 	@json($estadisticasSupervisores['pasantiasValidadasSupervisorCount']),
 	@json($estadisticasSupervisores['pasantiasValidadasSupervisorPorcentaje']),
-	detalleDatosAlumnos(@json($estadisticasSupervisores['alumnosPasantiasValidadasSupervisor']))]);
+	'Modal_PasantiasValidadasSupervisor']);
+
+//Pie chart de empresas
+pieChartConstructor('empresasEnConvenio', 'Convenios de empresas', 'Empresas',
+	//data_Attributes1
+	['Empresas con convenio',
+	@json($estadisticasEmpresas['empresasValidadasCount']),
+	@json($estadisticasEmpresas['empresasPorcentajeValidadas']),
+	'Modal_EmpresasValidas'],
+	//data_Attributes2
+	['Empresas sin convenio',
+	@json($estadisticasEmpresas['empresasNoValidadasCount']),
+	@json($estadisticasEmpresas['empresasPorcentajeNoValidadas']),
+	'Modal_EmpresasNoValidas']);
 	</script>
 @endsection
