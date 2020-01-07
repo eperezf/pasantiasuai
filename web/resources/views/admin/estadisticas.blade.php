@@ -571,15 +571,7 @@ window.chart = new Highcharts.chart({
 				events: {
 					//Que hacer al clickear una barra
 					click: function (e) {
-						hs.htmlExpand(null, {
-							pageOrigin: {
-								x: e.pageX || e.clientX,
-								y: e.pageY || e.clientY
-							},
-							//Mostrar contenido
-							headingText: this.series.data[this.x].name,
-							maincontentText: this.detalleDatos
-						});
+						$('#'+this.modal_ID).modal('toggle');
 					}
 				}
 			}
@@ -601,22 +593,22 @@ window.chart = new Highcharts.chart({
 			y: @json($estadisticasPasantias['pasantiasPaso1Count']),
 			porcentajePostulantes: @json($estadisticasPasantias['pasantiasPaso1Count']) / @json($estadisticasPasantias['pasantiasTotal']) * 100,
 			name: 'Requisitos académicos',
-			detalleDatos: detalleDatosAlumnos(@json($estadisticasPasantias['alumnosPasantiaPaso1']))
+			modal_ID: 'Modal_pasantiaPaso1'
 		}, {
 			y: @json($estadisticasPasantias['pasantiasPaso2Count']),
 			porcentajePostulantes: @json($estadisticasPasantias['pasantiasPaso2Count']) / @json($estadisticasPasantias['pasantiasTotal']) * 100,
 			name: 'Inscripción pasantía',
-			detalleDatos: detalleDatosAlumnos(@json($estadisticasPasantias['alumnosPasantiaPaso2']))
+			modal_ID: 'Modal_pasantiaPaso2'
 		}, {
 			y: @json($estadisticasPasantias['pasantiasPaso3Count']),
 			porcentajePostulantes: @json($estadisticasPasantias['pasantiasPaso3Count']) / @json($estadisticasPasantias['pasantiasTotal']) * 100,
 			name: 'Inscripción supervisor',
-			detalleDatos: detalleDatosAlumnos(@json($estadisticasPasantias['alumnosPasantiaPaso3']))
+			modal_ID: 'Modal_pasantiaPaso3'
 		}, {
 			y: @json($estadisticasPasantias['pasantiasPaso4Count']),
 			porcentajePostulantes: @json($estadisticasPasantias['pasantiasPaso4Count']) / @json($estadisticasPasantias['pasantiasTotal']) * 100,
 			name: 'Inscripción proyecto',
-			detalleDatos: detalleDatosAlumnos(@json($estadisticasPasantias['alumnosPasantiaPaso4']))
+			modal_ID: 'Modal_pasantiaPaso4'
 		}],
 		showInLegend: false
 	}]
