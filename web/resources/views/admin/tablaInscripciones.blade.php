@@ -6,7 +6,7 @@
 </div>
 
 <div class="table-responsive">
-	<table class="table table-hover" id="TablaInscripciones"
+	<table class="table table-hover text-nowrap" id="TablaInscripciones"
 		data-show-export="true"
 		data-pagination="true"
 		data-click-to-select="true"
