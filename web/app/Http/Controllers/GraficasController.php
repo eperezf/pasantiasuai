@@ -23,7 +23,7 @@ class GraficasController extends Controller
 			$estadisticasProyectos = $this->getEstadisticasProyectos();
 			$estadisticasEmpresas = $this->getEstadisticasEmpresas();
 			$estadisticasPasantias = $this->getEstadisticasPasantias();
-			return view('admin.estadisticas', compact('estadisticasSupervisores', 'estadisticasInscripciones', 'estadisticasProyectos', 'estadisticasEmpresas', 'estadisticasPasantias'));
+			return view('admin.dashboard.index', compact('estadisticasSupervisores', 'estadisticasInscripciones', 'estadisticasProyectos', 'estadisticasEmpresas', 'estadisticasPasantias'));
 		} else {
 			return redirect('index');
 		}

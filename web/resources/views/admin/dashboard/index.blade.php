@@ -10,6 +10,93 @@
 		</div><br />
 		@endif
 		<div class="row">
+			<div class="col-12">
+				<div class="card shadow">
+					<div class="card-header">
+						Dashboard
+					</div>
+					<div class="card-body">
+						<ul class="nav nav-tabs mb-5 ">
+							<li class="nav-item">
+								<a class="nav-link active" id="pasantias-tab" data-toggle="tab" href="#pasantias" role="tab">Pasantias</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" id="proyectos-tab" data-toggle="tab" href="#proyectos" role="tab">Proyectos</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" id="empresas-tab" data-toggle="tab" href="#empresas" role="tab">Empresas</a>
+							</li>
+						</ul>
+
+						<!-- CONTENIDO DE PANELES -->
+						<div class="tab-content" id="contenidoPaneles">
+						<!-- PASANTIAS -->
+							<div class="tab-pane fade show active" id="pasantias" role="tabpanel" aria-labelledby="pasantias-tab">
+								<div class="container-fluid m-2">
+									<div class="row">
+
+										<div class="col-3 p-3">
+											<div class="card text-center shadow" style="height:170px;"><br>
+												<div class="card-body">
+													<h5 class="card-title">18</h5>
+													<p class="card-text">Pasantias</p>
+												 </div>
+											</div>
+										</div>
+
+									</div>
+								</div>
+							</div>
+
+
+						<!-- PROYECTOS -->
+							<div class="tab-pane fade" id="proyectos" role="tabpanel" aria-labelledby="proyectos-tab">
+								<div class="container-fluid m-2">
+									<div class="row">
+
+										<div class="col-3 p-3">
+											<div class="card text-center shadow" style="height:170px;"><br>
+												<div class="card-body">
+													<h5 class="card-title">54</h5>
+													<p class="card-text">Proyectos</p>
+												 </div>
+											</div>
+										</div>
+
+									</div>
+								</div>
+							</div>
+
+						<!-- EMPRESAS -->
+							<div class="tab-pane fade" id="empresas" role="tabpanel" aria-labelledby="empresas-tab">
+								<div class="container-fluid m-2">
+									<div class="row">
+
+										<div class="col-3 p-3">
+											<div class="card text-center shadow" style="height:170px;"><br>
+												<div class="card-body">
+													<h5 class="card-title">120</h5>
+													<p class="card-text">Empresas</p>
+												 </div>
+											</div>
+										</div>
+
+									</div>
+								</div>
+							</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+
+
+
+
+
+
+		<div class="row">
 			<div class="col-md-12">
 				<h1 id="estadisticas" class="text-center">Estadísticas administrativas actualizadas a la fecha: </h1>
 			</div>
