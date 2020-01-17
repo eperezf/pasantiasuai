@@ -11,7 +11,7 @@
 		@endif
 		<div class="row">
 			<div class="col-12">
-				<div class="card shadow">
+				<div class="card shadow m-5 text-center">
 					<div class="card-header">
 						Dashboard
 					</div>
@@ -35,13 +35,15 @@
 								<div class="container-fluid m-2">
 									<div class="row">
 
-										<div class="col-3 p-3">
-											<div class="card text-center shadow" style="height:170px;"><br>
-												<div class="card-body">
-													<h5 class="card-title">18</h5>
-													<p class="card-text">Pasantias</p>
-												 </div>
-											</div>
+										<div class="col-12">
+											<div id="pasos"></div>
+										</div>
+
+										<div class="col-md-6">
+											<div id="validacionSupervisor"></div>
+										</div>
+										<div class="col-md-6">
+											<div id="inscripcionesTerminadas"></div>
 										</div>
 
 									</div>
@@ -54,13 +56,15 @@
 								<div class="container-fluid m-2">
 									<div class="row">
 
-										<div class="col-3 p-3">
-											<div class="card text-center shadow" style="height:170px;"><br>
-												<div class="card-body">
-													<h5 class="card-title">54</h5>
-													<p class="card-text">Proyectos</p>
-												 </div>
-											</div>
+										<div class="col-md-6">
+											<div id="proyectosValidados"></div>
+										</div>
+
+										<div class="col-md-6">
+											<div id="proyectosInscritos"></div>
+										</div>
+										<div class="col-md-6">
+											<div id="inscripcionesTerminadas"></div>
 										</div>
 
 									</div>
@@ -72,13 +76,8 @@
 								<div class="container-fluid m-2">
 									<div class="row">
 
-										<div class="col-3 p-3">
-											<div class="card text-center shadow" style="height:170px;"><br>
-												<div class="card-body">
-													<h5 class="card-title">120</h5>
-													<p class="card-text">Empresas</p>
-												 </div>
-											</div>
+										<div class="col-md-12">
+											<div id="empresasEnConvenio"></div>
 										</div>
 
 									</div>
@@ -89,48 +88,8 @@
 				</div>
 			</div>
 		</div>
-		</div>
+	</div>
 
-
-
-
-
-
-		<div class="row">
-			<div class="col-md-12">
-				<h1 id="estadisticas" class="text-center">Estadísticas administrativas actualizadas a la fecha: </h1>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="col-md-12">
-				<div id="pasos"></div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-6">
-				<div id="proyectosValidados"></div>
-			</div>
-			<div class="col-md-6">
-				<div id="empresasEnConvenio"></div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-6">
-				<div id="inscripcionesTerminadas"></div>
-			</div>
-			<div class="col-md-6">
-				<div id="validacionSupervisor"></div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-6">
-				<div id="proyectosInscritos"></div>
-			</div>
-			<div class="col-md-6">
-				<div id=""></div>
-			</div>
-		</div>
 
 <!-- Modal Empresas Validas -->
 <div class="modal fade" id="Modal_EmpresasValidas" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -413,11 +372,6 @@
 </div>
 
 <script>
-//Fecha en forma SIF (self invoking function)
-(function() {
-	const hoy = new Date().getFullYear() + '-' + (new Date().getMonth()+1) + '-' + new Date().getDate();
-	document.getElementById('estadisticas').innerHTML += hoy;
-})();
 
 //Funcion para obtener todo el html a mostrar cuando se clickea el grafico de empresas
 const tabla_empresasEnConvenio = (JSONdatosEmpresas, idTabla, idBodyModal) => {
