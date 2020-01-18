@@ -222,8 +222,13 @@ class GraficasController extends Controller
 		$empresasValidadasCount = $empresasValidadas->count();
 		$empresasNoValidadasCount = $empresasNoValidadas->count();
 		$empresasTotal = $empresasValidadasCount + $empresasNoValidadasCount;
-		$empresasPorcentajeValidadas = round($empresasValidadasCount / $empresasTotal * 100, 2);
-		$empresasPorcentajeNoValidadas = round($empresasNoValidadasCount / $empresasTotal * 100, 2);
+		if ($empresasTotal == 0) {
+			$empresasPorcentajeValidadas = 0;
+			$empresasPorcentajeNoValidadas = 0;
+		} else {
+			$empresasPorcentajeValidadas = round($empresasValidadasCount / $empresasTotal * 100, 2);
+			$empresasPorcentajeNoValidadas = round($empresasNoValidadasCount / $empresasTotal * 100, 2);
+		}
 
 
 		$estadisticasEmpresas = array(
@@ -290,7 +295,11 @@ class GraficasController extends Controller
 	{
 		$horasSemanales = $pasantia->horasSemanales;
 		$totalHoras = 810;
-		$totalSemanas = round($totalHoras / $horasSemanales);
+		if ($horasSemanales == 0) {
+			return false;
+		} else {
+			$totalSemanas = round($totalHoras / $horasSemanales);
+		}
 		$fechaTermino = Carbon::parse($pasantia->fechaInicio);
 		$fechaTermino->addWeeks($totalSemanas);
 		if (Carbon::now() > $fechaTermino) {
