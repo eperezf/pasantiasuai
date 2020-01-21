@@ -14,8 +14,7 @@
 </div>
 
 <div class="row">
-	<a href="{{ route('tablaInscripciones.export') }}" class="btn btn-primary">Exportar a excel</a>
-	<div class="table-responsive bootstrap-table" style="overflow-x:auto;">
+	<div class="col-12">
 		@include('admin.tablaInscripciones')
 	</div>
 </div>

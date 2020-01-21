@@ -13,30 +13,33 @@ use App\Empresa;
 use App\User;
 
 
-class GraficasController extends Controller {
-  public function index() {
+class GraficasController extends Controller
+{
+	public function index()
+	{
 		if (Auth::user()->rol >= 4) {
 			$estadisticasSupervisores = $this->getEstadisticasSupervisores();
 			$estadisticasInscripciones = $this->getEstadisticasInscripciones();
 			$estadisticasProyectos = $this->getEstadisticasProyectos();
 			$estadisticasEmpresas = $this->getEstadisticasEmpresas();
 			$estadisticasPasantias = $this->getEstadisticasPasantias();
-			return view('admin.estadisticas', compact('estadisticasSupervisores', 'estadisticasInscripciones', 'estadisticasProyectos', 'estadisticasEmpresas', 'estadisticasPasantias'));
-    } else {
-      return redirect('index');
-    }
+			return view('admin.dashboard.index', compact('estadisticasSupervisores', 'estadisticasInscripciones', 'estadisticasProyectos', 'estadisticasEmpresas', 'estadisticasPasantias'));
+		} else {
+			return redirect('index');
+		}
 	}
 
-	public function getEstadisticasSupervisores() {
-		//Proyectos aprobados
-		$pasantiasValidadasSupervisor = Pasantia::where('statusPaso3','=','4')->get();
+	public function getEstadisticasSupervisores()
+	{
+		//Pasantias confirmadas supervisor
+		$pasantiasValidadasSupervisor = Pasantia::where('statusPaso3', '=', '4')->get();
 		//cantidad
 		$pasantiasValidadasSupervisorCount = $pasantiasValidadasSupervisor->count();
 		//alumnos
 		$alumnosPasantiasValidadasSupervisor = $this->getAlumnos($pasantiasValidadasSupervisor);
 
-		//Distinto de aprobados -> objetado o no validado
-		$pasantiasNoValidadasSupervisor = Pasantia::where('statusPaso3','=','3')->get();
+		//Pasantias no confirmadas supervisor
+		$pasantiasNoValidadasSupervisor = Pasantia::where('statusPaso3', '!=', '4')->get();
 		//cantidad
 		$pasantiasNoValidadasSupervisorCount = $pasantiasNoValidadasSupervisor->count();
 		//alumnos
@@ -47,8 +50,7 @@ class GraficasController extends Controller {
 		if ($total == 0) {
 			$pasantiasValidadasSupervisorPorcentaje = 0;
 			$pasantiasNoValidadasSupervisorPorcentaje = 0;
-		}
-		else {
+		} else {
 			$pasantiasValidadasSupervisorPorcentaje = round($pasantiasValidadasSupervisorCount / $total * 100, 2);
 			$pasantiasNoValidadasSupervisorPorcentaje = round($pasantiasNoValidadasSupervisorCount / $total * 100, 2);
 		}
@@ -60,7 +62,7 @@ class GraficasController extends Controller {
 			'alumnosPasantiasValidadasSupervisor' => $alumnosPasantiasValidadasSupervisor,
 
 			'pasantiasNoValidadasSupervisor' => $pasantiasNoValidadasSupervisor,
-      'pasantiasNoValidadasSupervisorCount' => $pasantiasNoValidadasSupervisorCount,
+			'pasantiasNoValidadasSupervisorCount' => $pasantiasNoValidadasSupervisorCount,
 			'alumnosNoPasantiasValidadasSupervisor' => $alumnosNoPasantiasValidadasSupervisor,
 
 			'pasantiasValidadasSupervisorPorcentaje' => $pasantiasValidadasSupervisorPorcentaje,
@@ -69,69 +71,128 @@ class GraficasController extends Controller {
 		return $estadisticasSupervisores;
 	}
 
-	public function getEstadisticasProyectos() {
+	public function getEstadisticasProyectos()
+	{
+
+
+
+		/* ******************************** Proyectos Validos ******************************** */
+		//Proyectos Validos --> paso 4 = 4
+		//Proyectos No validos --> paso 4 = 2
 		//Proyectos aprobados
-		$proyectosAprobados = Pasantia::where('statusPaso4','=','4')->get();
+		$proyectosAprobados = Pasantia::where('statusPaso4', '=', '4')->get();
 		//cantidad
 		$proyectosAprobadosCount = $proyectosAprobados->count();
 		//alumnos
 		$alumnosProyectosAprobados = $this->getAlumnos($proyectosAprobados);
 
 		//Distinto de aprobados -> objetado o no validado
-		$proyectosNoAprobados = Pasantia::whereBetween('statusPaso4', [2,3])->get();
+		$proyectosNoAprobados = Pasantia::where('statusPaso4', '2')->get();
 		//cantidad
 		$proyectosNoAprobadosCount = $proyectosNoAprobados->count();
 		//alumnos
 		$alumnosProyectosNoAprobados = $this->getAlumnos($proyectosNoAprobados);
 
 		//Porcentaje
-		$total = $proyectosNoAprobadosCount + $proyectosAprobadosCount;
-		if ($total == 0) {
+		$totalAprobados = $proyectosNoAprobadosCount + $proyectosAprobadosCount;
+		if ($totalAprobados == 0) {
 			$proyectosAprobadosPorcentaje = 0;
 			$proyectosNoAprobadosPorcentaje = 0;
+		} else {
+			$proyectosAprobadosPorcentaje = round($proyectosAprobadosCount / $totalAprobados * 100, 2);
+			$proyectosNoAprobadosPorcentaje = round($proyectosNoAprobadosCount / $totalAprobados * 100, 2);
 		}
-		else {
-			$proyectosAprobadosPorcentaje = round($proyectosAprobadosCount / $total * 100, 2);
-			$proyectosNoAprobadosPorcentaje = round($proyectosNoAprobadosCount / $total * 100, 2);
+		/* ******************************** Proyectos Inscritos ******************************** */
+		//Proyectos Inscritos --> Paso 4 = 4 o 2
+		//Proyectos no inscritos --> Paso 4 = 0 o 1
+		//Inscritos
+		$proyectosInscritos = Pasantia::whereIn('statusPaso4', [4, 2])->get();
+		//cantidad
+		$proyectosInscritosCount = $proyectosInscritos->count();
+		//alumnos
+		$alumnosProyectosInscritos = $this->getAlumnos($proyectosInscritos);
+
+
+		$proyectosNOInscritos = Pasantia::whereIn('statusPaso4', [0, 1])->get();
+		//cantidad
+		$proyectosNOInscritosCount = $proyectosNOInscritos->count();
+		//alumnos
+		$alumnosProyectosNOInscritos = $this->getAlumnos($proyectosNOInscritos);
+
+
+		//Porcentaje
+		$totalInscritos = $proyectosNOInscritosCount + $proyectosInscritosCount;
+		if ($totalInscritos == 0) {
+			$proyectosInscritosPorcentaje = 0;
+			$proyectosNoInscritosPorcentaje = 0;
+		} else {
+			$proyectosInscritosPorcentaje = round($proyectosInscritosCount / $totalInscritos * 100, 2);
+			$proyectosNoInscritosPorcentaje = round($proyectosNOInscritosCount / $totalInscritos * 100, 2);
 		}
 
+
 		$estadisticasProyectos = array(
+			/* ******************************** Proyectos Validos ******************************** */
 			'proyectosAprobados' => $proyectosAprobados,
 			'proyectosAprobadosCount' => $proyectosAprobadosCount,
 			'alumnosProyectosAprobados' => $alumnosProyectosAprobados,
 
 			'proyectosNoAprobados' => $proyectosNoAprobados,
-      'proyectosNoAprobadosCount' => $proyectosNoAprobadosCount,
+			'proyectosNoAprobadosCount' => $proyectosNoAprobadosCount,
 			'alumnosProyectosNoAprobados' => $alumnosProyectosNoAprobados,
 
 			'proyectosAprobadosPorcentaje' => $proyectosAprobadosPorcentaje,
-			'proyectosNoAprobadosPorcentaje' => $proyectosNoAprobadosPorcentaje
+			'proyectosNoAprobadosPorcentaje' => $proyectosNoAprobadosPorcentaje,
+			/* ******************************** Proyectos Inscritos ******************************** */
+			'proyectosInscritos' => $proyectosInscritos,
+			'proyectosInscritosCount' => $proyectosInscritosCount,
+			'alumnosProyectosInscritos' => $alumnosProyectosInscritos,
+
+			'proyectosNOInscritos' => $proyectosNOInscritos,
+			'proyectosNOInscritosCount' => $proyectosNOInscritosCount,
+			'alumnosProyectosNOInscritos' => $alumnosProyectosNOInscritos,
+
+			'proyectosInscritosPorcentaje' => $proyectosInscritosPorcentaje,
+			'proyectosNoInscritosPorcentaje' => $proyectosNoInscritosPorcentaje,
 		);
 		return $estadisticasProyectos;
 	}
 
-	public function getEstadisticasInscripciones() {
-		//Terminadas
-		$inscripcionesTerminadas = Pasantia::where('statusGeneral','=','1')->get();
-		//cantidad
+	public function getEstadisticasInscripciones()
+	{
+		$pasantias = Pasantia::all();
+		$inscripcionesTerminadas = array();
+		$inscripcionesNoTerminadas = array();
+
+		foreach ($pasantias as $pasantia) {
+			if ($this->isPasantiaTerminada($pasantia)) {
+				array_push($inscripcionesTerminadas, $pasantia);
+			}
+			if (!$this->isPasantiaTerminada($pasantia)) {
+				array_push($inscripcionesNoTerminadas, $pasantia);
+			}
+		}
+
+		$inscripcionesTerminadas = collect(Arr::flatten($inscripcionesTerminadas));
+		$inscripcionesNoTerminadas = collect(Arr::flatten($inscripcionesNoTerminadas));
+		//collect(Arr::flatten($inscripcionesTerminadas));
+		//collect(Arr::flatten($inscripcionesNoTerminadas));
+
+		//Terminados
 		$inscripcionesTerminadasCount = $inscripcionesTerminadas->count();
-		//alumnos
 		$alumnosInscripcionesTerminadas = $this->getAlumnos($inscripcionesTerminadas);
 
-		//No terminadas
-		$inscripcionesNoTerminadas = Pasantia::where('statusGeneral','=','0')->get();
-		//cantidad
+		//No terminados
 		$inscripcionesNoTerminadasCount = $inscripcionesNoTerminadas->count();
-		//alumnos
 		$alumnosInscripcionesNoTerminadas = $this->getAlumnos($inscripcionesNoTerminadas);
+
 
 		//Porcentaje
 		$total = $inscripcionesNoTerminadasCount + $inscripcionesTerminadasCount;
 		if ($total == 0) {
 			$inscripcionesTerminadasPorcentaje = 0;
 			$inscripcionesNoTerminadasPorcentaje = 0;
-		}
-		else {
+		} else {
 			$inscripcionesTerminadasPorcentaje = round($inscripcionesTerminadasCount / $total * 100, 2);
 			$inscripcionesNoTerminadasPorcentaje = round($inscripcionesNoTerminadasCount / $total * 100, 2);
 		}
@@ -143,7 +204,7 @@ class GraficasController extends Controller {
 			'inscripcionesNoTerminadas' => $inscripcionesNoTerminadas,
 			'alumnosInscripcionesNoTerminadas' => $alumnosInscripcionesNoTerminadas,
 
-      'inscripcionesTerminadasCount' => $inscripcionesTerminadasCount,
+			'inscripcionesTerminadasCount' => $inscripcionesTerminadasCount,
 			'inscripcionesNoTerminadasCount' => $inscripcionesNoTerminadasCount,
 
 			'inscripcionesTerminadasPorcentaje' => $inscripcionesTerminadasPorcentaje,
@@ -152,7 +213,8 @@ class GraficasController extends Controller {
 		return $estadisticasInscripciones;
 	}
 
-	public function getEstadisticasEmpresas() {
+	public function getEstadisticasEmpresas()
+	{
 		//estadisticas Empresas --> en convenio, sin convenio, proceso convenio
 		/* ---------- convenios ---------- */
 		$empresasValidadas = Empresa::where('status', '=', '1')->get();
@@ -160,65 +222,90 @@ class GraficasController extends Controller {
 		$empresasValidadasCount = $empresasValidadas->count();
 		$empresasNoValidadasCount = $empresasNoValidadas->count();
 		$empresasTotal = $empresasValidadasCount + $empresasNoValidadasCount;
-		$empresasPorcentajeValidadas = round($empresasValidadasCount / $empresasTotal * 100, 2);
-		$empresasPorcentajeNoValidadas = round($empresasNoValidadasCount / $empresasTotal * 100, 2);
+		if ($empresasTotal == 0) {
+			$empresasPorcentajeValidadas = 0;
+			$empresasPorcentajeNoValidadas = 0;
+		} else {
+			$empresasPorcentajeValidadas = round($empresasValidadasCount / $empresasTotal * 100, 2);
+			$empresasPorcentajeNoValidadas = round($empresasNoValidadasCount / $empresasTotal * 100, 2);
+		}
 
 
 		$estadisticasEmpresas = array(
 			'empresasPorcentajeValidadas' => $empresasPorcentajeValidadas,
 			'empresasPorcentajeNoValidadas' => $empresasPorcentajeNoValidadas,
-      'empresasValidadas' => $empresasValidadas,
+			'empresasValidadas' => $empresasValidadas,
 			'empresasNoValidadas' => $empresasNoValidadas,
-      'empresasValidadasCount' => $empresasValidadasCount,
+			'empresasValidadasCount' => $empresasValidadasCount,
 			'empresasNoValidadasCount' => $empresasNoValidadasCount,
 			'empresasTotal' => $empresasTotal,
 		);
 		return $estadisticasEmpresas;
 	}
-	public function getEstadisticasPasantias() {
+	public function getEstadisticasPasantias()
+	{
 		//estadisticas Pasantias --> cantidad de alumnos en cada paso
 		/* ---------- cantidad de alumnos en cada paso ---------- */
 		//Hasta paso 4 completo
-		$pasantiasPaso4 = Pasantia::where('statusPaso4','=','4')->get();
+		$pasantiasPaso4 = Pasantia::where('statusPaso4', '=', '4')->get();
 		$pasantiasPaso4Count = $pasantiasPaso4->count();
 		$alumnosPasantiaPaso4 = $this->getAlumnos($pasantiasPaso4);
 		//Hasta paso 3 completo
-		$pasantiasPaso3 = Pasantia::where('statusPaso3','=','4')->where('statusPaso4', '!=', '4')->get();
+		$pasantiasPaso3 = Pasantia::where('statusPaso3', '=', '4')->where('statusPaso4', '!=', '4')->get();
 		$pasantiasPaso3Count = $pasantiasPaso3->count();
 		$alumnosPasantiaPaso3 = $this->getAlumnos($pasantiasPaso3);
 		//Hasta paso 2 completo
-		$pasantiasPaso2 = Pasantia::where('statusPaso2','=','2')->where('statusPaso3', '!=', '4')->where('statusPaso4', '!=', '4')->get();
+		$pasantiasPaso2 = Pasantia::where('statusPaso2', '=', '2')->where('statusPaso3', '!=', '4')->where('statusPaso4', '!=', '4')->get();
 		$pasantiasPaso2Count = $pasantiasPaso2->count();
 		$alumnosPasantiaPaso2 = $this->getAlumnos($pasantiasPaso2);
 		//Hasta paso 1 completo
-		$pasantiasPaso1 = Pasantia::where('statusPaso1','=','2')->where('statusPaso2','!=','2')->where('statusPaso3', '!=', '4')->where('statusPaso4', '!=', '4')->get();
+		$pasantiasPaso1 = Pasantia::where('statusPaso1', '=', '2')->where('statusPaso2', '!=', '2')->where('statusPaso3', '!=', '4')->where('statusPaso4', '!=', '4')->get();
 		$pasantiasPaso1Count = $pasantiasPaso1->count();
 		$alumnosPasantiaPaso1 = $this->getAlumnos($pasantiasPaso1);
 		//total
 		$pasantiasTotal = $pasantiasPaso4Count + $pasantiasPaso3Count + $pasantiasPaso2Count + $pasantiasPaso1Count;
 		//Array de estadisticas
-    $estadisticasPasantias = array(
+		$estadisticasPasantias = array(
 			'alumnosPasantiaPaso4' => $alumnosPasantiaPaso4,
-      'alumnosPasantiaPaso3' => $alumnosPasantiaPaso3,
-      'alumnosPasantiaPaso2' => $alumnosPasantiaPaso2,
+			'alumnosPasantiaPaso3' => $alumnosPasantiaPaso3,
+			'alumnosPasantiaPaso2' => $alumnosPasantiaPaso2,
 			'alumnosPasantiaPaso1' => $alumnosPasantiaPaso1,
 			'pasantiasPaso4' => $pasantiasPaso4,
-      'pasantiasPaso3' => $pasantiasPaso3,
-      'pasantiasPaso2' => $pasantiasPaso2,
-      'pasantiasPaso1' => $pasantiasPaso1,
-      'pasantiasPaso4Count' => $pasantiasPaso4Count,
-      'pasantiasPaso3Count' => $pasantiasPaso3Count,
-      'pasantiasPaso2Count' => $pasantiasPaso2Count,
-      'pasantiasPaso1Count' => $pasantiasPaso1Count,
+			'pasantiasPaso3' => $pasantiasPaso3,
+			'pasantiasPaso2' => $pasantiasPaso2,
+			'pasantiasPaso1' => $pasantiasPaso1,
+			'pasantiasPaso4Count' => $pasantiasPaso4Count,
+			'pasantiasPaso3Count' => $pasantiasPaso3Count,
+			'pasantiasPaso2Count' => $pasantiasPaso2Count,
+			'pasantiasPaso1Count' => $pasantiasPaso1Count,
 			'pasantiasTotal' => $pasantiasTotal,
 		);
-    return $estadisticasPasantias;
+		return $estadisticasPasantias;
 	}
-	public function getAlumnos($pasantias) {
+	public function getAlumnos($pasantias)
+	{
 		$alumnosPasantia = array();
 		foreach ($pasantias as $pasantia) {
 			array_push($alumnosPasantia, User::where('idUsuario', $pasantia->idAlumno)->get());
 		}
 		return Arr::flatten($alumnosPasantia);
+	}
+
+	public function isPasantiaTerminada($pasantia)
+	{
+		$horasSemanales = $pasantia->horasSemanales;
+		$totalHoras = 810;
+		if ($horasSemanales == 0) {
+			return false;
+		} else {
+			$totalSemanas = round($totalHoras / $horasSemanales);
+		}
+		$fechaTermino = Carbon::parse($pasantia->fechaInicio);
+		$fechaTermino->addWeeks($totalSemanas);
+		if (Carbon::now() > $fechaTermino) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
