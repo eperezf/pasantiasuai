@@ -129,4 +129,21 @@ class LoginController extends Controller
 		Auth::logout();
 		return redirect('/login');
 	}
+
+
+//FOR DEBUG ONLY: LOG IN AS ANOTHER USER
+	public function doLoginAs(Request $request){
+		$email = $request->Email;
+		if (!User::where('email', $email)->first()){
+			return redirect('/admin/loginAs')->with('danger', 'Usuario ' . $email . ' no encontrado en el sistema.');
+		}
+		else {
+			$located = User::where('email', $email) -> first();
+			$userID = $located['idUsuario'];
+			Auth::loginUsingId($userID);
+			return redirect('/');
+		}
+		Auth::logout();
+
+	}
 }

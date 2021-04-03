@@ -21,6 +21,7 @@
     <a href="/empresas" class="btn btn-primary btn-lg" role="button" aria-pressed="true">Ver empresas</a>
     <a href="/admin/importarlista" class="btn btn-primary btn-lg" role="button" aria-pressed="true">Importar listado de alumnos autorizados</a>
     <a href="/admin/asignarProyectos" class="btn btn-primary btn-lg" role="button" aria-pressed="true">Asignar profesores a proyectos</a>
+    <a href="/admin/loginAs" class="btn btn-primary btn-lg" role="button" aria-pressed="true">Iniciar sesión como...</a>
   </div>
 </div>
 </div>

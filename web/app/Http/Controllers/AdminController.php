@@ -60,4 +60,8 @@ class AdminController extends Controller
       return redirect()->back();
     }
   }
+
+  public function loginAs(){
+    return view('admin.loginAs');
+  }
 }

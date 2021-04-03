@@ -180,7 +180,7 @@ class PasantiaController extends Controller{
 	public function paso2Control(Request $request){
 		$request->validate([
 			'empresa' => 'numeric|nullable',
-			'ciudad' => 'alpha|nullable',
+			'ciudad' => 'regex:/^[a-zA-ZÑñ\s]+$/|nullable',
 			'pais' => 'regex:/^[a-zA-ZÑñ\s]+$/|nullable',
 			'fecha' => 'date|nullable',
 			'horas' => 'numeric|between:20,45|nullable',
@@ -227,8 +227,8 @@ class PasantiaController extends Controller{
 
 		if ($request->fecha) {
 			//Limite de la fecha de inscripcion respecto al año actual
-			$fechaInicio = Carbon::parse(Carbon::create(Carbon::now()->year, 7, 22)); //22 Julio
-			$fechaLimite = Carbon::parse(Carbon::create(Carbon::now()->year, 10, 20)); //20 octubre
+			$fechaInicio = Carbon::parse(Carbon::create(Carbon::now()->year, 01, 1)); //22 Julio
+			$fechaLimite = Carbon::parse(Carbon::create(2030, 10, 20)); //20 octubre 2030
 			//Si hoy o la fecha de inscripcion es mayor a la fecha limite
 			if (Carbon::now() > $fechaLimite || Carbon::parse($request->fecha) > $fechaLimite) {
 				return redirect('/inscripcion/2')->with('danger', 'Su pasantía no la puede inscribir en esta fecha, si aún asi desea realizarla, deberá contactarse con pasantias.fic@uai.cl');

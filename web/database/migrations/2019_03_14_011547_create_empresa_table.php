@@ -17,6 +17,8 @@ class CreateEmpresaTable extends Migration{
 
       $table->unique(["idEmpresa"], 'idEmpresa_UNIQUE');
 
+      $table->unique(["urlWeb"], 'urlWeb_UNIQUE');
+
       $table->unique(["nombre"], 'nombre_UNIQUE');
     });
   }
